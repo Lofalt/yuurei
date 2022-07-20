@@ -1,0 +1,16 @@
+<template>
+    <div class="btnHeader">
+        <button class="button">王四月</button>
+        <button class="button">椎名林檎</button>
+        <button class="button">唐可可</button>
+        <button class="button">BUMP OF CHICKEN</button>
+    </div>
+    <div>
+        <router-view></router-view>
+    </div>
+</template>
+
+<script lang="ts" setup>
+
+
+</script>

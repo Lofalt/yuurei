@@ -1,0 +1,5 @@
+<template>
+    <router-link to="/home/pages/anli/1">click me</router-link>
+    <router-link to="/home/pages/anli/2">click me</router-link>
+    <router-view></router-view>
+</template>

@@ -1,0 +1,116 @@
+<template>
+    <div class="rightbar">
+        <div class="showpage">
+            <div class="showtag tag1"></div>
+            <router-view></router-view>
+        </div>
+        <div class="showpage">
+            <div class="showtag tag2"></div>
+            <router-view></router-view>
+        </div>
+        <div class="showpage">
+            <div class="showtag tag3"></div>
+            <router-view></router-view>
+        </div>
+        <div class="showpage">
+            <div class="showtag tag4"></div>
+            <router-view></router-view>
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+    name: "RightBar"
+}
+</script>
+<script lang="ts" setup>
+
+</script>
+
+<style lang="less" scoped>
+.rightbar {
+    float: right;
+    position: relative;
+    overflow: hidden;
+    width: 83.5%;
+    min-height: 100vh;
+    // min-height: 100vh;
+    // width: 83.5vw;
+    // overflow: hidden;
+
+    .showpage {
+        position: absolute;
+        right: 0;
+        top: 10vh;
+        box-shadow: -2px 2px 10px 1px rgba(0, 0, 0, 0.1);
+        width: 80vw;
+        height: 80vh;
+        background-color: rgb(250, 242, 234);
+        transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+
+
+        &:nth-child(1) {
+            z-index: 4;
+            // background-color: aquamarine;
+            transform: translateX(75vw);
+        }
+
+        &:nth-child(2) {
+            z-index: 3;
+            // background-color: aquamarine;
+            transform: translateX(70vw);
+        }
+
+        &:nth-child(3) {
+            z-index: 2;
+            // background-color: aquamarine;
+            transform: translateX(65vw);
+        }
+
+        &:nth-child(4) {
+            z-index: 1;
+            // background-color: aquamarine;
+            transform: translateX(60vw);
+        }
+
+        &:hover {
+            transform: translateX(0);
+        }
+
+        .showtag {
+
+            position: absolute;
+            width: 50px;
+            height: 100px;
+            background-color: #fff;
+            left: -25px;
+            top: 25px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: 1px solid rgba(0, 0, 0, 0.1)
+        }
+
+        .tag1 {
+            background-color: #ff5454;
+            top: 60vh;
+        }
+
+        .tag2 {
+            background-color: #f1c388;
+            top: 40vh
+        }
+
+        .tag3 {
+            background-color: #f18888;
+            top: 20vh
+        }
+
+        .tag4 {
+            background-color: #16cedb;
+        }
+    }
+
+}
+</style>
