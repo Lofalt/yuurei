@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="panel" @click="changePage(2)">
+        <div class="panel">
             panel
         </div>
         <div class="panel">
@@ -25,17 +25,7 @@
         </div>
     </div>
 </template>
-<script lang="ts" setup>
-import { usePageData } from '@/store/pageData';
 
-const pageData = usePageData()
-
-function changePage(num: number) {
-    pageData.pagedata = { data: "fuckyou~" }
-}
-
-
-</script>
 <style lang="less" scoped>
 .container {
     width: 80%;
@@ -58,6 +48,5 @@ function changePage(num: number) {
     margin: 30px auto;
     border-radius: 5px;
     text-align: center;
-    cursor: pointer;
 }
 </style>

@@ -36,7 +36,7 @@ const pageCount = ref(0)
 const pageData = usePageData()
 watch(pageData, (newValue, oldValue) => {
   console.log(newValue.pagedata.data)
-  pageCount.value = 1
+  pageCount.value = 2
 })
 
 function wheeling(event: any) {

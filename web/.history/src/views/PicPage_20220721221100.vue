@@ -26,12 +26,9 @@
     </div>
 </template>
 <script lang="ts" setup>
-import { usePageData } from '@/store/pageData';
-
-const pageData = usePageData()
 
 function changePage(num: number) {
-    pageData.pagedata = { data: "fuckyou~" }
+
 }
 
 
@@ -58,6 +55,5 @@ function changePage(num: number) {
     margin: 30px auto;
     border-radius: 5px;
     text-align: center;
-    cursor: pointer;
 }
 </style>

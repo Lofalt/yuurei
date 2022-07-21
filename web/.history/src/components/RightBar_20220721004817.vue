@@ -1,31 +1,28 @@
 <template>
     <div class="rightbar" @click.self="pushCard">
-        <div class="showpage" @wheel.stop="">
+        <div class="showpage">
             <div class="showtag tag1" @click="pullCard(0)">
                 休職
             </div>
             <router-view v-show="showPic"></router-view>
         </div>
-        <div class="showpage" @wheel.stop="">
+        <div class="showpage">
             <div class="showtag tag2" @click="pullCard(1)">
                 休職
             </div>
             <router-view name="BlogPage" v-show="showBlog"></router-view>
         </div>
-        <div class="showpage" @wheel.stop="">
+        <div class="showpage">
             <div class="showtag tag3" @click="pullCard(2)">
                 休職
             </div>
-            <router-view name="LovePage" v-show="showLove"></router-view>
+            <router-view name="VlogPage" v-show="showVlog"></router-view>
         </div>
-        <div class="showpage" @wheel.stop="">
+        <div class="showpage">
             <div class="showtag tag4" @click="pullCard(3)">
                 休職
             </div>
-            <!-- <router-view name="VlogPage" v-show="showVlog"></router-view> -->
-            <!-- <div class="father"> -->
-            <!-- <anli-page></anli-page> -->
-            <!-- </div> -->
+            <router-view name="LovePage" v-show="showLove"></router-view>
         </div>
     </div>
 </template>
@@ -38,12 +35,12 @@ export default {
 <script lang="ts" setup>
 import { onDeactivated, onUnmounted, ref } from 'vue';
 import { useRouter } from 'vue-router'
-import AnliPage from '@/views/AnliPage.vue';
+
 const router = useRouter();
-const showBlog = ref(false)
+const showBlog = ref(true)
 const showVlog = ref(true)
-const showLove = ref(false)
-const showPic = ref(false)
+const showLove = ref(true)
+const showPic = ref(true)
 
 
 function pullCard(num: number): void {
@@ -73,10 +70,10 @@ function pullCard(num: number): void {
             showBlog.value = true
             break;
         case 2:
-            showLove.value = true
+            showVlog.value = true
             break;
         case 3:
-            showVlog.value = true
+            showLove.value = true
             break;
     }
 }
@@ -89,9 +86,9 @@ function pushCard() {
         card.style.transitionDelay = "0"
         card.style.right = "-55vw"
     }
-    showBlog.value = false
-    showLove.value = false
-    showPic.value = false
+    // showBlog.value = false
+    // showLove.value = false
+    // showPic.value = false
     // showVlog.value = false
 }
 
@@ -99,12 +96,6 @@ function pushCard() {
 </script>
 
 <style lang="less" scoped>
-.father {
-    overflow: auto;
-    width: 80%;
-    height: 100vh;
-}
-
 .rightbar {
     float: right;
     position: relative;
@@ -116,7 +107,6 @@ function pushCard() {
     // overflow: hidden;
 
     .showpage {
-        // background-attachment: fixed;
         overflow: hidden;
         position: absolute;
         right: 0;
@@ -124,41 +114,51 @@ function pushCard() {
         box-shadow: -2px 2px 5px 1px rgba(0, 0, 0, 0.1);
         width: 80vw;
         height: 80vh;
-        background-color: #fff;
-        // backdrop-filter: blur(3px);
+        // background-color: rgba(68, 68, 68, 0.6);
+        backdrop-filter: blur(3px);
         transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
         // border: 1px solid rgba(0, 0, 0, 0.3);
+        // transform: translateX(70vw);
         border-radius: 5px;
         right: -55vw;
-        background-size: cover;
+
 
         &:nth-child(4) {
             z-index: 4;
+            // background-color: aquamarine;
+            // transform: translateX(75vw);
             transform: translateX(20vw);
-            // overflow: auto;
-            // background-image: url(../assets/91375949_p0.jpg);
         }
 
         &:nth-child(3) {
             z-index: 3;
+            // background-color: aquamarine;
+            // transform: translateX(70vw);
             transform: translateX(15vw);
-            // background-image: url(../assets/89025157_p0.jpg);
         }
 
         &:nth-child(2) {
             z-index: 2;
+            // background-color: aquamarine;
+            // transform: translateX(65vw);
             transform: translateX(10vw);
-            // background-image: url(../assets/wallhaven-k71327.jpg);
         }
 
         &:nth-child(1) {
             z-index: 1;
+            // background-color: aquamarine;
+            // transform: translateX(60vw);
             transform: translateX(5vw);
-            // background-image: url(../assets/ec8ce499ly1h1hhm1o6m1j22pg1ww4qp.jpg);
         }
 
+        // transform: translateX(70vw);
+
+        // &:hover {
+        //     right: 0;
+        // }
+
         .showtag {
-            z-index: 10;
+
             position: absolute;
             width: 35px;
             height: 110px;
@@ -168,6 +168,7 @@ function pushCard() {
             cursor: pointer;
             box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.1);
             border-radius: 3px;
+            // border: 1px solid rgba(0, 0, 0, 0.3)
             writing-mode: vertical-lr;
             text-align: start;
             color: white;

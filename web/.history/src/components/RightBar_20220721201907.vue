@@ -22,7 +22,7 @@
             <div class="showtag tag4" @click="pullCard(3)">
                 休職
             </div>
-            <!-- <router-view name="VlogPage" v-show="showVlog"></router-view> -->
+            <router-view name="VlogPage" v-show="showVlog"></router-view>
             <!-- <div class="father"> -->
             <!-- <anli-page></anli-page> -->
             <!-- </div> -->
@@ -116,7 +116,6 @@ function pushCard() {
     // overflow: hidden;
 
     .showpage {
-        // background-attachment: fixed;
         overflow: hidden;
         position: absolute;
         right: 0;

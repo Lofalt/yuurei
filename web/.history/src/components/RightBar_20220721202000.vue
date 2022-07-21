@@ -116,7 +116,6 @@ function pushCard() {
     // overflow: hidden;
 
     .showpage {
-        // background-attachment: fixed;
         overflow: hidden;
         position: absolute;
         right: 0;

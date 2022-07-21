@@ -12,12 +12,10 @@
       <div class="bottom">
         <div class="bottomPage">
           <!-- <anli-page></anli-page> -->
-          占位
         </div>
       </div>
       <div class="info">
         <div class="infoPage">
-          占位
         </div>
       </div>
     </div>
@@ -36,7 +34,7 @@ const pageCount = ref(0)
 const pageData = usePageData()
 watch(pageData, (newValue, oldValue) => {
   console.log(newValue.pagedata.data)
-  pageCount.value = 1
+  pageCount.value = 2
 })
 
 function wheeling(event: any) {
@@ -69,28 +67,28 @@ function changePage(num: number) {
 
 }
 
-// function change() {
-//   const card = document.getElementsByClassName("middle") as HTMLSelectElement
-//   const actualCard = card[0]
-//   actualCard.style.transition = "all 1s cubic-bezier(0.075, 0.82, 0.165, 1)"
-//   actualCard.style.transform = "translateY(-100vh)"
-//   // actualCard.style.transition = ""
-//   const card2 = document.getElementsByClassName("bottom") as HTMLSelectElement
-//   const actualCard2 = card2[0]
-//   actualCard2.style.transition = "all 1s cubic-bezier(0.075, 0.82, 0.165, 1)"
-//   actualCard2.style.transform = "translateY(-100vh)"
-// }
-// function change2() {
-//   const card = document.getElementsByClassName("middle") as HTMLSelectElement
-//   const actualCard = card[0]
-//   actualCard.style.transition = "all 1s cubic-bezier(0.075, 0.82, 0.165, 1)"
-//   actualCard.style.transform = "translateY(0)"
-//   // actualCard.style.transition = ""
-//   const card2 = document.getElementsByClassName("bottom") as HTMLSelectElement
-//   const actualCard2 = card2[0]
-//   actualCard2.style.transition = "all 1s cubic-bezier(0.075, 0.82, 0.165, 1)"
-//   actualCard2.style.transform = "translateY(0)"
-// }
+function change() {
+  const card = document.getElementsByClassName("middle") as HTMLSelectElement
+  const actualCard = card[0]
+  actualCard.style.transition = "all 1s cubic-bezier(0.075, 0.82, 0.165, 1)"
+  actualCard.style.transform = "translateY(-100vh)"
+  // actualCard.style.transition = ""
+  const card2 = document.getElementsByClassName("bottom") as HTMLSelectElement
+  const actualCard2 = card2[0]
+  actualCard2.style.transition = "all 1s cubic-bezier(0.075, 0.82, 0.165, 1)"
+  actualCard2.style.transform = "translateY(-100vh)"
+}
+function change2() {
+  const card = document.getElementsByClassName("middle") as HTMLSelectElement
+  const actualCard = card[0]
+  actualCard.style.transition = "all 1s cubic-bezier(0.075, 0.82, 0.165, 1)"
+  actualCard.style.transform = "translateY(0)"
+  // actualCard.style.transition = ""
+  const card2 = document.getElementsByClassName("bottom") as HTMLSelectElement
+  const actualCard2 = card2[0]
+  actualCard2.style.transition = "all 1s cubic-bezier(0.075, 0.82, 0.165, 1)"
+  actualCard2.style.transform = "translateY(0)"
+}
 
 provide('pageCount', pageCount)
 </script>
@@ -144,7 +142,7 @@ provide('pageCount', pageCount)
   background-size: cover;
   margin: 10vh auto;
   border-radius: 20px;
-  background-color: rgb(255, 249, 249);
+  background-color: rgb(255, 170, 170);
   // padding: 100px;
 }
 
