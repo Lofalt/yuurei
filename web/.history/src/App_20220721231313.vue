@@ -40,9 +40,9 @@ watch(pageData, (newValue, oldValue) => {
 })
 
 function wheeling(event: any) {
-  // console.log(event.wheelDelta)
+  console.log(event.wheelDelta)
   if (event.wheelDelta == 150 || event.wheelDelta == 120) {
-    // console.log(event.wheelDelta)
+    console.log(event.wheelDelta)
     pageCount.value--
     if (pageCount.value < 0) {
       pageCount.value = 0
@@ -60,7 +60,7 @@ function wheeling(event: any) {
 watch(pageCount, (newValue, oldValue) => {
   const rightPage = document.getElementById("rightbar") as HTMLSelectElement
   rightPage.style.transform = `translateY(-${newValue}00vh)`
-  // console.log(newValue)
+  console.log(newValue)
 })
 function changePage(num: number) {
   // const rightPage = document.getElementById("rightbar") as HTMLSelectElement
@@ -106,7 +106,7 @@ provide('pageCount', pageCount)
   background-color: rgba(255, 255, 255, 0.384);
   border-radius: 10px;
   cursor: pointer;
-  color: rgba(37, 37, 37, 0.733);
+  color: rgba(0, 0, 0, 0.603);
 }
 
 #rightbar {

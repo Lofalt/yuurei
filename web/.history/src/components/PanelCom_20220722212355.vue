@@ -5,7 +5,7 @@
             <!--            <img src="~assets/img/backgroundimg/background1.png"/>-->
         </div>
         <div class="panelTitle">
-            <!-- <a @click="archive(article.articleId)">{{ article.articleTitle }}</a> -->鲤鱼姐没有你我怎么活啊
+            <!-- <a @click="archive(article.articleId)">{{ article.articleTitle }}</a> -->hello
         </div>
         <div class="panelSummary">
             <!-- {{ article.articleSummary }} -->这里是简介
@@ -102,7 +102,7 @@ export default {
     }
 
     &:hover {
-        box-shadow: 0 0 10px rgba(110, 104, 104, 0.8);
+        box-shadow: 0 0 10px rgba(252, 168, 167, 0.8);
 
         .panelTitle {
             transform: translate3d(0, -10px, 0);
@@ -177,11 +177,10 @@ export default {
     background-size: cover;
     /*<!--background-position:  0 -200px;-->*/
     width: 100%;
-    height: 30vh;
+    height: 250px;
     min-height: 250px;
     transition: .3s all ease;
-    background-image: url(../assets/ec8ce499ly1h1hhm1o6m1j22pg1ww4qp.jpg);
-    background-position: center;
+    // background-image: url(../assets/89025157_p0.jpg);
     // background-size: cover;
 }
 

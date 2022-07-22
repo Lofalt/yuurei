@@ -4,11 +4,10 @@
         <img class=" test" v-for="(item, index) in picList" :src="item" :key="item" ref="waterFallItem"
             @click="zoom(index)" :style="{ animationDelay: (index % 2) * 0.1 + 's' }" />
     </div>
-    <!-- <loading-com class="loading"></loading-com> -->
     <loading-com class="loading" v-show="isLoading"></loading-com>
-    <!-- <div class="loading" v-show="offset == 15">--</div> -->
     <transition>
-        <div @click="zoomout" v-if="hover" class="photoInfo" :style="{ backgroundImage: `url('` + showingPage + `')` }">
+        <div @click="zoomout" v-show="hover" class="photoInfo"
+            :style="{ backgroundImage: `url('` + showingPage + `')` }">
 
         </div>
     </transition>
@@ -58,10 +57,7 @@ function listenScroll(event: any) {
         // offset.value += 5
         if (!isLoading.value && offset.value < 15) {
             isLoading.value = true
-            setTimeout(() => {
-                getNext(offset.value)
-
-            }, 3000);
+            getNext(offset.value)
 
         } else {
             return
@@ -81,10 +77,7 @@ function zoom(event: number) {
 
 }
 function getNext(num: number) {
-
     axios.defaults.baseURL = "/api"
-    isLoading.value = true
-
     axios.post("/api/img", qs.stringify({ num: num + 5 })).then((result) => {
         for (let i = num; i < result.data.data.list.length; i++) {
             picList.value.push(result.data.data.list[i])
@@ -113,10 +106,10 @@ function waterFall() {
         for (let i = 0; i < childs.length; i++) {
             boxHeight = childs[i].offsetHeight
             if (i < col) {
-                heightArr.push(boxHeight + 50)
+                heightArr.push(boxHeight + 10)
                 childs[i].style.position = 'absolute'
                 childs[i].style.left = i * boxWidth + 'px'
-                childs[i].style.top = 5 + '0px'
+                childs[i].style.top = '0px'
                 childs[i].style.opacity = '1'
                 childs[i].style.transform = "translateY(0)"
             } else {
@@ -129,8 +122,8 @@ function waterFall() {
                 childs[i].style.transform = "translateY(0)"
                 heightArr[minIndex] += boxHeight
             }
+            isLoading.value = false
         }
-        isLoading.value = false
     }, 600)
 }
 
@@ -189,9 +182,7 @@ watch(colRaw, () => {
 .loading {
     // position: relative;
     bottom: 0;
-    // height: 5%;
     // float: left;
-    text-align: center;
 }
 
 .v-enter-from,
@@ -264,7 +255,7 @@ watch(colRaw, () => {
 #main {
     // position: relative;
     // margin: 0 auto;
-    height: 100%;
+    height: 92%;
     // width: 80%;
     // margin: 0 auto;
     width: 85%;
@@ -274,7 +265,7 @@ watch(colRaw, () => {
     position: relative;
     // bottom: 0;
     margin: 0 auto;
-    padding-top: 10vh;
+    // padding: 10vh;
 
     &::-webkit-scrollbar {
         width: 0;

@@ -6,7 +6,7 @@
     </div>
     <!-- <loading-com class="loading"></loading-com> -->
     <loading-com class="loading" v-show="isLoading"></loading-com>
-    <!-- <div class="loading" v-show="offset == 15">--</div> -->
+    <div class="loading" v-show="offset == 15">--</div>
     <transition>
         <div @click="zoomout" v-if="hover" class="photoInfo" :style="{ backgroundImage: `url('` + showingPage + `')` }">
 

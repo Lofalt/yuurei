@@ -177,11 +177,10 @@ export default {
     background-size: cover;
     /*<!--background-position:  0 -200px;-->*/
     width: 100%;
-    height: 30vh;
+    height: 250px;
     min-height: 250px;
     transition: .3s all ease;
-    background-image: url(../assets/ec8ce499ly1h1hhm1o6m1j22pg1ww4qp.jpg);
-    background-position: center;
+    // background-image: url(../assets/89025157_p0.jpg);
     // background-size: cover;
 }
 

@@ -1,14 +1,12 @@
 <template>
     <div id="main" @wheel="listenScroll">
-        <!-- <button class="scrollToTop" @click="scrollToTop">dmwo</button> -->
+        <button class="scrollToTop" @click="scrollToTop">dmwo</button>
         <img class=" test" v-for="(item, index) in picList" :src="item" :key="item" ref="waterFallItem"
             @click="zoom(index)" :style="{ animationDelay: (index % 2) * 0.1 + 's' }" />
     </div>
-    <!-- <loading-com class="loading"></loading-com> -->
-    <loading-com class="loading" v-show="isLoading"></loading-com>
-    <!-- <div class="loading" v-show="offset == 15">--</div> -->
     <transition>
-        <div @click="zoomout" v-if="hover" class="photoInfo" :style="{ backgroundImage: `url('` + showingPage + `')` }">
+        <div @click="zoomout" v-show="hover" class="photoInfo"
+            :style="{ backgroundImage: `url('` + showingPage + `')` }">
 
         </div>
     </transition>
@@ -19,7 +17,7 @@
 import axios from "axios"
 import qs from 'qs'
 import { reactive, ref, onMounted, watch, nextTick, inject, Ref } from "vue";
-import LoadingCom from "../components/LoadingCom.vue"
+
 
 const isShow = ref(true)
 const picList = ref<any>([])
@@ -30,7 +28,6 @@ const waterFallItem = ref<HTMLSelectElement>()
 const showingPage = ref('')
 const hover = inject('hover') as Ref<boolean>
 const showVlog = inject('showVlog') as Ref<boolean>
-const isLoading = ref(false)
 
 function scroll(scrollDuration: number, box: any) {
     var cosParameter = box.scrollY / 2,
@@ -55,17 +52,8 @@ function scrollToTop() {
 function listenScroll(event: any) {
     const box = document.getElementById("main") as HTMLSelectElement
     if (box.scrollTop + box.offsetHeight + 50 > box.scrollHeight) {
-        // offset.value += 5
-        if (!isLoading.value && offset.value < 15) {
-            isLoading.value = true
-            setTimeout(() => {
-                getNext(offset.value)
-
-            }, 3000);
-
-        } else {
-            return
-        }
+        offset.value += 5
+        getNext(offset.value)
     }
 
 }
@@ -81,15 +69,12 @@ function zoom(event: number) {
 
 }
 function getNext(num: number) {
-
     axios.defaults.baseURL = "/api"
-    isLoading.value = true
-
     axios.post("/api/img", qs.stringify({ num: num + 5 })).then((result) => {
         for (let i = num; i < result.data.data.list.length; i++) {
             picList.value.push(result.data.data.list[i])
         }
-        offset.value += 5
+        // offset.value += 5
         waterFall()
     })
 }
@@ -113,10 +98,10 @@ function waterFall() {
         for (let i = 0; i < childs.length; i++) {
             boxHeight = childs[i].offsetHeight
             if (i < col) {
-                heightArr.push(boxHeight + 50)
+                heightArr.push(boxHeight + 10)
                 childs[i].style.position = 'absolute'
                 childs[i].style.left = i * boxWidth + 'px'
-                childs[i].style.top = 5 + '0px'
+                childs[i].style.top = '0px'
                 childs[i].style.opacity = '1'
                 childs[i].style.transform = "translateY(0)"
             } else {
@@ -130,7 +115,6 @@ function waterFall() {
                 heightArr[minIndex] += boxHeight
             }
         }
-        isLoading.value = false
     }, 600)
 }
 
@@ -186,14 +170,6 @@ watch(colRaw, () => {
 </script>
 
 <style lang="less" scoped>
-.loading {
-    // position: relative;
-    bottom: 0;
-    // height: 5%;
-    // float: left;
-    text-align: center;
-}
-
 .v-enter-from,
 .v-leave-to {
     opacity: 0;
@@ -269,31 +245,18 @@ watch(colRaw, () => {
     // margin: 0 auto;
     width: 85%;
     // float: left;
-    // height: 100%;
+    height: 100%;
     overflow: auto;
     position: relative;
-    // bottom: 0;
+    bottom: 0;
     margin: 0 auto;
-    padding-top: 10vh;
+    // padding: 10vh;
 
     &::-webkit-scrollbar {
         width: 0;
         // transition: all 1s;
     }
-
-    &::after,
-    &::before {
-        content: "";
-        // overflow: hidden;
-        display: block;
-        height: 0;
-        clear: both;
-        visibility: hidden;
-    }
-
-
 }
-
 
 button {
     position: absolute

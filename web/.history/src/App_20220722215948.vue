@@ -16,8 +16,8 @@
         </div>
       </div>
       <div class="info">
+        <anli-page></anli-page>
         <div class="infoPage">
-          占位
         </div>
       </div>
     </div>
@@ -103,10 +103,10 @@ provide('pageCount', pageCount)
   outline: none;
   padding: 10px;
   border: none;
-  background-color: rgba(255, 255, 255, 0.384);
+  background-color: rgba(241, 106, 106, 0.384);
   border-radius: 10px;
   cursor: pointer;
-  color: rgba(37, 37, 37, 0.733);
+  color: rgba(255, 255, 255, 0.322);
 }
 
 #rightbar {

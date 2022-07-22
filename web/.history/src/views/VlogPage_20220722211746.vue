@@ -92,7 +92,7 @@ onMounted(() => {
 
 .father-box {
     // width: 90%;
-    width: 100%;
+    width: 60vw;
     z-index: -1;
     // transform: translateX(-120px);
     height: 100%;
@@ -102,10 +102,6 @@ onMounted(() => {
     /* 一定要制定父元素超出滚动 */
     padding-top: 50px;
     // overflow: hidden;
-
-    &::-webkit-scrollbar {
-        width: 0;
-    }
 }
 
 .menu {

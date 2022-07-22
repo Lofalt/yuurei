@@ -2,25 +2,25 @@
     <div class="rightbar" @click.self="pushCard">
         <div class="showpage" @wheel.stop="">
             <div class="showtag tag1" @click="pullCard(0)">
-                鲤鱼姐
+                休職
             </div>
             <router-view v-show="showPic"></router-view>
         </div>
         <div class="showpage" @wheel.stop="">
             <div class="showtag tag2" @click="pullCard(1)">
-                没有你
+                休職
             </div>
             <router-view name="BlogPage" v-show="showBlog"></router-view>
         </div>
         <div class="showpage" @wheel.stop="">
             <div class="showtag tag3" @click="pullCard(2)">
-                我怎么
+                休職
             </div>
             <router-view name="LovePage" v-show="showLove"></router-view>
         </div>
         <div class="showpage" @wheel.stop="">
             <div class="showtag tag4" @click="pullCard(3)">
-                活啊
+                人间
             </div>
             <!-- <router-view name="VlogPage" v-show="showVlog"></router-view> -->
             <!-- <div class="father"> -->
@@ -136,7 +136,7 @@ function pushCard() {
         background-color: #fff;
         // backdrop-filter: blur(3px);
         transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-        // border: 5px solid rgba(0, 0, 0, 1);
+        // border: 1px solid rgba(0, 0, 0, 0.3);
         border-radius: 5px;
         right: -55vw;
         background-size: cover;
@@ -178,8 +178,6 @@ function pushCard() {
         }
 
         .showtag {
-            // border: 2px solid rgba(0, 0, 0, 1);
-            // box-sizing: content-box;
             z-index: 10;
             position: absolute;
             width: 35px;
@@ -198,7 +196,7 @@ function pushCard() {
         }
 
         .tag1 {
-            background-color: #9dd498;
+            background-color: #ff5454;
         }
 
         .tag2 {
@@ -212,7 +210,7 @@ function pushCard() {
         }
 
         .tag4 {
-            background-color: #78d2d8;
+            background-color: #16cedb;
             top: 60vh;
         }
     }

@@ -2,25 +2,25 @@
     <div class="rightbar" @click.self="pushCard">
         <div class="showpage" @wheel.stop="">
             <div class="showtag tag1" @click="pullCard(0)">
-                鲤鱼姐
+                休職
             </div>
             <router-view v-show="showPic"></router-view>
         </div>
         <div class="showpage" @wheel.stop="">
             <div class="showtag tag2" @click="pullCard(1)">
-                没有你
+                休職
             </div>
             <router-view name="BlogPage" v-show="showBlog"></router-view>
         </div>
         <div class="showpage" @wheel.stop="">
             <div class="showtag tag3" @click="pullCard(2)">
-                我怎么
+                休職
             </div>
             <router-view name="LovePage" v-show="showLove"></router-view>
         </div>
         <div class="showpage" @wheel.stop="">
             <div class="showtag tag4" @click="pullCard(3)">
-                活啊
+                人间
             </div>
             <!-- <router-view name="VlogPage" v-show="showVlog"></router-view> -->
             <!-- <div class="father"> -->
@@ -178,8 +178,8 @@ function pushCard() {
         }
 
         .showtag {
-            // border: 2px solid rgba(0, 0, 0, 1);
-            // box-sizing: content-box;
+            border: 5px solid rgba(0, 0, 0, 1);
+            box-sizing: content-box;
             z-index: 10;
             position: absolute;
             width: 35px;
