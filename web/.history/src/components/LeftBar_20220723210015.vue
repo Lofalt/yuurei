@@ -179,7 +179,7 @@ a {
 
     .icon1 {
         display: flex;
-        justify-content: space-around;
+        justify-content: space-between;
         align-items: center;
         width: 6vw;
         margin: 20px auto;

@@ -247,7 +247,7 @@ watch(colRaw, () => {
     // margin: 8px;
     /* margin:15px; */
     // float: left;
-    transition: opacity 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
     // transition: all 1s;
     // animation: enter 1s;
     // animation-timing-function: ease-in-out;
@@ -270,7 +270,7 @@ watch(colRaw, () => {
     height: 100%;
     // width: 80%;
     // margin: 0 auto;
-    width: 70%;
+    width: 80%;
     // float: left;
     // height: 100%;
     overflow: auto;

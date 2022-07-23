@@ -49,7 +49,7 @@ export default {
     position: absolute;
     left: 50%;
     width: 1px;
-    height: 5px;
+    height: 7px;
     border-radius: 5px;
     transform: rotate(calc(18deg*var(--i)));
     background-color: #414141;

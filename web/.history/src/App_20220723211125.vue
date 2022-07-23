@@ -3,9 +3,7 @@
     <transition>
       <home v-show="showHome"></home>
     </transition>
-    <transition>
-      <button class="fixedButton" @click="changePage(0)" @touchstart="touchChange" v-show="pageCount != 0">回到顶端</button>
-    </transition>
+    <button class="fixedButton" @click="changePage(0)" @touchstart="touchChange" v-show="pageCount != 0">回到顶端</button>
     <!-- <button @click="change">dmwo </button> -->
     <!-- <button @click="change2">dmwo </button> -->
     <left-bar @change-page="changePage"></left-bar>
@@ -125,41 +123,13 @@ provide('pageCount', pageCount)
   position: fixed;
   top: 10vh;
   left: 18vw;
-  // outline: none;
-  // padding: 10px;
-  // border: none;
-  // background-color: rgba(255, 255, 255, 0.384);
-  // border-radius: 10px;
-  // cursor: pointer;
-  // color: rgba(37, 37, 37, 0.733);
+  outline: none;
+  padding: 10px;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.384);
+  border-radius: 10px;
   cursor: pointer;
-  // width: 5vw;
-  padding: 5px 20px;
-  background-color: #ffffff;
-  // height: 4vh;
-  border-radius: 2px;
-  outline-style: none;
-  border: 3px solid rgb(51, 51, 51);
-  box-shadow: -1px 1px 0 0px rgb(51, 51, 51);
-
-  @media (max-width:800px) {
-    height: 10vh;
-    left: 2vw;
-    // padding: 10px;
-    padding: 0;
-    width: 8vw;
-    top: 0;
-    writing-mode: vertical-lr;
-    background-color: rgb(49, 49, 49);
-    color: white;
-  }
-
-  &:hover {
-    background-color: rgb(255, 83, 83) !important;
-    color: white !important;
-
-  }
-
+  color: rgba(37, 37, 37, 0.733);
 }
 
 #rightbar {
@@ -195,14 +165,14 @@ provide('pageCount', pageCount)
 .bottomPage,
 .infoPage {
   // background-image: url("./assets/wallhaven-p262de.jpg");
-  border: 5px solid rgb(49, 49, 49);
+  border: 5px solid;
   width: 80%;
   min-height: 80%;
   position: relative;
   background-size: cover;
   margin: 10vh auto;
-  border-radius: 5px;
-  background-color: rgb(255, 255, 255);
+  border-radius: 20px;
+  background-color: rgb(255, 249, 249);
   // padding: 100px;
   display: flex;
   justify-content: center;
@@ -259,11 +229,11 @@ button {
 
 .v-leave-to,
 .v-enter-from {
-  transform: translateY(-100vh);
+  opacity: 0;
 }
 
 .v-leave-active,
 .v-enter-active {
-  transition: all .8s ease-in-out;
+  transition: all 1s ease-in-out;
 }
 </style>

@@ -133,33 +133,27 @@ provide('pageCount', pageCount)
   // cursor: pointer;
   // color: rgba(37, 37, 37, 0.733);
   cursor: pointer;
-  // width: 5vw;
-  padding: 5px 20px;
+  width: 5vw;
   background-color: #ffffff;
-  // height: 4vh;
+  height: 5vh;
   border-radius: 2px;
   outline-style: none;
   border: 3px solid rgb(51, 51, 51);
   box-shadow: -1px 1px 0 0px rgb(51, 51, 51);
 
-  @media (max-width:800px) {
-    height: 10vh;
-    left: 2vw;
-    // padding: 10px;
-    padding: 0;
-    width: 8vw;
-    top: 0;
-    writing-mode: vertical-lr;
-    background-color: rgb(49, 49, 49);
-    color: white;
-  }
-
   &:hover {
     background-color: rgb(255, 83, 83) !important;
     color: white !important;
-
   }
 
+  @media (max-width:800px) {
+    writing-mode: vertical-rl;
+    ;
+    height: 10vh;
+    left: 0;
+    padding: 10px;
+    width: auto;
+  }
 }
 
 #rightbar {

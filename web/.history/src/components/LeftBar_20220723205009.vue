@@ -111,7 +111,7 @@ a {
 
 
 .leftbar {
-    border-right: 4px solid rgb(49, 49, 49);
+    border-right: 4px solid rgb(73, 73, 73);
 
     color: white;
     position: fixed;
@@ -179,7 +179,7 @@ a {
 
     .icon1 {
         display: flex;
-        justify-content: space-around;
+        justify-content: space-between;
         align-items: center;
         width: 6vw;
         margin: 20px auto;

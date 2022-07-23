@@ -144,11 +144,9 @@ provide('pageCount', pageCount)
 
   @media (max-width:800px) {
     height: 10vh;
-    left: 2vw;
+    left: 0;
     // padding: 10px;
-    padding: 0;
     width: 8vw;
-    top: 0;
     writing-mode: vertical-lr;
     background-color: rgb(49, 49, 49);
     color: white;
@@ -157,7 +155,6 @@ provide('pageCount', pageCount)
   &:hover {
     background-color: rgb(255, 83, 83) !important;
     color: white !important;
-
   }
 
 }

@@ -112,14 +112,12 @@ function pullCard(num: number): void {
 function pushCard() {
     hover.value = false
     const cards = document.getElementsByClassName("showpage") as HTMLCollection
-    const tags = document.getElementsByClassName("showtag") as HTMLSelectElement
+
     for (let i = 0; i < cards.length; i++) {
-        let tag = tags[i] as HTMLElement
         let card = cards[i] as HTMLElement
         card.style.transitionDelay = "0"
         card.style.right = "0"
         card.className = "showpage activeCard"
-        tag.classList.remove("activeTag")
     }
 
     setTimeout(() => {
@@ -142,8 +140,8 @@ function pushCard() {
 }
 
 .activeTag {
-    background-color: rgb(49, 49, 49) !important;
-    color: rgb(255, 255, 255) !important;
+    background-color: rgb(255, 83, 83) !important;
+    color: white !important;
 }
 
 .rightbar {
@@ -157,10 +155,10 @@ function pushCard() {
     // width: 83.5vw;
     // overflow: hidden;
     .activeCard {
-        right: -69vw !important;
+        right: -70vw !important;
 
         @media (max-width:800px) {
-            right: -89vw !important;
+            right: -90vw !important;
         }
     }
 
@@ -238,25 +236,25 @@ function pushCard() {
             left: -35px;
             top: 5vh;
             cursor: pointer;
-            box-shadow: -3px 0px 0px 2px rgb(49, 49, 49);
+            box-shadow: -3px 0px 0px 2px rgb(54, 54, 54);
             border-radius: 3px;
             writing-mode: vertical-lr;
             text-align: 1px 1 px;
-            color: rgb(255, 255, 255);
+            color: rgb(87, 87, 87);
             font-size: 1.3em;
             padding: 8px 5px;
-            border-top: 3px solid rgb(49, 49, 49);
-            border-bottom: 3px solid rgb(49, 49, 49);
+            border-top: 3px solid rgb(73, 73, 73);
+            border-bottom: 3px solid rgb(73, 73, 73);
 
 
             &:hover {
-                background-color: rgb(49, 49, 49);
-                color: rgb(255, 255, 255);
+                background-color: rgb(255, 83, 83);
+                color: white;
             }
         }
 
         .tag1 {
-            background-color: #9dd498;
+            // background-color: #9dd498;
 
             &:nth-child(2) {
                 // box-sizing: content-box;
@@ -275,19 +273,19 @@ function pushCard() {
         }
 
         .tag2 {
-            background-color: rgb(255, 83, 83);
+            // background-color: rgb(255, 83, 83);
             // background: linear-gradient(to right, rgb(255, 83, 83), #ffffff);
             top: 23vh;
             // color: white;
         }
 
         .tag3 {
-            background-color: #f18888;
+            // background-color: #f18888;
             top: 41vh
         }
 
         .tag4 {
-            background-color: #78d2d8;
+            // background-color: #78d2d8;
             top: 59vh;
         }
     }

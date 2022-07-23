@@ -247,14 +247,14 @@ watch(colRaw, () => {
     // margin: 8px;
     /* margin:15px; */
     // float: left;
-    transition: opacity 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
     // transition: all 1s;
     // animation: enter 1s;
     // animation-timing-function: ease-in-out;
     // animation-fill-mode: backwards;
     // box-shadow: 0 0 1px 1px rgba(43, 43, 43, 0.738);
     opacity: 0;
-    // transform: translateY(1000px);
+    transform: translateY(1000px);
 
     &:hover {
         transform: translate(-5px, -5px) !important;
@@ -270,7 +270,7 @@ watch(colRaw, () => {
     height: 100%;
     // width: 80%;
     // margin: 0 auto;
-    width: 70%;
+    width: 80%;
     // float: left;
     // height: 100%;
     overflow: auto;

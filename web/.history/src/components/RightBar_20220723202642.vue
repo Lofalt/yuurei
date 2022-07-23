@@ -157,10 +157,10 @@ function pushCard() {
     // width: 83.5vw;
     // overflow: hidden;
     .activeCard {
-        right: -69vw !important;
+        right: -70vw !important;
 
         @media (max-width:800px) {
-            right: -89vw !important;
+            right: -90vw !important;
         }
     }
 

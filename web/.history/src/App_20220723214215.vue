@@ -146,7 +146,6 @@ provide('pageCount', pageCount)
     height: 10vh;
     left: 2vw;
     // padding: 10px;
-    padding: 0;
     width: 8vw;
     top: 0;
     writing-mode: vertical-lr;
@@ -157,7 +156,6 @@ provide('pageCount', pageCount)
   &:hover {
     background-color: rgb(255, 83, 83) !important;
     color: white !important;
-
   }
 
 }

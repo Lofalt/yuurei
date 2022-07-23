@@ -157,10 +157,10 @@ function pushCard() {
     // width: 83.5vw;
     // overflow: hidden;
     .activeCard {
-        right: -69vw !important;
+        right: -70vw !important;
 
         @media (max-width:800px) {
-            right: -89vw !important;
+            right: -90vw !important;
         }
     }
 
@@ -245,13 +245,13 @@ function pushCard() {
             color: rgb(255, 255, 255);
             font-size: 1.3em;
             padding: 8px 5px;
-            border-top: 3px solid rgb(49, 49, 49);
-            border-bottom: 3px solid rgb(49, 49, 49);
+            border-top: 3px solid rgb(73, 73, 73);
+            border-bottom: 3px solid rgb(73, 73, 73);
 
 
             &:hover {
-                background-color: rgb(49, 49, 49);
-                color: rgb(255, 255, 255);
+                background-color: rgb(255, 255, 255);
+                color: rgb(0, 0, 0);
             }
         }
 

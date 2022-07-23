@@ -115,7 +115,7 @@ function waterFall() {
             if (i < col) {
                 heightArr.push(boxHeight + 50)
                 childs[i].style.position = 'absolute'
-                childs[i].style.left = i * boxWidth + 'px'
+                childs[i].style.left = i * boxWidth + screenWidth.value / 10 + 'px'
                 childs[i].style.top = 5 + '0px'
                 childs[i].style.opacity = '1'
                 childs[i].style.transform = "translateY(0)"
@@ -123,7 +123,7 @@ function waterFall() {
                 minBoxHeight = heightArr[minBox(heightArr)]
                 minIndex = minBox(heightArr)
                 childs[i].style.position = 'absolute'
-                childs[i].style.left = minIndex * boxWidth + 'px'
+                childs[i].style.left = minIndex * boxWidth + screenWidth.value / 10 + 'px'
                 childs[i].style.top = minBoxHeight + 'px'
                 childs[i].style.opacity = '1'
                 childs[i].style.transform = "translateY(0)"
@@ -165,22 +165,22 @@ onMounted(() => {
     })
 })
 watch(screenWidth, () => {
-    if (screenWidth.value >= 1000) {
-        colRaw.value = 2
-    }
-    // if (screenWidth.value < 1000 && screenWidth.value >= 700) {
+    // if (screenWidth.value >= 1000) {
+    //     colRaw.value = 2
+    // }
+    // else if (screenWidth.value < 1000 && screenWidth.value >= 700) {
     //     colRaw.value = 2
 
     // }
-    if (screenWidth.value < 800) {
-        colRaw.value = 2
-    }
     waterFall()
+    // else if (screenWidth.value < 700) {
+    // colRaw.value = 2
+    // }
 })
 watch(colRaw, () => {
-    // let childs = document.getElementsByClassName("test") as HTMLSelectElement
+    let childs = document.getElementsByClassName("test") as HTMLSelectElement
     // for (let i = 0; i < childs.length; i++) {
-    //     childs[i].style.width = 100 / colRaw.value + "%"
+    //     childs[i].style.width = 60 / colRaw.value + "%"
     // }
 })
 </script>
@@ -247,17 +247,17 @@ watch(colRaw, () => {
     // margin: 8px;
     /* margin:15px; */
     // float: left;
-    transition: opacity 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
     // transition: all 1s;
     // animation: enter 1s;
     // animation-timing-function: ease-in-out;
     // animation-fill-mode: backwards;
     // box-shadow: 0 0 1px 1px rgba(43, 43, 43, 0.738);
     opacity: 0;
-    // transform: translateY(1000px);
+    transform: translateY(1000px);
 
     &:hover {
-        transform: translate(-5px, -5px) !important;
+        transform: translate(-10px, -10px) !important;
         box-shadow: -2px 2px 5px 1px rgba(0, 0, 0, 0.1);
         transition: all .2s ease;
 
@@ -270,13 +270,13 @@ watch(colRaw, () => {
     height: 100%;
     // width: 80%;
     // margin: 0 auto;
-    width: 70%;
+    width: 85%;
     // float: left;
     // height: 100%;
     overflow: auto;
     position: relative;
     // bottom: 0;
-    margin: 0 auto;
+    // margin: 0 auto;
     padding-top: 10vh;
 
     &::-webkit-scrollbar {

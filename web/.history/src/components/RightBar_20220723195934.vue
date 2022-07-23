@@ -44,7 +44,7 @@ export default {
 </script>
 <script lang="ts" setup>
 import WaterPage from "../views/WaterPage.vue"
-import { computed, onDeactivated, onUnmounted, provide, ref } from 'vue';
+import { onDeactivated, onUnmounted, provide, ref } from 'vue';
 import { useRouter } from 'vue-router'
 import AnliPage from '@/views/AnliPage.vue';
 import PicPage from "@/views/PicPage.vue";
@@ -61,37 +61,27 @@ const hover = ref(false)
 provide('hover', hover)
 provide('showVlog', showVlog)
 
-
 function pullCard(num: number): void {
     // if (router.currentRoute.value.fullPath == "/home") {
     //     router.push("/home/pages")
     // }
-    const tags = document.getElementsByClassName("showtag") as HTMLSelectElement
     const cards = document.getElementsByClassName("showpage") as HTMLCollection
     for (let i = num; i >= 0; i--) {
         let card = cards[i] as HTMLElement
         card.style.transitionDelay = (i - 4) * -0.02 + "s"
         // card.style.right = "0"
         card.className = "showpage"
-        let tag = tags[i] as HTMLElement
-        tag.classList.remove("activeTag")
     }
     for (let i = num; i < cards.length; i++) {
         let card = cards[i] as HTMLElement
-        let tag = tags[i] as HTMLElement
-
         card.style.transitionDelay = (i - 4) * -0.02 + "s"
         // card.style.right = "-65vw"
         // card.style.right = "0"
         card.className = "showpage activeCard"
-        tag.classList.remove("activeTag")
-
     }
 
     let element = cards[num] as HTMLElement
-    let tag = tags[num] as HTMLElement
     element.className = "showpage"
-    tag.classList.add("activeTag")
 
     switch (num) {
         case 0:
@@ -112,14 +102,12 @@ function pullCard(num: number): void {
 function pushCard() {
     hover.value = false
     const cards = document.getElementsByClassName("showpage") as HTMLCollection
-    const tags = document.getElementsByClassName("showtag") as HTMLSelectElement
+
     for (let i = 0; i < cards.length; i++) {
-        let tag = tags[i] as HTMLElement
         let card = cards[i] as HTMLElement
         card.style.transitionDelay = "0"
         card.style.right = "0"
         card.className = "showpage activeCard"
-        tag.classList.remove("activeTag")
     }
 
     setTimeout(() => {
@@ -142,8 +130,8 @@ function pushCard() {
 }
 
 .activeTag {
-    background-color: rgb(49, 49, 49) !important;
-    color: rgb(255, 255, 255) !important;
+    background-color: rgb(255, 83, 83);
+    color: white;
 }
 
 .rightbar {
@@ -157,10 +145,10 @@ function pushCard() {
     // width: 83.5vw;
     // overflow: hidden;
     .activeCard {
-        right: -69vw !important;
+        right: -70vw !important;
 
         @media (max-width:800px) {
-            right: -89vw !important;
+            right: -90vw !important;
         }
     }
 
@@ -238,25 +226,25 @@ function pushCard() {
             left: -35px;
             top: 5vh;
             cursor: pointer;
-            box-shadow: -3px 0px 0px 2px rgb(49, 49, 49);
+            box-shadow: -3px 0px 0px 2px rgb(54, 54, 54);
             border-radius: 3px;
             writing-mode: vertical-lr;
             text-align: 1px 1 px;
-            color: rgb(255, 255, 255);
+            color: rgb(87, 87, 87);
             font-size: 1.3em;
             padding: 8px 5px;
-            border-top: 3px solid rgb(49, 49, 49);
-            border-bottom: 3px solid rgb(49, 49, 49);
+            border-top: 3px solid rgb(73, 73, 73);
+            border-bottom: 3px solid rgb(73, 73, 73);
 
 
             &:hover {
-                background-color: rgb(49, 49, 49);
-                color: rgb(255, 255, 255);
+                background-color: rgb(255, 83, 83);
+                color: white;
             }
         }
 
         .tag1 {
-            background-color: #9dd498;
+            // background-color: #9dd498;
 
             &:nth-child(2) {
                 // box-sizing: content-box;
@@ -278,16 +266,16 @@ function pushCard() {
             background-color: rgb(255, 83, 83);
             // background: linear-gradient(to right, rgb(255, 83, 83), #ffffff);
             top: 23vh;
-            // color: white;
+            color: white;
         }
 
         .tag3 {
-            background-color: #f18888;
+            // background-color: #f18888;
             top: 41vh
         }
 
         .tag4 {
-            background-color: #78d2d8;
+            // background-color: #78d2d8;
             top: 59vh;
         }
     }
