@@ -154,8 +154,8 @@ a {
         // justify-content: center;
         // align-items: center;
         color: black;
-        background-image: url("../assets/-421408862.jpg");
-        // background-image: url("../assets/QQ图片20220723102142.jpg");
+        // background-image: url("../assets/-421408862.jpg");
+        background-image: url("../assets/QQ图片20220723102142.jpg");
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -210,12 +210,11 @@ a {
             border: 3px solid rgb(51, 51, 51);
             box-shadow: -1px 1px 0 0px rgb(51, 51, 51);
 
-            &:hover {
-                background-color: rgb(255, 83, 83) !important;
-                color: white !important;
-            }
+            &:hoverbackground-color: rgb(255, 83, 83) !important;
+            color: white !important;
         }
     }
+}
 
 }
 

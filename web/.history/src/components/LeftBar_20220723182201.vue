@@ -154,8 +154,8 @@ a {
         // justify-content: center;
         // align-items: center;
         color: black;
-        background-image: url("../assets/-421408862.jpg");
-        // background-image: url("../assets/QQ图片20220723102142.jpg");
+        // background-image: url("../assets/-421408862.jpg");
+        background-image: url("../assets/QQ图片20220723102142.jpg");
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;

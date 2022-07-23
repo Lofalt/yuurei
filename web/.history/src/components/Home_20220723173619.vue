@@ -89,7 +89,6 @@ export default {
     font-size: 30px;
     white-space: nowrap;
     border: 5px rgb(56, 56, 56) solid;
-    border-radius: 5px;
 
     @media screen and (max-width: 800px) {
         width: 80%;

@@ -230,12 +230,6 @@ function pushCard() {
             padding: 8px 5px;
             border-top: 3px solid rgb(73, 73, 73);
             border-bottom: 3px solid rgb(73, 73, 73);
-
-
-            &:hover {
-                background-color: rgb(255, 83, 83);
-                color: white;
-            }
         }
 
         .tag1 {
@@ -258,8 +252,7 @@ function pushCard() {
         }
 
         .tag2 {
-            background-color: rgb(255, 83, 83);
-            // background: linear-gradient(to right, rgb(255, 83, 83), #ffffff);
+            background-color: #ff6464;
             top: 23vh;
             color: white;
         }

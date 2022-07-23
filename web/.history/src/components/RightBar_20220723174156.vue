@@ -2,7 +2,7 @@
     <div class="rightbar" @click.self="pushCard">
         <div class="showpage activeCard" @wheel.stop="">
             <div class="showtag tag1" @click="pullCard(0)">
-                人間話
+                鲤鱼姐
             </div>
             <!-- <div class="showtag tag1" @click="pullCard(0)"> -->
             <!-- 鲤鱼姐 -->
@@ -12,21 +12,21 @@
         </div>
         <div class="showpage activeCard" @wheel.stop="">
             <div class="showtag tag2" @click="pullCard(1)">
-                碎碎念
+                没有你
             </div>
             <blog-page></blog-page>
             <!-- <router-view name="BlogPage" v-show="showBlog"></router-view> -->
         </div>
         <div class="showpage activeCard" @wheel.stop="">
             <div class="showtag tag3" @click="pullCard(2)">
-                好物
+                我怎么
             </div>
             <!-- <router-view name="LovePage" v-show="showLove"></router-view> -->
             <love-page></love-page>
         </div>
         <div class="showpage activeCard" @wheel.stop="">
             <div class="showtag tag4" @click="pullCard(3)">
-                人间
+                活啊
             </div>
             <!-- <router-view name="VlogPage" v-show="showVlog"></router-view> -->
             <!-- <div class="father"> -->
@@ -140,10 +140,10 @@ function pushCard() {
     // width: 83.5vw;
     // overflow: hidden;
     .activeCard {
-        right: -70vw !important;
+        right: -65vw !important;
 
         @media (max-width:800px) {
-            right: -90vw !important;
+            right: -85vw !important;
         }
     }
 
@@ -159,9 +159,9 @@ function pushCard() {
         background-color: #fff;
         // backdrop-filter: blur(3px);
         transition: all .5s ease-in-out; // transition: all 1.5s cubic-bezier(0.19, 1, 0.22, 1);
-        border: 4px solid rgb(49, 49, 49);
+        border: 4px solid rgb(73, 73, 73);
         border-right: none;
-        border-radius: 5px;
+        border-radius: 15px;
         // right: -65vw;
         background-size: cover;
 
@@ -221,21 +221,14 @@ function pushCard() {
             left: -35px;
             top: 5vh;
             cursor: pointer;
-            box-shadow: -3px 0px 0px 2px rgb(54, 54, 54);
+            box-shadow: -3px 0px 0px 3px rgb(73, 73, 73);
             border-radius: 3px;
             writing-mode: vertical-lr;
             text-align: 1px 1 px;
             color: rgb(87, 87, 87);
             font-size: 1.3em;
             padding: 8px 5px;
-            border-top: 3px solid rgb(73, 73, 73);
-            border-bottom: 3px solid rgb(73, 73, 73);
-
-
-            &:hover {
-                background-color: rgb(255, 83, 83);
-                color: white;
-            }
+            // border-left: 3px solid rgb(73, 73, 73);
         }
 
         .tag1 {
@@ -243,7 +236,7 @@ function pushCard() {
 
             &:nth-child(2) {
                 // box-sizing: content-box;
-                border: 4px solid rgb(47, 47, 47);
+                border: 4px solid rgba(73, 73, 73);
                 left: -10px;
                 top: 20px;
                 width: 0.1px;
@@ -258,8 +251,7 @@ function pushCard() {
         }
 
         .tag2 {
-            background-color: rgb(255, 83, 83);
-            // background: linear-gradient(to right, rgb(255, 83, 83), #ffffff);
+            background-color: #ff6464;
             top: 23vh;
             color: white;
         }

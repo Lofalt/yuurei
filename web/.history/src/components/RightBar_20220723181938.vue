@@ -258,8 +258,7 @@ function pushCard() {
         }
 
         .tag2 {
-            background-color: rgb(255, 83, 83);
-            // background: linear-gradient(to right, rgb(255, 83, 83), #ffffff);
+            background-color: #ff6464;
             top: 23vh;
             color: white;
         }
