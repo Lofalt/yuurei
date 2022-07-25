@@ -17,6 +17,7 @@
       </div>
       <div class="info" @wheel.self="wheeling">
         <div class="infoPage">
+
           <router-view></router-view>
         </div>
       </div>
@@ -43,13 +44,11 @@ const isShow = ref(true)
 const pageCount = ref(0)
 const pageData = usePageData()
 watch(pageData, (newValue, oldValue) => {
-  console.log(newValue.pagedata.data)
   pageCount.value = 1
 })
 let isWheeling = false
 
 function touchChange(event: any) {
-  console.log(event)
 }
 
 const showHome = computed(() => {
@@ -57,15 +56,9 @@ const showHome = computed(() => {
 })
 
 function wheeling(event: any) {
-  // console.log(event.wheelDelta)
   if (!isWheeling) {
     if (event.wheelDelta == 150 || event.wheelDelta == 120 || event.wheelDelta > 0) {
-      // console.log(event.wheelDelta)
-      // isWheeling = true
       pageCount.value--
-      // setTimeout(() => {
-      //   isWheeling = false
-      // }, 2000);
       if (pageCount.value < 0) {
         pageCount.value = 0
       }
@@ -87,7 +80,6 @@ function wheeling(event: any) {
 watch(pageCount, (newValue, oldValue) => {
   const rightPage = document.getElementById("rightbar") as HTMLSelectElement
   rightPage.style.transform = `translateY(-${newValue}00vh)`
-  // console.log(newValue)
 })
 function changePage(num: number) {
   // const rightPage = document.getElementById("rightbar") as HTMLSelectElement
@@ -201,6 +193,7 @@ iframe {
 
 .bottomPage,
 .infoPage {
+  overflow: auto;
   // background-image: url("./assets/wallhaven-p262de.jpg");
   border: 5px solid rgb(49, 49, 49);
   width: 80%;
@@ -214,6 +207,13 @@ iframe {
   display: flex;
   justify-content: center;
   align-items: center;
+  &::-webkit-scrollbar-thumb {
+    width: 30px;
+    background-color: rgba(73, 73, 73, .5);
+    color: black;
+    border-radius: 20px;
+  }
+
 }
 
 .infoPage {

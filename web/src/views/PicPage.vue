@@ -1,45 +1,30 @@
 <template>
     <div class="container">
-        <!-- <div class="panel" @click="changePage(2)">
-            panel
-        </div>
-        <div class="panel">
-            panel
-
-        </div>
-        <div class="panel">
-            panel
-
-        </div>
-        <div class="panel">
-            panel
-
-        </div>
-        <div class="panel">
-            panel
-
-        </div>
-        <div class="panel">
-            panel
-
-        </div> -->
-        <panel-com @click="changePage(2)"></panel-com>
-        <panel-com @click="changePage(2)"></panel-com>
-        <panel-com @click="changePage(2)"></panel-com>
-        <panel-com @click="changePage(2)"></panel-com>
+      <panel-com v-for="item in articleList"
+                 @click="changePage(1)"
+                 :article="item" :key="item.ID"></panel-com>
     </div>
 </template>
 <script lang="ts" setup>
 import { usePageData } from '@/store/pageData';
 import PanelCom from '../components/PanelCom.vue'
 import { useRouter } from 'vue-router';
+import {ref} from "vue";
+import axios from 'axios'
 const pageData = usePageData()
 const router = useRouter()
 
 function changePage(num: number) {
     pageData.pagedata = { data: "fuckyou~" }
-    router.push('/About')
+    // router.push('/About')
 }
+
+const articleList =  ref([])
+axios.defaults.baseURL="/api"
+axios.get("/yuurei/articles").then((result)=>{
+  articleList.value = result.data.data.data
+})
+
 
 
 </script>
@@ -58,6 +43,8 @@ function changePage(num: number) {
         // background-color: aquamarine;
         // color: black;
     }
+
+
 
     &::-webkit-scrollbar-thumb {
         width: 30px;

@@ -29,7 +29,7 @@ const focus = inject('focus', true)
 onMounted(() => {
     setTimeout(() => {
         valueHtml.value = '<p>模拟 Ajax 异步设置内容</p>'
-        console.log(editorRef.value.getAllMenuKeys())
+        // console.log(editorRef.value.getAllMenuKeys())
     }, 1500)
 
 })

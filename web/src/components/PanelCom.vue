@@ -1,63 +1,99 @@
 <template>
-    <div class="panel">
+    <div class="panel" @click="archive(article.ID)">
         <!--        <div class="background" :style="{backgroundImage:background}">-->
         <div class="background">
             <!--            <img src="~assets/img/backgroundimg/background1.png"/>-->
         </div>
         <div class="panelTitle">
-            <!-- <a @click="archive(article.articleId)">{{ article.articleTitle }}</a> -->鲤鱼姐没有你我怎么活啊
+             <a >{{ article.ArticleTitle }}</a>
         </div>
         <div class="panelSummary">
-            <!-- {{ article.articleSummary }} -->这里是简介
+             {{ article.ArticleSummary }}
         </div>
         <div class="panelInfo">
-            <!-- <i class="el-icon-time" /> <span>{{ new Date(article.articleCreateTime).toLocaleDateString() }}</span> -->
-            <!--            <i class="el-icon-view"/> <span>阅读 {{article.articleReadTimes}}</span>-->
-            <!--            <span>❤ 点赞 {{article.articleLoveTimes}}次</span>-->
-            <!-- <i class="el-icon-document" /><span>分类: {{ articleCategories }}</span> -->
+             <span>{{ new Date(article.CreatedAt).toLocaleDateString() }}</span>
+<!--                        <i class="el-icon-view"/> <span>阅读 {{article.articleReadTimes}}</span>-->
+<!--                        <span>❤ 点赞 {{article.articleLoveTimes}}次</span>-->
+<!--             <i class="el-icon-document" /><span>分类: {{ articleCategories }}</span> -->
         </div>
     </div>
 </template>
 
-<script>
+<script lang="ts" setup>
+
 // import scrollToTop from "../../util/scrollToTop";
-export default {
-    name: "Panel",
-    //     props: ['article', 'background', 'backgroundColor'],
-    //     computed: {
-    //         articleCategories() {
-    //             let categories = ''
-    //             for (let category of this.article.articleCategories) {
-    //                 categories += category.categoryName + ' '
-    //             }
-    //             return categories
-    //         },
-    //         articleTags() {
-    //             let tags = ''
-    //             for (let tag of this.article.articleTags) {
-    //                 tags += tag.tagName + '  '
-    //             }
-    //             return tags
-    //         },
-    //         bgc() {
-    //             return this.article.articleCategories[0].categoryColor
-    //         }
-    //     },
-    //     methods: {
-    //         archive(articleId) {
-    //             scrollToTop(200)
-    //             this.$router.push('/archive/' + articleId)
-    //             this.$router.push({
-    //               path:'/archive',
-    //               query:{
-    //                 articleId:articleId
-    //               }
-    //             })
-    //         }
-    //     }
-    // }
+import {computed} from "vue";
+import {useRouter} from "vue-router";
+
+const router = useRouter()
+
+const props = defineProps<{
+  article:{},
+  background:'',
+  backgroundColor:''
+}>()
+// const articleCategories= computed(() => {
+//   let categories = ''
+//   // for(let category of props.article.ArticleCategories
+// // )
+// {
+//   categories += category.categoryName + ' '
+// }
+// return categories
+//   })
+
+function archive(articleId:number) {
+  // scrollToTop(200)
+  router.push('/archive/article/' + articleId)
+  // router.push({
+  //   path:'/archive',
+  //   query:{
+  //     articleId:articleId
+  //   }
+  // })
 }
+//         articleTags() {
+//             let tags = ''
+//             for (let tag of this.article.articleTags) {
+//                 tags += tag.tagName + '  '
+//             }
+//             return tags
+//         },
+//         bgc() {
+//             return this.article.articleCategories[0].categoryColor
+//         }
+//     },
 </script>
+
+<!--<script>-->
+<!--export default {-->
+<!--    name: "Panel",-->
+<!--        props: ['article', 'background', 'backgroundColor'],-->
+<!--    //     computed: {-->
+<!--    //         articleCategories() {-->
+<!--    //             let categories = ''-->
+<!--    //             for (let category of this.article.articleCategories) {-->
+<!--    //                 categories += category.categoryName + ' '-->
+<!--    //             }-->
+<!--    //             return categories-->
+<!--    //         },-->
+<!--    //         articleTags() {-->
+<!--    //             let tags = ''-->
+<!--    //             for (let tag of this.article.articleTags) {-->
+<!--    //                 tags += tag.tagName + '  '-->
+<!--    //             }-->
+<!--    //             return tags-->
+<!--    //         },-->
+<!--    //         bgc() {-->
+<!--    //             return this.article.articleCategories[0].categoryColor-->
+<!--    //         }-->
+<!--    //     },-->
+<!--        methods: {-->
+<!--            -->
+<!--    //     }-->
+<!--    }-->
+<!--}-->
+<!--</script>-->
 
 <style lang="less" scoped>
 .panel {
@@ -93,7 +129,7 @@ export default {
         text-align: center;
         overflow: hidden;
         white-space: nowrap;
-        margin: 20px 30px;
+        margin: 10px 30px;
         padding-bottom: 10px;
         /*border-bottom:1px white solid;*/
         transform: translate3d(0, -10px, 0);
@@ -154,7 +190,7 @@ export default {
     .panelTitle {
         text-align: center;
         position: relative;
-        margin-top: -160px;
+        margin-top: -180px;
         font-size: 25px;
         transition: .3s ease all;
         -webkit-transition: .3s ease all;

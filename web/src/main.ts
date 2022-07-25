@@ -14,5 +14,5 @@ const app = createApp(App)
 
 app.use(router)
     .use(V3waterfall)
-    .use(pinia)
-    .mount("#app");
+    .use(pinia);
+app.mount("#app");

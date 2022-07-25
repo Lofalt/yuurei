@@ -12,7 +12,6 @@ onMounted(() => {
     axios.post("/api/img", qs.stringify({ num: 20 })).then((result) => {
         const newList = ref<unknown[]>([])
         for (let i = 0; i < 20; i++) {
-            console.log("mounted")
             let obj = { src: '', title: "hello", outline: "?", count: 0 }
             obj.src = result.data.data.list[i]
             obj.count = i % 4
@@ -20,9 +19,7 @@ onMounted(() => {
         }
         list.value = newList.value
         // loading.value = false
-        // console.log(result)
         // list.value = list.value.concat(result.data.data.list)
-        // console.log(list.value)
     }
     )
     // isMounted.value = true

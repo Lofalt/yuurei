@@ -6,18 +6,9 @@
             <joke></joke>
             <joke></joke>
             <joke></joke>
-            <joke></joke>
-            <joke></joke>
-            <joke></joke>
-            <joke></joke>
-            <joke></joke>
-            <joke></joke>
-            <joke></joke>
-            <joke></joke>
-            <joke></joke>
-            <joke></joke>
         </div>
         <div class="left">
+
             <n-icon size="30" color="#000000" class="messageIcon" @click="changeModal">
                 <message-circle />
             </n-icon>
@@ -25,17 +16,24 @@
                 <div class="messageDiv" v-show="showModal">
                     <div class="inputUsername"><input type="text" placeholder="输入署名,为空匿名" /></div>
                     <wang-editor-mini ref="wang"></wang-editor-mini>
+                    <!-- <transition name="button"> -->
                     <button class="sendButton">send</button>
+                    <!-- </transition> -->
                 </div>
             </transition>
         </div>
-        <n-modal v-model:show="showTheModal" :display-directive="'show'" :transform-origin="'mouse'">
-            <n-card size="huge" aria-modal="true" style="width: 600px; height:50vh;">
+        <n-modal v-model:show="showTheModal" :display-directive="'if'" :transform-origin="'mouse'">
+            <n-card size="huge" aria-modal="true" style="width: 600px; height:60vh;">
+                <!-- <button @click="post">点我发送</button> -->
                 <div class="messageDiv" style="height:80%">
                     <div class="inputUsernameModal"><input type="text" placeholder="署名,为空匿名" /></div>
                     <wang-editor-mini></wang-editor-mini>
+                    <!-- <transition name="button"> -->
                     <button class="sendButton">send</button>
+                    <!-- </transition> -->
                 </div>
+                <!-- <template #footer> -->
+                <!-- </template> -->
             </n-card>
         </n-modal>
     </div>
@@ -45,15 +43,14 @@
 import { computed, provide, ref } from 'vue';
 import WangEditorMini from "../components/wangeditor/WangEditorMini.vue"
 import { useRouter } from 'vue-router'
-import TinyMce from "../components/tinymce/TinyMce.vue"
+// import TinyMce from "../components/tinymce/TinyMce.vue"
 import '@wangeditor/editor/dist/css/style.css' // 引入 css
 import { NModal, NCard } from 'naive-ui';
 import Joke from "../components/comments/Joke.vue"
-import { onBeforeUnmount, shallowRef, onMounted } from 'vue'
-import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
+// import { onBeforeUnmount, shallowRef, onMounted } from 'vue'
+// import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 import { MessageCircle } from "@vicons/tabler"
 import { NIcon } from "naive-ui"
-import PanelCom from "../components/PanelCom.vue"
 const router = useRouter()
 const showModal = ref(false)
 const container = document.getElementsByClassName("container")[0] as HTMLElement
@@ -61,6 +58,9 @@ const showTheModal = ref(false)
 const focus = computed(() => {
     return showModal.value || showTheModal.value
 })
+
+
+
 
 provide('focus', focus)
 function post() {
@@ -72,7 +72,6 @@ const wang = ref<InstanceType<typeof WangEditorMini>>();
 // const wang = ref(null)
 
 function changeModal() {
-    console.log(wang)
     if (document.body.clientWidth > 1024) {
         showModal.value = !showModal.value
     } else {
@@ -97,12 +96,11 @@ function changeModal() {
 
 .left {
     position: absolute;
-    // z-index: -1;
     width: 100%;
-    // height: 100%;
+     //height: 100%;
     // background-color: rgb(255, 128, 128);
     bottom: 0;
-    // height: 40vh;
+    //height: 40vh;
     // display: flex;
     // align-items: flex-end;
     // justify-content: start;
@@ -206,25 +204,12 @@ function changeModal() {
 }
 
 .container {
-    width: 98%;
+    width: 100%;
     height: 100%;
     /* background-color: #fff; */
     /* margin: 0 auto; */
     overflow: auto;
-    scrollbar-width: 3px;
-
-    &::-webkit-scrollbar {
-        width: 10px;
-        // background-color: aquamarine;
-        // color: black;
-    }
-
-    &::-webkit-scrollbar-thumb {
-        width: 30px;
-        background-color: rgba(73, 73, 73, .5);
-        color: black;
-        border-radius: 20px;
-    }
+    // scrollbar-width: none;
 }
 
 ::-webkit-scrollbar {

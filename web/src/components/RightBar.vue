@@ -2,7 +2,7 @@
     <div class="rightbar" @click.self="pushCard">
         <div class="showpage activeCard" @wheel.stop="">
             <div class="showtag tag1" @click="pullCard(0)">
-                人間話
+                废话
             </div>
             <!-- <div class="showtag tag1" @click="pullCard(0)"> -->
             <!-- 鲤鱼姐 -->

@@ -11,7 +11,6 @@ let num = 10
 axios.defaults.baseURL = "/api"
 const isMounted = ref(false)
 function getNext() {
-    console.log("next")
     loading.value = true
     if (num > 50) {
         loading.value = false
@@ -25,7 +24,6 @@ function getNext() {
         }
         const newList = ref<unknown[]>([])
         for (let i = num - 20; i < num; i++) {
-            console.log("mounted")
             let obj = { cover: '', title: "hello", outline: "?", count: 0 }
             obj.cover = result.data.data.list[i]
             obj.count = i % 4
@@ -33,7 +31,6 @@ function getNext() {
         }
         list.value = [...list.value, ...newList.value]
         loading.value = false
-        console.log(list.value)
     })
 }
 onMounted(() => {
@@ -41,7 +38,6 @@ onMounted(() => {
     axios.post("/api/img", qs.stringify({ num: 20 })).then((result) => {
         const newList = ref<unknown[]>([])
         for (let i = 0; i < 20; i++) {
-            console.log("mounted")
             let obj = { cover: '', title: "hello", outline: "?", count: 0 }
             obj.cover = result.data.data.list[i]
             obj.count = i % 4
@@ -49,9 +45,6 @@ onMounted(() => {
         }
         list.value = newList.value
         loading.value = false
-        // console.log(result)
-        // list.value = list.value.concat(result.data.data.list)
-        // console.log(list.value)
     }
     )
     isMounted.value = true
@@ -100,7 +93,6 @@ onMounted(() => {
     /* 父元素一定要指定高度 */
     // overflow-y: scroll;
     /* 一定要制定父元素超出滚动 */
-    padding-top: 50px;
     // overflow: hidden;
 
     &::-webkit-scrollbar {

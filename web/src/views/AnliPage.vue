@@ -1,5 +1,5 @@
 <template>
-    <div id="main" @wheel="listenScroll">
+    <div id="main" @wheel="listenScroll" >
         <!-- <button class="scrollToTop" @click="scrollToTop">dmwo</button> -->
         <img class=" test" v-for="(item, index) in picList" :src="item" :key="item" ref="waterFallItem"
             @click="zoom(index)" :style="{ animationDelay: (index % 2) * 0.1 + 's' }" />
@@ -85,7 +85,7 @@ function getNext(num: number) {
     axios.defaults.baseURL = "/api"
     isLoading.value = true
 
-    axios.post("/api/img", qs.stringify({ num: num + 5 })).then((result) => {
+    axios.post("/yuurei/img", qs.stringify({ num: num + 5 })).then((result) => {
         for (let i = num; i < result.data.data.list.length; i++) {
             picList.value.push(result.data.data.list[i])
         }
@@ -95,7 +95,7 @@ function getNext(num: number) {
 }
 function getPic(num: number) {
     axios.defaults.baseURL = "/api"
-    axios.post("/api/img", qs.stringify({ num: num })).then((result) => {
+    axios.post("/yuurei/img", qs.stringify({ num: num })).then((result) => {
         picList.value = result.data.data.list
         setTimeout(() => {
             waterFall()
