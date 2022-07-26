@@ -61,7 +61,7 @@ onMounted(()=>{
     method:"post",
     url:"/yuurei/article",
     data:qs.stringify({
-      articleId:props.id,
+      ID:props.id,
     })
   }).then((result)=>{
 article.value = result.data.data.data
@@ -73,7 +73,7 @@ watch(router.currentRoute,(newValue,oldValue)=>{
     method:"post",
     url:"/yuurei/article",
     data:qs.stringify({
-      articleId:newValue.params.id,
+      ID:newValue.params.id,
     })
   }).then((result)=>{
     article.value = result.data.data.data

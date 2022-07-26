@@ -1,29 +1,27 @@
 package model
 
-import "time"
 import "gorm.io/gorm"
 
 type Article struct {
-	ID               uint           `gorm:"column:article_id"`
-	CreatedAt        time.Time      `gorm:"column:article_create_time"`
-	UpdatedAt        time.Time      `gorm:"column:article_last_mod_time"`
-	DeletedAt        gorm.DeletedAt `gorm:"index"`
-	ArticleTitle     string
-	ArticleContent   string
-	ArticleReadTimes int
-	ArticleLoveTimes int
-	IsActive         bool
-	ArticleSummary   string
+	gorm.Model
+	ArticleTitle         string `gorm:"NOT NULL"`
+	ArticleContent       string `gorm:"NOT NULL"`
+	ArticleReadTimes     int
+	ArticleLoveTimes     int
+	IsActive             bool            `gorm:"DEFAULT:1"`
+	ArticleSummary       string          `gorm:"NOT NULL"`
+	ArticleCategoryRefer int             `gorm:"NOT NULL"`
+	ArticleCategory      ArticleCategory `gorm:"foreignKey:ArticleCategoryRefer"`
+	Tags                 []*Tag          `gorm:"many2many:tag_article_tables"`
 }
-type Article2 struct {
-	ID               uint `gorm:"primary_key"`
-	CreatedAt        time.Time
-	UpdatedAt        time.Time
-	DeletedAt        gorm.DeletedAt `gorm:"index"`
-	ArticleTitle     string
-	ArticleContent   string
-	ArticleReadTimes int
-	ArticleLoveTimes int
-	IsActive         bool
-	ArticleSummary   string
+type ArticleCategory struct {
+	gorm.Model
+	ArticleCategoryName string
+}
+
+type Tag struct {
+	gorm.Model
+	TagName  string
+	TagColor string
+	Articles []*Article `gorm:"many2many:tag_article_tables"`
 }

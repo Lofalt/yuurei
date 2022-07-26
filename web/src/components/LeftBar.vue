@@ -44,6 +44,7 @@
       <button class="footerbox" @click="changePage(0)" :class="isThisPage(0) ? 'active' : ``">HOME</button>
       <button class="footerbox" @click="changePage(1)" :class="isThisPage(1) ? 'active' : ``">INFO</button>
       <button class="footerbox" @click="changePage(2)" :class="isThisPage(2) ? 'active' : ``">ABOUT</button>
+      <button class="footerbox" @click="changePage(3)" :class="isThisPage(3) ? 'active' : ``">WRITE</button>
     </div>
   </div>
 </template>

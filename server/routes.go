@@ -13,6 +13,10 @@ func CollecRouter(r *gin.Engine) *gin.Engine {
 	r.GET("/yuurei/info", middleware.AuthMiddleware(), controller.Info)
 	r.POST("/yuurei/img", controller.Imgs)
 	r.GET("/yuurei/articles", controller.SelectAll)
-	r.POST("/yuurei/article", controller.SelectById)
+	r.POST("/yuurei/article", controller.SelectArticleById)
+	//r.GET("/yuurei/article", controller.SelectArticleById)
+	r.POST("/yuurei/getArticleByTagId", controller.SelectArticlesByTagId)
+	r.POST("/yuurei/getArticlesByCategoryId", controller.SelectArticlesByCategoryId)
+	r.POST("/yuurei/addArticle", controller.AddArticle)
 	return r
 }

@@ -3,8 +3,6 @@ package common
 import (
 	"flag"
 	"fmt"
-	"github.com/Lofalt/yuurei/model"
-
 	"github.com/spf13/viper"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -40,11 +38,8 @@ func InitDB() *gorm.DB {
 		panic("failed to connect database")
 	}
 
-	errR := db.AutoMigrate(&model.Article2{})
-	if errR != nil {
-		return nil
-	}
 	DB = db
+
 	return db
 	// db.Create(&User{})
 	// // Migrate the schema

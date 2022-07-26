@@ -25,32 +25,41 @@
         <div class="bottomPage">
           <!-- <anli-page></anli-page> -->
           <iframe src="//player.bilibili.com/player.html?aid=4539251&bvid=BV1Ds411q7Xp&cid=7360965&page=1"
-            scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+                  scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
         </div>
+      </div>
+      <div class=" bottom" @wheel.self="wheeling" v-show="isAdmin">
+<!--        <div class="bottomPage">-->
+          <article-editor/>
+<!--        </div>-->
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { computed, provide, ref, watch } from 'vue';
+import {computed, getCurrentInstance, provide, ref, watch} from 'vue';
 import LeftBar from './components/LeftBar.vue';
 import RightBar from './components/RightBar.vue'
 import AnliPage from './views/AnliPage.vue';
-import { usePageData } from './store/pageData';
+import {usePageData} from './store/pageData';
 import Home from "./components/Home.vue"
+import ArticleEditor from "./components/edit/ArticleEditor.vue"
+import axios from "./request/index"
 
 const isShow = ref(true)
 const pageCount = ref(0)
 const pageData = usePageData()
+let isWheeling = false
+
+
+
 watch(pageData, (newValue, oldValue) => {
   pageCount.value = 1
 })
-let isWheeling = false
-
 function touchChange(event: any) {
 }
-
+const isAdmin = ref(true)
 const showHome = computed(() => {
   return pageCount.value == 0
 })
@@ -81,6 +90,7 @@ watch(pageCount, (newValue, oldValue) => {
   const rightPage = document.getElementById("rightbar") as HTMLSelectElement
   rightPage.style.transform = `translateY(-${newValue}00vh)`
 })
+
 function changePage(num: number) {
   // const rightPage = document.getElementById("rightbar") as HTMLSelectElement
   pageCount.value = num
@@ -136,7 +146,7 @@ provide('pageCount', pageCount)
   border: 3px solid rgb(51, 51, 51);
   box-shadow: -1px 1px 0 0px rgb(51, 51, 51);
 
-  @media (max-width:1024px) {
+  @media (max-width: 1024px) {
     height: 10vh;
     left: 2vw;
     // padding: 10px;
@@ -164,7 +174,7 @@ provide('pageCount', pageCount)
   // overflow: hidden;
   transition: all .8s ease-in-out;
 
-  @media (max-width:1024px) {
+  @media (max-width: 1024px) {
     width: 100%;
   }
 }
@@ -207,6 +217,7 @@ iframe {
   display: flex;
   justify-content: center;
   align-items: center;
+
   &::-webkit-scrollbar-thumb {
     width: 30px;
     background-color: rgba(73, 73, 73, .5);

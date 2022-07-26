@@ -8,6 +8,8 @@ import V3waterfall from 'v3-waterfall'
 import 'v3-waterfall/style.css'
 import { createPinia } from "pinia";
 import 'vue-waterfall-plugin-next/style.css'
+import axios from "./request/index"
+
 
 const pinia = createPinia()
 const app = createApp(App)
@@ -16,3 +18,4 @@ app.use(router)
     .use(V3waterfall)
     .use(pinia);
 app.mount("#app");
+app.config.globalProperties.$axios = axios;

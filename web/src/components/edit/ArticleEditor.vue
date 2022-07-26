@@ -1,0 +1,180 @@
+<template>
+  <div class="container">
+    <div class="header">
+      <input v-model="title" placeholder="输入标题">
+      <input v-model="summary" placeholder="输入简介">
+    </div>
+    <div class="neck">
+      <n-space vertical>
+        <n-select v-model:value="category" :options="options" placeholder="选择分类"/>
+      </n-space>
+      <n-dynamic-tags v-model:value="tags" @create="onCreate"/>
+    </div>
+    <div class="summary">{{ tags }}
+    {{tagColor}}
+      正文:
+      {{content}}
+    </div>
+    <div style="height: 100px;width: 80%;">
+      <n-color-picker :modes="[`hex`]"
+                      :swatches="[
+      '#FFFFFF',
+      '#18A058',
+      '#2080F0',
+      '#F0A020',
+      'rgba(208, 48, 80, 1)'
+    ]"
+                      size="small" v-model:value="tagColor"/>
+    </div>
+
+    <wang-editor class="editor" @upload-content="acceptContent"/>
+    <button class="sendBtn" @click="send">点我</button>
+  </div>
+</template>
+
+<script lang="ts" setup>
+import WangEditor from "../wangeditor/WangEditor.vue"
+import {ref,Ref} from "vue";
+import {NSpace, NSelect, NDynamicTags, NColorPicker} from "naive-ui";
+// import axios from "../../request/index"
+import axios from "axios"
+
+const category = ref(null)
+const title = ref('')
+const summary = ref('')
+const content:Ref<string> = ref('')
+const tagColor = ref('')
+let options = [
+  {
+    label: "第一分类",
+    value: 1
+  },
+  {
+    label: "第二分类",
+    value: 2
+  }
+]
+const tags = ref([
+
+      {
+        label: "hello",
+        value: 1
+      }, {
+        label: "hello",
+        value: 2
+      },
+    ]
+)
+
+function send(){
+  var Tags = []
+
+  for(let i=0;i<tags.value.length;i++){
+    let tag  = {
+      TagName : tags.value[i].label,
+      ID:tags.value[i].value
+    }
+    Tags.push(tag)
+  }
+  var ArticleCategory = {
+    ID:category.value
+  }
+
+  var Article = {
+    ArticleTitle : title.value,
+    ArticleCategory :ArticleCategory,
+    AriticleContent : content.value,
+    Tags:Tags,
+
+  }
+
+  console.log(Article)
+
+  axios.post("/yuurei/addArticle",{
+    ArticleTitle : title.value,
+    ArticleCategory :ArticleCategory,
+    ArticleSummary:summary.value,
+    ArticleContent : content.value,
+    Tags:Tags,
+  }).then((res)=>{
+    console.log(res)
+  })
+}
+function acceptContent(cont:string){
+  content.value = cont
+}
+
+function onCreate(label: string) {
+  //先发送请求 验证是否存在tag
+  // axios.post("/yuurei/addTag",{})
+  //若不存在 ,即创建新数据行 返回新ID
+  //若存在 返回标签ID
+  return {
+    label,
+    value: "result.data.ID"
+  }
+}
+</script>
+<style lang="less" scoped>
+
+
+.sendBtn{
+  position:absolute;
+  right:20px;
+  bottom:100px;
+  padding:10px 20px;
+  outline: none;
+  cursor: pointer;
+  background-color: white;
+  border:4px solid rgb(49,49,49)
+
+}
+
+.container {
+  overflow: auto;
+  // background-image: url("./assets/wallhaven-p262de.jpg");
+  border: 5px solid rgb(49, 49, 49);
+  width: 80%;
+  height: 80%;
+  position: relative;
+  background-size: cover;
+  margin: 10vh auto;
+  border-radius: 5px;
+  background-color: rgb(255, 255, 255);
+  // padding: 100px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    width: 10px;
+    background-color: rgba(73, 73, 73, .5);
+    color: black;
+    border-radius: 20px;
+  }
+}
+
+.header {
+  min-height: 5vh;
+  margin: 20px 0;
+  width: 100%;
+
+  input {
+    height: 100%;
+    width: 80%;
+    margin: 0 auto;
+    display: block;
+    text-align: center;
+  }
+}
+
+.editor {
+  width: 100%;
+}
+</style>
