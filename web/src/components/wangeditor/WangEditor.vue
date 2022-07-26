@@ -74,3 +74,9 @@ const handleCreated = (editor: any) => {
   // editor.value.focus(true)
 }
 </script>
+<style lang="less" scoped>
+.w-e-text-container{
+  height:500px !important;
+}
+
+</style>

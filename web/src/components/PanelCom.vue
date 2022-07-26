@@ -29,8 +29,8 @@ const router = useRouter()
 
 const props = defineProps<{
   article:{},
-  background:'',
-  backgroundColor:''
+  // background:'',
+  // backgroundColor:''
 }>()
 // const articleCategories= computed(() => {
 //   let categories = ''

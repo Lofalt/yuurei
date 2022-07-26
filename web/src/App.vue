@@ -32,6 +32,7 @@
 <!--        <div class="bottomPage">-->
           <article-editor/>
 <!--        </div>-->
+<!--        <home/>-->
       </div>
     </div>
   </div>
@@ -78,8 +79,8 @@ function wheeling(event: any) {
       // setTimeout(() => {
       //   isWheeling = false
       // }, 2000);
-      if (pageCount.value > 2) {
-        pageCount.value = 2
+      if (pageCount.value > 3) {
+        pageCount.value = 3
       }
     }
   }

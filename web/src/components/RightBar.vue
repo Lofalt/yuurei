@@ -30,7 +30,7 @@
             </div>
             <!-- <router-view name="VlogPage" v-show="showVlog"></router-view> -->
             <!-- <div class="father"> -->
-            <anli-page></anli-page>
+            <anli-page v-if="showVlog"></anli-page>
             <!-- </div> -->
             <!-- <water-page></water-page> -->
         </div>

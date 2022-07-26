@@ -63,6 +63,11 @@ func SelectArticleById(c *gin.Context) {
 			DeletedAt: gorm.DeletedAt{},
 		},
 	}
+	db.Debug().Preload("Tags").Preload("ArticleCategory").Find(&article)
+	response.Success(c, gin.H{
+		"data": article,
+	}, "success")
+
 	//var tags []*model.Tag
 	//开启关联查询
 	//db.Debug().Model(&article).Association("Tags")
@@ -75,10 +80,6 @@ func SelectArticleById(c *gin.Context) {
 	//	fmt.Println(tag)
 	//}
 	//article.Tags = tags
-	db.Debug().Preload("Tags").Preload("ArticleCategory").Find(&article)
-	response.Success(c, gin.H{
-		"data": article,
-	}, "success")
 }
 
 func SelectArticlesByTagId(c *gin.Context) {
@@ -136,5 +137,9 @@ func AddArticle(c *gin.Context) {
 	}
 	fmt.Println(article)
 	result := db.Debug().Create(&article)
-	fmt.Println(result)
+	if result.Error != nil {
+		response.Fail(c, gin.H{"错误信息": result.Error}, "出错了")
+	} else {
+		response.Success(c, gin.H{"data": article}, "添加成功")
+	}
 }

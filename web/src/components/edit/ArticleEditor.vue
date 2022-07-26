@@ -2,6 +2,8 @@
   <div class="container">
     <div class="header">
       <input v-model="title" placeholder="输入标题">
+    </div>
+    <div class="summary">
       <input v-model="summary" placeholder="输入简介">
     </div>
     <div class="neck">
@@ -10,12 +12,9 @@
       </n-space>
       <n-dynamic-tags v-model:value="tags" @create="onCreate"/>
     </div>
-    <div class="summary">{{ tags }}
-    {{tagColor}}
-      正文:
-      {{content}}
+    <div>
     </div>
-    <div style="height: 100px;width: 80%;">
+    <div style="height: 50px;width: 80%;">
       <n-color-picker :modes="[`hex`]"
                       :swatches="[
       '#FFFFFF',
@@ -34,7 +33,7 @@
 
 <script lang="ts" setup>
 import WangEditor from "../wangeditor/WangEditor.vue"
-import {ref,Ref} from "vue";
+import {ref, Ref} from "vue";
 import {NSpace, NSelect, NDynamicTags, NColorPicker} from "naive-ui";
 // import axios from "../../request/index"
 import axios from "axios"
@@ -42,8 +41,8 @@ import axios from "axios"
 const category = ref(null)
 const title = ref('')
 const summary = ref('')
-const content:Ref<string> = ref('')
-const tagColor = ref('')
+const content: Ref<string> = ref('')
+const tagColor = ref('#000000')
 let options = [
   {
     label: "第一分类",
@@ -66,41 +65,42 @@ const tags = ref([
     ]
 )
 
-function send(){
+function send() {
   var Tags = []
 
-  for(let i=0;i<tags.value.length;i++){
-    let tag  = {
-      TagName : tags.value[i].label,
-      ID:tags.value[i].value
+  for (let i = 0; i < tags.value.length; i++) {
+    let tag = {
+      TagName: tags.value[i].label,
+      ID: tags.value[i].value
     }
     Tags.push(tag)
   }
   var ArticleCategory = {
-    ID:category.value
+    ID: category.value
   }
 
   var Article = {
-    ArticleTitle : title.value,
-    ArticleCategory :ArticleCategory,
-    AriticleContent : content.value,
-    Tags:Tags,
+    ArticleTitle: title.value,
+    ArticleCategory: ArticleCategory,
+    AriticleContent: content.value,
+    Tags: Tags,
 
   }
 
   console.log(Article)
 
-  axios.post("/yuurei/addArticle",{
-    ArticleTitle : title.value,
-    ArticleCategory :ArticleCategory,
-    ArticleSummary:summary.value,
-    ArticleContent : content.value,
-    Tags:Tags,
-  }).then((res)=>{
+  axios.post("/yuurei/addArticle", {
+    ArticleTitle: title.value,
+    ArticleCategory: ArticleCategory,
+    ArticleSummary: summary.value,
+    ArticleContent: content.value,
+    Tags: Tags,
+  }).then((res) => {
     console.log(res)
   })
 }
-function acceptContent(cont:string){
+
+function acceptContent(cont: string) {
   content.value = cont
 }
 
@@ -118,15 +118,15 @@ function onCreate(label: string) {
 <style lang="less" scoped>
 
 
-.sendBtn{
-  position:absolute;
-  right:20px;
-  bottom:100px;
-  padding:10px 20px;
+.sendBtn {
+  position: absolute;
+  right: 20px;
+  top: 220px;
+  padding: 10px 20px;
   outline: none;
   cursor: pointer;
   background-color: white;
-  border:4px solid rgb(49,49,49)
+  border: 4px solid rgb(49, 49, 49)
 
 }
 
@@ -142,10 +142,10 @@ function onCreate(label: string) {
   border-radius: 5px;
   background-color: rgb(255, 255, 255);
   // padding: 100px;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  align-items: center;
+  //display: flex;
+  //justify-content: space-between;
+  //flex-direction: column;
+  //align-items: center;
   padding: 20px;
 
   &::-webkit-scrollbar {
@@ -161,7 +161,7 @@ function onCreate(label: string) {
 }
 
 .header {
-  min-height: 5vh;
+  height: 5vh;
   margin: 20px 0;
   width: 100%;
 
@@ -172,6 +172,25 @@ function onCreate(label: string) {
     display: block;
     text-align: center;
   }
+}
+
+.summary {
+  width: 100%;
+  margin: 10px auto;
+
+  input {
+    height: 50px;
+    width: 80%;
+    margin: 0 auto;
+    display: block;
+    text-align: center;
+
+  }
+}
+
+.neck {
+  min-height: 50px;
+  display: block;
 }
 
 .editor {

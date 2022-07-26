@@ -225,7 +225,7 @@ watch(router.currentRoute,(newValue,oldValue)=>{
         .articleSummary{
             font-size: 17px;
             text-align: center;
-            background-color: #494949;
+            background-color: #ec5050;
             /*width: 60%;*/
             color:white;
             margin:0 auto;
@@ -237,10 +237,11 @@ watch(router.currentRoute,(newValue,oldValue)=>{
             padding:20px;
             justify-content: center;
             align-items: center;
-            border-radius: 5px;
+            border-radius: 2px;
+          border:3px solid rgb(49,49,49);
             /*padding-bottom: 40px;*/
             /*border-bottom: 1px solid black ;*/
-            box-shadow: 0 0 2px rgba(100,100,100,.4);
+            box-shadow: -1px 1px 0px .5px rgb(49,49,49);
             .summary{
 
             }
