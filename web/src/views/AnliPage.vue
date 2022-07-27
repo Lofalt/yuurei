@@ -1,5 +1,5 @@
 <template>
-    <div id="main" @wheel="listenScroll" >
+    <div id="main" @wheel="listenScroll" @touchstart.stop="touchStart" @touchend.stop="touchEnd">
         <!-- <button class="scrollToTop" @click="scrollToTop">dmwo</button> -->
         <img class=" test" v-for="(item, index) in picList" :src="item" :key="item" ref="waterFallItem"
             @click="zoom(index)" :style="{ animationDelay: (index % 2) * 0.1 + 's' }" />
@@ -31,6 +31,32 @@ const showingPage = ref('')
 const hover = inject('hover') as Ref<boolean>
 const showVlog = inject('showVlog') as Ref<boolean>
 const isLoading = ref(false)
+
+var touchX = 0
+var touchY = 0
+
+
+function touchStart(event:any){
+  touchX=event.targetTouches[0].pageX;
+  touchY=event.targetTouches[0].pageY;
+}
+
+function touchEnd(event:any){
+  // alert("hello")
+  // alert(touchY)
+  let touchYEnd = event.changedTouches[0].pageY
+  let touches  =touchYEnd-touchY
+  if(touches<-90){
+    if (!isLoading.value && offset.value < 15) {
+      isLoading.value = true
+      setTimeout(() => {
+        getNext(offset.value)
+
+      }, 3000);}
+  }
+
+}
+
 
 function scroll(scrollDuration: number, box: any) {
     var cosParameter = box.scrollY / 2,
@@ -284,10 +310,16 @@ watch(colRaw, () => {
     margin: 0 auto;
     padding-top: 10vh;
 
-    &::-webkit-scrollbar {
-        width: 0;
-        // transition: all 1s;
-    }
+  &::-webkit-scrollbar {
+    width: 0px;
+    // transition: all 1s;
+  }
+  &::-webkit-scrollbar-thumb {
+    width: 5px;
+    background-color: rgba(110, 110, 110, 0.6);
+    // transition: all 1s;
+    border-radius: 10px;
+  }
 
     &::after,
     &::before {

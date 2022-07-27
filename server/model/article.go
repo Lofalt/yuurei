@@ -1,6 +1,8 @@
 package model
 
-import "gorm.io/gorm"
+import (
+	"gorm.io/gorm"
+)
 
 type Article struct {
 	gorm.Model
@@ -13,6 +15,7 @@ type Article struct {
 	ArticleCategoryRefer int             `gorm:"NOT NULL"`
 	ArticleCategory      ArticleCategory `gorm:"foreignKey:ArticleCategoryRefer"`
 	Tags                 []*Tag          `gorm:"many2many:tag_article_tables"`
+	ArticleComments      []ArticleComment
 }
 type ArticleCategory struct {
 	gorm.Model
@@ -24,4 +27,11 @@ type Tag struct {
 	TagName  string
 	TagColor string
 	Articles []*Article `gorm:"many2many:tag_article_tables"`
+}
+
+type ArticleComment struct {
+	gorm.Model
+	ArticleCommentContent  string `gorm:"NOT NULL"`
+	ArticleCommentUserName string `gorm:"NOT NULL"`
+	ArticleID              uint
 }

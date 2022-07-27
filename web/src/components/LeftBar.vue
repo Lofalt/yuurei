@@ -1,5 +1,6 @@
 <template>
   <div class="leftbar">
+    <div class="header">幽居</div>
     <div class="profile"></div>
     <div class="name">LOFALT</div>
     <div class="icon1">
@@ -127,14 +128,26 @@ a {
   background-position: center;
   // background-image: url("../assets/69167110_p0.png");
   transition: all .1s ease-in-out;
+  overflow: hidden;
 
   @media (max-width: 1024px) {
-    //display: none;
     //left: -16.5%
     transform: translateX(-16.5vw);
+    //display: none;
   }
 
-
+  .header{
+    position: relative;
+    color: black;
+    top:20px;
+    font-size: 2em;
+    //border:3px solid rgb(49,49,49);
+    //border-radius: 2px;
+    box-shadow: -1px 1px 4px 1px rgba(49,49,49,.5);
+    //width:150px;
+    background-color: rgb(23,23,23);
+    color:white;
+  }
   div {
     margin: 0 auto;
     text-align: center;
@@ -154,7 +167,7 @@ a {
 
     background: white;
     text-align: center;
-    margin-top: 30%;
+    margin-top: 20%;
     // justify-content: center;
     // align-items: center;
     color: black;

@@ -1,6 +1,6 @@
 <template>
-    <div class="rightbar" @click.self="pushCard">
-        <div class="showpage activeCard" @wheel.stop="">
+    <div class="rightbar" @click.self="pushCard" >
+        <div class="showpage activeCard" @wheel.stop="" >
             <div class="showtag tag1" @click="pullCard(0)">
                 废话
             </div>
@@ -60,6 +60,7 @@ const showPic = ref(false)
 const hover = ref(false)
 provide('hover', hover)
 provide('showVlog', showVlog)
+
 
 
 function pullCard(num: number): void {
@@ -181,6 +182,16 @@ function pushCard() {
         border-radius: 5px;
         // right: -65vw;
         background-size: cover;
+      &::-webkit-scrollbar {
+        width: 5px;
+        // transition: all 1s;
+      }
+      &::-webkit-scrollbar-thumb {
+        width: 5px;
+        background-color: rgba(110, 110, 110, 0.6);
+        // transition: all 1s;
+        border-radius: 10px;
+      }
 
         @media (max-width:1024px) {
             width: 90vw;

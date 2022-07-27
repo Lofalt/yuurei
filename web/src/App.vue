@@ -9,14 +9,14 @@
     <!-- <button @click="change">dmwo </button> -->
     <!-- <button @click="change2">dmwo </button> -->
     <left-bar @change-page="changePage"></left-bar>
-    <div id="rightbar">
+    <div id="rightbar" @touchstart="touchStart" @touchend="touchEnd">
 
       <div class="middle">
         <!-- <router-view></router-view> -->
-        <right-bar @wheel.self="wheeling"></right-bar>
+        <right-bar @wheel.self="wheeling" @touchend.stop></right-bar>
       </div>
-      <div class="info" @wheel.self="wheeling">
-        <div class="infoPage">
+      <div class="info" @wheel.self="wheeling" >
+        <div class="infoPage" @touchend.stop="">
 
           <router-view></router-view>
         </div>
@@ -52,7 +52,31 @@ const isShow = ref(true)
 const pageCount = ref(0)
 const pageData = usePageData()
 let isWheeling = false
+var touchX = 0
+var touchY = 0
 
+
+function touchStart(event:any){
+  touchX=event.targetTouches[0].pageX;
+  touchY=event.targetTouches[0].pageY;
+}
+
+function touchEnd(event:any){
+  // alert("hello")
+  // alert(touchY)
+  let touchYEnd = event.changedTouches[0].pageY
+  let touches  =touchYEnd-touchY
+  if(touches<-90){
+    if(pageCount.value < 3){
+    pageCount.value ++
+    }
+  }
+  if(touches>90){
+    if(pageCount.value>0){
+      pageCount.value--
+    }
+  }
+}
 
 
 watch(pageData, (newValue, oldValue) => {

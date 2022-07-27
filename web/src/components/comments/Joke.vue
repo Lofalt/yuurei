@@ -97,7 +97,7 @@
         &::after {
             position: absolute;
             display: block;
-            left: -15px;
+            left: -15.5px;
             // top: 5px;
             top: 4px;
             transform: rotate(225deg);
@@ -113,7 +113,7 @@
         &::before {
             position: absolute;
             display: block;
-            left: -8px;
+            left: -7px;
             // top: 5px;
             z-index: 10;
             top: 7px;
