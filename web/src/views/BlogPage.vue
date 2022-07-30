@@ -1,8 +1,8 @@
 <template>
     <div class="container">
         <div class="head" @click.capture="showModal = false">
-          <transition-group tap="p">
-          <joke v-for="(item,index) in msgList" :msg="item" :key="item.ID"/>
+          <transition-group tag="p">
+          <joke v-for="(item,index) in msgList" :msg="item" :key="item.ID" @reload="getMsgs"/>
           </transition-group>
         </div>
         <div class="left">
@@ -27,11 +27,13 @@
             <n-card size="huge" aria-modal="true" style="width: 600px; height:60vh;">
                 <!-- <button @click="post">点我发送</button> -->
                 <div class="messageDiv" style="height:80%">
-                    <div class="inputUsernameModal"><input type="text" placeholder="署名,为空匿名" /></div>
-                    <wang-editor-mini></wang-editor-mini>
+                    <div class="inputUsernameModal"><input type="text" v-model="userName" placeholder="署名,为空匿名" /></div>
+                    <wang-editor-mini @change-content="changeContent"></wang-editor-mini>
                     <!-- <transition name="button"> -->
-                    <button class="sendButton">send</button>
-                  <div class="uploadButton" :style="{backgroundImage:`url(${backgroundImg})`}" @click=upload></div>
+                  <button class="sendButton" @click="sendMsg">send</button>
+
+                  <div class="uploadButton inside" :style="{backgroundImage:`url(${backgroundImg})`}" @click=upload></div>
+
 
                   <!-- </transition> -->
                 </div>
@@ -67,8 +69,8 @@ const backgroundImg =ref("/img/-421408862.jpg")
 const userName = ref("")
 const msgList = ref([])
 
-getMsgs()
 
+getMsgs()
 function getMsgs(){
   axios.get("/yuurei/msg/all",{}).then((res)=>{
     console.log(res)
@@ -94,6 +96,8 @@ function sendMsg(){
   }).then((res)=>{
     console.log(res)
     getMsgs()
+    showModal.value = false
+    showTheModal.value = false
   })
 }
 const wang = ref<InstanceType<typeof WangEditorMini>>();
@@ -133,6 +137,7 @@ function getFile(event:any){
 .v-leave-to,
 .v-enter-from{
   opacity: 0;
+  transform: translateX(1000px);
 }
 
 .v-leave-active,
@@ -168,9 +173,12 @@ function getFile(event:any){
     left:-3px;
     top:-3px;
     border:3px solid rgba(49,49,49,0.2);
+  @media (max-width: 1024px){
+    visibility:visible!important;
 
   }
 
+  }
   &:hover::after{
     visibility:visible;
 
@@ -257,7 +265,10 @@ function getFile(event:any){
     }
 
 }
-
+.inside{
+     left:10% !important;
+     top:-100px !important;
+   }
 .inputUsernameModal {
     position: relative;
     // left: 10px;

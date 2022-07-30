@@ -34,14 +34,15 @@ func (a ArticleController) SelectAll(c *gin.Context) {
 		offset = -1
 	} else {
 		offset = (pageNum - 1) * pageSize
-
 	}
+	var total int64
+	a.DB.Model(model.Article{}).Count(&total)
 	if err := a.DB.Preload(clause.Associations).Offset(offset).Limit(pageSize).Find(&articles).Error; err != nil {
 		response.Fail(c, gin.H{}, err.Error())
 		return
 	}
 
-	response.Success(c, gin.H{"data": articles}, "success")
+	response.Success(c, gin.H{"data": articles, "total": total}, "success")
 }
 
 func (a ArticleController) SelectArticleById(c *gin.Context) {
@@ -72,6 +73,16 @@ func (a ArticleController) SelectArticlesByTagId(c *gin.Context) {
 			ID: Id,
 		},
 	}
+	//pageNum, _ := strconv.Atoi(c.DefaultQuery("pageNum", "-1"))
+	//pageSize, _ := strconv.Atoi(c.DefaultQuery("pageSize", "-1"))
+	//var offset int
+	//if pageNum == -1 {
+	//	offset = -1
+	//} else {
+	//	offset = (pageNum - 1) * pageSize
+	//}
+	//var total int64
+	//a.DB.Model(model.Article{}).Where(&tag).Count(&total)
 	//db.Model(&tag).Association("Articles")
 
 	//err1 := db.Model(&tag).Association("Articles").Find(&articles)
@@ -86,12 +97,6 @@ func (a ArticleController) SelectArticlesByCategoryId(c *gin.Context) {
 	id := c.Params.ByName("id")
 	tid, _ := strconv.Atoi(id)
 	article := model.Article{
-		Model: gorm.Model{
-			ID:        uint(tid),
-			CreatedAt: time.Time{},
-			UpdatedAt: time.Time{},
-			DeletedAt: gorm.DeletedAt{},
-		},
 		ArticleTitle:      "",
 		ArticleContent:    "",
 		ArticleReadTimes:  0,
@@ -99,17 +104,31 @@ func (a ArticleController) SelectArticlesByCategoryId(c *gin.Context) {
 		IsActive:          false,
 		ArticleSummary:    "",
 		ArticleCategoryID: tid,
-		ArticleCategory:   model.ArticleCategory{},
+		ArticleCategory:   &model.ArticleCategory{},
 		Tags:              nil,
 	}
+	pageNum, _ := strconv.Atoi(c.DefaultQuery("pageNum", "-1"))
+	pageSize, _ := strconv.Atoi(c.DefaultQuery("pageSize", "-1"))
+	var offset int
+	if pageNum == -1 {
+		offset = -1
+	} else {
+		offset = (pageNum - 1) * pageSize
+	}
+	var total int64
+	a.DB.Model(model.Article{}).Where(&article).Count(&total)
 	var articles []model.Article
-	a.DB.Preload(clause.Associations).Where(&article).Find(&articles)
-	response.Success(c, gin.H{"data": articles}, "success")
+	a.DB.Debug().Preload(clause.Associations).Where(&article).Offset(offset).Limit(pageSize).Find(&articles)
+	response.Success(c, gin.H{"data": articles, "total": total}, "success")
 }
 
 func CreateArticleController() IArticleController {
 	db := common.GetDb()
-	db.AutoMigrate(model.Article{}, model.Tag{}, model.ArticleComment{})
+	err := db.Debug().AutoMigrate(model.Article{}, model.Tag{}, model.ArticleComment{})
+	if err != nil {
+		fmt.Println(err.Error())
+
+	}
 	return ArticleController{DB: db}
 }
 func (a ArticleController) Create(c *gin.Context) {

@@ -12,21 +12,21 @@
         </div>
         <div class="showpage activeCard" @wheel.stop="" @touchend.stop="">
             <div class="showtag tag2" @click="pullCard(1)">
-                碎碎念
+                留言板
             </div>
             <blog-page></blog-page>
             <!-- <router-view name="BlogPage" v-show="showBlog"></router-view> -->
         </div>
         <div class="showpage activeCard" @wheel.stop="" @touchend.stop="">
             <div class="showtag tag3" @click="pullCard(2)">
-                好物
+                TAG
             </div>
             <!-- <router-view name="LovePage" v-show="showLove"></router-view> -->
             <love-page></love-page>
         </div>
         <div class="showpage activeCard" @wheel.stop="" @touchend.stop="">
             <div class="showtag tag4" @click="pullCard(3)">
-                人间
+                TAG2
             </div>
             <!-- <router-view name="VlogPage" v-show="showVlog"></router-view> -->
             <!-- <div class="father"> -->
@@ -252,7 +252,8 @@ function pushCard() {
             box-shadow: -3px 0px 0px 2px rgb(49, 49, 49);
             border-radius: 3px;
             writing-mode: vertical-lr;
-            text-align: 1px 1 px;
+            //text-align:s;
+          align-items: end;
             color: rgb(255, 255, 255);
             font-size: 1.3em;
             padding: 8px 5px;
@@ -286,7 +287,7 @@ function pushCard() {
         }
 
         .tag2 {
-            background-color: rgb(255, 83, 83);
+            background-color: rgb(252, 211, 104);
             // background: linear-gradient(to right, rgb(255, 83, 83), #ffffff);
             top: 23vh;
             // color: white;

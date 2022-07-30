@@ -10,16 +10,16 @@ type Article struct {
 	ArticleContent    string `gorm:"NOT NULL"`
 	ArticleReadTimes  int
 	ArticleLoveTimes  int
-	IsActive          bool            `gorm:"DEFAULT:1"`
-	ArticleSummary    string          `gorm:"NOT NULL"`
-	ArticleCategoryID int             `gorm:"NOT NULL"`
-	ArticleCategory   ArticleCategory `gorm:"Not null"`
-	Tags              []*Tag          `gorm:"many2many:tag_article_tables"`
+	IsActive          bool             `gorm:"DEFAULT:1"`
+	ArticleSummary    string           `gorm:"NOT NULL"`
+	ArticleCategoryID int              `gorm:"NOT NULL"`
+	ArticleCategory   *ArticleCategory `gorm:"Not null"`
+	Tags              []*Tag           `gorm:"many2many:tag_article_tables"`
 	ArticleComments   []ArticleComment
 }
 type ArticleCategory struct {
 	gorm.Model
-	ArticleCategoryName string
+	ArticleCategoryName string `gorm:"type:varchar(20)"`
 }
 
 type Tag struct {

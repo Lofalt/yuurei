@@ -23,7 +23,7 @@
     </div>
     <div class=" bottom" @wheel.self="wheeling" v-show="isAdmin">
       <!--        <div class="bottomPage">-->
-      <article-editor/>
+<!--      <article-editor/>-->
       <!--        </div>-->
       <!--        <home/>-->
     </div>

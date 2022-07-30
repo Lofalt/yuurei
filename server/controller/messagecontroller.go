@@ -99,12 +99,21 @@ func (m MessageController) Show(c *gin.Context) {
 
 func (m MessageController) Delete(c *gin.Context) {
 
-	var cats []model.Message
+	id, _ := strconv.Atoi(c.Params.ByName("id"))
 
-	if err := m.DB.Model(model.Message{}).Find(&cats).Error; err != nil {
+	msg := model.Message{
+		Model: gorm.Model{
+			ID: uint(id),
+		},
+	}
+
+	//if err := c2.DB.Debug().Unscoped().Delete(&msg).Error; err != nil {\
+	if err := m.DB.Debug().Delete(&msg).Error; err != nil {
+
 		response.Fail(c, gin.H{}, err.Error())
 		return
 	}
-	response.Success(c, gin.H{"data": cats}, "查询成功")
+
+	response.Success(c, gin.H{}, "删除成功")
 
 }

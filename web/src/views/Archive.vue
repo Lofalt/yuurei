@@ -206,11 +206,13 @@ watch(router.currentRoute, (newValue, oldValue) => {
       /*margin-top:15px;*/
       font-size: 16px;
       padding-bottom: 15px;
-      color: #032f62;
+      color: rgb(49,49,49)
       /*color: #005cc5;*/
       /*color: #009486;*/
     }
-
+    p:nth-child(1){
+      padding-top:50px;
+    }
     a img {
       max-width: 100%;
     }
@@ -226,7 +228,7 @@ watch(router.currentRoute, (newValue, oldValue) => {
   .articleSummary {
     font-size: 17px;
     text-align: center;
-    background-color: #ec5050;
+    background-color: #d05252;
     /*width: 60%;*/
     color: white;
     margin: 0 auto;
@@ -280,7 +282,7 @@ watch(router.currentRoute, (newValue, oldValue) => {
       span {
         margin-left: 10px;
         font-size: 15px;
-        color: #ffc48c;
+        color: rgb(52, 40, 40);
       }
     }
   }

@@ -4,6 +4,7 @@
       <div class="name">{{ msg.UserName }}</div>
     </div>
     <div class="messageInfo">
+      <div class="delete" @click="deleteMsg">删除</div>
       <div class="date">{{
           new Date(msg.CreatedAt).toLocaleDateString() + " \n\n\n" + new Date(msg.CreatedAt).toLocaleTimeString()
         }}
@@ -19,15 +20,26 @@
 
 <script lang="ts" setup>
 import {ref} from 'vue'
+import axios from '@/request/index'
 
 const backgroundImg = ref("")
+
+const emit = defineEmits(['reload'])
 
 const props = defineProps<{
   msg: object
 }>()
 
 backgroundImg.value = props.msg.Icon
+
+function deleteMsg() {
+  axios.request("/yuurei/msg/" + props.msg.ID, "delete", {}).then((result) => {
+    console.log(result)
+    emit('reload')
+  })
+}
 </script>
+
 
 <style lang="less" scoped>
 
@@ -64,10 +76,11 @@ backgroundImg.value = props.msg.Icon
     background-color: rgb(49, 49, 49);
     margin-right: 20px;
     position: relative;
+    background-position: center;
 
     @media (max-width: 1024px) {
-      width: 20vw;
-      height: 20vw;
+      width: 8vh;
+      height: 8vh;
     }
 
     .name {
@@ -75,7 +88,7 @@ backgroundImg.value = props.msg.Icon
       bottom: -30px;
       width: 100%;
       text-align: center;
-      text-shadow: -1px 1px 2px black;
+      text-shadow: -1px 1px 4px rgba(215, 138, 138, 0.4);
 
     }
   }
@@ -92,18 +105,33 @@ backgroundImg.value = props.msg.Icon
     // background-color: aquamarine;
     position: relative;
 
+    .delete {
+      cursor: pointer;
+      position: absolute;
+      bottom: -30px;
+      right: 140px;
+      //text-shadow: -1px 1px 2px rgb(49,49,49);
+      text-shadow: -1px 1px 5px rgba(49, 49, 49, .4);
+
+      text-align: right;
+      color: rgb(49, 49, 49)
+    }
+
     .date {
       position: absolute;
       bottom: -30px;
       right: 2px;
-      text-shadow: -1px 1px 2px black;
+      text-shadow: -1px 1px 5px rgba(164, 74, 74, 0.4);
       text-align: right;
       color: rgb(49, 49, 49)
     }
 
     @media (max-width: 1024px) {
       min-height: 10vh;
-      width: 60%;
+      width: 70%;
+      border: 3px solid rgb(49, 49, 49);
+      border-left: 5px solid rgb(49, 49, 49);
+      border-bottom: 5px solid rgb(49, 49, 49);
 
     }
 
@@ -111,7 +139,6 @@ backgroundImg.value = props.msg.Icon
       position: absolute;
       display: block;
       left: -15.5px;
-      // top: 5px;
       top: 4px;
       transform: rotate(225deg);
       content: '';
@@ -121,15 +148,23 @@ backgroundImg.value = props.msg.Icon
       border-top-color: rgb(49, 49, 49);
       border-right-color: rgb(49, 49, 49);
       border-radius: 2px;
+
+      @media (max-width: 1024px) {
+        border: 8px solid transparent ;
+        border-top-color: rgb(49, 49, 49);
+        border-right-color: rgb(49, 49, 49);
+        border-radius: 2px;
+        left: -12.5px;
+      }
     }
 
     &::before {
       position: absolute;
       display: block;
-      left: -7px;
+      left: -8px;
       // top: 5px;
       z-index: 10;
-      top: 7px;
+      top: 6px;
       transform: rotate(225deg);
       content: '';
       width: 0;
@@ -137,12 +172,21 @@ backgroundImg.value = props.msg.Icon
       border: 8px solid transparent;
       border-top-color: white;
       border-right-color: white;
+      @media (max-width: 1024px) {
+
+        left: -7px;
+        top: 4px;
+
+      }
+
     }
 
     .info {
       font-family: "幼圆";
       font-size: 1.2em;
       font-weight: 600;
+      color: rgb(98, 95, 95);
+      padding: 5px;
     }
   }
 }
