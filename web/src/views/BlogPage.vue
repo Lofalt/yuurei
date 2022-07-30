@@ -1,11 +1,9 @@
 <template>
     <div class="container">
         <div class="head" @click.capture="showModal = false">
-            <joke></joke>
-            <joke></joke>
-            <joke></joke>
-            <joke></joke>
-            <joke></joke>
+          <transition-group tap="p">
+          <joke v-for="(item,index) in msgList" :msg="item" :key="item.ID"/>
+          </transition-group>
         </div>
         <div class="left">
 
@@ -14,11 +12,14 @@
             </n-icon>
             <transition>
                 <div class="messageDiv" v-show="showModal">
-                    <div class="inputUsername"><input type="text" placeholder="输入署名,为空匿名" /></div>
-                    <wang-editor-mini ref="wang"></wang-editor-mini>
+                    <div class="inputUsername"><input type="text" v-model="userName" placeholder="输入署名,为空匿名" /></div>
+                    <wang-editor-mini ref="wang" @change-content="changeContent"></wang-editor-mini>
+
                     <!-- <transition name="button"> -->
-                    <button class="sendButton">send</button>
+                    <button class="sendButton" @click="sendMsg">send</button>
                     <!-- </transition> -->
+                  <input type="file" ref="inputFile" @change="getFile" style="display: none" >
+                  <div class="uploadButton" :style="{backgroundImage:`url(${backgroundImg})`}" @click=upload></div>
                 </div>
             </transition>
         </div>
@@ -30,7 +31,9 @@
                     <wang-editor-mini></wang-editor-mini>
                     <!-- <transition name="button"> -->
                     <button class="sendButton">send</button>
-                    <!-- </transition> -->
+                  <div class="uploadButton" :style="{backgroundImage:`url(${backgroundImg})`}" @click=upload></div>
+
+                  <!-- </transition> -->
                 </div>
                 <!-- <template #footer> -->
                 <!-- </template> -->
@@ -51,22 +54,48 @@ import Joke from "../components/comments/Joke.vue"
 // import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 import { MessageCircle } from "@vicons/tabler"
 import { NIcon } from "naive-ui"
+import axios from "@/request/index"
 const router = useRouter()
 const showModal = ref(false)
 const container = document.getElementsByClassName("container")[0] as HTMLElement
 const showTheModal = ref(false)
+const msgContent = ref("")
 const focus = computed(() => {
     return showModal.value || showTheModal.value
 })
+const backgroundImg =ref("/img/-421408862.jpg")
+const userName = ref("")
+const msgList = ref([])
 
+getMsgs()
 
-
-
+function getMsgs(){
+  axios.get("/yuurei/msg/all",{}).then((res)=>{
+    console.log(res)
+    let msgTmp:any[] = []
+    res.data.data.forEach((msg)=>{
+      msgTmp.push(msg)
+    })
+    msgList.value = msgTmp
+  })
+}
 provide('focus', focus)
 function post() {
     alert("post!")
 }
-
+function changeContent(content:string){
+  msgContent.value= content
+}
+function sendMsg(){
+  axios.request("/yuurei/msg","post",{
+    MessageContent:msgContent.value,
+    Icon:backgroundImg.value,
+    UserName : userName.value,
+  }).then((res)=>{
+    console.log(res)
+    getMsgs()
+  })
+}
 const wang = ref<InstanceType<typeof WangEditorMini>>();
 
 // const wang = ref(null)
@@ -78,13 +107,75 @@ function changeModal() {
         showTheModal.value = !showTheModal.value
     }
 }
-
-
+const inputFile = ref(null)
+function upload(){
+  console.log(inputFile.value.click())
+}
+function RndNum(num:number){
+  return Math.floor(Math.random() * Math.pow(10,num)).toString()
+}
+function getFile(event:any){
+  let formFile = new FormData()
+  formFile.append("file", event.target.files[0]);
+  formFile.append("apply_info_id", RndNum(12));
+  formFile.append("file_type", '');
+  axios.file_upload("/yuurei/uploadImg",formFile).then((res)=>{
+    console.log(res)
+    backgroundImg.value = res.data.fileName
+  })
+}
 
 </script>
 
 
 <style lang="less" scoped>
+
+.v-leave-to,
+.v-enter-from{
+  opacity: 0;
+}
+
+.v-leave-active,
+.v-enter-active{
+  transition: all 1.5s ease;
+}
+.uploadButton{
+  width:100px;
+  height: 100px;
+  background-color: black;
+  background-size: cover;
+  background-position: center;
+  position: absolute;
+  top:-110px;
+  left:200px;
+  cursor: pointer;
+  border:3px solid rgb(49,49,49);
+
+  &::after{
+    content: "修改头像";
+    //z-index: -1 ;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color:white;
+    width: 100px;
+    height: 100px;
+    //display: none;
+    visibility: hidden;
+    background: rgba(49,49,49,.2);
+    position:absolute;
+    left:-3px;
+    top:-3px;
+    border:3px solid rgba(49,49,49,0.2);
+
+  }
+
+  &:hover::after{
+    visibility:visible;
+
+  }
+}
 .head {
     width: 100%;
     height: 100%;
@@ -134,7 +225,7 @@ function changeModal() {
         // white-space: nowrap;
 
     @media (max-height: 800px){
-      height:80vh;
+      height:40vh;
     }
         &::after {
             content: '';
@@ -154,7 +245,7 @@ function changeModal() {
         // left: 10px;
         top: -40px;
         z-index: 1;
-        width: 40%;
+        //width: 40%;
 
         input {
             // width: 10%;

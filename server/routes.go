@@ -12,11 +12,43 @@ func CollecRouter(r *gin.Engine) *gin.Engine {
 	r.POST("/yuurei/login", controller.Login)
 	r.GET("/yuurei/info", middleware.AuthMiddleware(), controller.Info)
 	r.POST("/yuurei/img", controller.Imgs)
-	r.GET("/yuurei/articles", controller.SelectAll)
-	r.POST("/yuurei/article", controller.SelectArticleById)
+
+	articleRoutes := r.Group("/yuurei/article")
+	artilceController := controller.CreateArticleController()
+	articleRoutes.GET("all", artilceController.SelectAll)
+	articleRoutes.GET(":id", artilceController.SelectArticleById)
 	//r.GET("/yuurei/article", controller.SelectArticleById)
-	r.POST("/yuurei/getArticleByTagId", controller.SelectArticlesByTagId)
-	r.POST("/yuurei/getArticlesByCategoryId", controller.SelectArticlesByCategoryId)
-	r.POST("/yuurei/addArticle", controller.AddArticle)
+	articleRoutes.POST("tagId/:id", artilceController.SelectArticlesByTagId)
+	articleRoutes.POST("categoryId/:id", artilceController.SelectArticlesByCategoryId)
+	articleRoutes.POST("", artilceController.Create)
+	articleRoutes.PUT(":id", artilceController.Update)
+	articleRoutes.DELETE(":id", artilceController.Delete)
+
+	categoryRoutes := r.Group("/yuurei/articleCategory")
+	categoryController := controller.CreateCategoryController()
+	categoryRoutes.POST("", categoryController.Create)
+	categoryRoutes.PUT(":id", categoryController.Update)
+	categoryRoutes.DELETE(":id", categoryController.Delete)
+	categoryRoutes.GET(":id", categoryController.Show)
+	categoryRoutes.GET("all", categoryController.ShowAll)
+
+	tagRoutes := r.Group("/yuurei/tag")
+	tagController := controller.NewTagController()
+	tagRoutes.POST("", tagController.Create)
+	tagRoutes.PUT(":id", tagController.Update)
+	tagRoutes.DELETE(":id", tagController.Delete)
+	tagRoutes.GET(":name", tagController.Show)
+	tagRoutes.GET("all", tagController.ShowAll)
+
+	msgRoutes := r.Group("/yuurei/msg")
+	msgController := controller.NewMessageController()
+	msgRoutes.POST("", msgController.Create)
+	msgRoutes.PUT(":id", msgController.Update)
+	msgRoutes.DELETE(":id", msgController.Delete)
+	msgRoutes.GET(":name", msgController.Show)
+	msgRoutes.GET("all", msgController.ShowAll)
+
+	r.POST("/yuurei/uploadImg", controller.UploadImgController)
+
 	return r
 }

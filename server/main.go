@@ -13,6 +13,8 @@ func main() {
 	Init()
 	r := gin.Default()
 	r.StaticFS("/img", http.Dir("./img"))
+	r.StaticFS("/testImg", http.Dir("./testImg"))
+
 	// r.Static("/img", "./img")
 	common.InitDB()
 	r = CollecRouter(r)

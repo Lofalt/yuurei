@@ -36,34 +36,26 @@ import WangEditor from "../wangeditor/WangEditor.vue"
 import {ref, Ref} from "vue";
 import {NSpace, NSelect, NDynamicTags, NColorPicker} from "naive-ui";
 // import axios from "../../request/index"
-import axios from "axios"
+// import axios from "axios"
+import axios from "@/request/index"
 
 const category = ref(null)
 const title = ref('')
 const summary = ref('')
 const content: Ref<string> = ref('')
 const tagColor = ref('#000000')
-let options = [
-  {
-    label: "第一分类",
-    value: 1
-  },
-  {
-    label: "第二分类",
-    value: 2
+const options = ref([])
+axios.get("/yuurei/articleCategory/all", {}).then((res) => {
+  console.log(res.data.data)
+  for (let i = 0; i < res.data.data.length; i++) {
+    options.value.push({
+      value: res.data.data[i].ID,
+      label: res.data.data[i].ArticleCategoryName
+    })
   }
-]
-const tags = ref([
+})
 
-      {
-        label: "hello",
-        value: 1
-      }, {
-        label: "hello",
-        value: 2
-      },
-    ]
-)
+const tags = ref([])
 
 function send() {
   var Tags = []
@@ -89,7 +81,7 @@ function send() {
 
   console.log(Article)
 
-  axios.post("/yuurei/addArticle", {
+  axios.request("/yuurei/article", "post", {
     ArticleTitle: title.value,
     ArticleCategory: ArticleCategory,
     ArticleSummary: summary.value,
@@ -106,13 +98,29 @@ function acceptContent(cont: string) {
 
 function onCreate(label: string) {
   //先发送请求 验证是否存在tag
-  // axios.post("/yuurei/addTag",{})
+  let value;
+  let name = label
+  axios.get("/yuurei/tag/" + label, {}).then((res) => {
+    if (res.data.data != null) {
+      value = res.data.data.ID
+    }
+  }).then(() => {
+    if (value === undefined) {
+
+      axios.request("/yuurei/tag", "post",
+          {
+            TagName: label,
+            TagColor: tagColor.value,
+          }).then((res) => {
+        value = res.data.data.ID
+
+      })
+    }
+
+  })
   //若不存在 ,即创建新数据行 返回新ID
   //若存在 返回标签ID
-  return {
-    label,
-    value: "result.data.ID"
-  }
+  return {label: name, value: value}
 }
 </script>
 <style lang="less" scoped>

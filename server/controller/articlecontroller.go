@@ -12,47 +12,40 @@ import (
 	"time"
 )
 
-func SelectAll(c *gin.Context) {
-	db := common.GetDb()
-	//article := make([]model.Article, 5)
-	//fmt.Println(article)
-	//db.Find(&article)
-	//response.Success(c, gin.H{"data": article}, "success")
-	//article := model.Article{
-	//	Model:gorm.Model{
-	//		ID:        0,
-	//		CreatedAt: time.Time{},
-	//		UpdatedAt: time.Time{},
-	//		DeletedAt: gorm.DeletedAt{},
-	//	},
-	//	ArticleTitle:         "",
-	//	ArticleContent:       "",
-	//	ArticleReadTimes:     0,
-	//	ArticleLoveTimes:     0,
-	//	IsActive:             false,
-	//	ArticleSummary:       "",
-	//	ArticleCategoryRefer: 0,
-	//	ArticleCategory:      model.ArticleCategory{},
-	//	Tags:                 nil,
-	//}
+type IArticleController interface {
+	RESTfulcontroller
+	SelectAll(c *gin.Context)
+	SelectArticleById(c *gin.Context)
+	SelectArticlesByTagId(c *gin.Context)
+	SelectArticlesByCategoryId(c *gin.Context)
+}
+
+type ArticleController struct {
+	DB *gorm.DB
+}
+
+func (a ArticleController) SelectAll(c *gin.Context) {
 	var articles []model.Article
-	db.Preload(clause.Associations).Find(&articles)
+
+	pageNum, _ := strconv.Atoi(c.DefaultQuery("pageNum", "-1"))
+	pageSize, _ := strconv.Atoi(c.DefaultQuery("pageSize", "-1"))
+	var offset int
+	if pageNum == -1 {
+		offset = -1
+	} else {
+		offset = (pageNum - 1) * pageSize
+
+	}
+	if err := a.DB.Preload(clause.Associations).Offset(offset).Limit(pageSize).Find(&articles).Error; err != nil {
+		response.Fail(c, gin.H{}, err.Error())
+		return
+	}
+
 	response.Success(c, gin.H{"data": articles}, "success")
 }
 
-func SelectById(c *gin.Context) {
-	id := c.PostForm("articleId")
-	db := common.GetDb()
-	article := model.Article{}
-	db.First(&article, "article_id = ?", id)
-	response.Success(c, gin.H{
-		"data": article,
-	}, "success")
-}
-
-func SelectArticleById(c *gin.Context) {
-	db := common.GetDb()
-	id := c.PostForm("ID")
+func (a ArticleController) SelectArticleById(c *gin.Context) {
+	id := c.Params.ByName("id")
 	nid, _ := strconv.Atoi(id)
 	fmt.Println(nid)
 	article := model.Article{
@@ -63,28 +56,15 @@ func SelectArticleById(c *gin.Context) {
 			DeletedAt: gorm.DeletedAt{},
 		},
 	}
-	db.Debug().Preload("Tags").Preload("ArticleCategory").Find(&article)
+	a.DB.Debug().Preload("Tags").Preload("ArticleCategory").Find(&article)
 	response.Success(c, gin.H{
 		"data": article,
 	}, "success")
 
-	//var tags []*model.Tag
-	//开启关联查询
-	//db.Debug().Model(&article).Association("Tags")
-	//err1 := db.Model(&article).Association("Tags").Find(&tags)
-	//db.Debug().Where("article_id=?", id).First(&article)
-	//if err1 != nil {
-	//	fmt.Println(err1)
-	//}
-	//for _, tag := range tags {
-	//	fmt.Println(tag)
-	//}
-	//article.Tags = tags
 }
 
-func SelectArticlesByTagId(c *gin.Context) {
-	db := common.GetDb()
-	tagId, _ := strconv.Atoi(c.PostForm("ID"))
+func (a ArticleController) SelectArticlesByTagId(c *gin.Context) {
+	tagId, _ := strconv.Atoi(c.Params.ByName("id"))
 	Id := uint(tagId)
 	//var articles []*model.Article
 	tag := model.Tag{
@@ -98,13 +78,12 @@ func SelectArticlesByTagId(c *gin.Context) {
 	//if err1 != nil {
 	//	fmt.Println(err1)
 	//}
-	db.Debug().Preload("Articles").Find(&tag)
+	a.DB.Debug().Preload("Articles").Find(&tag)
 	response.Success(c, gin.H{"data": tag}, "success")
 }
 
-func SelectArticlesByCategoryId(c *gin.Context) {
-	db := common.GetDb()
-	id := c.PostForm("ID")
+func (a ArticleController) SelectArticlesByCategoryId(c *gin.Context) {
+	id := c.Params.ByName("id")
 	tid, _ := strconv.Atoi(id)
 	article := model.Article{
 		Model: gorm.Model{
@@ -113,33 +92,102 @@ func SelectArticlesByCategoryId(c *gin.Context) {
 			UpdatedAt: time.Time{},
 			DeletedAt: gorm.DeletedAt{},
 		},
-		ArticleTitle:         "",
-		ArticleContent:       "",
-		ArticleReadTimes:     0,
-		ArticleLoveTimes:     0,
-		IsActive:             false,
-		ArticleSummary:       "",
-		ArticleCategoryRefer: tid,
-		ArticleCategory:      model.ArticleCategory{},
-		Tags:                 nil,
+		ArticleTitle:      "",
+		ArticleContent:    "",
+		ArticleReadTimes:  0,
+		ArticleLoveTimes:  0,
+		IsActive:          false,
+		ArticleSummary:    "",
+		ArticleCategoryID: tid,
+		ArticleCategory:   model.ArticleCategory{},
+		Tags:              nil,
 	}
 	var articles []model.Article
-	db.Preload(clause.Associations).Where(&article).Find(&articles)
+	a.DB.Preload(clause.Associations).Where(&article).Find(&articles)
 	response.Success(c, gin.H{"data": articles}, "success")
 }
 
-func AddArticle(c *gin.Context) {
+func CreateArticleController() IArticleController {
 	db := common.GetDb()
+	db.AutoMigrate(model.Article{}, model.Tag{}, model.ArticleComment{})
+	return ArticleController{DB: db}
+}
+func (a ArticleController) Create(c *gin.Context) {
 	var article model.Article
-	err := c.BindJSON(&article)
+	err := c.ShouldBind(&article)
 	if err != nil {
 		fmt.Println(err)
 	}
 	fmt.Println(article)
-	result := db.Debug().Create(&article)
+	result := a.DB.Debug().Create(&article)
 	if result.Error != nil {
 		response.Fail(c, gin.H{"错误信息": result.Error}, "出错了")
 	} else {
 		response.Success(c, gin.H{"data": article}, "添加成功")
 	}
+}
+
+func (a ArticleController) Update(c *gin.Context) {
+	catid, _ := strconv.Atoi(c.Params.ByName("id"))
+
+	//查找是否存在
+	var art model.Article
+
+	var newArt model.Article
+	err3 := c.ShouldBind(&newArt)
+	if err3 != nil {
+		response.Fail(c, gin.H{}, err3.Error())
+		return
+	}
+
+	if err := a.DB.Where("id=?", catid).First(&art).Error; err != nil {
+		response.Fail(c, gin.H{}, err.Error())
+		return
+	}
+
+	if err2 := a.DB.Model(&art).Updates(&newArt).Error; err2 != nil {
+		response.Fail(c, gin.H{}, err2.Error())
+		return
+	}
+
+	response.Success(c, gin.H{"data": art}, "更改成功")
+}
+
+func (a ArticleController) Show(c *gin.Context) {
+	id := c.PostForm("ID")
+	nid, _ := strconv.Atoi(id)
+	fmt.Println(nid)
+	article := model.Article{
+		Model: gorm.Model{
+			ID:        uint(nid),
+			CreatedAt: time.Time{},
+			UpdatedAt: time.Time{},
+			DeletedAt: gorm.DeletedAt{},
+		},
+	}
+	if err := a.DB.Debug().Preload("Tags").Preload("ArticleCategory").Find(&article).Error; err != nil {
+		response.Fail(c, gin.H{}, err.Error())
+		return
+	}
+	response.Success(c, gin.H{
+		"data": article,
+	}, "success")
+}
+
+func (a ArticleController) Delete(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Params.ByName("id"))
+
+	art := model.Article{
+		Model: gorm.Model{
+			ID: uint(id),
+		},
+	}
+	//if err := c2.DB.Debug().Unscoped().Delete(&cat).Error; err != nil {\
+	if err := a.DB.Debug().Delete(&art).Error; err != nil {
+
+		response.Fail(c, gin.H{}, err.Error())
+		return
+	}
+
+	response.Success(c, gin.H{}, "删除成功")
 }

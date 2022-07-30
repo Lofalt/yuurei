@@ -62,22 +62,21 @@ import {inject, Ref, ref} from 'vue';
 import {useRouter} from 'vue-router';
 import {Weibo, Twitter, GrinTongue} from '@vicons/fa'
 import {NIcon} from "naive-ui"
+import {usePageData} from '@/store/pageData';
 
 const router = useRouter()
-const pageNum = ref(0)
-const emit = defineEmits(['change-page'])
-const pageCount = inject('pageCount') as Ref<number>
+// const pageNum = ref(0)
+const pageData = usePageData()
+
+// const emit = defineEmits(['change-page'])
 
 function isThisPage(num: number) {
-  if (num == pageCount.value) {
-    return true
-  }
-  return false
+  return num == pageData.pagedata.count;
+
 }
 
 function changePage(num: number) {
-  pageNum.value = num;
-  emit('change-page', pageNum.value)
+  pageData.pagedata.count = num;
 }
 </script>
 
@@ -136,18 +135,19 @@ a {
     //display: none;
   }
 
-  .header{
+  .header {
     position: relative;
     color: black;
-    top:20px;
+    top: 20px;
     font-size: 2em;
     //border:3px solid rgb(49,49,49);
     //border-radius: 2px;
-    box-shadow: -1px 1px 4px 1px rgba(49,49,49,.5);
+    box-shadow: -1px 1px 4px 1px rgba(49, 49, 49, .5);
     //width:150px;
-    background-color: rgb(23,23,23);
-    color:white;
+    background-color: rgb(23, 23, 23);
+    color: white;
   }
+
   div {
     margin: 0 auto;
     text-align: center;

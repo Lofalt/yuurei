@@ -49,7 +49,8 @@ export default {
             axios({
                 method: method,
                 url,
-                data: qs.stringify(data),
+                // data: qs.stringify(data),
+                data: data,
             })
                 .then(res => {
                     resolve(res.data)
@@ -74,5 +75,24 @@ export default {
                     reject(err)
                 })
         })
+    },
+    file_upload(url: any, data: any) {
+        return new Promise((resolve, reject) => {
+            axios({
+                method: 'post',
+                url,
+                data: data,
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+                .then(res => {
+                    resolve(res.data)
+                })
+                .catch(err => {
+                    reject(err)
+                })
+        })
     }
+
 };

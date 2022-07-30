@@ -4,154 +4,61 @@
     <!-- <home v-show="showHome"></home> -->
     <!-- </transition> -->
     <transition>
-      <button class="fixedButton" @click="changePage(0)" v-show="pageCount != 0">回到顶端</button>
+      <button class="fixedButton" @click="changePage(0)" v-show="pageData.pagedata.count != 0">回到顶端</button>
     </transition>
-    <!-- <button @click="change">dmwo </button> -->
-    <!-- <button @click="change2">dmwo </button> -->
-    <left-bar @change-page="changePage"></left-bar>
-    <div id="rightbar" @touchstart="touchStart" @touchend="touchEnd">
+    <left-bar></left-bar>
+    <router-view></router-view>
+    <!--    <div id="rightbar" @touchstart="touchStart" @touchend="touchEnd">-->
 
-      <div class="middle">
-        <!-- <router-view></router-view> -->
-        <right-bar @wheel.self="wheeling"></right-bar>
-      </div>
-      <div class="info" @wheel.self="wheeling">
-        <div class="infoPage" @touchend.stop="">
+    <!--      <div class="middle">-->
+    <!--        &lt;!&ndash; <router-view></router-view> &ndash;&gt;-->
+    <!--        <right-bar @wheel.self="wheeling"></right-bar>-->
+    <!--      </div>-->
+    <!--      <div class="info" @wheel.self="wheeling">-->
+    <!--        <div class="infoPage" @touchend.stop="">-->
 
-          <router-view></router-view>
-        </div>
-      </div>
-      <div class=" bottom" @wheel.self="wheeling">
-        <div class="bottomPage">
-          <!-- <anli-page></anli-page> -->
-          <!--          <iframe src="//player.bilibili.com/player.html?aid=4539251&bvid=BV1Ds411q7Xp&cid=7360965&page=1"-->
-          <!--                  scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>-->
-          <iframe src="//player.bilibili.com/player.html?aid=290694593&bvid=BV1yf4y1Y7V1&cid=341769102&page=1"
-                  scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+    <!--          <router-view></router-view>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--      <div class=" bottom" @wheel.self="wheeling">-->
+    <!--        <div class="bottomPage">-->
+    <!--          &lt;!&ndash; <anli-page></anli-page> &ndash;&gt;-->
+    <!--          &lt;!&ndash;          <iframe src="//player.bilibili.com/player.html?aid=4539251&bvid=BV1Ds411q7Xp&cid=7360965&page=1"&ndash;&gt;-->
+    <!--          &lt;!&ndash;                  scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>&ndash;&gt;-->
+    <!--          <iframe src="//player.bilibili.com/player.html?aid=290694593&bvid=BV1yf4y1Y7V1&cid=341769102&page=1"-->
+    <!--                  scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>-->
 
-        </div>
-      </div>
-      <div class=" bottom" @wheel.self="wheeling" v-show="isAdmin">
-        <!--        <div class="bottomPage">-->
-        <article-editor/>
-        <!--        </div>-->
-        <!--        <home/>-->
-      </div>
-    </div>
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--      <div class=" bottom" @wheel.self="wheeling" v-show="isAdmin">-->
+    <!--        &lt;!&ndash;        <div class="bottomPage">&ndash;&gt;-->
+    <!--        <article-editor/>-->
+    <!--        &lt;!&ndash;        </div>&ndash;&gt;-->
+    <!--        &lt;!&ndash;        <home/>&ndash;&gt;-->
+    <!--      </div>-->
+    <!--    </div>-->
   </div>
 </template>
 
 <script lang="ts" setup>
 import {computed, getCurrentInstance, provide, ref, watch} from 'vue';
 import LeftBar from './components/LeftBar.vue';
-import RightBar from './components/RightBar.vue'
-import AnliPage from './views/AnliPage.vue';
 import {usePageData} from './store/pageData';
-import Home from "./components/Home.vue"
-import ArticleEditor from "./components/edit/ArticleEditor.vue"
-import axios from "./request/index"
 
 const isShow = ref(true)
-const pageCount = ref(0)
 const pageData = usePageData()
 let isWheeling = false
-var touchX = 0
-var touchY = 0
-
-
-function touchStart(event: any) {
-  touchX = event.targetTouches[0].pageX;
-  touchY = event.targetTouches[0].pageY;
-}
-
-function touchEnd(event: any) {
-  // alert("hello")
-  // alert(touchY)
-  let touchYEnd = event.changedTouches[0].pageY
-  let touches = touchYEnd - touchY
-  if (touches < -90) {
-    if (pageCount.value < 3) {
-      pageCount.value++
-    }
-  }
-  if (touches > 90) {
-    if (pageCount.value > 0) {
-      pageCount.value--
-    }
-  }
-}
-
-
-watch(pageData, (newValue, oldValue) => {
-  pageCount.value = 1
-})
-
-function touchChange(event: any) {
-}
-
 const isAdmin = ref(true)
 const showHome = computed(() => {
-  return pageCount.value == 0
+  return pageData.pagedata.count == 0
 })
 
-function wheeling(event: any) {
-  if (!isWheeling) {
-    if (event.wheelDelta == 150 || event.wheelDelta == 120 || event.wheelDelta > 0) {
-      pageCount.value--
-      if (pageCount.value < 0) {
-        pageCount.value = 0
-      }
-    }
-    if (event.wheelDelta == -150 || event.wheelDelta == -120 || event.wheelDelta < 0) {
-      // isWheeling = true
-      pageCount.value++
-      // setTimeout(() => {
-      //   isWheeling = false
-      // }, 2000);
-      if (pageCount.value > 3) {
-        pageCount.value = 3
-      }
-    }
-  }
-}
-
-
-watch(pageCount, (newValue, oldValue) => {
-  const rightPage = document.getElementById("rightbar") as HTMLSelectElement
-  rightPage.style.transform = `translateY(-${newValue}00vh)`
-})
 
 function changePage(num: number) {
-  // const rightPage = document.getElementById("rightbar") as HTMLSelectElement
-  pageCount.value = num
-  // rightPage.style.transform = `translateY(-${num}00vh)`
+  pageData.pagedata.count = num
 
 }
 
-// function change() {
-//   const card = document.getElementsByClassName("middle") as HTMLSelectElement
-//   const actualCard = card[0]
-//   actualCard.style.transition = "all 1s cubic-bezier(0.075, 0.82, 0.165, 1)"
-//   actualCard.style.transform = "translateY(-100vh)"
-//   // actualCard.style.transition = ""
-//   const card2 = document.getElementsByClassName("bottom") as HTMLSelectElement
-//   const actualCard2 = card2[0]
-//   actualCard2.style.transition = "all 1s cubic-bezier(0.075, 0.82, 0.165, 1)"
-//   actualCard2.style.transform = "translateY(-100vh)"
-// }
-// function change2() {
-//   const card = document.getElementsByClassName("middle") as HTMLSelectElement
-//   const actualCard = card[0]
-//   actualCard.style.transition = "all 1s cubic-bezier(0.075, 0.82, 0.165, 1)"
-//   actualCard.style.transform = "translateY(0)"
-//   // actualCard.style.transition = ""
-//   const card2 = document.getElementsByClassName("bottom") as HTMLSelectElement
-//   const actualCard2 = card2[0]
-//   actualCard2.style.transition = "all 1s cubic-bezier(0.075, 0.82, 0.165, 1)"
-//   actualCard2.style.transform = "translateY(0)"
-// }
-
-provide('pageCount', pageCount)
 </script>
 
 <style lang="less" scoped>

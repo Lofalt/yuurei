@@ -16,7 +16,7 @@
           </div>
         </div>
       </div>
-      <div class="articleContent" v-html="article.ArticleContent" />
+      <div class="articleContent" v-html="article.ArticleContent"/>
     </div>
     <div class="preAndNext">
       <!--        <div v-if="pre">-->
@@ -37,14 +37,15 @@
 </template>
 
 
-
 <script lang="ts" setup>
 
 
-import { onMounted, reactive, ref, watch } from "vue";
-import axios from "axios"
+import {onMounted, reactive, ref, watch} from "vue";
+// import axios from "axios"
+import axios from "@/request/index"
 import qs from "qs"
-import { useRouter } from "vue-router"
+import {useRouter} from "vue-router"
+
 const router = useRouter()
 const article = ref({
   ID: '',
@@ -58,26 +59,19 @@ const props = defineProps<{
   id: any
 }>()
 onMounted(() => {
-  axios({
-    method: "post",
-    url: "/yuurei/article",
-    data: qs.stringify({
-      ID: props.id,
-    })
-  }).then((result) => {
-    article.value = result.data.data.data
+  axios.get(
+      "/yuurei/article/" + props.id,
+      {}
+  ).then((result) => {
+    article.value = result.data.data
 
   })
 })
 watch(router.currentRoute, (newValue, oldValue) => {
-  axios({
-    method: "post",
-    url: "/yuurei/article",
-    data: qs.stringify({
-      ID: newValue.params.id,
-    })
-  }).then((result) => {
-    article.value = result.data.data.data
+  axios.get(
+      "/yuurei/article/" + newValue.params.id, {}
+  ).then((result) => {
+    article.value = result.data.data
     document.getElementsByClassName("articlePage")[0].scrollTo(0, 0)
 
   })
@@ -225,8 +219,8 @@ watch(router.currentRoute, (newValue, oldValue) => {
       max-width: 100%;
     }
 
-    margin-top:20px;
-    border-top:1px solid #3a3a3a;
+    margin-top: 20px;
+    border-top: 1px solid #3a3a3a;
   }
 
   .articleSummary {
@@ -250,10 +244,11 @@ watch(router.currentRoute, (newValue, oldValue) => {
     /*border-bottom: 1px solid black ;*/
     box-shadow: -1px 1px 0px .5px rgb(49, 49, 49);
 
-    .summary {}
+    .summary {
+    }
   }
 
-  margin:50px 50px 20px 50px;
+  margin: 50px 50px 20px 50px;
   /*margin-bottom: 20px;*/
   /*text-overflow: ellipsis;*/
   /*overflow: hidden;*/
