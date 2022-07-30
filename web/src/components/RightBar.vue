@@ -1,6 +1,6 @@
 <template>
     <div class="rightbar" @click.self="pushCard" >
-        <div class="showpage activeCard" @wheel.stop="" >
+        <div class="showpage activeCard" @wheel.stop="" @touchend.stop="">
             <div class="showtag tag1" @click="pullCard(0)">
                 废话
             </div>
@@ -10,21 +10,21 @@
             <pic-page></pic-page>
             <!-- <router-view v-show="showPic"></router-view> -->
         </div>
-        <div class="showpage activeCard" @wheel.stop="">
+        <div class="showpage activeCard" @wheel.stop="" @touchend.stop="">
             <div class="showtag tag2" @click="pullCard(1)">
                 碎碎念
             </div>
             <blog-page></blog-page>
             <!-- <router-view name="BlogPage" v-show="showBlog"></router-view> -->
         </div>
-        <div class="showpage activeCard" @wheel.stop="">
+        <div class="showpage activeCard" @wheel.stop="" @touchend.stop="">
             <div class="showtag tag3" @click="pullCard(2)">
                 好物
             </div>
             <!-- <router-view name="LovePage" v-show="showLove"></router-view> -->
             <love-page></love-page>
         </div>
-        <div class="showpage activeCard" @wheel.stop="">
+        <div class="showpage activeCard" @wheel.stop="" @touchend.stop="">
             <div class="showtag tag4" @click="pullCard(3)">
                 人间
             </div>

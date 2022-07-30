@@ -41,7 +41,7 @@ function changeContent(){
   console.log(valueHtml.value)
 }
 
-const focus = inject('focus', true)
+// const focus = inject('focus', true)
 // 模拟 ajax 异步获取内容
 onMounted(() => {
   setTimeout(() => {

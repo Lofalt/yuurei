@@ -7,9 +7,8 @@
             <div class="date">2022.7.24 21:16</div>
             <span></span>
             <div class="info">
-              鲤鱼姐没有你我怎么活啊鲤鱼姐没有你我怎么活啊
+                鲤鱼姐没有你我怎么活啊鲤鱼姐没有你我怎么活啊
             </div>
-
 
         </div>
     </div>

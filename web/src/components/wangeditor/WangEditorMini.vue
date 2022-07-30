@@ -62,15 +62,13 @@ function calling() {
     console.log("call")
 }
 
-watch(focus, (newValue, oldValue) => {
-    console.log(newValue)
-    // if (newValue) {
-    nextTick(() => {
-        editorRef.value.focus()
-
-    });
-    // }
-})
+// watch(focus, (newValue, oldValue) => {
+//     console.log(newValue)
+//     // if (newValue) {
+//         editorRef.value.focus()
+//
+//     // }
+// })
 // 组件销毁时，也及时销毁编辑器
 onBeforeUnmount(() => {
     const editor = editorRef.value
@@ -107,7 +105,7 @@ const handleCreated = (editor: any) => {
     // overflow: auto;
 
     @media (max-width:1024px) {
-        // height: 100%;    
+         //height: 100%;
         height: 40vh;
     }
 }

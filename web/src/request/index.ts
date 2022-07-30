@@ -35,7 +35,7 @@ axios.interceptors.response.use(
     },
     error => {
 
-        alert(JSON.stringify(error));
+        // alert(JSON.stringify(error));
     }
 );
 export default {
@@ -44,10 +44,10 @@ export default {
      * @param {Object} data
      * @returns Promise
      */
-    post(url:any, data:any) {
+    request(url: any, method: string, data: any) {
         return new Promise((resolve, reject) => {
             axios({
-                method: 'post',
+                method: method,
                 url,
                 data: qs.stringify(data),
             })
@@ -60,7 +60,7 @@ export default {
         })
     },
 
-    get(url:any, data:any) {
+    get(url: any, data: any) {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'get',

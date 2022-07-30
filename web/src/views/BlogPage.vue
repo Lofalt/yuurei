@@ -133,7 +133,9 @@ function changeModal() {
         // overflow: hidden;
         // white-space: nowrap;
 
-
+    @media (max-height: 800px){
+      height:80vh;
+    }
         &::after {
             content: '';
             width: 0px;

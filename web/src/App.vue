@@ -13,9 +13,9 @@
 
       <div class="middle">
         <!-- <router-view></router-view> -->
-        <right-bar @wheel.self="wheeling" @touchend.stop></right-bar>
+        <right-bar @wheel.self="wheeling"></right-bar>
       </div>
-      <div class="info" @wheel.self="wheeling" >
+      <div class="info" @wheel.self="wheeling">
         <div class="infoPage" @touchend.stop="">
 
           <router-view></router-view>
@@ -24,15 +24,18 @@
       <div class=" bottom" @wheel.self="wheeling">
         <div class="bottomPage">
           <!-- <anli-page></anli-page> -->
-          <iframe src="//player.bilibili.com/player.html?aid=4539251&bvid=BV1Ds411q7Xp&cid=7360965&page=1"
+          <!--          <iframe src="//player.bilibili.com/player.html?aid=4539251&bvid=BV1Ds411q7Xp&cid=7360965&page=1"-->
+          <!--                  scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>-->
+          <iframe src="//player.bilibili.com/player.html?aid=290694593&bvid=BV1yf4y1Y7V1&cid=341769102&page=1"
                   scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+
         </div>
       </div>
       <div class=" bottom" @wheel.self="wheeling" v-show="isAdmin">
-<!--        <div class="bottomPage">-->
-          <article-editor/>
-<!--        </div>-->
-<!--        <home/>-->
+        <!--        <div class="bottomPage">-->
+        <article-editor/>
+        <!--        </div>-->
+        <!--        <home/>-->
       </div>
     </div>
   </div>
@@ -56,23 +59,23 @@ var touchX = 0
 var touchY = 0
 
 
-function touchStart(event:any){
-  touchX=event.targetTouches[0].pageX;
-  touchY=event.targetTouches[0].pageY;
+function touchStart(event: any) {
+  touchX = event.targetTouches[0].pageX;
+  touchY = event.targetTouches[0].pageY;
 }
 
-function touchEnd(event:any){
+function touchEnd(event: any) {
   // alert("hello")
   // alert(touchY)
   let touchYEnd = event.changedTouches[0].pageY
-  let touches  =touchYEnd-touchY
-  if(touches<-90){
-    if(pageCount.value < 3){
-    pageCount.value ++
+  let touches = touchYEnd - touchY
+  if (touches < -90) {
+    if (pageCount.value < 3) {
+      pageCount.value++
     }
   }
-  if(touches>90){
-    if(pageCount.value>0){
+  if (touches > 90) {
+    if (pageCount.value > 0) {
       pageCount.value--
     }
   }
@@ -82,8 +85,10 @@ function touchEnd(event:any){
 watch(pageData, (newValue, oldValue) => {
   pageCount.value = 1
 })
+
 function touchChange(event: any) {
 }
+
 const isAdmin = ref(true)
 const showHome = computed(() => {
   return pageCount.value == 0
