@@ -19,18 +19,21 @@
       <div class="articleContent" v-html="article.ArticleContent"/>
     </div>
     <div class="preAndNext">
-      <!--        <div v-if="pre">-->
-      <!--            上一篇: <a href="javascript:"  @click="jump(pre.articleId)">{{pre.articleTitle}}</a>-->
-      <!--        </div>-->
-      <!--        <div v-else disabled>-->
-      <!--            该分类下没有上一篇啦!-->
-      <!--        </div>-->
-      <!--        <div v-if="next" @click="jump(next.articleId)">-->
-      <!--            下一篇: <a href="javascript:"  @click="jump(next.articleId)">{{next.articleTitle}}</a>-->
-      <!--        </div>-->
-      <!--        <div v-else disabled>-->
-      <!--            该分类下没有下一篇啦!-->
-      <!--        </div>-->
+      <div v-if="pre.ID!=0">
+
+        上一篇: <a href="javascript:" @click="jump(pre.ID)">{{ pre.ArticleTitle }}</a>
+      </div>
+      <div v-else disabled>
+
+        <!--        该分类下没有上一篇啦!-->
+      </div>
+      <div v-if="next.ID!=0" @click="jump(next.ID)">
+        下一篇: <a href="javascript:" @click="jump(next.ID)">{{ next.ArticleTitle }}</a>
+      </div>
+      <div v-else disabled>
+        <!--        该分类下没有下一篇啦!-->
+
+      </div>
     </div>
     <!--    <comments :article="article" v-cloak/>-->
   </div>
@@ -45,6 +48,7 @@ import {onMounted, reactive, ref, watch} from "vue";
 import axios from "@/request/index"
 import qs from "qs"
 import {useRouter} from "vue-router"
+import Comments from "../components/article/Comments.vue"
 
 const router = useRouter()
 const article = ref({
@@ -58,25 +62,38 @@ const article = ref({
 const props = defineProps<{
   id: any
 }>()
+
+
+const pre = ref(null)
+const next = ref(null)
+
 onMounted(() => {
   axios.get(
       "/yuurei/article/" + props.id,
       {}
-  ).then((result) => {
+  ).then((result: any) => {
     article.value = result.data.data
+    pre.value = result.data.pre
+    next.value = result.data.next
 
   })
 })
 watch(router.currentRoute, (newValue, oldValue) => {
   axios.get(
       "/yuurei/article/" + newValue.params.id, {}
-  ).then((result) => {
+  ).then((result: any) => {
     article.value = result.data.data
+    pre.value = result.data.pre
+    next.value = result.data.next
+    console.log(result.data)
     document.getElementsByClassName("articlePage")[0].scrollTo(0, 0)
 
   })
 })
 
+function jump(id: number) {
+  router.push("/archive/article/" + id)
+}
 </script>
 
 <!--<script>-->
@@ -206,13 +223,15 @@ watch(router.currentRoute, (newValue, oldValue) => {
       /*margin-top:15px;*/
       font-size: 16px;
       padding-bottom: 15px;
-      color: rgb(49,49,49)
+      color: rgb(49, 49, 49)
       /*color: #005cc5;*/
       /*color: #009486;*/
     }
-    p:nth-child(1){
-      padding-top:50px;
+
+    p:nth-child(1) {
+      padding-top: 50px;
     }
+
     a img {
       max-width: 100%;
     }

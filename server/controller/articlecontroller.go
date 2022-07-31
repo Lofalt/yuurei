@@ -18,10 +18,31 @@ type IArticleController interface {
 	SelectArticleById(c *gin.Context)
 	SelectArticlesByTagId(c *gin.Context)
 	SelectArticlesByCategoryId(c *gin.Context)
+	SelectPre(c *gin.Context)
+	SelectNext(c *gin.Context)
 }
 
 type ArticleController struct {
 	DB *gorm.DB
+}
+
+func (a ArticleController) SelectPre(c *gin.Context) {
+	var art model.Article
+	c.ShouldBind(&art)
+	var art2 model.Article
+	err := a.DB.Debug().Where("article_category_id = ? AND created_at < ?", art.ArticleCategoryID, art.CreatedAt).Last(&art2).Error
+	if err != nil {
+		response.Fail(c, gin.H{}, err.Error())
+		return
+	}
+
+	response.Success(c, gin.H{"data": art2}, "success")
+
+}
+
+func (a ArticleController) SelectNext(c *gin.Context) {
+	//TODO implement me
+	panic("implement me")
 }
 
 func (a ArticleController) SelectAll(c *gin.Context) {
@@ -57,9 +78,15 @@ func (a ArticleController) SelectArticleById(c *gin.Context) {
 			DeletedAt: gorm.DeletedAt{},
 		},
 	}
+	var pre model.Article
+	var next model.Article
 	a.DB.Debug().Preload("Tags").Preload("ArticleCategory").Find(&article)
+	a.DB.Debug().Where("created_at<? AND article_category_id=?", article.CreatedAt, article.ArticleCategoryID).Last(&pre)
+	a.DB.Debug().Where("created_at>? AND article_category_id=?", article.CreatedAt, article.ArticleCategoryID).First(&next)
 	response.Success(c, gin.H{
 		"data": article,
+		"pre":  pre,
+		"next": next,
 	}, "success")
 
 }

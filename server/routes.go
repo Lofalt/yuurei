@@ -23,6 +23,7 @@ func CollecRouter(r *gin.Engine) *gin.Engine {
 	articleRoutes.POST("", artilceController.Create)
 	articleRoutes.PUT(":id", artilceController.Update)
 	articleRoutes.DELETE(":id", artilceController.Delete)
+	articleRoutes.POST("pre", artilceController.SelectPre)
 
 	categoryRoutes := r.Group("/yuurei/articleCategory")
 	categoryController := controller.CreateCategoryController()
