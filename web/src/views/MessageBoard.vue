@@ -48,12 +48,9 @@
 import { computed, provide, ref } from 'vue';
 import WangEditorMini from "../components/wangeditor/WangEditorMini.vue"
 import { useRouter } from 'vue-router'
-// import TinyMce from "../components/tinymce/TinyMce.vue"
 import '@wangeditor/editor/dist/css/style.css' // 引入 css
 import { NModal, NCard } from 'naive-ui';
 import Joke from "../components/comments/Joke.vue"
-// import { onBeforeUnmount, shallowRef, onMounted } from 'vue'
-// import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 import { MessageCircle } from "@vicons/tabler"
 import { NIcon } from "naive-ui"
 import axios from "@/request/index"

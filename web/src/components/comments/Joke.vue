@@ -77,6 +77,7 @@ function deleteMsg() {
     margin-right: 20px;
     position: relative;
     background-position: center;
+    box-shadow: -4px 4px 1px 0 rgba(49, 49, 49, 0.2);
 
     @media (max-width: 1024px) {
       width: 8vh;
@@ -109,7 +110,7 @@ function deleteMsg() {
       cursor: pointer;
       position: absolute;
       bottom: -30px;
-      right: 140px;
+      right: 160px;
       //text-shadow: -1px 1px 2px rgb(49,49,49);
       text-shadow: -1px 1px 5px rgba(49, 49, 49, .4);
 
@@ -123,7 +124,12 @@ function deleteMsg() {
       right: 2px;
       text-shadow: -1px 1px 5px rgba(164, 74, 74, 0.4);
       text-align: right;
-      color: rgb(49, 49, 49)
+      //color: rgb(49, 49, 49);
+      color:white;
+      padding:0px 5px;
+      border-radius: 2px;
+      background-color: rgba(49, 49, 49, 0.76);
+      box-shadow: -4px 4px 1px 0 rgba(49, 49, 49, 0.2);
     }
 
     @media (max-width: 1024px) {

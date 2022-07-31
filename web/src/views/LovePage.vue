@@ -42,7 +42,9 @@ import Entry from "../components/Entry.vue"
     width: 100%;
     height: 100%;
     padding-left: 70px;
-
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
     @media (max-width: 800px) {
       padding-left: 0;
     }

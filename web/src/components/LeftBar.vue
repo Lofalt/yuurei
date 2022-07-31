@@ -1,8 +1,8 @@
 <template>
   <div class="leftbar">
-    <div class="header">幽居</div>
+    <div class="header">NULL</div>
     <div class="profile"></div>
-    <div class="name">LOFALT</div>
+    <div class="name">UNDEFINED</div>
     <div class="icon1">
       <!-- <div> -->
       <!-- <svg class="icon" aria-hidden="false">
@@ -143,8 +143,8 @@ a {
     //border:3px solid rgb(49,49,49);
     //border-radius: 2px;
     box-shadow: -1px 1px 4px 1px rgba(49, 49, 49, .5);
-    //width:150px;
-    background-color: rgb(23, 23, 23);
+    width:250px;
+    background-color: rgb(73, 155, 169);
     color: white;
   }
 
@@ -171,7 +171,7 @@ a {
     // justify-content: center;
     // align-items: center;
     color: black;
-    background-image: url("../assets/-421408862.jpg");
+    background-image: url("../assets/e342ee78a065e6c608d9d31959dd8b24.jpeg");
     // background-image: url("../assets/QQ图片20220723102142.jpg");
     background-size: cover;
     background-position: center;

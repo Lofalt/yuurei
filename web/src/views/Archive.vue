@@ -262,7 +262,7 @@ function jump(id: number) {
     }
 
     margin-top: 20px;
-    border-top: 1px solid #3a3a3a;
+    //border-top: 1px solid rgba(58, 58, 58, 0.1);
   }
 
   .articleSummary {
@@ -299,7 +299,7 @@ function jump(id: number) {
   padding: 30px;
   /*border:5px #ffe4b5 dashed;*/
   /*box-shadow: 0 0 5px rgba(100,100,100,.5);*/
-  border-bottom: 1px solid #3a3a3a;
+  border-bottom: 1px solid rgba(58, 58, 58, 0.1);
   /*border-radius: 10px;*/
 
   .articleHeader {
@@ -317,7 +317,7 @@ function jump(id: number) {
       text-align: center;
       padding-bottom: 10px;
       margin-bottom: 50px;
-      border-bottom: 1px solid #414141;
+      border-bottom: 1px solid rgba(65, 65, 65, 0.1);
 
       span {
         margin-left: 10px;
@@ -329,6 +329,9 @@ function jump(id: number) {
 }
 
 .preAndNext {
+  position: relative;
+  //float: left;
+  bottom: 0;
   display: flex;
   justify-content: space-between;
   margin: 0 50px;
@@ -352,7 +355,7 @@ function jump(id: number) {
   }
 
   .article {
-    height: 100%;
+    //height: 100%;
     padding: 10px;
     margin: 0 5px;
   }

@@ -255,7 +255,7 @@ function pushCard() {
       border-radius: 3px;
       writing-mode: vertical-lr;
       //text-align:s;
-      align-items: end;
+      align-items: flex-end;
       color: rgb(255, 255, 255);
       font-size: 1.3em;
       padding: 8px 5px;
