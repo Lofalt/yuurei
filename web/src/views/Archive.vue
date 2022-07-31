@@ -19,7 +19,7 @@
       <div class="articleContent" v-html="article.ArticleContent"/>
     </div>
     <div class="preAndNext">
-      <div v-if="pre.ID!=0">
+      <div v-if="hasPre">
 
         上一篇: <a href="javascript:" @click="jump(pre.ID)">{{ pre.ArticleTitle }}</a>
       </div>
@@ -27,7 +27,7 @@
 
         <!--        该分类下没有上一篇啦!-->
       </div>
-      <div v-if="next.ID!=0" @click="jump(next.ID)">
+      <div v-if="hasNext">
         下一篇: <a href="javascript:" @click="jump(next.ID)">{{ next.ArticleTitle }}</a>
       </div>
       <div v-else disabled>
@@ -43,7 +43,7 @@
 <script lang="ts" setup>
 
 
-import {onMounted, reactive, ref, watch} from "vue";
+import {computed, onMounted, reactive, ref, watch} from "vue";
 // import axios from "axios"
 import axios from "@/request/index"
 import qs from "qs"
@@ -67,6 +67,28 @@ const props = defineProps<{
 const pre = ref(null)
 const next = ref(null)
 
+const hasPre = computed(() => {
+  if (pre.value === null) {
+    return false
+  }
+  if (pre.value.ID === 0) {
+    return false
+  }
+  return true
+
+})
+
+
+const hasNext = computed(() => {
+  if (next.value === null) {
+    return false
+  }
+  if (next.value.ID === 0) {
+    return false
+  }
+  return true
+
+})
 onMounted(() => {
   axios.get(
       "/yuurei/article/" + props.id,
@@ -85,7 +107,6 @@ watch(router.currentRoute, (newValue, oldValue) => {
     article.value = result.data.data
     pre.value = result.data.pre
     next.value = result.data.next
-    console.log(result.data)
     document.getElementsByClassName("articlePage")[0].scrollTo(0, 0)
 
   })

@@ -23,7 +23,7 @@
     </div>
     <div class=" bottom" @wheel.self="wheeling" v-show="isAdmin">
       <!--        <div class="bottomPage">-->
-<!--      <article-editor/>-->
+      <article-editor/>
       <!--        </div>-->
       <!--        <home/>-->
     </div>
@@ -89,7 +89,6 @@ function wheeling(event: any) {
       }
     }
     if (event.wheelDelta == -150 || event.wheelDelta == -120 || event.wheelDelta < -100) {
-      console.log("is me?")
       pageData.countIncrease()
       if (pageData.pagedata.count > 3) {
         pageData.pagedata.count = 3
@@ -100,8 +99,6 @@ function wheeling(event: any) {
 
 
 watch(pageData.pagedata, (newValue, oldValue) => {
-  console.log(newValue)
-  console.log(oldValue)
   const rightPage = document.getElementById("rightbar") as HTMLSelectElement
   rightPage.style.transform = `translateY(-${newValue.count}00vh)`
 })

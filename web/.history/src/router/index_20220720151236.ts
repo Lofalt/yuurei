@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-import PicPage from "@/views/PicPage.vue";
+import PicPage from "../../../src/views/ArticlePage.vue";
 import BlogPage from "../views/BlogPage.vue"
 import VlogPage from "../views/VlogPage.vue"
 import LovePage from "../views/LovePage.vue"
@@ -26,7 +26,7 @@ const routes: Array<RouteRecordRaw> = [
         children: [
           {
             path: "anli",
-            component: import("@/views/AnliPage.vue"),
+            component: import("../../../src/views/PicPage.vue"),
             props: true,
           }
         ]

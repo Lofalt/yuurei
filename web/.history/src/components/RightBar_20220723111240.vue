@@ -43,11 +43,11 @@ export default {
 import WaterPage from "../views/WaterPage.vue"
 import { onDeactivated, onUnmounted, provide, ref } from 'vue';
 import { useRouter } from 'vue-router'
-import AnliPage from '@/views/AnliPage.vue';
-import PicPage from "@/views/PicPage.vue";
+import AnliPage from '../../../src/views/PicPage.vue';
+import PicPage from "../../../src/views/ArticlePage.vue";
 import VlogPage from "@/views/VlogPage.vue";
 import LovePage from "@/views/LovePage.vue";
-import BlogPage from "@/views/BlogPage.vue";
+import BlogPage from "../../../src/views/MessageBoard.vue";
 // import LovePage from "@/views/LovePage.vue";
 const router = useRouter();
 const showBlog = ref(false)

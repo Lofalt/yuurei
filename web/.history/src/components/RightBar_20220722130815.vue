@@ -40,7 +40,7 @@ export default {
 import WaterPage from "../views/WaterPage.vue"
 import { onDeactivated, onUnmounted, ref } from 'vue';
 import { useRouter } from 'vue-router'
-import AnliPage from '@/views/AnliPage.vue';
+import AnliPage from '../../../src/views/PicPage.vue';
 const router = useRouter();
 const showBlog = ref(false)
 const showVlog = ref(true)

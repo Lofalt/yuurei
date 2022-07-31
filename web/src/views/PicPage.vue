@@ -1,185 +1,361 @@
 <template>
-  <div class="container">
-    <div class="catList">
-      <div class="cat" @click="getArtsByCat(`all`)" :class="{active:isActive('all')}">ALL</div>
-    <div class="cat" v-for="item in catList" @click="getArtsByCat(item.ID)" :class="{active:isActive(item.ID)}">{{item.ArticleCategoryName}}</div>
+    <div id="main" @wheel="listenScroll" @touchstart.stop="touchStart" @touchend.stop="touchEnd">
+        <!-- <button class="scrollToTop" @click="scrollToTop">dmwo</button> -->
+        <img class=" test" v-for="(item, index) in picList" :src="item" :key="item" ref="waterFallItem"
+            @click="zoom(index)" :style="{ animationDelay: (index % 2) * 0.1 + 's' }" />
     </div>
-    <panel-com v-for="item in articleList"
-               @click="changePage(1)"
-               :article="item" :key="item.ID"></panel-com>
-    <n-pagination v-model:page="pageNum" :page-count="pageTotal" show-quick-jumper class="page">
-      <template #goto v-show="isShow">
-        跳转
-      </template>
-    </n-pagination>
-  </div>
+    <!-- <loading-com class="loading"></loading-com> -->
+    <loading-com class="loading" v-show="isLoading"></loading-com>
+    <!-- <div class="loading" v-show="offset == 15">--</div> -->
+    <transition>
+        <div @click="zoomout" v-if="hover" class="photoInfo" :style="{ backgroundImage: `url('` + showingPage + `')` }">
+
+        </div>
+    </transition>
 </template>
+
 <script lang="ts" setup>
-import {NPagination} from 'naive-ui'
-import {usePageData} from '@/store/pageData';
-import PanelCom from '../components/PanelCom.vue'
-import {useRouter} from 'vue-router';
-import {computed, ref, watch} from "vue";
-import axios from '@/request/index'
 
-const pageData = usePageData()
-const router = useRouter()
-const pageNum = ref(1)
-const pageTotal = ref(10)
-const pageSize = ref(8)
-const currentCat =ref("all")
+import axios from "axios"
+import qs from 'qs'
+import { reactive, ref, onMounted, watch, nextTick, inject, Ref } from "vue";
+import LoadingCom from "../components/LoadingCom.vue"
 
-function isActive(num:any){
-  return num === currentCat.value
-}
-const isShow = computed(()=>{
-  return pageTotal.value >8
-})
-function changePage(num: number) {
-  pageData.pagedata.count = 1
-  // router.push('/About')
-}
+const isShow = ref(true)
+const picList = ref<any>([])
+const offset = ref(5)
+const colRaw = ref(2)
+const screenWidth = ref(0)
+const waterFallItem = ref<HTMLSelectElement>()
+const showingPage = ref('')
+const hover = inject('hover') as Ref<boolean>
+const showVlog = inject('showVlog') as Ref<boolean>
+const isLoading = ref(false)
 
-const articleList = ref([])
-const catList = ref([])
+var touchX = 0
+var touchY = 0
 
-getArts(pageNum.value,pageSize.value)
 
-function getArtsByCat(id:number){
-  pageNum.value = 1
-  currentCat.value = id
-
+function touchStart(event:any){
+  touchX=event.targetTouches[0].pageX;
+  touchY=event.targetTouches[0].pageY;
 }
 
-function getArts(pagenum:number,pagesize:number){
-  if(currentCat.value === "all"){
-  axios.get(`yuurei/article/all?pageNum=${pagenum}&pageSize=${pagesize}`,{}).then((result) => {
-    articleList.value = result.data.data
-    pageTotal.value = Math.round(result.data.total / pageSize.value)
-    document.getElementsByClassName("container")[0].scrollTo(0,0)
-  })
+function touchEnd(event:any){
+  // alert("hello")
+  // alert(touchY)
+  let touchYEnd = event.changedTouches[0].pageY
+  let touches  =touchYEnd-touchY
+  if(touches<-90){
+    if (!isLoading.value && offset.value < 15) {
+      isLoading.value = true
+      setTimeout(() => {
+        getNext(offset.value)
 
-  }else{
-    axios.get(`yuurei/article/categoryId/${currentCat.value}?pageNum=${pagenum}&pageSize=${pagesize}`,{}).then((result) => {
-      articleList.value = result.data.data
-      pageTotal.value = Math.round(result.data.total / pageSize.value)
-      document.getElementsByClassName("container")[0].scrollTo(0,0)
+      }, 3000);}
+  }
+
+}
+
+
+function scroll(scrollDuration: number, box: any) {
+    var cosParameter = box.scrollY / 2,
+        scrollCount = 0,
+        oldTimestamp = performance.now();
+    function step(newTimestamp: any) {
+        scrollCount += Math.PI / (scrollDuration / (newTimestamp - oldTimestamp));
+        if (scrollCount >= Math.PI) box.scrollTo(0, 0);
+        if (box.scrollY === 0) return;
+        box.scrollTo(0, Math.round(cosParameter + cosParameter * Math.cos(scrollCount)));
+        oldTimestamp = newTimestamp;
+        // box.requestAnimationFrame(step);
+    }
+    // box.requestAnimationFrame(step);q
+}
+function scrollToTop() {
+    const box = document.getElementById("main") as HTMLSelectElement
+    // box.scrollTo(0, 0)
+    scroll(500, box)
+}
+
+function listenScroll(event: any) {
+    const box = document.getElementById("main") as HTMLSelectElement
+    if (box.scrollTop + box.offsetHeight + 50 > box.scrollHeight) {
+        // offset.value += 5
+        if (!isLoading.value && offset.value < 15) {
+            isLoading.value = true
+            setTimeout(() => {
+                getNext(offset.value)
+
+            }, 3000);
+
+        } else {
+            return
+        }
+    }
+
+}
+
+
+function zoomout() {
+    hover.value = false
+}
+function zoom(event: number) {
+    let childs = document.getElementsByClassName("test") as HTMLSelectElement
+    showingPage.value = childs[event].getAttribute("src") as string
+    hover.value = true
+
+}
+function getNext(num: number) {
+
+    axios.defaults.baseURL = "/api"
+    isLoading.value = true
+
+    axios.post("/yuurei/img", qs.stringify({ num: num + 5 })).then((result) => {
+        for (let i = num; i < result.data.data.list.length; i++) {
+            picList.value.push(result.data.data.list[i])
+        }
+        offset.value += 5
+        waterFall()
+    })
+}
+function getPic(num: number) {
+    axios.defaults.baseURL = "/api"
+    axios.post("/yuurei/img", qs.stringify({ num: num })).then((result) => {
+        picList.value = result.data.data.list
+        setTimeout(() => {
+            waterFall()
+
+        }, 500);
+    })
+}
+function waterFall() {
+    setTimeout(() => {
+        let childs = document.getElementsByClassName("test") as HTMLSelectElement
+        // showingPage.value = childs[0].getAttribute("src") as string
+        var boxWidth = childs[0].offsetWidth
+        var heightArr = [], boxHeight = 0, minBoxHeight = 0, minIndex = 0
+        var col: number = colRaw.value
+        for (let i = 0; i < childs.length; i++) {
+            boxHeight = childs[i].offsetHeight
+            if (i < col) {
+                heightArr.push(boxHeight + 50)
+                childs[i].style.position = 'absolute'
+                childs[i].style.left = i * boxWidth + 'px'
+                childs[i].style.top = 5 + '0px'
+                childs[i].style.opacity = '1'
+                childs[i].style.transform = "translateY(0)"
+            } else {
+                minBoxHeight = heightArr[minBox(heightArr)]
+                minIndex = minBox(heightArr)
+                childs[i].style.position = 'absolute'
+                childs[i].style.left = minIndex * boxWidth + 'px'
+                childs[i].style.top = minBoxHeight + 'px'
+                childs[i].style.opacity = '1'
+                childs[i].style.transform = "translateY(0)"
+                heightArr[minIndex] += boxHeight
+            }
+        }
+        isLoading.value = false
+    }, 600)
+}
+
+function minBox(box: any) {
+    var j = 0
+    for (let i = 0; i < box.length; i++) {
+        if (box[j] > box[i]) {
+            j = i
+        }
+    }
+    return j
+}
+onMounted(() => {
+    getPic(offset.value)
+    nextTick(() => {
+        // waterFall()
+
+        window.onscroll = () => {
+            let scrollTop = document.documentElement.scrollTop; //获取滚动距离
+            let scrollHeigh = document.documentElement.scrollHeight; //获取整个页面的高度
+            let clientHeigh = document.documentElement.clientHeight; //获取
+            if (scrollTop + clientHeigh - scrollHeigh >= -50) {
+                getNext(offset.value)
+            }
+        }
+        window.onresize = () => {
+            return (() => {
+                screenWidth.value = document.body.clientWidth
+            })()
+        }
 
     })
-  }
-}
-
-axios.get("/yuurei/articleCategory/all").then((result)=>{
-  result.data.data.forEach((data)=>{catList.value.push(data)
-  })
 })
+watch(screenWidth, () => {
+    if (screenWidth.value >= 1000) {
+        colRaw.value = 2
+    }
+    // if (screenWidth.value < 1000 && screenWidth.value >= 700) {
+    //     colRaw.value = 2
 
-watch(pageNum,(newValue,oldValue)=>{
-  getArts(newValue,pageSize.value)
+    // }
+    if (screenWidth.value < 800) {
+        colRaw.value = 2
+    }
+    waterFall()
 })
-watch(currentCat,(newValue,oldValue)=>{
-  getArts(pageNum.value,pageSize.value)
+watch(colRaw, () => {
+    // let childs = document.getElementsByClassName("test") as HTMLSelectElement
+    // for (let i = 0; i < childs.length; i++) {
+    //     childs[i].style.width = 100 / colRaw.value + "%"
+    // }
 })
 </script>
+
 <style lang="less" scoped>
-.page{
-  margin: 10px auto;
-  justify-content: center;
-
-
+.loading {
+    // position: relative;
+    bottom: 0;
+    // height: 5%;
+    // float: left;
+    text-align: center;
 }
 
-.n-pagination-item--active {
-  color: black !important;
-  border: 1px black solid !important;
+.v-enter-from,
+.v-leave-to {
+    opacity: 0;
 }
-.n-pagination{
-  --n-item-text-color-active:white!important;
-  --n-item-color-active: #FF5353FF !important;
 
-  --n-item-border-active:2px solid black!important;
-  --n-item-text-color-hover:white!important;
-  --n-item-color-hover: #FF5353FF !important;
-  --n-item-color-active-hover:#FF5353FF!important;
-
-
+.v-enter-active {
+    transition: all .8s;
 }
-.active{
-  background-color: #FF5353FF!important;
-  color: white;
+
+.v-leave-active {
+    transition: all .3s;
 }
-.container {
-  width: 98%;
-  float: left;
-  height: 100%;
-  overflow: auto;
-  position: relative;
-  bottom: 0;
-  margin: auto auto;
-  .catList{
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    &::after,
-    &::before{
-      content: ""; //设置内容为空
 
-      height: 0; //高度为0
-
-      line-height: 0; //行高为0
-
-      display: block; //将文本转为块级元素
-
-      visibility: hidden; //将元素隐藏
-
-      clear: both //清除浮动
-    }
-  }
-  .cat{
+.photoInfo {
+    background-color: rgba(43, 43, 43, 0.738);
+    width: 100%;
+    // width: auto;
+    height: 100%;
+    position: absolute;
+    // position: fixed;
+    top: 0;
+    left: 0;
+    // z-index: 10;
+    background-size: contain;
+    background-repeat: no-repeat;
+    // animation: zoom 1s ease;
     cursor: pointer;
-    margin-top:20px;
-    padding: 3px 20px;
-    background-color: white;
-    border: 3px solid rgb(49,49,49);
-    border-radius: 2px;
-    box-shadow: -1px 1px 0px 0px rgb(49,49,49);
-    @media (max-width: 1024px){
-      padding:0px 40px;
+    background-position: center;
+    // z-index: 10;
+}
+
+@keyframes zoom {
+    from {
+        opacity: 0;
     }
-    &:hover{
-      background-color: #FF5353FF;
-      color: white;
+}
+
+.scrollToTop {
+    position: fixed;
+    z-index: 10;
+    top: 100px;
+}
+
+.test {
+    cursor: pointer;
+    left: 0px;
+    width: 50%;
+    // height: 100%;
+    box-sizing: border-box;
+    padding: 8px;
+    // margin: 8px;
+    /* margin:15px; */
+    // float: left;
+    transition: opacity 0.5s ease-in-out;
+    // transition: all 1s;
+    // animation: enter 1s;
+    // animation-timing-function: ease-in-out;
+    // animation-fill-mode: backwards;
+    // box-shadow: 0 0 1px 1px rgba(43, 43, 43, 0.738);
+    opacity: 0;
+    // transform: translateY(1000px);
+
+    &:hover {
+        transform: translate(-5px, -5px) !important;
+        box-shadow: -2px 2px 5px 1px rgba(0, 0, 0, 0.1);
+        transition: all .2s ease;
+
     }
-  }
+
+    @media (max-width:800px) {
+        padding: 5px;
+
+    }
+}
+
+#main {
+    // position: relative;
+    // margin: 0 auto;
+    height: 100%;
+    // width: 80%;
+    // margin: 0 auto;
+    width: 70%;
+    // float: left;
+    // height: 100%;
+    overflow: auto;
+    position: relative;
+    // bottom: 0;
+    margin: 0 auto;
+    padding-top: 10vh;
 
   &::-webkit-scrollbar {
-    width: 5px;
-    // background-color: aquamarine;
-    // color: black;
+    width: 0px;
+    // transition: all 1s;
   }
-
-
   &::-webkit-scrollbar-thumb {
     width: 5px;
-    background-color: rgba(73, 73, 73, .3);
-    color: black;
-    border-radius: 20px;
+    background-color: rgba(110, 110, 110, 0.6);
+    // transition: all 1s;
+    border-radius: 10px;
   }
 
-  scrollbar-width: none;
+    &::after,
+    &::before {
+        content: "";
+        // overflow: hidden;
+        display: block;
+        height: 0;
+        clear: both;
+        visibility: hidden;
+    }
+
+    @media (max-width:800px) {
+        // padding-top: 2vh;
+        width: 90%
+    }
+
+
 }
 
-::-webkit-scrollbar {
-  width: 0px;
+
+button {
+    position: absolute
 }
 
-.panel {
-  background-color: rgba(109, 155, 255, 0.8);
-  width: 80%;
-  height: 25vh;
-  margin: 30px auto;
-  border-radius: 5px;
-  text-align: center;
-  cursor: pointer;
+.box {
+    width: 100%;
+    background-color: yellow;
+    height: 100px;
+    transition: all 1s ease-in-out;
+}
+
+
+@keyframes enter {
+    from {
+        // transform: translateY(1000px);
+        opacity: 0;
+    }
 }
 </style>

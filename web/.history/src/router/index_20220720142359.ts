@@ -14,7 +14,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "pages",
         components: {
-          default: import("@/views/PicPage.vue"),
+          default: import("../../../src/views/ArticlePage.vue"),
 
         }
       }
