@@ -1,6 +1,9 @@
 <template>
   <div id="rightbar" @touchstart="touchStart" @touchend="touchEnd">
+    <transition>
 
+      <Date v-show="pageData.pagedata.count===0"></Date>
+    </transition>
     <div class="middle">
       <!-- <router-view></router-view> -->
       <right-bar @wheel.self="wheeling"></right-bar>
@@ -36,6 +39,9 @@ import {computed, getCurrentInstance, provide, ref, watch} from 'vue';
 import RightBar from '@/components/RightBar.vue'
 import {usePageData} from '@/store/pageData';
 import ArticleEditor from "@/components/edit/ArticleEditor.vue"
+import Date from "@/components/Date.vue";
+import {ArrowBarToUp} from "@vicons/tabler"
+import {NIcon} from "naive-ui"
 
 const isShow = ref(true)
 const pageData = usePageData()
@@ -90,8 +96,8 @@ function wheeling(event: any) {
     }
     if (event.wheelDelta == -150 || event.wheelDelta == -120 || event.wheelDelta < -100) {
       pageData.countIncrease()
-      if (pageData.pagedata.count > 3) {
-        pageData.pagedata.count = 3
+      if (pageData.pagedata.count > 2) {
+        pageData.pagedata.count = 2
       }
     }
   }
@@ -139,40 +145,19 @@ function changePage(num: number) {
 <style lang="less" scoped>
 .fixedButton {
   position: fixed;
-  top: 10vh;
-  left: 18vw;
-  // outline: none;
-  // padding: 10px;
-  // border: none;
-  // background-color: rgba(255, 255, 255, 0.384);
-  // border-radius: 10px;
-  // cursor: pointer;
-  // color: rgba(37, 37, 37, 0.733);
+  top: 1vh;
+  left: 1vw;
+  z-index: 5;
   cursor: pointer;
-  // width: 5vw;
-  padding: 5px 20px;
-  background-color: #ffffff;
-  // height: 4vh;
-  border-radius: 2px;
-  outline-style: none;
-  border: 3px solid rgb(51, 51, 51);
-  box-shadow: -1px 1px 0 0px rgb(51, 51, 51);
-
   @media (max-width: 1024px) {
     height: 10vh;
-    left: 2vw;
-    // padding: 10px;
-    padding: 0;
-    width: 8vw;
-    top: 0;
-    writing-mode: vertical-lr;
-    background-color: rgb(49, 49, 49);
-    color: white;
+    left: 1vw;
+    top: 1vh;
   }
 
   &:hover {
-    background-color: rgb(255, 83, 83) !important;
-    color: white !important;
+    //background-color: rgb(255, 83, 83) !important;
+    //color: white !important;
 
   }
 

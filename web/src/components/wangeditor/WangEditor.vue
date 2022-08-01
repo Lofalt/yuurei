@@ -18,27 +18,34 @@
 </template>
 
 <script lang="ts" setup>
-import { inject, nextTick, ref, watch } from 'vue';
-import { useRouter } from 'vue-router'
+import {inject, nextTick, ref, watch} from 'vue';
+import {useRouter} from 'vue-router'
 import '@wangeditor/editor/dist/css/style.css' // 引入 css
 
-import { onBeforeUnmount, shallowRef, onMounted } from 'vue'
-import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
+import {onBeforeUnmount, shallowRef, onMounted} from 'vue'
+import {Editor, Toolbar} from '@wangeditor/editor-for-vue'
+
 const router = useRouter()
 
 // const content = ref('')
-
 const editorRef = shallowRef()
-
-const mode = ref('default')
 // 内容 HTML
-const valueHtml = ref()
-
+const valueHtml = ref('')
 const emit = defineEmits(['uploadContent'])
+const props = defineProps<{
+  article: object
+}>()
 
-function changeContent(){
-  emit('uploadContent',valueHtml.value)
-  console.log(valueHtml.value)
+if (props.article != undefined) {
+  valueHtml.value = props.article.ArticleContent
+}
+
+watch(props, (newValue: any) => {
+  valueHtml.value = props.article.ArticleContent
+})
+
+function changeContent() {
+  emit('uploadContent', valueHtml.value)
 }
 
 // const focus = inject('focus', true)
@@ -46,18 +53,15 @@ function changeContent(){
 onMounted(() => {
   setTimeout(() => {
 
-    // console.log(editorRef.value.getAllMenuKeys())
   }, 1500)
 
 })
 
 
 const toolbarConfig = {}
-// console.log(Toolbar)
-const editorConfig = { placeholder: '说点啥吧', focus: true }
+const editorConfig = {placeholder: '说点啥吧', focus: true}
 
 function calling() {
-  console.log("call")
 }
 
 
@@ -75,8 +79,8 @@ const handleCreated = (editor: any) => {
 }
 </script>
 <style lang="less" scoped>
-.w-e-text-container{
-  height:500px !important;
+.w-e-text-container {
+  height: 500px !important;
 }
 
 </style>

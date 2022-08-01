@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    {{ tags }}
     <div class="header">
       <input v-model="title" placeholder="输入标题">
     </div>
@@ -27,14 +26,14 @@
                       size="small" v-model:value="tagColor"/>
     </div>
 
-    <wang-editor class="editor" @upload-content="acceptContent"/>
+    <wang-editor class="editor" @upload-content="acceptContent" :article="article"/>
     <button class="sendBtn" @click="send">点我</button>
   </div>
 </template>
 
 <script lang="ts" setup>
 import WangEditor from "../wangeditor/WangEditor.vue"
-import {inject, ref, Ref, watch} from "vue";
+import {inject, nextTick, ref, Ref, watch} from "vue";
 import {NSpace, NSelect, NDynamicTags, NColorPicker} from "naive-ui";
 // import axios from "../../request/index"
 // import axios from "axios"
@@ -46,7 +45,30 @@ const summary = ref('')
 const content: Ref<string> = ref('')
 const tagColor = ref('#000000')
 const options = ref([])
-
+const article = inject('article') as any
+const emit = defineEmits(['success'])
+const tags = ref([])
+title.value = article.value.ArticleTitle
+summary.value = article.value.ArticleSummary
+category.value = article.value.ArticleCategoryID
+article.value.Tags.forEach((obj: any) => {
+  tags.value.push({
+    label: obj.TagName,
+    value: obj.ID
+  })
+})
+watch(article, (newValue: any, oldValue: any) => {
+  title.value = article.value.ArticleTitle
+  summary.value = article.value.ArticleSummary
+  category.value = article.value.ArticleCategoryID
+  tags.value = []
+  article.value.Tags.forEach((obj: any) => {
+    tags.value.push({
+      label: obj.TagName,
+      value: obj.ID
+    })
+  })
+})
 
 axios.get("/yuurei/articleCategory/all", {}).then((res: any) => {
   for (let i = 0; i < res.data.data.length; i++) {
@@ -57,8 +79,6 @@ axios.get("/yuurei/articleCategory/all", {}).then((res: any) => {
   }
 })
 
-const emit = defineEmits(['success'])
-const tags = ref([])
 
 function send() {
   var Tags = []
@@ -78,15 +98,14 @@ function send() {
     AriticleContent: content.value,
     Tags: Tags,
   }
-  console.log(Article)
-  axios.request("/yuurei/article", "post", {
+  axios.request("/yuurei/article/" + article.value.ID, "put", {
+    ID: article.value.ID,
     ArticleTitle: title.value,
-    ArticleCategory: ArticleCategory,
+    ArticleCategoryID: ArticleCategory.ID,
     ArticleSummary: summary.value,
     ArticleContent: content.value,
     Tags: Tags,
   }).then((res) => {
-    console.log(res)
     emit('success', res)
   })
 }
@@ -102,9 +121,6 @@ function onCreate(label: string) {
   axios.get("/yuurei/tag/" + label, {}).then((res: any) => {
     if (res.data.data != null) {
       value = res.data.data.ID
-      if (tags.value[tags.value.length - 1].label == label) {
-        tags.value[tags.value.length - 1].value = res.data.data.ID
-      }
     }
   }).then(() => {
     if (value === undefined) {
@@ -124,7 +140,9 @@ function onCreate(label: string) {
   })
   //若不存在 ,即创建新数据行 返回新ID
   //若存在 返回标签ID
+
   return {label: name, value: value}
+  // return
 }
 </script>
 <style lang="less" scoped>

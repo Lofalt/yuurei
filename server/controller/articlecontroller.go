@@ -186,16 +186,15 @@ func (a ArticleController) Update(c *gin.Context) {
 		return
 	}
 
-	if err := a.DB.Where("id=?", catid).First(&art).Error; err != nil {
+	if err := a.DB.Preload(clause.Associations).Where("id=?", catid).First(&art).Error; err != nil {
 		response.Fail(c, gin.H{}, err.Error())
 		return
 	}
-
-	if err2 := a.DB.Model(&art).Updates(&newArt).Error; err2 != nil {
+	if err2 := a.DB.Session(&gorm.Session{FullSaveAssociations: true}).Updates(&newArt).Error; err2 != nil {
 		response.Fail(c, gin.H{}, err2.Error())
 		return
 	}
-
+	a.DB.Model(&art).Association("Tags").Replace(newArt.Tags, art.Tags)
 	response.Success(c, gin.H{"data": art}, "更改成功")
 }
 

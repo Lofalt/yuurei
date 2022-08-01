@@ -1,19 +1,15 @@
 <template>
   <div class="app">
-    <!-- <transition> -->
-    <!-- <home v-show="showHome"></home> -->
-    <!-- </transition> -->
     <transition>
-      <n-icon size="50" color="#ffffff" @click="changePage(0)"  class="fixedButton" v-show="pageData.pagedata.count!=0" >
+      <n-icon size="50" color="#ffffff" @click="changePage(0)" class="fixedButton" v-show="pageData.pagedata.count!=0">
         <arrow-bar-to-up/>
       </n-icon>
-<!--      <button class="fixedButton" @click="changePage(0)" v-show="pageData.pagedata.count != 0">回到顶端</button>-->
     </transition>
     <left-bar></left-bar>
-    <transition>
+    <!--    <transition>-->
 
-    <Date v-show="pageData.pagedata.count==0"></Date>
-    </transition>
+    <!--    <Date v-show="pageData.pagedata.count==0"></Date>-->
+    <!--    </transition>-->
 
     <router-view></router-view>
     <!--    <div id="rightbar" @touchstart="touchStart" @touchend="touchEnd">-->
@@ -53,8 +49,8 @@ import {computed, getCurrentInstance, provide, ref, watch} from 'vue';
 import LeftBar from './components/LeftBar.vue';
 import {usePageData} from './store/pageData';
 import Date from "./components/Date.vue";
-import { ArrowBarToUp } from "@vicons/tabler"
-import { NIcon } from "naive-ui"
+import {ArrowBarToUp} from "@vicons/tabler"
+import {NIcon} from "naive-ui"
 
 const isShow = ref(true)
 const pageData = usePageData()
@@ -75,8 +71,8 @@ function changePage(num: number) {
 <style lang="less" scoped>
 .fixedButton {
   position: fixed;
-  top:10vh;
-  left:20vw;
+  top: 10vh;
+  left: 20vw;
   z-index: 5;
   cursor: pointer;
   @media (max-width: 1024px) {

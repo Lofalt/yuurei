@@ -24,6 +24,12 @@ const routes: Array<RouteRecordRaw> = [
             }
         ]
     },
+    {
+        path: "/admin",
+        name: "admin",
+        component: () => import("../views/admin/Board.vue"),
+        props: true
+    },
     // {
     //   path: "/home",
     //   name: "home",
