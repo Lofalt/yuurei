@@ -1,7 +1,7 @@
 <template>
   <div class="app">
     <transition>
-      <n-icon size="50" color="#ffffff" @click="changePage(0)" class="fixedButton" v-show="pageData.pagedata.count!=0">
+      <n-icon size="40" color="#ffffff" @click="changePage(0)" class="fixedButton" v-show="pageData.pagedata.count!=0">
         <arrow-bar-to-up/>
       </n-icon>
     </transition>
@@ -71,8 +71,8 @@ function changePage(num: number) {
 <style lang="less" scoped>
 .fixedButton {
   position: fixed;
-  top: 10vh;
-  left: 20vw;
+  top: 5vh;
+  left: 18vw;
   z-index: 5;
   cursor: pointer;
   @media (max-width: 1024px) {

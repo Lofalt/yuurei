@@ -19,14 +19,15 @@
         <!-- <anli-page></anli-page> -->
         <!--          <iframe src="//player.bilibili.com/player.html?aid=4539251&bvid=BV1Ds411q7Xp&cid=7360965&page=1"-->
         <!--                  scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>-->
-        <iframe src="//player.bilibili.com/player.html?aid=290694593&bvid=BV1yf4y1Y7V1&cid=341769102&page=1"
-                scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+<!--        <iframe class="player" src="//player.bilibili.com/player.html?aid=290694593&bvid=BV1yf4y1Y7V1&cid=341769102&page=1"-->
+<!--                scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>-->
+        <video class="player" src="../assets/单向箭头finn_x264.mp4" width="80vw" height="80vh" controls="controls" loop>s?</video>
 
       </div>
     </div>
     <div class=" bottom" @wheel.self="wheeling" v-show="isAdmin">
       <!--        <div class="bottomPage">-->
-      <article-editor/>
+<!--      <article-editor/>-->
       <!--        </div>-->
       <!--        <home/>-->
     </div>
@@ -110,39 +111,20 @@ watch(pageData.pagedata, (newValue, oldValue) => {
 })
 
 function changePage(num: number) {
-  // const rightPage = document.getElementById("rightbar") as HTMLSelectElement
   pageData.pagedata.count = num
-  // rightPage.style.transform = `translateY(-${num}00vh)`
 
 }
 
-// function change() {
-//   const card = document.getElementsByClassName("middle") as HTMLSelectElement
-//   const actualCard = card[0]
-//   actualCard.style.transition = "all 1s cubic-bezier(0.075, 0.82, 0.165, 1)"
-//   actualCard.style.transform = "translateY(-100vh)"
-//   // actualCard.style.transition = ""
-//   const card2 = document.getElementsByClassName("bottom") as HTMLSelectElement
-//   const actualCard2 = card2[0]
-//   actualCard2.style.transition = "all 1s cubic-bezier(0.075, 0.82, 0.165, 1)"
-//   actualCard2.style.transform = "translateY(-100vh)"
-// }
-// function change2() {
-//   const card = document.getElementsByClassName("middle") as HTMLSelectElement
-//   const actualCard = card[0]
-//   actualCard.style.transition = "all 1s cubic-bezier(0.075, 0.82, 0.165, 1)"
-//   actualCard.style.transform = "translateY(0)"
-//   // actualCard.style.transition = ""
-//   const card2 = document.getElementsByClassName("bottom") as HTMLSelectElement
-//   const actualCard2 = card2[0]
-//   actualCard2.style.transition = "all 1s cubic-bezier(0.075, 0.82, 0.165, 1)"
-//   actualCard2.style.transform = "translateY(0)"
-// }
 
-// provide('pageCount', pageCount)
+
 </script>
 
 <style lang="less" scoped>
+
+.player{
+  height: 100%!important;
+  width: 100%!important;
+}
 .fixedButton {
   position: fixed;
   top: 1vh;
@@ -191,6 +173,9 @@ function changePage(num: number) {
   width: 100%;
   height: 100vh;
   transition: all 2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 iframe {
@@ -203,8 +188,8 @@ iframe {
   overflow: auto;
   // background-image: url("./assets/wallhaven-p262de.jpg");
   border: 5px solid rgb(49, 49, 49);
-  width: 80%;
-  height: 80%;
+  width: 85%;
+  height: 90%;
   position: relative;
   background-size: cover;
   margin: 10vh auto;
@@ -223,7 +208,10 @@ iframe {
   }
 
 }
-
+.bottomPage{
+  background-color: rgba(0,0,0,1);
+  border: 0px;
+}
 .infoPage {
   // background-image: url("./assets/wallhaven-l3w9kr.jpg");
 }

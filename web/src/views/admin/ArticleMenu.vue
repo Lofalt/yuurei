@@ -95,6 +95,7 @@ function getCategory() {
 const actions = [{
   name: "删除",
   key: "delete",
+  type:"error",
   call: function (id: any) {
     dialog.warning({
       title: '警告',
@@ -115,6 +116,7 @@ const actions = [{
 }, {
   name: "修改",
   key: "update",
+  type:"info",
   call: function (id: any) {
     axios.get("/yuurei/article/" + id, {}).then((res: any) => {
       article.value = res.data.data
@@ -124,7 +126,7 @@ const actions = [{
 }]
 
 
-const createColumns = ({play}: { play: (row: Song) => void }): DataTableColumns<Song> => {
+const createColumns = ({play}: { play: (row: Article) => void }): DataTableColumns<Article> => {
   return [
     {
       title: 'id',
@@ -150,13 +152,17 @@ const createColumns = ({play}: { play: (row: Song) => void }): DataTableColumns<
       title: '操作',
       key: 'update',
       render(row) {
-        const action = actions.map((a) => {
+        const action = actions.map((a:any) => {
           return h(
               NButton,
               {
+                style:{
+                  marginRight:`6px`
+                },
                 strong: true,
                 tertiary: true,
                 size: 'small',
+                type:a.type,
                 onClick: () => a.call(row.id)
               },
               {default: () => a.name}

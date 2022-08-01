@@ -1,7 +1,7 @@
 <template>
   <div id="main" @wheel="listenScroll" @touchstart.stop="touchStart" @touchend.stop="touchEnd">
     <!-- <button class="scrollToTop" @click="scrollToTop">dmwo</button> -->
-    <img class=" test" v-for="(item, index) in picList" :src="item" :key="item" ref="waterFallItem"
+    <img class=" test" v-for="(item, index) in picList" :src="item.Path.slice(1)" :key="item.ID" ref="waterFallItem"
          @click="zoom(index)" :style="{ animationDelay: (index % 2) * 0.1 + 's' }"/>
   </div>
   <!-- <loading-com class="loading"></loading-com> -->
@@ -10,7 +10,7 @@
   <transition>
     <div @click="zoomout" v-if="hover" class="photoInfo" :style="{ backgroundImage: `url('` + showingPage + `')` }">
       <div class="info">
-        很多年前拍的照片。
+        {{ currentInfo }}
       </div>
     </div>
   </transition>
@@ -18,14 +18,17 @@
 
 <script lang="ts" setup>
 
-import axios from "axios"
+import axios from "@/request/index"
 import qs from 'qs'
 import {reactive, ref, onMounted, watch, nextTick, inject, Ref} from "vue";
 import LoadingCom from "../components/LoadingCom.vue"
 
 const isShow = ref(true)
 const picList = ref<any>([])
-const offset = ref(5)
+const offset = ref(10)
+const total = ref(0)
+const pageSize = ref(6)
+const pageNum = ref(1)
 const colRaw = ref(2)
 const screenWidth = ref(0)
 const waterFallItem = ref<HTMLSelectElement>()
@@ -33,7 +36,7 @@ const showingPage = ref('')
 const hover = inject('hover') as Ref<boolean>
 const showVlog = inject('showVlog') as Ref<boolean>
 const isLoading = ref(false)
-
+const currentInfo = ref("")
 var touchX = 0
 var touchY = 0
 
@@ -49,12 +52,12 @@ function touchEnd(event: any) {
   let touchYEnd = event.changedTouches[0].pageY
   let touches = touchYEnd - touchY
   if (touches < -90) {
-    if (!isLoading.value && offset.value < 15) {
+    if (!isLoading.value &&  (pageNum.value+1)*pageSize.value <= total.value) {
       isLoading.value = true
       setTimeout(() => {
         getNext(offset.value)
 
-      }, 3000);
+      }, 1000);
     }
   }
 
@@ -88,12 +91,12 @@ function listenScroll(event: any) {
   const box = document.getElementById("main") as HTMLSelectElement
   if (box.scrollTop + box.offsetHeight + 50 > box.scrollHeight) {
     // offset.value += 5
-    if (!isLoading.value && offset.value < 15) {
+    if (!isLoading.value && (pageNum.value+1)*pageSize.value <= total.value) {
       isLoading.value = true
       setTimeout(() => {
         getNext(offset.value)
 
-      }, 3000);
+      }, 1000);
 
     } else {
       return
@@ -111,27 +114,29 @@ function zoom(event: number) {
   let childs = document.getElementsByClassName("test") as HTMLSelectElement
   showingPage.value = childs[event].getAttribute("src") as string
   hover.value = true
+  currentInfo.value = picList.value[event].Description
 
 }
 
 function getNext(num: number) {
 
-  axios.defaults.baseURL = "/api"
+  if((pageNum.value+1)*pageSize.value > total.value){
+    return
+  }
   isLoading.value = true
-
-  axios.post("/yuurei/img", qs.stringify({num: num + 5})).then((result) => {
-    for (let i = num; i < result.data.data.list.length; i++) {
-      picList.value.push(result.data.data.list[i])
+  pageNum.value+=1
+  axios.get(`/yuurei/gallery/all?pageNum=${pageNum.value}&pageSize=${pageSize.value}`,{}).then((result:any) => {
+    for (let i = 0; i < result.data.data.length; i++) {
+      picList.value.push(result.data.data[i])
     }
-    offset.value += 5
     waterFall()
   })
 }
-
+// qs.stringify({num: num})
 function getPic(num: number) {
-  axios.defaults.baseURL = "/api"
-  axios.post("/yuurei/img", qs.stringify({num: num})).then((result) => {
-    picList.value = result.data.data.list
+  axios.get(`/yuurei/gallery/all?pageNum=${pageNum.value}&pageSize=${pageSize.value}`,{}).then((result:any) => {
+    picList.value = result.data.data
+    total.value =result.data.total
     setTimeout(() => {
       waterFall()
 

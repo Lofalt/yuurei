@@ -8,7 +8,7 @@
       <!-- <svg class="icon" aria-hidden="false">
               <use xlink:href="#icon-weibo"></use>
           </svg> -->
-      <a href="https://space.bilibili.com/470249/" target="_blank">
+      <a href="javascript:" >
         <!-- <svg xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink" width="1.3em" height="1.3em" viewBox="0 0 512 512">
             <path fill="#333300"
@@ -21,7 +21,7 @@
       </a>
       <!-- </div> -->
       <!-- <div> -->
-      <a href="https://weibo.com/u/1781729755" target="_blank">
+      <a href="javascript:">
         <!-- <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1.5em"
             height="1.5em" viewBox="0 0 24 24">
             <path fill="#333300"
@@ -34,7 +34,7 @@
       </a>
       <!-- </div> -->
       <!-- <div> -->
-      <a href="https://twitter.com/Lofaltt" target="_blank">
+      <a href="javascript:" >
         <n-icon size="20" color="#484848    ">
           <twitter/>
         </n-icon>
@@ -47,6 +47,12 @@
       <button class="footerbox" @click="changePage(2)" :class="isThisPage(2) ? 'active' : ``">ABOUT</button>
       <!--      <button class="footerbox" @click="changePage(3)" :class="isThisPage(3) ? 'active' : ``">WRITE</button>-->
     </div>
+    <n-icon class="icon2" size="20" color="#484848" @click="jumpTo(`/admin`)">
+      <settings/>
+    </n-icon>
+    <n-icon class="icon3" size="20" color="#484848" @click="jumpTo(`/home`)">
+      <home/>
+    </n-icon>
   </div>
 </template>
 
@@ -63,7 +69,7 @@ import {useRouter} from 'vue-router';
 import {Weibo, Twitter, GrinTongue} from '@vicons/fa'
 import {NIcon} from "naive-ui"
 import {usePageData} from '@/store/pageData';
-
+import {Settings,Home} from '@vicons/tabler'
 const router = useRouter()
 // const pageNum = ref(0)
 const pageData = usePageData()
@@ -73,6 +79,9 @@ const pageData = usePageData()
 function isThisPage(num: number) {
   return num == pageData.pagedata.count;
 
+}
+function jumpTo(path:string){
+  router.push(path)
 }
 
 function changePage(num: number) {
@@ -93,7 +102,18 @@ a {
 .hover:hover {
   cursor: not-allowed;
 }
-
+.icon2{
+  position: absolute;
+  left:5px;
+  bottom:5px;
+  cursor: pointer!important;
+}
+.icon3{
+  position: absolute;
+  left:30px;
+  bottom:5px;
+  cursor: pointer!important;
+}
 .icon {
   width: 1em;
 
