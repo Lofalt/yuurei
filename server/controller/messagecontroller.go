@@ -107,8 +107,8 @@ func (m MessageController) Delete(c *gin.Context) {
 		},
 	}
 
-	//if err := c2.DB.Debug().Unscoped().Delete(&msg).Error; err != nil {\
-	if err := m.DB.Debug().Delete(&msg).Error; err != nil {
+	//if err := c2.DB.Unscoped().Delete(&msg).Error; err != nil {\
+	if err := m.DB.Delete(&msg).Error; err != nil {
 
 		response.Fail(c, gin.H{}, err.Error())
 		return

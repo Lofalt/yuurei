@@ -52,7 +52,7 @@ function touchEnd(event: any) {
   let touchYEnd = event.changedTouches[0].pageY
   let touches = touchYEnd - touchY
   if (touches < -90) {
-    if (!isLoading.value &&  (pageNum.value+1)*pageSize.value <= total.value) {
+    if (!isLoading.value && (pageNum.value + 1) * pageSize.value <= total.value) {
       isLoading.value = true
       setTimeout(() => {
         getNext(offset.value)
@@ -91,7 +91,7 @@ function listenScroll(event: any) {
   const box = document.getElementById("main") as HTMLSelectElement
   if (box.scrollTop + box.offsetHeight + 50 > box.scrollHeight) {
     // offset.value += 5
-    if (!isLoading.value && (pageNum.value+1)*pageSize.value <= total.value) {
+    if (!isLoading.value && (pageNum.value + 1) * pageSize.value <= total.value) {
       isLoading.value = true
       setTimeout(() => {
         getNext(offset.value)
@@ -120,23 +120,24 @@ function zoom(event: number) {
 
 function getNext(num: number) {
 
-  if((pageNum.value+1)*pageSize.value > total.value){
+  if ((pageNum.value + 1) * pageSize.value > total.value) {
     return
   }
   isLoading.value = true
-  pageNum.value+=1
-  axios.get(`/yuurei/gallery/all?pageNum=${pageNum.value}&pageSize=${pageSize.value}`,{}).then((result:any) => {
+  pageNum.value += 1
+  axios.get(`/yuurei/gallery/all?pageNum=${pageNum.value}&pageSize=${pageSize.value}`, {}).then((result: any) => {
     for (let i = 0; i < result.data.data.length; i++) {
       picList.value.push(result.data.data[i])
     }
     waterFall()
   })
 }
+
 // qs.stringify({num: num})
 function getPic(num: number) {
-  axios.get(`/yuurei/gallery/all?pageNum=${pageNum.value}&pageSize=${pageSize.value}`,{}).then((result:any) => {
+  axios.get(`/yuurei/gallery/all?pageNum=${pageNum.value}&pageSize=${pageSize.value}`, {}).then((result: any) => {
     picList.value = result.data.data
-    total.value =result.data.total
+    total.value = result.data.total
     setTimeout(() => {
       waterFall()
 
@@ -266,10 +267,10 @@ watch(colRaw, () => {
   background-position: center;
   // z-index: 10;
 
-  .info{
+  .info {
     position: absolute;
-    top:15px;
-    left:2%;
+    top: 15px;
+    left: 2%;
     background-color: rgb(124, 108, 105);
     //background-color: rgb(124, 105, 105);
     color: white;
@@ -277,7 +278,7 @@ watch(colRaw, () => {
     border-radius: 5px;
     //border:2px solid rgb(49,49,49);
     //border:3px solid rgba(255,255,255,.1);
-    box-shadow: -2px 2px 1px 1px rgba(49,49,49,.2);
+    box-shadow: -2px 2px 1px 1px rgba(49, 49, 49, .2);
   }
 }
 
@@ -335,6 +336,7 @@ watch(colRaw, () => {
   // float: left;
   // height: 100%;
   overflow: auto;
+  overflow-x: hidden;
   position: relative;
   // bottom: 0;
   margin: 0 auto;

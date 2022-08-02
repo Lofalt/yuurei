@@ -19,7 +19,9 @@
                     <button class="sendButton" @click="sendMsg">send</button>
                     <!-- </transition> -->
                   <input type="file" accept="image/jpeg,image/png,image/bmp,image/gif" ref="inputFile" @change="getFile" style="display: none" >
-                  <div class="uploadButton" :style="{backgroundImage:`url(${backgroundImg})`}" @click=upload></div>
+                  <div class="uploadButton" :style="{backgroundImage:`url(${backgroundImg})`}" @click=upload>
+                    <loading-com v-show="isLoading"/>
+                  </div>
                 </div>
             </transition>
         </div>
@@ -54,6 +56,9 @@ import Joke from "../components/comments/Joke.vue"
 import { MessageCircle } from "@vicons/tabler"
 import { NIcon } from "naive-ui"
 import axios from "@/request/index"
+import LoadingCom from "@/components/LoadingCom.vue";
+
+const isLoading = ref(false)
 const router = useRouter()
 const showModal = ref(false)
 const container = document.getElementsByClassName("container")[0] as HTMLElement
@@ -69,10 +74,9 @@ const msgList = ref([])
 
 getMsgs()
 function getMsgs(){
-  axios.get("/yuurei/msg/all",{}).then((res)=>{
-    console.log(res)
+  axios.get("/yuurei/msg/all",{}).then((res:any)=>{
     let msgTmp:any[] = []
-    res.data.data.forEach((msg)=>{
+    res.data.data.forEach((msg:any)=>{
       msgTmp.push(msg)
     })
     msgList.value = msgTmp
@@ -120,9 +124,16 @@ function getFile(event:any){
   formFile.append("file", event.target.files[0]);
   formFile.append("apply_info_id", RndNum(12));
   formFile.append("file_type", '');
-  axios.file_upload("/yuurei/uploadImg",formFile).then((res)=>{
+  isLoading.value=true
+  backgroundImg.value=''
+  axios.file_upload("/yuurei/uploadImg?qua=20",formFile).then((res:any)=>{
     console.log(res)
+    isLoading.value=false
     backgroundImg.value = res.data.fileName
+
+  }).catch(()=>{
+    isLoading.value =false
+    backgroundImg.value ="/img/-421408862.jpg"
   })
 }
 
@@ -142,9 +153,12 @@ function getFile(event:any){
   transition: all 1.5s ease;
 }
 .uploadButton{
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width:100px;
   height: 100px;
-  background-color: black;
+  background-color: #ffffff;
   background-size: cover;
   background-position: center;
   position: absolute;

@@ -81,8 +81,8 @@ func (t TagController) Delete(c *gin.Context) {
 		},
 	}
 
-	//if err := t.DB.Debug().Unscoped().Delete(&tag).Error; err != nil {\
-	if err := t.DB.Debug().Delete(&tag).Error; err != nil {
+	//if err := t.DB.Unscoped().Delete(&tag).Error; err != nil {\
+	if err := t.DB.Delete(&tag).Error; err != nil {
 
 		response.Fail(c, gin.H{}, err.Error())
 		return

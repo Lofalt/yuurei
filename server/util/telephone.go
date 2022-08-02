@@ -5,9 +5,9 @@ import (
 	"github.com/Lofalt/yuurei/model"
 )
 
-func TelephoneExit(telephone string) bool {
+func UserNameExist(username string) bool {
 	db := common.GetDb()
 	var user *model.User
-	db.First(&user, "telephone = ?", telephone)
-	return user.ID != 0
+	db.Debug().First(&user, "username = ?", username)
+	return user.ID != ""
 }

@@ -34,12 +34,12 @@ func AuthMiddleware() gin.HandlerFunc {
 			return
 
 		}
-
+		fmt.Println(claims)
 		userId := claims.UserId
 		var user model.User
 		db := common.GetDb()
-		db.First(&user, "Id = ?", userId)
-		if user.ID == 0 {
+		db.Debug().First(&user, "id = ?", userId)
+		if user.ID == "" {
 			ctx.JSON(500, gin.H{"message": "用户不存在"})
 			ctx.Abort()
 			return

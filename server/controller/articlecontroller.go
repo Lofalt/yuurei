@@ -30,7 +30,7 @@ func (a ArticleController) SelectPre(c *gin.Context) {
 	var art model.Article
 	c.ShouldBind(&art)
 	var art2 model.Article
-	err := a.DB.Debug().Where("article_category_id = ? AND created_at < ?", art.ArticleCategoryID, art.CreatedAt).Last(&art2).Error
+	err := a.DB.Where("article_category_id = ? AND created_at < ?", art.ArticleCategoryID, art.CreatedAt).Last(&art2).Error
 	if err != nil {
 		response.Fail(c, gin.H{}, err.Error())
 		return
@@ -80,9 +80,9 @@ func (a ArticleController) SelectArticleById(c *gin.Context) {
 	}
 	var pre model.Article
 	var next model.Article
-	a.DB.Debug().Preload("Tags").Preload("ArticleCategory").Find(&article)
-	a.DB.Debug().Where("created_at<? AND article_category_id=?", article.CreatedAt, article.ArticleCategoryID).Last(&pre)
-	a.DB.Debug().Where("created_at>? AND article_category_id=?", article.CreatedAt, article.ArticleCategoryID).First(&next)
+	a.DB.Preload("Tags").Preload("ArticleCategory").Find(&article)
+	a.DB.Where("created_at<? AND article_category_id=?", article.CreatedAt, article.ArticleCategoryID).Last(&pre)
+	a.DB.Where("created_at>? AND article_category_id=?", article.CreatedAt, article.ArticleCategoryID).First(&next)
 	response.Success(c, gin.H{
 		"data": article,
 		"pre":  pre,
@@ -116,7 +116,7 @@ func (a ArticleController) SelectArticlesByTagId(c *gin.Context) {
 	//if err1 != nil {
 	//	fmt.Println(err1)
 	//}
-	a.DB.Debug().Preload("Articles").Find(&tag)
+	a.DB.Preload("Articles").Find(&tag)
 	response.Success(c, gin.H{"data": tag}, "success")
 }
 
@@ -145,13 +145,13 @@ func (a ArticleController) SelectArticlesByCategoryId(c *gin.Context) {
 	var total int64
 	a.DB.Model(model.Article{}).Where(&article).Count(&total)
 	var articles []model.Article
-	a.DB.Debug().Preload(clause.Associations).Where(&article).Offset(offset).Limit(pageSize).Find(&articles)
+	a.DB.Preload(clause.Associations).Where(&article).Offset(offset).Limit(pageSize).Find(&articles)
 	response.Success(c, gin.H{"data": articles, "total": total}, "success")
 }
 
 func CreateArticleController() IArticleController {
 	db := common.GetDb()
-	err := db.Debug().AutoMigrate(model.Article{}, model.Tag{}, model.ArticleComment{})
+	err := db.AutoMigrate(model.Article{}, model.Tag{}, model.ArticleComment{})
 	if err != nil {
 		fmt.Println(err.Error())
 
@@ -165,7 +165,7 @@ func (a ArticleController) Create(c *gin.Context) {
 		fmt.Println(err)
 	}
 	fmt.Println(article)
-	result := a.DB.Debug().Create(&article)
+	result := a.DB.Create(&article)
 	if result.Error != nil {
 		response.Fail(c, gin.H{"错误信息": result.Error}, "出错了")
 	} else {
@@ -210,7 +210,7 @@ func (a ArticleController) Show(c *gin.Context) {
 			DeletedAt: gorm.DeletedAt{},
 		},
 	}
-	if err := a.DB.Debug().Preload("Tags").Preload("ArticleCategory").Find(&article).Error; err != nil {
+	if err := a.DB.Preload("Tags").Preload("ArticleCategory").Find(&article).Error; err != nil {
 		response.Fail(c, gin.H{}, err.Error())
 		return
 	}
@@ -227,8 +227,8 @@ func (a ArticleController) Delete(c *gin.Context) {
 			ID: uint(id),
 		},
 	}
-	//if err := c2.DB.Debug().Unscoped().Delete(&cat).Error; err != nil {\
-	if err := a.DB.Debug().Delete(&art).Error; err != nil {
+	//if err := c2.DB.Unscoped().Delete(&cat).Error; err != nil {\
+	if err := a.DB.Delete(&art).Error; err != nil {
 
 		response.Fail(c, gin.H{}, err.Error())
 		return

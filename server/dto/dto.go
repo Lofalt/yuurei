@@ -3,13 +3,15 @@ package dto
 import "github.com/Lofalt/yuurei/model"
 
 type UserDto struct {
-	Username  string `json:"name"`
-	Telephone string `json:"telephone"`
+	Name     string `json:"Name"`
+	Username string `json:"Username"`
+	IsAdmin  bool   `json:"IsAdmin"`
 }
 
 func GetUserDto(user model.User) UserDto {
 	return UserDto{
-		Username:  user.Name,
-		Telephone: user.Telephone,
+		Name:     user.Name,
+		Username: user.Username,
+		IsAdmin:  user.IsAdmin,
 	}
 }

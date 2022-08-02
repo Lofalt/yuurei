@@ -2,18 +2,18 @@ package controller
 
 import (
 	"fmt"
-	"log"
-	"os"
-	"path/filepath"
-	"strconv"
-
 	"github.com/Lofalt/yuurei/common"
 	"github.com/Lofalt/yuurei/dto"
 	"github.com/Lofalt/yuurei/model"
 	"github.com/Lofalt/yuurei/response"
 	"github.com/Lofalt/yuurei/util"
 	"github.com/gin-gonic/gin"
+	"github.com/satori/go.uuid"
 	"golang.org/x/crypto/bcrypt"
+	"log"
+	"os"
+	"path/filepath"
+	"strconv"
 )
 
 func Register(c *gin.Context) {
@@ -21,7 +21,7 @@ func Register(c *gin.Context) {
 	db := common.GetDb()
 	name := c.PostForm("name")
 	password := c.PostForm("password")
-	telephone := c.PostForm("telephone")
+	username := c.PostForm("username")
 	errR := db.AutoMigrate(&model.User{})
 	if errR != nil {
 		return
@@ -30,8 +30,8 @@ func Register(c *gin.Context) {
 		name = util.RandomString(10)
 	}
 
-	if util.TelephoneExit(telephone) {
-		response.Response(c, 200, 400, nil, "当前手机号已被注册")
+	if util.UserNameExist(username) {
+		response.Response(c, 200, 400, nil, "当前用户名已被注册")
 		return
 	}
 	//加密密码
@@ -40,22 +40,24 @@ func Register(c *gin.Context) {
 		response.Response(c, 500, -1, nil, "服务器端错误")
 
 	}
-	db.Create(&model.User{Name: name, Password: string(passwordString), Telephone: telephone})
+	db.Create(&model.User{
+		ID:   uuid.NewV4().String(),
+		Name: name, Password: string(passwordString), Username: username})
 	response.Success(c, nil, "恭喜注册成功")
 }
 
 func Login(c *gin.Context) {
 	db := common.GetDb()
 	password := c.PostForm("password")
-	telephone := c.PostForm("telephone")
+	username := c.PostForm("username")
 	//验证手机号是否存在
-	if !util.TelephoneExit(telephone) {
+	if !util.UserNameExist(username) {
 		response.Response(c, 200, 400, nil, "找不到账号")
 
 		return
 	}
 	var user *model.User
-	db.First(&user, "telephone = ?", telephone)
+	db.First(&user, "username = ?", username)
 
 	//判断密码是否错误
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil {
@@ -70,7 +72,7 @@ func Login(c *gin.Context) {
 		log.Printf("token generate error:%v", err)
 		return
 	}
-	response.Success(c, gin.H{"token": token}, "登陆成功")
+	response.Success(c, gin.H{"token": token, "data": user}, "登陆成功")
 }
 
 func Info(ctx *gin.Context) {

@@ -17,7 +17,11 @@ axios.defaults.headers.post["Access-Control-Allow-Origin-Type"] = "*";
 axios.defaults.timeout = 15000;
 
 axios.interceptors.request.use(
-    config => {
+    (config: any) => {
+        const token = window.localStorage.getItem("token")
+        if (token) {
+            config.headers.Authorization = 'Bearer ' + token
+        }
         return config;
     },
     error => {

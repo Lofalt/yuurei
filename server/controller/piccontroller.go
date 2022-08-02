@@ -36,7 +36,7 @@ func (p PicController) ShowAll(c *gin.Context) {
 		offset = (pageNum - 1) * pageSize
 	}
 
-	if err := p.DB.Model(model.PictureEntry{}).Debug().Order("created_at desc").Offset(offset).Limit(pageSize).Find(&pics).Error; err != nil {
+	if err := p.DB.Model(model.PictureEntry{}).Order("created_at desc").Offset(offset).Limit(pageSize).Find(&pics).Error; err != nil {
 		response.Fail(c, gin.H{}, err.Error())
 		return
 	}
@@ -106,8 +106,8 @@ func (p PicController) Delete(c *gin.Context) {
 		},
 	}
 
-	//if err := p.DB.Debug().Unscoped().Delete(&pic).Error; err != nil {\
-	if err := p.DB.Debug().Delete(&pic).Error; err != nil {
+	//if err := p.DB.Unscoped().Delete(&pic).Error; err != nil {\
+	if err := p.DB.Delete(&pic).Error; err != nil {
 
 		response.Fail(c, gin.H{}, err.Error())
 		return

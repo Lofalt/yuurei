@@ -7,20 +7,23 @@
       :bordered="false"
   />
   <n-modal v-model:show="showModal" display-directive="show">
-    <div> 请输入 <input type="text" v-model="newName" @keyup.enter="send"/>
-      <button @click="send">提交</button>
-    </div>
+    <n-card style="width: 50vw"> 请输入
+      <n-input type="text" v-model:value="newName" @keyup.enter="send"/>
+      <n-button @click="send">提交</n-button>
+    </n-card>
   </n-modal>
   <n-modal v-model:show="showNew" display-directive="show">
-    <div> 请输入 <input type="text" v-model="newCat" @keyup.enter="send2"/>
-      <button @click="send2">提交</button>
-    </div>
+    <n-card style="width: 50vw">
+      请输入
+      <n-input type="text" v-model:value="newCat" @keyup.enter="send2"/>
+      <n-button @click="send2">提交</n-button>
+    </n-card>
   </n-modal>
 </template>
 
 <script lang="ts" setup>
 import {h, Ref, ref} from 'vue'
-import {NButton, NDataTable, NModal} from 'naive-ui'
+import {NButton, NDataTable, NModal, NCard, NInput} from 'naive-ui'
 import type {DataTableColumns} from 'naive-ui'
 import axios from "@/request/index"
 
@@ -47,8 +50,11 @@ const actions = [{
   name: "修改",
   key: "update",
   call: function (id: any) {
-    showModal.value = !showModal.value
-    currentId.value = id
+    axios.get(`/yuurei/articleCategory/${id}`, {}).then((res: any) => {
+      currentId.value = id
+      newName.value = res.data.data.ArticleCategoryName
+      showModal.value = !showModal.value
+    })
   }
 }]
 

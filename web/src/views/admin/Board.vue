@@ -33,6 +33,10 @@ import PicMenu from "@/views/admin/PicMenu.vue"
   height: 100vh;
   float: right;
   overflow: auto;
+
+  @media (max-width: 800px) {
+    width: 100%;
+  }
 }
 
 </style>

@@ -86,8 +86,8 @@ func (c2 CategoryController) Delete(c *gin.Context) {
 		},
 	}
 
-	//if err := c2.DB.Debug().Unscoped().Delete(&cat).Error; err != nil {\
-	if err := c2.DB.Debug().Delete(&cat).Error; err != nil {
+	//if err := c2.DB.Unscoped().Delete(&cat).Error; err != nil {\
+	if err := c2.DB.Delete(&cat).Error; err != nil {
 
 		response.Fail(c, gin.H{}, err.Error())
 		return

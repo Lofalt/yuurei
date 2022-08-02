@@ -28,6 +28,15 @@ const routes: Array<RouteRecordRaw> = [
         path: "/admin",
         name: "admin",
         component: () => import("../views/admin/Board.vue"),
+        props: true,
+        meta: {
+            needAuth: true
+        }
+    },
+    {
+        path: "/login",
+        name: "login",
+        component: () => import("../views/user/LogSign.vue"),
         props: true
     },
     // {

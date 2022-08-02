@@ -1,63 +1,81 @@
 <template>
+
   <div class="app">
+    <div :class="[isActive?`activeClass`:`unActive`,`mask`]" @click="showNav"></div>
+    <div :class="[isActive?`lefting`:``,`navButton`]" @click="showNav">
+      <div class="icons"></div>
+      <div class="icons"></div>
+      <div class="icons"></div>
+    </div>
     <transition>
       <n-icon size="40" color="#ffffff" @click="changePage(0)" class="fixedButton" v-show="pageData.pagedata.count!=0">
         <arrow-bar-to-up/>
       </n-icon>
     </transition>
-    <left-bar></left-bar>
-    <!--    <transition>-->
-
-    <!--    <Date v-show="pageData.pagedata.count==0"></Date>-->
-    <!--    </transition>-->
-
+    <n-dialog-provider>
+      <left-bar :class="[isActive?`showing`:`notShowing`,`leftBar`]"/>
+    </n-dialog-provider>
     <router-view></router-view>
-    <!--    <div id="rightbar" @touchstart="touchStart" @touchend="touchEnd">-->
-
-    <!--      <div class="middle">-->
-    <!--        &lt;!&ndash; <router-view></router-view> &ndash;&gt;-->
-    <!--        <right-bar @wheel.self="wheeling"></right-bar>-->
-    <!--      </div>-->
-    <!--      <div class="info" @wheel.self="wheeling">-->
-    <!--        <div class="infoPage" @touchend.stop="">-->
-
-    <!--          <router-view></router-view>-->
-    <!--        </div>-->
-    <!--      </div>-->
-    <!--      <div class=" bottom" @wheel.self="wheeling">-->
-    <!--        <div class="bottomPage">-->
-    <!--          &lt;!&ndash; <anli-page></anli-page> &ndash;&gt;-->
-    <!--          &lt;!&ndash;          <iframe src="//player.bilibili.com/player.html?aid=4539251&bvid=BV1Ds411q7Xp&cid=7360965&page=1"&ndash;&gt;-->
-    <!--          &lt;!&ndash;                  scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>&ndash;&gt;-->
-    <!--          <iframe src="//player.bilibili.com/player.html?aid=290694593&bvid=BV1yf4y1Y7V1&cid=341769102&page=1"-->
-    <!--                  scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>-->
-
-    <!--        </div>-->
-    <!--      </div>-->
-    <!--      <div class=" bottom" @wheel.self="wheeling" v-show="isAdmin">-->
-    <!--        &lt;!&ndash;        <div class="bottomPage">&ndash;&gt;-->
-    <!--        <article-editor/>-->
-    <!--        &lt;!&ndash;        </div>&ndash;&gt;-->
-    <!--        &lt;!&ndash;        <home/>&ndash;&gt;-->
-    <!--      </div>-->
-    <!--    </div>-->
   </div>
 </template>
-
 <script lang="ts" setup>
-import {computed, getCurrentInstance, provide, ref, watch} from 'vue';
+import {computed, getCurrentInstance, onMounted, provide, ref, watch} from 'vue';
 import LeftBar from './components/LeftBar.vue';
 import {usePageData} from './store/pageData';
 import Date from "./components/Date.vue";
 import {ArrowBarToUp} from "@vicons/tabler"
 import {NIcon} from "naive-ui"
+import {useUserInfo} from "@/store/UserInfo";
+import axios from "@/request/index"
+import {useRouter} from "vue-router";
+import {useMessage, NDialogProvider} from "naive-ui";
 
+const router = useRouter()
 const isShow = ref(true)
 const pageData = usePageData()
 let isWheeling = false
 const isAdmin = ref(true)
-const showHome = computed(() => {
-  return pageData.pagedata.count == 0
+const userInfo = useUserInfo()
+const isActive = ref(false)
+
+router.beforeEach((to, from, next) => {
+  console.log(to)
+  if (to.meta.needAuth && !userInfo.user.IsAdmin && to.name != "login") {
+    alert("你没有权限")
+    next({
+      name: "home"
+    })
+    // return false
+  }
+
+  if (userInfo.user.Username === null) {
+    axios.get("/yuurei/info", {}).then((res: any) => {
+      console.log(res)
+      if (res.code === 200) {
+        userInfo.user = res.data.user
+      }
+    })
+  }
+
+  next()
+})
+
+function showNav() {
+  // var childs = document.getElementsByClassName("leftBar") as HTMLSelectElement
+  // childs[0].style.transform = `translateX(0)`
+  isActive.value = !isActive.value
+}
+
+onMounted(() => {
+  let user = userInfo.user
+  if (user.Username === null) {
+    axios.get("/yuurei/info", {}).then((res: any) => {
+      console.log(res)
+      if (res.code === 200) {
+        userInfo.user = res.data.user
+      }
+    })
+  }
 })
 
 
@@ -69,6 +87,40 @@ function changePage(num: number) {
 </script>
 
 <style lang="less" scoped>
+.lefting {
+  transform: translateX(300px);
+}
+
+.showing {
+  transform: translateX(0);
+}
+
+.activeClass {
+  background-color: rgba(0, 0, 0, .3);
+}
+
+
+.unActive {
+  display: none;
+}
+
+
+.leftBar {
+  z-index: 5;
+  @media (max-width: 1024px) {
+    width: 300px;
+  }
+}
+
+.mask {
+  //transform: translateX(300px);
+  //background-color: black;
+  z-index: 1;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+}
+
 .fixedButton {
   position: fixed;
   top: 5vh;
@@ -213,4 +265,44 @@ button {
 .v-enter-active {
   transition: all .8s ease-in-out;
 }
+
+.navButton {
+  position: absolute;
+  //transition: .5s all ease;
+  transition: all .3s ease-in-out;
+
+  background-color: white;
+  padding: 1px;
+  border-radius: 2px;
+  z-index: 10;
+  left: 0;
+  top: 50px;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  @media screen and (min-width: 1024px) {
+    display: none;
+  }
+
+  .icons {
+    height: 2px;
+    min-width: 20px;
+    margin: 5px 8px;
+    background-color: #3d3535;
+    border-radius: 2px;
+
+    &:nth-of-type(1) {
+      margin-top: 8px;
+    }
+
+    &:nth-of-type(3) {
+      margin-bottom: 8px;
+    }
+  }
+
+}
+
+
 </style>

@@ -46,7 +46,7 @@ function deleteMsg() {
 .messageBox {
   // float: left;
   width: 90%;
-  margin: 5vh auto;
+  margin: 8vh auto;
   position: relative;
 
   // height: 100%;
@@ -89,6 +89,12 @@ function deleteMsg() {
       bottom: -30px;
       width: 100%;
       text-align: center;
+      display: inline-block;
+      //transform-origin: top;
+      //text-wrap: avoid;
+      height: 15px;
+      //word-break: keep-all;
+      //line-height: 100%;
       text-shadow: -1px 1px 4px rgba(215, 138, 138, 0.4);
 
     }
@@ -125,8 +131,8 @@ function deleteMsg() {
       text-shadow: -1px 1px 5px rgba(164, 74, 74, 0.4);
       text-align: right;
       //color: rgb(49, 49, 49);
-      color:white;
-      padding:0px 5px;
+      color: white;
+      padding: 0px 5px;
       border-radius: 2px;
       background-color: rgba(49, 49, 49, 0.76);
       box-shadow: -4px 4px 1px 0 rgba(49, 49, 49, 0.2);

@@ -19,16 +19,21 @@
       <div class="articleContent" v-html="article.ArticleContent"/>
     </div>
     <div class="preAndNext">
-      <div v-if="hasPre">
-
-        上一篇: <a href="javascript:" @click="jump(pre.ID)">{{ pre.ArticleTitle }}</a>
+      <div class="preAndNextBox" v-if="hasPre">
+        <n-icon color="#000000" size="15">
+          <arrow-left/>
+        </n-icon>
+        &nbsp;<a href="javascript:" @click="jump(pre.ID)">{{ pre.ArticleTitle }}</a>
       </div>
       <div v-else disabled>
 
         <!--        该分类下没有上一篇啦!-->
       </div>
-      <div v-if="hasNext">
-        下一篇: <a href="javascript:" @click="jump(next.ID)">{{ next.ArticleTitle }}</a>
+      <div class="preAndNextBox" v-if="hasNext">
+        <a href="javascript:" @click="jump(next.ID)">{{ next.ArticleTitle }}</a> &nbsp;
+        <n-icon color="#000000" size="15">
+          <arrow-right/>
+        </n-icon>
       </div>
       <div v-else disabled>
         <!--        该分类下没有下一篇啦!-->
@@ -49,6 +54,8 @@ import axios from "@/request/index"
 import qs from "qs"
 import {useRouter} from "vue-router"
 import Comments from "../components/article/Comments.vue"
+import {NIcon} from 'naive-ui'
+import {ArrowLeft, ArrowRight} from "@vicons/fa";
 
 const router = useRouter()
 const article = ref({
@@ -214,6 +221,14 @@ function jump(id: number) {
 <!--</script>-->
 
 <style lang="less">
+
+.preAndNextBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
 .articlePage {
   /*color: white;*/
   height: 100%;
@@ -268,7 +283,7 @@ function jump(id: number) {
   .articleSummary {
     font-size: 17px;
     text-align: center;
-    background-color: #d05252;
+    background-color: #524444;
     /*width: 60%;*/
     color: white;
     margin: 0 auto;
@@ -340,7 +355,8 @@ function jump(id: number) {
 
   a {
     text-decoration: none;
-    color: #ffb78d;
+    color: #ff4d4d;
+    font-weight: bold;
     text-shadow: 0 0 3px rgba(255, 245, 231, 0.5);
 
     &:hover {

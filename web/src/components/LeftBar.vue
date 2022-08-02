@@ -8,7 +8,7 @@
       <!-- <svg class="icon" aria-hidden="false">
               <use xlink:href="#icon-weibo"></use>
           </svg> -->
-      <a href="javascript:" >
+      <a href="javascript:">
         <!-- <svg xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink" width="1.3em" height="1.3em" viewBox="0 0 512 512">
             <path fill="#333300"
@@ -34,7 +34,7 @@
       </a>
       <!-- </div> -->
       <!-- <div> -->
-      <a href="javascript:" >
+      <a href="javascript:">
         <n-icon size="20" color="#484848    ">
           <twitter/>
         </n-icon>
@@ -47,12 +47,19 @@
       <button class="footerbox" @click="changePage(2)" :class="isThisPage(2) ? 'active' : ``">ABOUT</button>
       <!--      <button class="footerbox" @click="changePage(3)" :class="isThisPage(3) ? 'active' : ``">WRITE</button>-->
     </div>
-    <n-icon class="icon2" size="20" color="#484848" @click="jumpTo(`/admin`)">
+    <n-icon v-show="isAdmin" class="settings" size="20" color="#484848" @click="jumpTo(`/admin`)">
       <settings/>
     </n-icon>
-    <n-icon class="icon3" size="20" color="#484848" @click="jumpTo(`/home`)">
+    <n-icon class="home" size="20" color="#484848" @click="jumpTo(`/home`)">
       <home/>
     </n-icon>
+    <n-icon v-show="!isLogin" class="login" size="20" color="#484848" @click="logIn">
+      <login/>
+    </n-icon>
+    <n-icon v-show="isLogin" class="logout" size="20" color="#484848" @click="logOut">
+      <logout/>
+    </n-icon>
+
   </div>
 </template>
 
@@ -64,24 +71,74 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import {inject, Ref, ref} from 'vue';
+import {computed, inject, Ref, ref} from 'vue';
 import {useRouter} from 'vue-router';
 import {Weibo, Twitter, GrinTongue} from '@vicons/fa'
 import {NIcon} from "naive-ui"
 import {usePageData} from '@/store/pageData';
-import {Settings,Home} from '@vicons/tabler'
+import {Settings, Home, Login, Logout} from '@vicons/tabler'
+import {useUserInfo} from "@/store/UserInfo";
+import {useDialog} from "naive-ui";
+
 const router = useRouter()
 // const pageNum = ref(0)
+const dialog = useDialog()
 const pageData = usePageData()
-
+const userInfo = useUserInfo()
 // const emit = defineEmits(['change-page'])
+
+const isAdmin = computed(() => {
+  if (userInfo.user.Username === null) {
+    return false
+  } else if (!userInfo.user.IsAdmin) {
+    return false
+  }
+  return true
+})
+
+const isLogin = computed(() => {
+  if (userInfo.user.Username === null) {
+    return false
+  }
+  return true
+})
 
 function isThisPage(num: number) {
   return num == pageData.pagedata.count;
 
 }
-function jumpTo(path:string){
+
+function jumpTo(path: string) {
   router.push(path)
+  if (path === '/home') {
+    pageData.pagedata.count = 0
+  }
+}
+
+function logIn() {
+  router.push("/login")
+}
+
+function logOut() {
+  dialog.warning({
+    title: '登出确认',
+    content: '确定登出吗？',
+    positiveText: '确定',
+    negativeText: '算了',
+    onPositiveClick: () => {
+      localStorage.removeItem('token')
+      userInfo.user = {
+        Name: null,
+        Username: null,
+        IsAdmin: false
+      }
+      router.replace(router.currentRoute.value)
+    },
+    onNegativeClick: () => {
+      return
+    }
+  })
+
 }
 
 function changePage(num: number) {
@@ -102,18 +159,35 @@ a {
 .hover:hover {
   cursor: not-allowed;
 }
-.icon2{
+
+.settings {
   position: absolute;
-  left:5px;
-  bottom:5px;
-  cursor: pointer!important;
+  left: 30px;
+  bottom: 5px;
+  cursor: pointer !important;
 }
-.icon3{
+
+.login {
   position: absolute;
-  left:30px;
-  bottom:5px;
-  cursor: pointer!important;
+  right: 5px;
+  bottom: 5px;
+  cursor: pointer !important;
 }
+
+.logout {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  cursor: pointer !important;
+}
+
+.home {
+  position: absolute;
+  left: 5px;
+  bottom: 5px;
+  cursor: pointer !important;
+}
+
 .icon {
   width: 1em;
 
@@ -129,10 +203,9 @@ a {
   // overflow: hidden;
 }
 
-
 .leftbar {
   border-right: 4px solid rgb(49, 49, 49);
-
+  height: 100vh;
   color: white;
   position: fixed;
   float: left;
@@ -146,12 +219,12 @@ a {
   background-size: cover;
   background-position: center;
   // background-image: url("../assets/69167110_p0.png");
-  transition: all .1s ease-in-out;
+  transition: all .3s ease-in-out;
   overflow: hidden;
 
   @media (max-width: 1024px) {
     //left: -16.5%
-    transform: translateX(-16.5vw);
+    transform: translateX(-300px);
     //display: none;
   }
 
@@ -196,11 +269,16 @@ a {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+
+    @media (max-width: 1024px) {
+      width: 200px;
+      height: 220px;
+    }
   }
 
   .name {
     margin-top: 55px;
-    width: 16.5vw;
+    width: 80%;
     color: rgb(78, 78, 78);
     text-align: center;
     // font-weight: 600;
@@ -212,13 +290,14 @@ a {
     text-indent: 5px;
     word-wrap: break-word;
     text-shadow: 0px 0px 2px rgba(235, 235, 235, 0.5);
+
   }
 
   .icon1 {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    width: 6vw;
+    width: 50%;
     margin: 20px auto;
 
     div {
@@ -231,11 +310,14 @@ a {
 
   .footer {
     display: flex;
-    margin: 50px 20%;
+    margin: 50px 10%;
     min-height: 25vh;
     justify-content: space-around;
     align-items: center;
     flex-direction: column;
+    position: absolute;
+    width: 80%;
+    bottom: 0vh;
 
     .footerbox {
       cursor: pointer;

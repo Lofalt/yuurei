@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="nav">navbar</div>
+    <!--    <div class="nav">navbar</div>-->
     <div class="inside">
       <entry/>
       <entry/>

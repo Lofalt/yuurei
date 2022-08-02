@@ -19,15 +19,16 @@
         <!-- <anli-page></anli-page> -->
         <!--          <iframe src="//player.bilibili.com/player.html?aid=4539251&bvid=BV1Ds411q7Xp&cid=7360965&page=1"-->
         <!--                  scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>-->
-<!--        <iframe class="player" src="//player.bilibili.com/player.html?aid=290694593&bvid=BV1yf4y1Y7V1&cid=341769102&page=1"-->
-<!--                scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>-->
-        <video class="player" src="../assets/单向箭头finn_x264.mp4" width="80vw" height="80vh" controls="controls" loop>s?</video>
+        <!--        <iframe class="player" src="//player.bilibili.com/player.html?aid=290694593&bvid=BV1yf4y1Y7V1&cid=341769102&page=1"-->
+        <!--                scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>-->
+        <video class="player" src="../assets/单向箭头finn_x264.mp4" width="80vw" height="80vh" controls="controls" loop>s?
+        </video>
 
       </div>
     </div>
     <div class=" bottom" @wheel.self="wheeling" v-show="isAdmin">
       <!--        <div class="bottomPage">-->
-<!--      <article-editor/>-->
+      <!--      <article-editor/>-->
       <!--        </div>-->
       <!--        <home/>-->
     </div>
@@ -36,7 +37,7 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, getCurrentInstance, provide, ref, watch} from 'vue';
+import {computed, getCurrentInstance, onMounted, provide, ref, watch} from 'vue';
 import RightBar from '@/components/RightBar.vue'
 import {usePageData} from '@/store/pageData';
 import ArticleEditor from "@/components/edit/ArticleEditor.vue"
@@ -104,6 +105,10 @@ function wheeling(event: any) {
   }
 }
 
+onMounted(() => {
+  const rightPage = document.getElementById("rightbar") as HTMLSelectElement
+  rightPage.style.transform = `translateY(-${pageData.pagedata.count}00vh)`
+})
 
 watch(pageData.pagedata, (newValue, oldValue) => {
   const rightPage = document.getElementById("rightbar") as HTMLSelectElement
@@ -116,15 +121,15 @@ function changePage(num: number) {
 }
 
 
-
 </script>
 
 <style lang="less" scoped>
 
-.player{
-  height: 100%!important;
-  width: 100%!important;
+.player {
+  height: 100% !important;
+  width: 100% !important;
 }
+
 .fixedButton {
   position: fixed;
   top: 1vh;
@@ -208,10 +213,12 @@ iframe {
   }
 
 }
-.bottomPage{
-  background-color: rgba(0,0,0,1);
+
+.bottomPage {
+  background-color: rgba(0, 0, 0, 1);
   border: 0px;
 }
+
 .infoPage {
   // background-image: url("./assets/wallhaven-l3w9kr.jpg");
 }

@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"github.com/Lofalt/yuurei/response"
 	"github.com/Lofalt/yuurei/util"
 	"github.com/gin-gonic/gin"
@@ -14,11 +15,13 @@ import (
 func UploadImgController(c *gin.Context) {
 	// 单文件
 	file, _ := c.FormFile("file")
-	log.Println(file.Filename)
-
+	quality, _ := strconv.Atoi(c.Query("qua"))
+	fmt.Println(quality)
 	// 上传文件至指定目录
 	// c.SaveUploadedFile(file, dst)
-	timeStamp := strconv.Itoa(int(time.Now().UnixMilli())) + "." + strings.Split(file.Filename, ".")[len(strings.Split(file.Filename, "."))-1]
+	suffix := strings.Split(file.Filename, ".")[len(strings.Split(file.Filename, "."))-1]
+
+	timeStamp := strconv.Itoa(int(time.Now().UnixMilli())) + "." + suffix
 
 	filepath := "./img/"
 	if exit, _ := util.HasDir(filepath); exit == false {
@@ -30,6 +33,10 @@ func UploadImgController(c *gin.Context) {
 	if err != nil {
 		response.Fail(c, gin.H{}, err.Error())
 		return
+	}
+	if quality != 0 {
+		util.Compress(filename, quality)
+
 	}
 
 	responFileName := "/img/" + timeStamp
