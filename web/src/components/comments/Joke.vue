@@ -4,7 +4,7 @@
       <div class="name">{{ msg.UserName }}</div>
     </div>
     <div class="messageInfo">
-      <div class="delete" @click="deleteMsg">删除</div>
+      <div v-show="userInfo.user && userInfo.user.IsAdmin " class="delete" @click="deleteMsg">删除</div>
       <div class="date">{{
           new Date(msg.CreatedAt).toLocaleDateString() + " \n\n\n" + new Date(msg.CreatedAt).toLocaleTimeString()
         }}
@@ -21,9 +21,10 @@
 <script lang="ts" setup>
 import {ref} from 'vue'
 import axios from '@/request/index'
+import {useUserInfo} from "@/store/UserInfo";
 
 const backgroundImg = ref("")
-
+const userInfo = useUserInfo()
 const emit = defineEmits(['reload'])
 
 const props = defineProps<{
@@ -115,7 +116,7 @@ function deleteMsg() {
     .delete {
       cursor: pointer;
       position: absolute;
-      bottom: -30px;
+      bottom: -40px;
       right: 160px;
       //text-shadow: -1px 1px 2px rgb(49,49,49);
       text-shadow: -1px 1px 5px rgba(49, 49, 49, .4);
@@ -126,7 +127,7 @@ function deleteMsg() {
 
     .date {
       position: absolute;
-      bottom: -30px;
+      bottom: -40px;
       right: 2px;
       text-shadow: -1px 1px 5px rgba(164, 74, 74, 0.4);
       text-align: right;
