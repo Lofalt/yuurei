@@ -7,6 +7,8 @@
           <div class="up">
             <img style="max-height:50vh;max-width: 30vw" :src="backgroundImg"/>
           </div>
+<!--          <upload-pic  :name="`上传图片`" :ratio="2.5" directory="categoryHeadPic" quality="40" @confirm="changeImg"/>-->
+
           <input class="inputC" type="text" v-model="des" placeholder="输入图片描述:">
           <input type="file" accept="image/jpeg,image/png,image/bmp,image/gif" ref="inputFile" @change="getFile"
                  style="display: none">
@@ -42,6 +44,7 @@
 import {NButton, NModal, NCard} from 'naive-ui'
 import axios from "@/request";
 import {onMounted, ref} from "vue";
+import UploadPic from "@/components/file/UploadPic.vue"
 
 const inputFile = ref(null) as any
 const backgroundImg = ref(null)
@@ -105,7 +108,7 @@ function getFile(event: any) {
   formFile.append("file", event.target.files[0]);
   formFile.append("apply_info_id", RndNum(12));
   formFile.append("file_type", '');
-  axios.file_upload("/yuurei/uploadGallery", formFile).then((res: any) => {
+  axios.file_upload("/yuurei/uploadGallery?qua=80", formFile).then((res: any) => {
     console.log(res)
     backgroundImg.value = res.data.fileName
   })

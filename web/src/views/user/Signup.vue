@@ -2,6 +2,7 @@
 
   <div class="card">
     <!--      <n-space vertical>-->
+      <div>其实注册了也没什么用</div>
     <div class="cardContainer">
         <span class="label">
         昵称:
@@ -55,7 +56,7 @@ function signup() {
 
 
 .card {
-  width: 500px;
+  width: 600px;
   height: 240px;
   background-color: #fff;
   border-radius: 10px;
@@ -66,7 +67,7 @@ function signup() {
   //margin-bottom: 20px;
   @media (max-width: 600px) {
     width: 100vw;
-    height: 200px;
+    height: 250px;
   }
 
   .cardContainer {
@@ -77,7 +78,7 @@ function signup() {
     width: 80%;
     text-wrap: nowrap;
 
-    &:nth-child(3) {
+    &:nth-child(4) {
       margin-bottom: 30px;
     }
 

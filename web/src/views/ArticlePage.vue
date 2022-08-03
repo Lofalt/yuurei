@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="catList">
-      <div class="cat" @click="getArtsByCat(`all`)" :class="{active:isActive('all')}">ALL</div>
+      <div class="cat" @click="getArtsByCat(`all`)" :class="{active:isActive('all')}">全部分类</div>
       <div class="cat" v-for="item in catList" @click="getArtsByCat(item.ID)" :class="{active:isActive(item.ID)}">
         {{ item.ArticleCategoryName }}
       </div>
@@ -29,7 +29,7 @@ const pageData = usePageData()
 const router = useRouter()
 const pageNum = ref(1)
 const pageTotal = ref(8)
-const pageSize = ref(8)
+const pageSize = ref(5)
 const currentCat = ref("all")
 
 const needToShow = computed(() => {
@@ -155,7 +155,12 @@ watch(currentCat, (newValue, oldValue) => {
     cursor: pointer;
     margin-top: 20px;
     padding: 3px 20px;
+    //height:30px;
+    //width: 80px;
+    font-weight: bold;
+    font-family: 微软雅黑;
     background-color: white;
+    text-align: center;
     border: 3px solid rgb(49, 49, 49);
     border-radius: 2px;
     box-shadow: -1px 1px 0px 0px rgb(49, 49, 49);

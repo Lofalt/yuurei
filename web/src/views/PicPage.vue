@@ -1,4 +1,5 @@
 <template>
+<!--    <div>没什么艺术细胞的人</div>-->
   <div id="main" @wheel="listenScroll" @touchstart.stop="touchStart" @touchend.stop="touchEnd">
     <!-- <button class="scrollToTop" @click="scrollToTop">dmwo</button> -->
     <img class=" test" v-for="(item, index) in picList" :src="item.Path.slice(1)" :key="item.ID" ref="waterFallItem"
@@ -9,7 +10,7 @@
   <!-- <div class="loading" v-show="offset == 15">--</div> -->
   <transition>
     <div @click="zoomout" v-if="hover" class="photoInfo" :style="{ backgroundImage: `url('` + showingPage + `')` }">
-      <div class="info">
+      <div class="info" v-show="currentInfo">
         {{ currentInfo }}
       </div>
     </div>
@@ -52,10 +53,10 @@ function touchEnd(event: any) {
   let touchYEnd = event.changedTouches[0].pageY
   let touches = touchYEnd - touchY
   if (touches < -90) {
-    if (!isLoading.value && (pageNum.value + 1) * pageSize.value <= total.value) {
+    if (!isLoading.value && picList.value.length < total.value) {
       isLoading.value = true
       setTimeout(() => {
-        getNext(offset.value)
+        getNext()
 
       }, 1000);
     }
@@ -88,13 +89,16 @@ function scrollToTop() {
 }
 
 function listenScroll(event: any) {
+  console.log("？")
   const box = document.getElementById("main") as HTMLSelectElement
-  if (box.scrollTop + box.offsetHeight + 50 > box.scrollHeight) {
+  if (box.scrollTop + box.offsetHeight + 100 > box.scrollHeight) {
     // offset.value += 5
-    if (!isLoading.value && (pageNum.value + 1) * pageSize.value <= total.value) {
+    // console.log((pageNum.value ) * pageSize.value)
+    if (!isLoading.value && picList.value.length < total.value) {
+      console.log(".")
       isLoading.value = true
       setTimeout(() => {
-        getNext(offset.value)
+        getNext()
 
       }, 1000);
 
@@ -118,11 +122,11 @@ function zoom(event: number) {
 
 }
 
-function getNext(num: number) {
+function getNext() {
 
-  if ((pageNum.value + 1) * pageSize.value > total.value) {
-    return
-  }
+  // if ((pageNum.value + 1) * pageSize.value > total.value) {
+  //   return
+  // }
   isLoading.value = true
   pageNum.value += 1
   axios.get(`/yuurei/gallery/all?pageNum=${pageNum.value}&pageSize=${pageSize.value}`, {}).then((result: any) => {
@@ -134,7 +138,7 @@ function getNext(num: number) {
 }
 
 // qs.stringify({num: num})
-function getPic(num: number) {
+function getPic() {
   axios.get(`/yuurei/gallery/all?pageNum=${pageNum.value}&pageSize=${pageSize.value}`, {}).then((result: any) => {
     picList.value = result.data.data
     total.value = result.data.total
@@ -158,7 +162,7 @@ function waterFall() {
         heightArr.push(boxHeight + 50)
         childs[i].style.position = 'absolute'
         childs[i].style.left = i * boxWidth + 'px'
-        childs[i].style.top = 5 + '0px'
+        childs[i].style.top = 3 + '0px'
         childs[i].style.opacity = '1'
         childs[i].style.transform = "translateY(0)"
       } else {
@@ -187,7 +191,7 @@ function minBox(box: any) {
 }
 
 onMounted(() => {
-  getPic(offset.value)
+  getPic()
   nextTick(() => {
     // waterFall()
 
@@ -196,7 +200,7 @@ onMounted(() => {
       let scrollHeigh = document.documentElement.scrollHeight; //获取整个页面的高度
       let clientHeigh = document.documentElement.clientHeight; //获取
       if (scrollTop + clientHeigh - scrollHeigh >= -50) {
-        getNext(offset.value)
+        getNext()
       }
     }
     window.onresize = () => {
@@ -304,7 +308,7 @@ watch(colRaw, () => {
   // margin: 8px;
   /* margin:15px; */
   // float: left;
-  transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.2s ease-in-out;
   // transition: all 1s;
   // animation: enter 1s;
   // animation-timing-function: ease-in-out;
@@ -340,7 +344,7 @@ watch(colRaw, () => {
   position: relative;
   // bottom: 0;
   margin: 0 auto;
-  padding-top: 10vh;
+  padding-top: 5vh;
 
   &::-webkit-scrollbar {
     width: 0px;

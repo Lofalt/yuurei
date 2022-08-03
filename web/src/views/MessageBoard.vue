@@ -18,7 +18,7 @@
                     <!-- <transition name="button"> -->
                     <button class="sendButton" @click="sendMsg">send</button>
                     <!-- </transition> -->
-                  <input type="file" accept="image/jpeg,image/png,image/bmp,image/gif" ref="inputFile" @change="getFile" style="display: none" >
+                  <input type="file" accept="image/jpeg,image/png" ref="inputFile" @change="getFile" style="display: none" >
                   <div class="uploadButton" :style="{backgroundImage:`url(${backgroundImg})`}" @click="iconEdit=true">
                     <loading-com v-show="isLoading"/>
                   </div>
@@ -27,7 +27,7 @@
         </div>
       <n-modal v-model:show="iconEdit" display-directive="if">
         <n-card class="iconCard">
-          <upload-pic @confirm="check" :name="`上传图片`" :ratio="1" directory="headPic" quality="40" @send-pic="changeImg"/>
+          <upload-pic @confirm="check" :name="`上传图片`" :ratio="1" directory="profileIcon" quality="40" @send-pic="changeImg"/>
         </n-card>
       </n-modal>
         <n-modal v-model:show="showTheModal" :display-directive="'if'" :transform-origin="'mouse'">
@@ -218,7 +218,7 @@ function getFile(event:any){
 }
 .head {
     width: 100%;
-    height: 100%;
+    min-height: 50%;
 }
 
 .disapper {
@@ -340,12 +340,25 @@ function getFile(event:any){
 }
 
 .container {
-    width: 100%;
+    width: 98%;
     height: 100%;
     /* background-color: #fff; */
     /* margin: 0 auto; */
     overflow: auto;
     // scrollbar-width: none;
+  &::-webkit-scrollbar {
+    width: 5px;
+    // background-color: aquamarine;
+    // color: black;
+  }
+
+
+  &::-webkit-scrollbar-thumb {
+    width: 5px;
+    background-color: rgba(73, 73, 73, .3);
+    color: black;
+    border-radius: 20px;
+  }
 }
 
 ::-webkit-scrollbar {

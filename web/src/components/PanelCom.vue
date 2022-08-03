@@ -1,7 +1,7 @@
 <template>
   <div class="panel" @click="archive(article.ID)">
     <!--        <div class="background" :style="{backgroundImage:background}">-->
-    <div class="background">
+    <div class="background" :style="{backgroundImage:`url(${article.ArticleCategory.HeaderPic})`}">
       <!--            <img src="~assets/img/backgroundimg/background1.png"/>-->
     </div>
     <div class="panelTitle">
@@ -67,6 +67,7 @@ function archive(articleId: number) {
   }
 
   .panelSummary {
+    color: white;
     position: relative;
     text-overflow: ellipsis;
     text-align: center;
@@ -112,6 +113,7 @@ function archive(articleId: number) {
     position: absolute;
     left: 5px;
     padding-top: 10px;
+    color: white;
     padding-right: 100px;
     bottom: 5px;
     margin-left: 2px;
@@ -136,6 +138,7 @@ function archive(articleId: number) {
     position: relative;
     margin-top: -180px;
     font-size: 25px;
+    color: white;
     transition: .3s ease all;
     -webkit-transition: .3s ease all;
     cursor: pointer;
@@ -162,8 +165,8 @@ function archive(articleId: number) {
   height: 30vh;
   min-height: 250px;
   transition: .3s all ease;
-  background-image: url(../assets/ec8ce499ly1h1hhm1o6m1j22pg1ww4qp.jpg);
-  background-position: center;
+  //background-image: url(../assets/ec8ce499ly1h1hhm1o6m1j22pg1ww4qp.jpg);
+  background-position: top;
   // background-size: cover;
 }
 

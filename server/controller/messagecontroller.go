@@ -43,6 +43,10 @@ func (m MessageController) Create(c *gin.Context) {
 		response.Fail(c, gin.H{}, err.Error())
 		return
 	}
+	if msg.UserName == "" {
+		msg.UserName = "匿名具足虫"
+		//msg.Icon = ""
+	}
 	if err2 := m.DB.Create(&msg).Error; err2 != nil {
 		response.Fail(c, gin.H{}, err2.Error())
 		return

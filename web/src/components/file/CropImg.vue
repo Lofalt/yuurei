@@ -51,6 +51,7 @@ watch(props, (newValue: any, oldValue: any) => {
 
   /* This rule is very important, please don't ignore this */
   max-height: 100%;
+  max-width: 80%;
 }
 
 </style>

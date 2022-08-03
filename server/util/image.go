@@ -1,6 +1,8 @@
 package util
 
 import (
+	"bytes"
+	"fmt"
 	"image"
 	"image/jpeg"
 	"log"
@@ -8,16 +10,16 @@ import (
 )
 
 func Compress(imagePath string, quality int) {
-	imgfile, err := os.Open(imagePath)
+	imgfile, err := os.ReadFile(imagePath)
 	if err != nil {
 		log.Println(err.Error())
 		return
 	}
-	defer imgfile.Close()
 
-	jpgimg, err := jpeg.Decode(imgfile)
+	jpgimg, err := jpeg.Decode(bytes.NewReader(imgfile))
 	if err != nil {
-		log.Println(err.Error())
+		fmt.Println(imgfile[:5])
+		log.Println("decoding:" + err.Error())
 		return
 	}
 	newfile, err := os.Create(imagePath)
@@ -39,14 +41,13 @@ func Compress(imagePath string, quality int) {
 
 func CropPic(imagePath string, x, y, x1, y1 int) error {
 	log.Println(imagePath)
-	imgfile, err := os.Open(imagePath)
+	imgfile, err := os.ReadFile(imagePath)
 	if err != nil {
 		log.Println("opening:" + err.Error())
 		return err
 	}
-	defer imgfile.Close()
 
-	jpgimg, err := jpeg.Decode(imgfile)
+	jpgimg, err := jpeg.Decode(bytes.NewReader(imgfile))
 	if err != nil {
 		log.Println("decoding:" + err.Error())
 		return err

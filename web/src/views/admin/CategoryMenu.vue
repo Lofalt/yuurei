@@ -1,4 +1,6 @@
 <template>
+
+  {{backgroundImg}}
   <n-button @click="showNew=!showNew">新增</n-button>
   <n-data-table
       :columns="columns"
@@ -6,8 +8,10 @@
       :pagination="pagination"
       :bordered="false"
   />
-  <n-modal v-model:show="showModal" display-directive="show">
-    <n-card style="width: 50vw">
+  <n-modal v-model:show="showModal" display-directive="if">
+    <n-card style="width: 60vw">
+      <upload-pic :rawSrc="newSrc" :name="`上传图片`" :ratio="2.5" directory="categoryHeadPic" quality="40" @confirm="changeEditImg"/>
+      <n-color-picker :modes="[`hex`]" v-model:value="newColor"/>
       <n-input type="text" v-model:value="newName" @keyup.enter="send" placeholder="输入名称"/>
       <n-button @click="send">提交</n-button>
     </n-card>
@@ -16,7 +20,8 @@
     <n-card style="width: 50vw">
       <!--      <div :style="{backgroundImage:`url(${backgroundImg})`}" class="img">-->
       <!--      </div>-->
-      <upload-pic :name="`上传图片`" :ratio="2.5" directory="headPic" quality="40" @send-pic="changeImg"/>
+      <upload-pic  :name="`上传图片`" :ratio="2.5" directory="categoryHeadPic" quality="40" @confirm="changeImg"/>
+      <n-color-picker :modes="[`hex`]" v-model:value="color"/>
       <n-input type="text" v-model:value="newCat" @keyup.enter="send2" placeholder="输入名称"/>
       <n-button @click="send2">提交</n-button>
     </n-card>
@@ -29,19 +34,26 @@ import {NButton, NDataTable, NModal, NCard, NInput} from 'naive-ui'
 import type {DataTableColumns} from 'naive-ui'
 import axios from "@/request/index"
 import UploadPic from "@/components/file/UploadPic.vue"
+import {NColorPicker} from 'naive-ui'
 
-const backgroundImg = ref("")
-const currentId = ref(0)
-const newName = ref('')
 type Category = {
   id: number
   title: string
   createdAt: string
   updatedAt: string
 }
+
+const editImg = ref("")
+const color = ref('#000000')
+const backgroundImg = ref("")
+const currentId = ref(0)
+const newName = ref('')
+const newSrc = ref('')
+const newColor = ref('')
 const showModal = ref(false)
 const showNew = ref(false)
 const newCat = ref('')
+
 const actions = [{
   name: "删除",
   key: "delete",
@@ -57,6 +69,8 @@ const actions = [{
     axios.get(`/yuurei/articleCategory/${id}`, {}).then((res: any) => {
       currentId.value = id
       newName.value = res.data.data.ArticleCategoryName
+      newColor.value = res.data.data.Color
+      newSrc.value = res.data.data.HeaderPic
       showModal.value = !showModal.value
     })
   }
@@ -67,10 +81,15 @@ getCat()
 function changeImg(pic: string) {
   backgroundImg.value = pic
 }
+function changeEditImg(pic:string){
+  editImg.value = pic
+}
 
 function send2() {
   axios.request("/yuurei/articleCategory", "post", {
-    ArticleCategoryName: newCat.value
+    ArticleCategoryName: newCat.value,
+    Color:color.value,
+    HeaderPic:backgroundImg.value
   }).then((res) => {
     console.log(res)
     showNew.value = !showNew.value
@@ -80,7 +99,9 @@ function send2() {
 
 function send() {
   axios.request("/yuurei/articleCategory/" + currentId.value, "put", {
-    ArticleCategoryName: newName.value
+    ArticleCategoryName: newName.value,
+    Color:newColor.value,
+    HeaderPic:editImg.value
   }).then((res) => {
     console.log(res)
     showModal.value = !showModal.value

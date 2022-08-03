@@ -1,28 +1,28 @@
 <template>
   <div class="rightbar" @click.self="pushCard">
-    <div class="showpage activeCard" @wheel.stop="" @touchend.stop="">
+    <div class="showpage activeCard" @wheel.stop="" @touchend.stop="" >
       <div class="showtag tag1" @click="pullCard(0)">
         废话
       </div>
       <!-- <div class="showtag tag1" @click="pullCard(0)"> -->
       <!-- 鲤鱼姐 -->
       <!-- </div> -->
-      <article-page></article-page>
-      <!-- <router-view v-show="showPic"></router-view> -->
+      <article-page v-show="showBlog"></article-page>
+      <!-- <router-view v-show="showBlog"></router-view> -->
     </div>
-    <div class="showpage activeCard" @wheel.stop="" @touchend.stop="">
+    <div class="showpage activeCard" @wheel.stop="" @touchend.stop="" >
       <div class="showtag tag2" @click="pullCard(1)">
         留言板
       </div>
-      <blog-page></blog-page>
-      <!-- <router-view name="BlogPage" v-show="showBlog"></router-view> -->
+      <blog-page v-show="showMessage"></blog-page>
+      <!-- <router-view name="BlogPage" v-show="showMessage"></router-view> -->
     </div>
-    <div class="showpage activeCard" @wheel.stop="" @touchend.stop="">
+    <div class="showpage activeCard" @wheel.stop="" @touchend.stop="" >
       <div class="showtag tag3" @click="pullCard(2)">
         TAG
       </div>
       <!-- <router-view name="LovePage" v-show="showLove"></router-view> -->
-      <love-page></love-page>
+      <love-page v-show="showLove"></love-page>
     </div>
     <div class="showpage activeCard" @wheel.stop="" @touchend.stop="">
       <div class="showtag tag4" @click="pullCard(3)">
@@ -53,10 +53,10 @@ import LovePage from "@/views/LovePage.vue";
 import BlogPage from "@/views/MessageBoard.vue";
 // import LovePage from "@/views/LovePage.vue";
 const router = useRouter();
-const showBlog = ref(false)
+const showMessage = ref(false)
 const showVlog = ref(false)
 const showLove = ref(false)
-const showPic = ref(false)
+const showBlog = ref(false)
 const hover = ref(false)
 provide('hover', hover)
 provide('showVlog', showVlog)
@@ -95,10 +95,10 @@ function pullCard(num: number): void {
 
   switch (num) {
     case 0:
-      showPic.value = true;
+      showBlog.value = true;
       break;
     case 1:
-      showBlog.value = true
+      showMessage.value = true
       break;
     case 2:
       showLove.value = true
@@ -124,11 +124,11 @@ function pushCard() {
 
   setTimeout(() => {
 
-    showBlog.value = false
+    showMessage.value = false
     showLove.value = false
-    showPic.value = false
+    showBlog.value = false
     showVlog.value = false
-  }, 1000);
+  }, 500);
 }
 
 

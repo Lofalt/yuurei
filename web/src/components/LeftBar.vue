@@ -85,7 +85,7 @@ const router = useRouter()
 const dialog = useDialog()
 const pageData = usePageData()
 const userInfo = useUserInfo()
-// const emit = defineEmits(['change-page'])
+const emit = defineEmits(['toggleNav'])
 
 const isAdmin = computed(() => {
   if (userInfo.user.Username === null) {
@@ -112,11 +112,17 @@ function jumpTo(path: string) {
   router.push(path)
   if (path === '/home') {
     pageData.pagedata.count = 0
+    toggle()
   }
 }
 
+function toggle(){
+  emit('toggleNav')
+}
 function logIn() {
   router.push("/login")
+  toggle()
+
 }
 
 function logOut() {
@@ -133,6 +139,7 @@ function logOut() {
         IsAdmin: false
       }
       router.replace(router.currentRoute.value)
+      toggle()
     },
     onNegativeClick: () => {
       return
@@ -142,7 +149,12 @@ function logOut() {
 }
 
 function changePage(num: number) {
+  if(router.currentRoute.value.path.startsWith("/login")){
+    router.push("/home")
+    emit('toggleNav')
+  }
   pageData.pagedata.count = num;
+
 }
 </script>
 

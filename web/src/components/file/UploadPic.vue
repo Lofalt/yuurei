@@ -14,7 +14,7 @@
       <div class="btn" v-if="src" @click="confirm">提交</div>
     </div>
   </div>
-  <input type="file" accept="image/jpeg" ref="inputFile" @change="getFile"
+  <input type="file" accept="image/jpeg,image/png" ref="inputFile" @change="getFile"
          style="display: none">
   <input type="crop" accept="image/jpeg" ref="cropFile" @change="cropPic"
          style="display: none">
@@ -32,18 +32,20 @@ const isUploading = ref(false)
 const isLoading = ref(false)
 const count = ref(0)
 const cropping = ref(true)
-const emit = defineEmits(['sendPic', 'confirm'])
-const src = ref(null)
+const emit = defineEmits([ 'confirm'])
+const src = ref(null) as any
 const props = defineProps<{
   quality: number,
   directory: string,
   ratio: number,
-  name: string
+  name: string,
+  rawSrc:string
 }>()
 
 const inputFile = ref(null) as any
 const cropFile = ref(null) as any
 const detail = ref(null) as any
+src.value = props.rawSrc
 
 function acceptDetail(details: any) {
   detail.value = details

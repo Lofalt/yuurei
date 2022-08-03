@@ -139,7 +139,7 @@ function changePage(num: number) {
 .fixedButton {
   position: fixed;
   top: 1vh;
-  left: 1vw;
+  right: 1vw;
   z-index: 5;
   cursor: pointer;
   @media (max-width: 1024px) {
@@ -265,7 +265,7 @@ button {
 
 @keyframes move {
   from {
-    transform: translateY(1000px);
+    transform: translateX(200px);
   }
 
   /* to {

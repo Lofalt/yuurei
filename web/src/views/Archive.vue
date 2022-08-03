@@ -10,7 +10,7 @@
           <!--                <span>阅读数:{{article.ArticleReadTimes}}</span>-->
           <!--                <span>被分享:{{article.articleShareTimes}}</span>-->
         </div>
-        <div class="articleSummary">
+        <div class="articleSummary" :style="{backgroundColor:article.ArticleCategory?article.ArticleCategory.Color:``}">
           <div class="summary">
             {{ article.ArticleSummary }}
           </div>

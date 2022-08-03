@@ -13,7 +13,7 @@
       </n-icon>
     </transition>
     <n-dialog-provider>
-      <left-bar :class="[isActive?`showing`:`notShowing`,`leftBar`]"/>
+      <left-bar :class="[isActive?`showing`:`notShowing`,`leftBar`]" @toggle-nav="isActive=false"/>
     </n-dialog-provider>
     <router-view></router-view>
   </div>
@@ -37,6 +37,13 @@ let isWheeling = false
 const isAdmin = ref(true)
 const userInfo = useUserInfo()
 const isActive = ref(false)
+
+watch(router.currentRoute,(newValue:any)=>{
+  if(newValue.path.startsWith("/archive")){
+      pageData.pagedata.count=1
+
+  }
+})
 
 router.beforeEach((to, from, next) => {
   if (to.meta.needAuth && !userInfo.user.IsAdmin && to.name != "login") {
@@ -122,12 +129,12 @@ function changePage(num: number) {
 .fixedButton {
   position: fixed;
   top: 5vh;
-  left: 18vw;
+  right: 18vw;
   z-index: 5;
   cursor: pointer;
   @media (max-width: 1024px) {
     height: 10vh;
-    left: 1vw;
+    right: 1vw;
     // padding: 10px;
     //padding: 0;
     //width: 8vw;
@@ -228,7 +235,7 @@ button {
 .app {
   background-size: cover;
   background-repeat: repeat-y;
-  // background-image: url("./assets/94029233_p0.jpg");
+   background-image: url("./assets/94029233_p0.jpg");
   position: relative;
   min-height: 100vh;
   overflow: hidden;

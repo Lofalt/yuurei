@@ -96,7 +96,7 @@ function deleteMsg() {
       height: 15px;
       //word-break: keep-all;
       //line-height: 100%;
-      text-shadow: -1px 1px 4px rgba(215, 138, 138, 0.4);
+      text-shadow: -1px 1px 1px rgb(180, 157, 157);
 
     }
   }

@@ -37,7 +37,7 @@ func UploadImg(c *gin.Context) {
 		response.Fail(c, gin.H{}, err.Error())
 		return
 	}
-	if quality != 0 {
+	if quality != 0 && (suffix == "jpg" || suffix == "jpeg") {
 		util.Compress(filename, quality)
 
 	}
@@ -53,6 +53,9 @@ func GalleryPic(c *gin.Context) {
 	// 单文件
 	file, _ := c.FormFile("file")
 	log.Println(file.Filename)
+	quality, _ := strconv.Atoi(c.Query("qua"))
+
+	suffix := strings.Split(file.Filename, ".")[len(strings.Split(file.Filename, "."))-1]
 
 	// 上传文件至指定目录
 	// c.SaveUploadedFile(file, dst)
@@ -68,6 +71,11 @@ func GalleryPic(c *gin.Context) {
 	if err != nil {
 		response.Fail(c, gin.H{}, err.Error())
 		return
+	}
+	suffix = strings.ToUpper(suffix)
+	if quality != 0 && (suffix == "JPG" || suffix == "JPEG") {
+		util.Compress(filename, quality)
+
 	}
 
 	responFileName := filename

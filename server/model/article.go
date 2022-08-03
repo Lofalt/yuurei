@@ -20,6 +20,8 @@ type Article struct {
 type ArticleCategory struct {
 	gorm.Model
 	ArticleCategoryName string `gorm:"type:varchar(20)"`
+	Color               string `gorm:"type:varchar(10)"`
+	HeaderPic           string `gorm:"type:varchar(50)"`
 }
 
 type Tag struct {

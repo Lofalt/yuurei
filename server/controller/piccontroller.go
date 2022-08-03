@@ -1,11 +1,13 @@
 package controller
 
 import (
+	"fmt"
 	"github.com/Lofalt/yuurei/common"
 	"github.com/Lofalt/yuurei/model"
 	"github.com/Lofalt/yuurei/response"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
+	"os"
 	"strconv"
 )
 
@@ -105,13 +107,14 @@ func (p PicController) Delete(c *gin.Context) {
 			ID: uint(id),
 		},
 	}
-
+	p.DB.First(&pic)
+	fmt.Println(pic)
+	os.Remove(pic.Path)
 	//if err := p.DB.Unscoped().Delete(&pic).Error; err != nil {\
 	if err := p.DB.Delete(&pic).Error; err != nil {
 
 		response.Fail(c, gin.H{}, err.Error())
 		return
 	}
-
 	response.Success(c, gin.H{}, "删除成功")
 }
