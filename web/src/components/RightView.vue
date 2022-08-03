@@ -21,8 +21,8 @@
         <!--                  scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>-->
         <!--        <iframe class="player" src="//player.bilibili.com/player.html?aid=290694593&bvid=BV1yf4y1Y7V1&cid=341769102&page=1"-->
         <!--                scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>-->
-        <video class="player" src="../assets/单向箭头finn_x264.mp4" width="80vw" height="80vh" controls="controls" loop>s?
-        </video>
+        <!--        <video class="player" src="../assets/单向箭头finn_x264.mp4" width="80vw" height="80vh" controls="controls" loop>s?-->
+        <!--        </video>-->
 
       </div>
     </div>
@@ -31,6 +31,8 @@
       <!--      <article-editor/>-->
       <!--        </div>-->
       <!--        <home/>-->
+      <!--      <crop-img/>-->
+
     </div>
   </div>
 
@@ -44,6 +46,7 @@ import ArticleEditor from "@/components/edit/ArticleEditor.vue"
 import Date from "@/components/Date.vue";
 import {ArrowBarToUp} from "@vicons/tabler"
 import {NIcon} from "naive-ui"
+import UploadPic from "./file/UploadPic.vue"
 
 const isShow = ref(true)
 const pageData = usePageData()
@@ -52,6 +55,9 @@ let isWheeling = false
 var touchX = 0
 var touchY = 0
 
+function check(arg: any) {
+  alert(arg)
+}
 
 function touchStart(event: any) {
   touchX = event.targetTouches[0].pageX;
@@ -215,7 +221,7 @@ iframe {
 }
 
 .bottomPage {
-  background-color: rgba(0, 0, 0, 1);
+  //background-color: rgba(0, 0, 0, 1);
   border: 0px;
 }
 

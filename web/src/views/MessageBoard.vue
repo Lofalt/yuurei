@@ -19,12 +19,17 @@
                     <button class="sendButton" @click="sendMsg">send</button>
                     <!-- </transition> -->
                   <input type="file" accept="image/jpeg,image/png,image/bmp,image/gif" ref="inputFile" @change="getFile" style="display: none" >
-                  <div class="uploadButton" :style="{backgroundImage:`url(${backgroundImg})`}" @click=upload>
+                  <div class="uploadButton" :style="{backgroundImage:`url(${backgroundImg})`}" @click="iconEdit=true">
                     <loading-com v-show="isLoading"/>
                   </div>
                 </div>
             </transition>
         </div>
+      <n-modal v-model:show="iconEdit" display-directive="if">
+        <n-card class="iconCard">
+          <upload-pic @confirm="check" :name="`上传图片`" :ratio="1" directory="headPic" quality="40" @send-pic="changeImg"/>
+        </n-card>
+      </n-modal>
         <n-modal v-model:show="showTheModal" :display-directive="'if'" :transform-origin="'mouse'">
             <n-card size="huge" aria-modal="true" style="width: 600px; height:60vh;">
                 <!-- <button @click="post">点我发送</button> -->
@@ -34,7 +39,7 @@
                     <!-- <transition name="button"> -->
                   <button class="sendButton" @click="sendMsg">send</button>
 
-                  <div class="uploadButton inside" :style="{backgroundImage:`url(${backgroundImg})`}" @click=upload></div>
+                  <div class="uploadButton inside" :style="{backgroundImage:`url(${backgroundImg})`}" @click="iconEdit=true"></div>
 
 
                   <!-- </transition> -->
@@ -57,7 +62,9 @@ import { MessageCircle } from "@vicons/tabler"
 import { NIcon } from "naive-ui"
 import axios from "@/request/index"
 import LoadingCom from "@/components/LoadingCom.vue";
+import UploadPic from "@/components/file/UploadPic.vue"
 
+const iconEdit = ref(false)
 const isLoading = ref(false)
 const router = useRouter()
 const showModal = ref(false)
@@ -73,6 +80,11 @@ const msgList = ref([])
 
 
 getMsgs()
+
+function check(arg:any){
+  backgroundImg.value = arg
+  iconEdit.value = false
+}
 function getMsgs(){
   axios.get("/yuurei/msg/all",{}).then((res:any)=>{
     let msgTmp:any[] = []
@@ -142,6 +154,15 @@ function getFile(event:any){
 
 <style lang="less" scoped>
 
+.iconCard{
+  //height:80vh;
+  width: 50vw;
+  //min-width: 50vw;
+  border:3px solid black;
+  @media (max-width: 800px){
+    width: 100vw;
+  }
+}
 .v-leave-to,
 .v-enter-from{
   opacity: 0;

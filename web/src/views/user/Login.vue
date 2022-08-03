@@ -12,7 +12,7 @@
         <span class="label">
         密码:
           </span>
-      <n-input type="password" v-model:value="password" placeholder="输入密码"/>
+      <n-input @keyup.enter="login" type="password" v-model:value="password" placeholder="输入密码"/>
     </div>
     <div class="footer">
       <n-button @click="login" class="btn" type="info">登陆</n-button>

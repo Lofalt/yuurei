@@ -39,18 +39,17 @@ const userInfo = useUserInfo()
 const isActive = ref(false)
 
 router.beforeEach((to, from, next) => {
-  console.log(to)
   if (to.meta.needAuth && !userInfo.user.IsAdmin && to.name != "login") {
-    alert("你没有权限")
-    next({
-      name: "home"
-    })
+
+    // alert("你没有权限")
+    // next({
+    //   name: "home"
+    // })
     // return false
   }
 
   if (userInfo.user.Username === null) {
     axios.get("/yuurei/info", {}).then((res: any) => {
-      console.log(res)
       if (res.code === 200) {
         userInfo.user = res.data.user
       }
@@ -70,7 +69,6 @@ onMounted(() => {
   let user = userInfo.user
   if (user.Username === null) {
     axios.get("/yuurei/info", {}).then((res: any) => {
-      console.log(res)
       if (res.code === 200) {
         userInfo.user = res.data.user
       }

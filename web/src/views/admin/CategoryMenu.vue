@@ -7,15 +7,17 @@
       :bordered="false"
   />
   <n-modal v-model:show="showModal" display-directive="show">
-    <n-card style="width: 50vw"> 请输入
-      <n-input type="text" v-model:value="newName" @keyup.enter="send"/>
+    <n-card style="width: 50vw">
+      <n-input type="text" v-model:value="newName" @keyup.enter="send" placeholder="输入名称"/>
       <n-button @click="send">提交</n-button>
     </n-card>
   </n-modal>
   <n-modal v-model:show="showNew" display-directive="show">
     <n-card style="width: 50vw">
-      请输入
-      <n-input type="text" v-model:value="newCat" @keyup.enter="send2"/>
+      <!--      <div :style="{backgroundImage:`url(${backgroundImg})`}" class="img">-->
+      <!--      </div>-->
+      <upload-pic :name="`上传图片`" :ratio="2.5" directory="headPic" quality="40" @send-pic="changeImg"/>
+      <n-input type="text" v-model:value="newCat" @keyup.enter="send2" placeholder="输入名称"/>
       <n-button @click="send2">提交</n-button>
     </n-card>
   </n-modal>
@@ -26,7 +28,9 @@ import {h, Ref, ref} from 'vue'
 import {NButton, NDataTable, NModal, NCard, NInput} from 'naive-ui'
 import type {DataTableColumns} from 'naive-ui'
 import axios from "@/request/index"
+import UploadPic from "@/components/file/UploadPic.vue"
 
+const backgroundImg = ref("")
 const currentId = ref(0)
 const newName = ref('')
 type Category = {
@@ -59,6 +63,10 @@ const actions = [{
 }]
 
 getCat()
+
+function changeImg(pic: string) {
+  backgroundImg.value = pic
+}
 
 function send2() {
   axios.request("/yuurei/articleCategory", "post", {
@@ -144,3 +152,15 @@ const columns = createColumns({
 const pagination = false as const
 
 </script>
+
+<style lang="less" scoped>
+
+.img {
+  width: 100%;
+  height: 20vh;
+  background-color: #ffffff;
+  background-size: cover;
+  background-position: 50% 20%;
+}
+
+</style>
