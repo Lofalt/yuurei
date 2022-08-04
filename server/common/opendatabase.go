@@ -37,7 +37,7 @@ func InitDB() *gorm.DB {
 		loc)
 	db, err := gorm.Open(mysql.Open(args), &gorm.Config{})
 	if err != nil {
-		panic("failed to connect database")
+		panic("failed to connect database" + err.Error())
 	}
 
 	DB = db

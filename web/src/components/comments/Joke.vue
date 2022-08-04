@@ -11,7 +11,9 @@
       </div>
       <span></span>
       <div class="info" v-html="msg.MessageContent">
-      </div>
+        </div>
+<!--        <div class="info">-->
+<!--          <pre>{{msg.MessageContent}}</pre>-->
 
     </div>
   </div>
@@ -195,11 +197,16 @@ function deleteMsg() {
     }
 
     .info {
-      font-family: "幼圆";
+      font-family: "微软雅黑";
       font-size: 1.2em;
       font-weight: 600;
       color: rgb(98, 95, 95);
       padding: 5px;
+
+      pre{
+        font-family: "微软雅黑";
+        white-space: pre-line;
+      }
     }
   }
 }

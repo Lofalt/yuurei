@@ -235,7 +235,7 @@ button {
 .app {
   background-size: cover;
   background-repeat: repeat-y;
-  //background-image: url("./assets/94029233_p0.jpg");
+  background-image: url("./assets/1659613675111.jpg");
   position: relative;
   min-height: 100vh;
   overflow: hidden;

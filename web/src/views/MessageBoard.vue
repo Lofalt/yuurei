@@ -13,7 +13,26 @@
             <transition>
                 <div class="messageDiv" v-show="showModal">
                     <div class="inputUsername"><input type="text" v-model="userName" placeholder="输入署名,为空匿名" /></div>
-                    <wang-editor-mini ref="wang" @change-content="changeContent"></wang-editor-mini>
+<!--                    <wang-editor-mini ref="wang" @change-content="changeContent"></wang-editor-mini>-->
+                  <n-icon color="black" size="30">
+                    <picture-outlined/>
+                  </n-icon>
+                  <n-icon color="black" size="30">
+                    <smile-outlined/>
+                  </n-icon>
+
+                  <textarea type="textarea" draggable="false" able style="
+                            height: 70%;width: 100%;resize:none;
+                            outline: none;
+                            border:0px;
+                            padding:10px;
+                            font-family: 微软雅黑;
+                            font-size: 1em;
+                            position:absolute;
+                            bottom: 0;
+                            left:0;
+                            border-top:1px solid rgba(49,49,49,.1);
+                     " v-model="msgContent" > </textarea>
 
                     <!-- <transition name="button"> -->
                     <button class="sendButton" @click="sendMsg">send</button>
@@ -35,7 +54,7 @@
                 <!-- <button @click="post">点我发送</button> -->
                 <div class="messageDiv" style="height:80%">
                     <div class="inputUsernameModal"><input type="text" v-model="userName" placeholder="署名,为空匿名" /></div>
-                    <wang-editor-mini @change-content="changeContent"></wang-editor-mini>
+<!--                    <wang-editor-mini @change-content="changeContent"></wang-editor-mini>-->
                     <!-- <transition name="button"> -->
                   <button class="sendButton" @click="sendMsg">send</button>
 
@@ -56,14 +75,18 @@ import { computed, provide, ref } from 'vue';
 import WangEditorMini from "../components/wangeditor/WangEditorMini.vue"
 import { useRouter } from 'vue-router'
 import '@wangeditor/editor/dist/css/style.css' // 引入 css
-import { NModal, NCard } from 'naive-ui';
+import { NModal, NCard,NInput } from 'naive-ui';
 import Joke from "../components/comments/Joke.vue"
 import { MessageCircle } from "@vicons/tabler"
 import { NIcon } from "naive-ui"
 import axios from "@/request/index"
 import LoadingCom from "@/components/LoadingCom.vue";
 import UploadPic from "@/components/file/UploadPic.vue"
+import {PictureOutlined,SmileOutlined} from "@vicons/antd"
 
+var EmojiConvertor = require('emoji-js');
+var emoji = new EmojiConvertor()
+console.log(emoji.replace_colons("Hello :smile:"));
 const iconEdit = ref(false)
 const isLoading = ref(false)
 const router = useRouter()
@@ -103,7 +126,7 @@ function changeContent(content:string){
 }
 function sendMsg(){
   axios.request("/yuurei/msg","post",{
-    MessageContent:msgContent.value,
+    MessageContent:msgContent.value.replace(/\r/ig,'').replace(/\n/ig,'<br/>'),
     Icon:backgroundImg.value,
     UserName : userName.value,
   }).then((res)=>{
@@ -257,7 +280,9 @@ function getFile(event:any){
         left: 60px;
         position: absolute;
         bottom: 25px;
-        height: 40vh;
+        height: 15vh;
+      border:3px solid black;
+      z-index: 10;
         // left: 60px;
         // height: 23vh;
         // flex: 10;

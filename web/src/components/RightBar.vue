@@ -14,7 +14,7 @@
       <div class="showtag tag2" @click="pullCard(1)">
         留言板
       </div>
-      <blog-page v-show="showMessage"></blog-page>
+      <blog-page v-if="showMessage"></blog-page>
       <!-- <router-view name="BlogPage" v-show="showMessage"></router-view> -->
     </div>
     <div class="showpage activeCard" @wheel.stop="" @touchend.stop="" >

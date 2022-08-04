@@ -1563,6 +1563,11 @@
     "@uppy/utils" "^4.1.0"
     "nanoid" "^3.1.25"
 
+"@vicons/antd@^0.12.0":
+  "integrity" "sha512-C0p6aO1EmGG1QHrqgUWQS1No20934OdWSRQshM5NIDK5H1On6tC26U0hT6Rmp40KfUsvhvX5YW8BoWJdNFifPg=="
+  "resolved" "https://registry.npmmirror.com/@vicons/antd/-/antd-0.12.0.tgz"
+  "version" "0.12.0"
+
 "@vicons/fa@^0.12.0":
   "integrity" "sha512-g2PIeJLsTHUjt6bK63LxqC0uYQB7iu+xViJOxvp1s8b9/akpXVPVWjDTTsP980/0KYyMMe4U7F/aUo7wY+MsXA=="
   "resolved" "https://registry.npmmirror.com/@vicons/fa/-/fa-0.12.0.tgz"
@@ -3490,6 +3495,18 @@
     "memoize-one" "^6.0.0"
     "normalize-wheel-es" "^1.1.2"
 
+"emoji-datasource@7.0.2":
+  "integrity" "sha512-F5TTUSktTIfbjHIlaz8tjsQ8EAD0UpJtj1i5O13jQARWTddtFgam3nE1W5WgSQoqU/cuTnF1H9tK/wlCOyzfiA=="
+  "resolved" "https://registry.npmmirror.com/emoji-datasource/-/emoji-datasource-7.0.2.tgz"
+  "version" "7.0.2"
+
+"emoji-js@^3.7.0":
+  "integrity" "sha512-YNJCF8DOYI1AZnkSIcJbmIN6rtXtSv5DObqzvHuGAP8VLQc15MMN+DG9rQVSfHPXGFkFub9pGvbiO4FNz5+sjg=="
+  "resolved" "https://registry.npmmirror.com/emoji-js/-/emoji-js-3.7.0.tgz"
+  "version" "3.7.0"
+  dependencies:
+    "emoji-datasource" "7.0.2"
+
 "emoji-regex@^8.0.0":
   "integrity" "sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A=="
   "resolved" "https://registry.npmmirror.com/emoji-regex/-/emoji-regex-8.0.0.tgz"
@@ -4092,6 +4109,14 @@
   "version" "6.0.1"
   dependencies:
     "flat-cache" "^3.0.4"
+
+"file-loader@^6.2.0":
+  "integrity" "sha512-qo3glqyTa61Ytg4u73GultjHGjdRyig3tG6lPtyX/jOEJvHif9uB0/OCI2Kif6ctF3caQTW2G5gym21oAsI4pw=="
+  "resolved" "https://registry.npmmirror.com/file-loader/-/file-loader-6.2.0.tgz"
+  "version" "6.2.0"
+  dependencies:
+    "loader-utils" "^2.0.0"
+    "schema-utils" "^3.0.0"
 
 "filelist@^1.0.1":
   "integrity" "sha512-w1cEuf3S+DrLCQL7ET6kz+gmlJdbq9J7yXCSjK/OZCPA+qEN1WyF4ZAf0YYJa4/shHJra2t/d/r8SV4Ji+x+8Q=="
