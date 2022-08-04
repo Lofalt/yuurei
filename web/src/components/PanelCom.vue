@@ -20,9 +20,6 @@
 </template>
 
 <script lang="ts" setup>
-
-// import scrollToTop from "../../util/scrollToTop";
-import {computed} from "vue";
 import {useRouter} from "vue-router";
 
 const router = useRouter()
@@ -41,11 +38,8 @@ function archive(articleId: number) {
 <style lang="less" scoped>
 .panel {
   border: 3px solid rgb(53, 53, 53);
-  //background-color: #ffbca1;
   color: rgb(39, 39, 39);
   position: relative;
-  /*width: 70%;*/
-  /*width: 90%;*/
   margin-left: 10px;
   margin-right: 10px;
   margin-bottom: 50px;

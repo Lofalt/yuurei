@@ -10,17 +10,15 @@ import Cropper from "cropperjs"
 import {onMounted, ref, watch} from "vue";
 import {pProps} from "naive-ui";
 
-// const image = document.getElementById("image")
-const image = ref(null)
-// const detail = ref(null)
+const image = ref(null) as any
 const emit = defineEmits(['send-detail'])
+let cropper = null as any
 
 const props = defineProps<{
   imgSrc: string,
   ratio: number,
   count: number
 }>()
-let cropper = null as any
 onMounted(() => {
   cropper = new Cropper(image.value, {
     aspectRatio: props.ratio,

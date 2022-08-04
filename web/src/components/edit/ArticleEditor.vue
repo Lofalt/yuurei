@@ -78,7 +78,6 @@ function send() {
     AriticleContent: content.value,
     Tags: Tags,
   }
-  console.log(Article)
   axios.request("/yuurei/article", "post", {
     ArticleTitle: title.value,
     ArticleCategory: ArticleCategory,
@@ -86,7 +85,6 @@ function send() {
     ArticleContent: content.value,
     Tags: Tags,
   }).then((res) => {
-    console.log(res)
     emit('success', res)
   })
 }

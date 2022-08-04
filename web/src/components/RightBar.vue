@@ -43,15 +43,12 @@ export default {
 }
 </script>
 <script lang="ts" setup>
-import WaterPage from "../views/WaterPage.vue"
-import {computed, onDeactivated, onUnmounted, provide, ref} from 'vue';
+import { provide, ref} from 'vue';
 import {useRouter} from 'vue-router'
 import AnliPage from '@/views/PicPage.vue';
 import ArticlePage from "@/views/ArticlePage.vue";
-import VlogPage from "@/views/VlogPage.vue";
 import LovePage from "@/views/LovePage.vue";
 import BlogPage from "@/views/MessageBoard.vue";
-// import LovePage from "@/views/LovePage.vue";
 const router = useRouter();
 const showMessage = ref(false)
 const showVlog = ref(false)
@@ -63,9 +60,6 @@ provide('showVlog', showVlog)
 
 
 function pullCard(num: number): void {
-  // if (router.currentRoute.value.fullPath == "/home") {
-  //     router.push("/home/pages")
-  // }
   const tags = document.getElementsByClassName("showtag") as HTMLSelectElement
   const cards = document.getElementsByClassName("showpage") as HTMLCollection
   for (let i = num; i >= 0; i--) {

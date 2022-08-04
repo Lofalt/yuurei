@@ -30,7 +30,7 @@ const userInfo = useUserInfo()
 const emit = defineEmits(['reload'])
 
 const props = defineProps<{
-  msg: object
+  msg: any
 }>()
 
 backgroundImg.value = props.msg.Icon

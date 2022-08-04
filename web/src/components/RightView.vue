@@ -39,18 +39,13 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, getCurrentInstance, onMounted, provide, ref, watch} from 'vue';
+import {computed, onMounted, ref, watch} from 'vue';
 import RightBar from '@/components/RightBar.vue'
 import {usePageData} from '@/store/pageData';
-import ArticleEditor from "@/components/edit/ArticleEditor.vue"
 import Date from "@/components/Date.vue";
-import {ArrowBarToUp} from "@vicons/tabler"
-import {NIcon} from "naive-ui"
-import UploadPic from "./file/UploadPic.vue"
 
 const isShow = ref(true)
 const pageData = usePageData()
-// const pageCount = pageData.pagedata.count
 let isWheeling = false
 var touchX = 0
 var touchY = 0
@@ -65,8 +60,6 @@ function touchStart(event: any) {
 }
 
 function touchEnd(event: any) {
-  // alert("hello")
-  // alert(touchY)
   let touchYEnd = event.changedTouches[0].pageY
   let touches = touchYEnd - touchY
   if (touches < -90) {
@@ -81,10 +74,6 @@ function touchEnd(event: any) {
   }
 }
 
-
-// watch(pageData, (newValue, oldValue) => {
-//   pageData.pagedata.count = 1
-// })
 
 function touchChange(event: any) {
 }
@@ -146,12 +135,6 @@ function changePage(num: number) {
     height: 10vh;
     left: 1vw;
     top: 1vh;
-  }
-
-  &:hover {
-    //background-color: rgb(255, 83, 83) !important;
-    //color: white !important;
-
   }
 
 }
