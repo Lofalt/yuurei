@@ -41,7 +41,7 @@ function archive(articleId: number) {
 <style lang="less" scoped>
 .panel {
   border: 3px solid rgb(53, 53, 53);
-  background-color: #ffbca1;
+  //background-color: #ffbca1;
   color: rgb(39, 39, 39);
   position: relative;
   /*width: 70%;*/
@@ -113,7 +113,7 @@ function archive(articleId: number) {
     position: absolute;
     left: 5px;
     padding-top: 10px;
-    color: white;
+    color: black;
     padding-right: 100px;
     bottom: 5px;
     margin-left: 2px;
@@ -138,7 +138,7 @@ function archive(articleId: number) {
     position: relative;
     margin-top: -180px;
     font-size: 25px;
-    color: white;
+    color: black;
     transition: .3s ease all;
     -webkit-transition: .3s ease all;
     cursor: pointer;

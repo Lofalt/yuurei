@@ -196,7 +196,7 @@ watch(currentCat, (newValue, oldValue) => {
 }
 
 .panel {
-  background-color: rgba(109, 155, 255, 0.8);
+  //background-color: rgba(109, 155, 255, 0.8);
   width: 80%;
   height: 25vh;
   margin: 30px auto;

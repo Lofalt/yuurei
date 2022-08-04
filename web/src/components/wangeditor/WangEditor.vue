@@ -27,7 +27,6 @@ import {Editor, Toolbar} from '@wangeditor/editor-for-vue'
 
 const router = useRouter()
 
-// const content = ref('')
 const editorRef = shallowRef()
 // 内容 HTML
 const valueHtml = ref('')
@@ -50,13 +49,6 @@ function changeContent() {
 
 // const focus = inject('focus', true)
 // 模拟 ajax 异步获取内容
-onMounted(() => {
-  setTimeout(() => {
-
-  }, 1500)
-
-})
-
 
 const toolbarConfig = {}
 const editorConfig = {placeholder: '说点啥吧', focus: true}

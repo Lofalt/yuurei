@@ -38,9 +38,9 @@ const isAdmin = ref(true)
 const userInfo = useUserInfo()
 const isActive = ref(false)
 
-watch(router.currentRoute,(newValue:any)=>{
-  if(newValue.path.startsWith("/archive")){
-      pageData.pagedata.count=1
+watch(router.currentRoute, (newValue: any) => {
+  if (newValue.path.startsWith("/archive")) {
+    pageData.pagedata.count = 1
 
   }
 })
@@ -235,7 +235,7 @@ button {
 .app {
   background-size: cover;
   background-repeat: repeat-y;
-   background-image: url("./assets/94029233_p0.jpg");
+  //background-image: url("./assets/94029233_p0.jpg");
   position: relative;
   min-height: 100vh;
   overflow: hidden;
