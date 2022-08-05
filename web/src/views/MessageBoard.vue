@@ -19,7 +19,7 @@
             <div @click="deletePic(index)" v-for="(item,index) in picList" :style="{backgroundImage:`url(${item})`}"
                  class="insidePic"></div>
           </div>
-          <div class="inputUsername"><input type="text" v-model="userName" placeholder="输入署名,为空匿名"/></div>
+          <div class="inputUsername"><input type="text" v-model="userName" placeholder="输入昵称,为空匿名"/></div>
           <!--                    <wang-editor-mini ref="wang" @change-content="changeContent"></wang-editor-mini>-->
           <emoji @emit-emoji="insertEmoji" v-show="showEmoji" class="emojiCard"/>
           <div class="messageHeader">
@@ -59,7 +59,7 @@
                  class="insidePic"></div>
           </div>
 
-          <div class="inputUsernameModal"><input type="text" v-model="userName" placeholder="署名,为空匿名"/></div>
+          <div class="inputUsernameModal"><input type="text" v-model="userName" placeholder="输入昵称,为空匿名"/></div>
           <!--                    <wang-editor-mini @change-content="changeContent"></wang-editor-mini>-->
           <!-- <transition name="button"> -->
           <!--          <button class="sendButton" @click="sendMsg">send</button>-->
@@ -144,7 +144,7 @@ const uploadImg = computed(()=>{
 
 function editPic(){
   if(userName.value==''){
-    message.warning("请先输入署名")
+    message.warning("请先输入昵称")
     return
   }else{
     iconEdit.value = true
@@ -208,6 +208,9 @@ function sendMsg() {
   if(msgContent.value==null||msgContent.value==""){
     message.warning("先说点啥吧")
     return
+  }else if(msgContent.value.length>140){
+    message.warning("字数超限(<=140)")
+    return
   }
   axios.request("/yuurei/msg", "post", {
     MessageContent: msgContent.value.replace(/\r/ig, '').replace(/\n/ig, '<br/>'),
@@ -237,7 +240,7 @@ const wang = ref<InstanceType<typeof WangEditorMini>>();
 // const wang = ref(null)
 
 function changeModal() {
-  if (document.body.clientWidth > 1024) {
+  if (document.body.clientWidth > 800) {
     showModal.value = !showModal.value
   } else {
     showTheModal.value = !showTheModal.value
@@ -426,7 +429,7 @@ function getFile(event: any) {
   left: 60px;
   position: absolute;
   bottom: 25px;
-  height: 15vh;
+  height: 210px;
   border: 3px solid black;
   z-index: 10;
   // left: 60px;

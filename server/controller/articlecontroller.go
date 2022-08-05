@@ -85,8 +85,8 @@ func (a ArticleController) SelectArticleById(c *gin.Context) {
 	a.DB.Where("created_at>? AND article_category_id=?", article.CreatedAt, article.ArticleCategoryID).First(&next)
 	response.Success(c, gin.H{
 		"data": article,
-		"pre":  pre,
-		"next": next,
+		"pre":  next,
+		"next": pre,
 	}, "success")
 
 }

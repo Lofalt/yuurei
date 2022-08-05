@@ -225,6 +225,7 @@ function pushCard() {
       // transform: translateX(-10vw);
       // width: 60vw;
       // background-image: url(../assets/wallhaven-k71327.jpg);
+      background-color: white;
     }
 
     &:nth-child(1) {

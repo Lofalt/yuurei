@@ -251,7 +251,7 @@ a {
     //border-radius: 2px;
     box-shadow: -1px 1px 4px 1px rgba(49, 49, 49, .5);
     width: 250px;
-    background-color: rgb(73, 155, 169);
+    background-color: rgb(155, 176, 180);
     color: white;
   }
 
@@ -286,7 +286,7 @@ a {
 
     @media (max-width: 1024px) {
       width: 200px;
-      height: 220px;
+      height: 250px;
     }
   }
 
