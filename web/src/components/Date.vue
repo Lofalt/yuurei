@@ -30,6 +30,7 @@ setInterval(() => {
   width: 1000px;
   height: 1000px;
   //background-color: #fff;
+  color:var(--date-color);
   position: absolute;
   top: 20vh;
   left: 5vw;

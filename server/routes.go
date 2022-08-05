@@ -56,6 +56,11 @@ func CollecRouter(r *gin.Engine) *gin.Engine {
 	picRoutes.DELETE(":id", picController.Delete)
 	picRoutes.PUT(":id", picController.Update)
 
+	setRoutes := r.Group("/yuurei/settings")
+	setController := controller.NewSettingController()
+	setRoutes.PUT(":id", setController.Update)
+	setRoutes.GET(":id", setController.Show)
+
 	r.POST("/yuurei/uploadImgArticle", controller.ArticleImg)
 	r.POST("/yuurei/uploadImg", controller.UploadImg)
 	r.POST("/yuurei/uploadGallery", controller.GalleryPic)

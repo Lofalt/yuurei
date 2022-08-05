@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <crop-img :count="count" :ratio="ratio" :imgSrc="src" @send-detail="acceptDetail"/>
+    <crop-img :count="count" :ratio="ratio" :imgSrc="image" @send-detail="acceptDetail"/>
     <!--    <img v-show="!cropping" :src="src" alt="sad"/>-->
     <div class="inside">
       <div class="btn" @click="upload">
@@ -26,7 +26,7 @@
 
 <script lang="ts" setup>
 import CropImg from "./CropImg.vue"
-import {ref} from "vue";
+import {computed, ref} from "vue";
 import axios from "@/request";
 import {NButton} from 'naive-ui'
 import LoadingCom from "@/components/LoadingCom.vue";
@@ -45,11 +45,19 @@ const props = defineProps<{
   name: string,
   rawSrc: string
 }>()
-
+console.log(props.rawSrc)
 const inputFile = ref(null) as any
 const cropFile = ref(null) as any
 const detail = ref(null) as any
-src.value = props.rawSrc
+// src.value = props.rawSrc
+
+const image = computed(()=>{
+  if(src.value==null){
+    return props.rawSrc
+  }else{
+    return  src.value
+  }
+})
 
 function acceptDetail(details: any) {
   detail.value = details

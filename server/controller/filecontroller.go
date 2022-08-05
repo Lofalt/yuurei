@@ -5,6 +5,7 @@ import (
 	"github.com/Lofalt/yuurei/response"
 	"github.com/Lofalt/yuurei/util"
 	"github.com/gin-gonic/gin"
+	uuid "github.com/satori/go.uuid"
 	"log"
 	"math"
 	"os"
@@ -24,7 +25,7 @@ func UploadImg(c *gin.Context) {
 	// c.SaveUploadedFile(file, dst)
 	suffix := strings.Split(file.Filename, ".")[len(strings.Split(file.Filename, "."))-1]
 
-	timeStamp := strconv.Itoa(int(time.Now().UnixMilli())) + "." + suffix
+	timeStamp := uuid.NewV4().String() + strconv.Itoa(int(time.Now().UnixMilli())) + "." + suffix
 
 	var filepath string
 	if dir != "" {

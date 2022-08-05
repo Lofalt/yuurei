@@ -10,8 +10,11 @@
         <n-tab-pane name="menu" tab="菜单管理" display-directive="show">
           <category-menu/>
         </n-tab-pane>
-        <n-tab-pane name="pic" tab="图片管理 " display-directive="show">
+        <n-tab-pane name="pic" tab="图片管理 " display-directive="if">
           <pic-menu/>
+        </n-tab-pane>
+        <n-tab-pane name="config" tab="系统配置 " display-directive="if">
+          <config/>
         </n-tab-pane>
       </n-tabs>
     </n-card>
@@ -24,6 +27,7 @@ import articleMenu from "@/views/admin/ArticleMenu.vue";
 import ArticleMenu from "@/views/admin/ArticleMenu.vue";
 import CategoryMenu from "@/views/admin/CategoryMenu.vue"
 import PicMenu from "@/views/admin/PicMenu.vue"
+import Config from "./Config.vue"
 </script>
 
 <style lang="less" scoped>

@@ -1,6 +1,6 @@
 <template>
 
-  <div class="app">
+  <div class="app" :style="[{backgroundImage:backgroundImage},`--button-color:${ButtonColor};--date-color:${DateColor}`]" >
     <div :class="[isActive?`activeClass`:`unActive`,`mask`]" @click="showNav"></div>
     <div :class="[isActive?`lefting`:``,`navButton`]" @click="showNav">
       <div class="icons"></div>
@@ -37,6 +37,36 @@ let isWheeling = false
 const isAdmin = ref(true)
 const userInfo = useUserInfo()
 const isActive = ref(false)
+const config  = ref(null) as any
+
+const backgroundImage = computed(()=>{
+  if (config.value==null){
+    return ''
+  }
+  return `url(${config.value.BackgroundImage})`
+})
+
+const ButtonColor = computed(()=>{
+  if (config.value==null){
+    return ''
+  }
+  return config.value.ButtonColor
+})
+const DateColor = computed(()=>{
+  if (config.value==null){
+    return ''
+  }
+  return config.value.DateColor
+})
+
+    provide('globalConfig',config)
+axios.get("/yuurei/settings/1",{}).then((res:any)=>{
+  if(res.code==200){
+
+  config.value = res.data.data
+  }
+})
+
 
 watch(router.currentRoute, (newValue: any) => {
   if (newValue.path.startsWith("/archive")) {
@@ -75,7 +105,6 @@ function showNav() {
 onMounted(() => {
   let user = userInfo.user
   if (user.Username === null && localStorage.getItem("token") != null) {
-    console.log("是这里吗")
     axios.get("/yuurei/info", {}).then((res: any) => {
       if (res.code === 200) {
         userInfo.user = res.data.user

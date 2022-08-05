@@ -1,8 +1,8 @@
 <template>
-  <div class="leftbar">
-    <div class="header">NULL</div>
-    <div class="profile"></div>
-    <div class="name">UNDEFINED</div>
+  <div class="leftbar" >
+    <div class="header">{{ WebsiteName }}</div>
+    <div class="profile" :style="{backgroundImage:backgroundImage}"></div>
+    <div class="name">{{ MyName }}</div>
     <div class="icon1">
       <a href="javascript:">
         <n-icon size="20" color="#484848">
@@ -53,7 +53,7 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import {computed} from 'vue';
+import {computed, inject, onMounted, reactive, ref} from 'vue';
 import {useRouter} from 'vue-router';
 import {Weibo, Twitter, GrinTongue} from '@vicons/fa'
 import {NIcon} from "naive-ui"
@@ -67,6 +67,27 @@ const dialog = useDialog()
 const pageData = usePageData()
 const userInfo = useUserInfo()
 const emit = defineEmits(['toggleNav'])
+const config = inject("globalConfig") as any
+
+const backgroundImage = computed(()=>{
+  if(config.value==null){
+    return ``
+  }
+  return `url(${config.value.Icon})`
+})
+const WebsiteName = computed(()=>{
+  if(config.value==null){
+    return 'NULL'
+  }
+  return config.value.WebsiteName
+})
+
+const MyName = computed(()=>{
+  if(config.value==null){
+    return 'NULL'
+  }
+  return config.value.MyName
+})
 
 const isAdmin = computed(() => {
   if (userInfo.user.Username === null) {
@@ -245,8 +266,8 @@ a {
     position: relative;
     margin: 0 auto;
     // display: flex;
-    width: 12.2vw;
-    height: 15.2vw;
+    width: 12vw;
+    height: 15vw;
     // font-weight: 5000;
     // font-family: Verdana, Geneva, Tahoma, sans-serif;
     // border-radius: 50%;
@@ -257,7 +278,7 @@ a {
     // justify-content: center;
     // align-items: center;
     color: black;
-    background-image: url("../assets/e342ee78a065e6c608d9d31959dd8b24.jpeg");
+    //background-image: url("../assets/e342ee78a065e6c608d9d31959dd8b24.jpeg");
     // background-image: url("../assets/QQ图片20220723102142.jpg");
     background-size: cover;
     background-position: center;
@@ -323,7 +344,9 @@ a {
       box-shadow: -1px 1px 0 1px rgb(51, 51, 51);
 
       &:hover {
-        background-color: rgb(255, 83, 83) !important;
+        //background-color: rgb(255, 83, 83) !important;
+        background-color: var(--button-color) !important;
+
         color: white !important;
       }
     }
@@ -332,7 +355,8 @@ a {
 }
 
 .active {
-  background-color: rgb(255, 83, 83) !important;
+  //background-color: rgb(255, 83, 83) !important;
+  background-color: var(--button-color) !important;
   color: white !important;;
 
 }

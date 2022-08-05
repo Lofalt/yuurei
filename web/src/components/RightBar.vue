@@ -1,6 +1,6 @@
 <template>
   <div class="rightbar" @click.self="pushCard">
-    <div class="showpage activeCard" @wheel.stop="" @touchend.stop="" >
+    <div class="showpage activeCard" @wheel.stop="" @touchend.stop="">
       <div class="showtag tag1" @click="pullCard(0)">
         废话
       </div>
@@ -10,14 +10,16 @@
       <article-page v-show="showBlog"></article-page>
       <!-- <router-view v-show="showBlog"></router-view> -->
     </div>
-    <div class="showpage activeCard" @wheel.stop="" @touchend.stop="" >
+    <div class="showpage activeCard" @wheel.stop="" @touchend.stop="">
       <div class="showtag tag2" @click="pullCard(1)">
         留言板
       </div>
-      <blog-page v-if="showMessage"></blog-page>
+      <n-message-provider>
+        <blog-page v-if="showMessage"></blog-page>
+      </n-message-provider>
       <!-- <router-view name="BlogPage" v-show="showMessage"></router-view> -->
     </div>
-    <div class="showpage activeCard" @wheel.stop="" @touchend.stop="" >
+    <div class="showpage activeCard" @wheel.stop="" @touchend.stop="">
       <div class="showtag tag3" @click="pullCard(2)">
         TAG
       </div>
@@ -43,12 +45,14 @@ export default {
 }
 </script>
 <script lang="ts" setup>
-import { provide, ref} from 'vue';
+import {provide, ref} from 'vue';
 import {useRouter} from 'vue-router'
 import AnliPage from '@/views/PicPage.vue';
 import ArticlePage from "@/views/ArticlePage.vue";
 import LovePage from "@/views/LovePage.vue";
 import BlogPage from "@/views/MessageBoard.vue";
+import {NMessageProvider} from 'naive-ui'
+
 const router = useRouter();
 const showMessage = ref(false)
 const showVlog = ref(false)

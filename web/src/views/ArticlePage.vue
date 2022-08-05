@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" >
     <div class="catList">
       <div class="cat" @click="getArtsByCat(`all`)" :class="{active:isActive('all')}">全部分类</div>
       <div class="cat" v-for="item in catList" @click="getArtsByCat(item.ID)" :class="{active:isActive(item.ID)}">
@@ -30,7 +30,7 @@ const router = useRouter()
 const pageNum = ref(1)
 const pageTotal = ref(8)
 const pageSize = ref(5)
-const currentCat = ref("all")
+const currentCat = ref("all") as any
 
 const needToShow = computed(() => {
   return pageTotal.value > 1
@@ -49,8 +49,8 @@ function changePage(num: number) {
   // router.push('/About')
 }
 
-const articleList = ref([])
-const catList = ref([])
+const articleList = ref([]) as any
+const catList = ref([]) as any
 
 getArts(pageNum.value, pageSize.value)
 
@@ -78,8 +78,8 @@ function getArts(pagenum: number, pagesize: number) {
   }
 }
 
-axios.get("/yuurei/articleCategory/all").then((result) => {
-  result.data.data.forEach((data) => {
+axios.get("/yuurei/articleCategory/all",{}).then((result:any) => {
+  result.data.data.forEach((data:any) => {
     catList.value.push(data)
   })
 })
@@ -106,18 +106,19 @@ watch(currentCat, (newValue, oldValue) => {
 
 .n-pagination {
   --n-item-text-color-active: white !important;
-  --n-item-color-active: #FF5353FF !important;
+  --n-item-color-active:var(--button-color)  !important;
 
   --n-item-border-active: 2px solid black !important;
   --n-item-text-color-hover: white !important;
-  --n-item-color-hover: #FF5353FF !important;
-  --n-item-color-active-hover: #FF5353FF !important;
+  --n-item-color-hover: var(--button-color)  !important;
+  --n-item-color-active-hover:var(--button-color)  !important;
 
 
 }
 
 .active {
-  background-color: #FF5353FF !important;
+  //background-color: #FF5353FF !important;
+  background-color: var(--button-color) !important;
   color: white;
 }
 
@@ -169,7 +170,7 @@ watch(currentCat, (newValue, oldValue) => {
     }
 
     &:hover {
-      background-color: #FF5353FF;
+      background-color: var(--button-color) ;
       color: white;
     }
   }

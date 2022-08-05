@@ -38,7 +38,7 @@
           <!-- <transition name="button"> -->
           <!-- </transition> -->
           <input type="file" accept="image/jpeg,image/png" ref="inputFile" @change="getFile" style="display: none">
-          <div class="uploadButton" :style="{backgroundImage:`url(${backgroundImg})`}" @click="iconEdit=true">
+          <div class="uploadButton" :style="{backgroundImage:backgroundImage}" @click="editPic">
             <loading-com v-show="isLoading"/>
           </div>
         </div>
@@ -72,8 +72,8 @@
           </div>
           <textarea class="inputTextarea" @click="showEmoji=false" ref="inputTextarea2" draggable="false"
                     v-model="msgContent"/>
-          <div class="uploadButton inside" :style="{backgroundImage:`url(${backgroundImg})`}"
-               @click="iconEdit=true"></div>
+          <div class="uploadButton inside" :style="{backgroundImage:backgroundImage}"
+               @click="editPic"></div>
 
 
           <!-- </transition> -->
@@ -86,11 +86,11 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, nextTick, onMounted, onUpdated, provide, ref} from 'vue';
+import {computed, inject, nextTick, onMounted, onUpdated, provide, ref} from 'vue';
 import WangEditorMini from "../components/wangeditor/WangEditorMini.vue"
 import {useRouter} from 'vue-router'
 import '@wangeditor/editor/dist/css/style.css' // 引入 css
-import {NModal, NCard, NInput} from 'naive-ui';
+import {NModal, NCard, NInput,useMessage} from 'naive-ui';
 import Joke from "../components/comments/Joke.vue"
 import {MessageCircle} from "@vicons/tabler"
 import {NIcon} from "naive-ui"
@@ -100,6 +100,7 @@ import UploadPic from "@/components/file/UploadPic.vue"
 import {PictureOutlined, SmileOutlined} from "@vicons/antd"
 import Emoji from "@/components/comments/Emoji.vue"
 
+const message = useMessage()
 const showScale = ref(false)
 const picList = ref([]) as any
 const showEmoji = ref(false)
@@ -115,14 +116,40 @@ const msgContent = ref("")
 const focus = computed(() => {
   return showModal.value || showTheModal.value
 })
-const backgroundImg = ref("/img/-421408862.jpg")
+const backgroundImg = ref("")
 const userName = ref("")
 const msgList = ref([])
 const inputTextarea = ref(null) as any
 const bgi = ref("") as any
 
 getMsgs()
+const config = inject("globalConfig") as any
 
+const backgroundImage = computed(()=>{
+  if(config.value==null){
+    return ``
+  }
+  if((config.value!=null && backgroundImg.value=='')||userName.value==''){
+  return `url(${config.value.MessageDefaultIcon})`
+  }
+  return `url(${backgroundImg.value})`
+})
+
+const uploadImg = computed(()=>{
+  if(backgroundImg.value==''||userName.value==''){
+    return config.value.MessageDefaultIcon
+  }
+  return backgroundImg.value
+})
+
+function editPic(){
+  if(userName.value==''){
+    message.warning("请先输入署名")
+    return
+  }else{
+    iconEdit.value = true
+  }
+}
 
 onMounted(() => {
   let pics = document.getElementsByTagName("img")
@@ -178,9 +205,13 @@ function changeContent(content: string) {
 }
 
 function sendMsg() {
+  if(msgContent.value==null||msgContent.value==""){
+    message.warning("先说点啥吧")
+    return
+  }
   axios.request("/yuurei/msg", "post", {
     MessageContent: msgContent.value.replace(/\r/ig, '').replace(/\n/ig, '<br/>'),
-    Icon: backgroundImg.value,
+    Icon: uploadImg.value,
     UserName: userName.value,
     Pics: (() => {
       let pics: string = ""
@@ -197,7 +228,7 @@ function sendMsg() {
     showModal.value = false
     showTheModal.value = false
     msgContent.value = ""
-    picList.value = ""
+    picList.value = []
   })
 }
 
@@ -220,6 +251,10 @@ function deletePic(index: number) {
 const inputFile = ref(null)
 
 function upload() {
+  if(picList.value.length>=3){
+    message.warning("超过上传上限")
+    return
+  }
   console.log(inputFile.value.click())
 }
 
@@ -228,6 +263,7 @@ function RndNum(num: number) {
 }
 
 function getFile(event: any) {
+
   let formFile = new FormData()
   formFile.append("file", event.target.files[0]);
   formFile.append("apply_info_id", RndNum(12));
@@ -252,7 +288,7 @@ function getFile(event: any) {
 <style lang="less" scoped>
 
 .scalePic {
-  background-color: rgba(0, 0, 0, .3);
+  background-color: rgba(0, 0, 0, 0.5);
   width: 100%;
   height: 100%;
   position: absolute;
