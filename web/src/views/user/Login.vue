@@ -6,14 +6,18 @@
         <span class="label">
         用户名:
           </span>
-      <n-input type="text" v-model:value="username" placeholder="输入用户名"/>
+      <n-input type="text" @change.lazy="checkName" v-model:value="username" placeholder="输入用户名"/>
+      <div v-show="!hasName" class="error">用户名不能为空</div>
     </div>
     <div class="cardContainer">
         <span class="label">
         密码:
           </span>
-      <n-input @keyup.enter="login" type="password" v-model:value="password" placeholder="输入密码"/>
+      <n-input @keyup.enter="login" @change.lazy="checkPass" type="password" v-model:value="password"
+               placeholder="输入密码"/>
+      <div v-show="!hasPass" class="error">密码不能为空</div>
     </div>
+
     <div class="footer">
       <n-button @click="login" class="btn" type="info">登陆</n-button>
     </div>
@@ -25,7 +29,7 @@
 </template>
 
 <script lang="ts" setup>
-import {NCard, NSpace, NInput, NButton} from "naive-ui"
+import {NCard, NSpace, NInput, NButton, useMessage} from "naive-ui"
 import {ref} from "vue";
 import axios from "@/request"
 import qs from "qs"
@@ -34,16 +38,49 @@ import {useRouter} from "vue-router";
 const username = ref("")
 const password = ref("")
 const router = useRouter()
+const hasName = ref(true)
+const hasPass = ref(true)
+const message = useMessage()
+
+function checkName() {
+  if (username.value == "") {
+    hasName.value = false
+  } else {
+    hasName.value = true
+  }
+}
+
+function checkPass() {
+  if (password.value == "") {
+    hasPass.value = false
+  } else {
+    hasPass.value = true
+  }
+}
 
 function login() {
-  axios.request("/yuurei/login", "post", qs.stringify({
-    username: username.value,
-    password: password.value,
-  })).then((res: any) => {
-    console.log(res)
-    localStorage.setItem('token', res.data.token)
-    router.back()
-  })
+  checkPass()
+  checkName()
+  if (!hasName.value || !hasPass.value) {
+    return
+  } else {
+    axios.request("/yuurei/login", "post", qs.stringify({
+      username: username.value,
+      password: password.value,
+    })).then((res: any) => {
+      console.log(res)
+      if (res.code == 200) {
+        localStorage.setItem('token', res.data.token)
+        message.info("登陆成功,马上跳转")
+        setTimeout(() => {
+
+          router.back()
+        }, 3000)
+      } else {
+        message.error(res.msg)
+      }
+    })
+  }
 }
 </script>
 
@@ -66,7 +103,8 @@ function login() {
   }
 
   .cardContainer {
-    margin: 10px auto;
+    position: relative;
+    margin: 15px auto;
     //margin-bottom: 20px;
     display: flex;
     justify-content: space-around;
@@ -88,4 +126,9 @@ function login() {
   margin: 0px 20px;
 }
 
+.error {
+  position: absolute;
+  bottom: -25px;
+  color: #ff4d4d;
+}
 </style>

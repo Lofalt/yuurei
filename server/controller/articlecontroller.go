@@ -58,7 +58,7 @@ func (a ArticleController) SelectAll(c *gin.Context) {
 	}
 	var total int64
 	a.DB.Model(model.Article{}).Count(&total)
-	if err := a.DB.Preload(clause.Associations).Offset(offset).Limit(pageSize).Find(&articles).Error; err != nil {
+	if err := a.DB.Preload(clause.Associations).Order("created_at desc").Offset(offset).Limit(pageSize).Find(&articles).Error; err != nil {
 		response.Fail(c, gin.H{}, err.Error())
 		return
 	}
@@ -145,7 +145,7 @@ func (a ArticleController) SelectArticlesByCategoryId(c *gin.Context) {
 	var total int64
 	a.DB.Model(model.Article{}).Where(&article).Count(&total)
 	var articles []model.Article
-	a.DB.Preload(clause.Associations).Where(&article).Offset(offset).Limit(pageSize).Find(&articles)
+	a.DB.Preload(clause.Associations).Where(&article).Offset(offset).Order("created_at desc").Limit(pageSize).Find(&articles)
 	response.Success(c, gin.H{"data": articles, "total": total}, "success")
 }
 

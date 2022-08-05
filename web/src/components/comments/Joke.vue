@@ -10,10 +10,11 @@
         }}
       </div>
       <span></span>
-      <div class="info" v-html="msg.MessageContent">
-        </div>
-<!--        <div class="info">-->
-<!--          <pre>{{msg.MessageContent}}</pre>-->
+      <!--      <div class="info" v-html="msg.MessageContent">-->
+      <div :id="`info${msg.ID}`" class="info" v-html="msg.MessageContent">
+      </div>
+      <!--        <div class="info">-->
+      <!--          <pre>{{msg.MessageContent}}</pre>-->
 
     </div>
   </div>
@@ -21,23 +22,52 @@
 </template>
 
 <script lang="ts" setup>
-import {ref} from 'vue'
+import {onMounted, ref} from 'vue'
 import axios from '@/request/index'
 import {useUserInfo} from "@/store/UserInfo";
+import {isMobile} from "@/util/utils";
 
+const flag = ref(isMobile())
 const backgroundImg = ref("")
 const userInfo = useUserInfo()
-const emit = defineEmits(['reload'])
-
+const emit = defineEmits(['reload', 'emitPic'])
+const content = ref("")
 const props = defineProps<{
   msg: any
 }>()
+let pics = props.msg.Pics.split(",")
+// let imgs = ""
+// for (let i = 0; i < pics.length; i++) {
+//   imgs = imgs + `<img src="${pics[i]}" class="insertPic" />`
+// }
+// content.value = props.msg.MessageContent + `<br/>` + `<div style="display: flex;flex-wrap: wrap">` + imgs + `</div>`
+
+function open(url: string) {
+  window.open(url)
+}
 
 backgroundImg.value = props.msg.Icon
 
+onMounted(() => {
+  let info = document.getElementById(`info${props.msg.ID}`) as HTMLSelectElement
+  let br = document.createElement("br")
+  info.appendChild(br)
+  let div = document.createElement("div")
+  div.classList.add("box")
+  for (let i = 0; i < pics.length; i++) {
+    let img = document.createElement("img")
+    img.setAttribute("src", pics[i])
+    img.addEventListener("click", () => {
+      emit('emitPic', pics[i])
+    })
+    img.classList.add("insertPic")
+    div.appendChild(img)
+  }
+  info.appendChild(div)
+})
+
 function deleteMsg() {
   axios.request("/yuurei/msg/" + props.msg.ID, "delete", {}).then((result) => {
-    console.log(result)
     emit('reload')
   })
 }
@@ -112,8 +142,12 @@ function deleteMsg() {
     width: 80%;
     border-radius: 3px;
     min-height: 15vh;
+    //white-space: pre-line;
     // background-color: aquamarine;
+    word-break: break-word;
+    white-space: pre-wrap;
     position: relative;
+    //white-space: pre-wrap;
 
     .delete {
       cursor: pointer;
@@ -139,6 +173,8 @@ function deleteMsg() {
       border-radius: 2px;
       background-color: rgba(49, 49, 49, 0.76);
       box-shadow: -4px 4px 1px 0 rgba(49, 49, 49, 0.2);
+      white-space: nowrap;
+
     }
 
     @media (max-width: 1024px) {
@@ -203,11 +239,32 @@ function deleteMsg() {
       color: rgb(98, 95, 95);
       padding: 5px;
 
-      pre{
+
+      pre {
         font-family: "微软雅黑";
         white-space: pre-line;
       }
     }
   }
+}
+</style>
+
+<style lang="less">
+.insertPic {
+  max-width: 50%;
+  max-height: 300px;
+  margin-top: 20px;
+  margin-right: 20px;
+  align-self: flex-start;
+  cursor: pointer;
+
+  @media (max-width: 1024px) {
+    max-width: 90%;
+  }
+}
+
+.box {
+  display: flex;
+  flex-wrap: wrap;
 }
 </style>

@@ -11,7 +11,10 @@
         <loading-com v-show="isLoading"/>
         <span v-show="!isLoading">裁剪</span>
       </div>
-      <div class="btn" v-if="src" @click="confirm">提交</div>
+      <div class="btn" v-if="src" @click="confirm">
+        <loading-com v-show="isConfirming"/>
+        <span v-show="!isConfirming">提交</span>
+      </div>
     </div>
   </div>
   <input type="file" accept="image/jpeg,image/png" ref="inputFile" @change="getFile"
@@ -28,18 +31,19 @@ import axios from "@/request";
 import {NButton} from 'naive-ui'
 import LoadingCom from "@/components/LoadingCom.vue";
 
+const isConfirming = ref(false) as any
 const isUploading = ref(false)
 const isLoading = ref(false)
 const count = ref(0)
 const cropping = ref(true)
-const emit = defineEmits([ 'confirm'])
+const emit = defineEmits(['confirm'])
 const src = ref(null) as any
 const props = defineProps<{
   quality: number,
   directory: string,
   ratio: number,
   name: string,
-  rawSrc:string
+  rawSrc: string
 }>()
 
 const inputFile = ref(null) as any
@@ -52,64 +56,75 @@ function acceptDetail(details: any) {
 }
 
 function confirm() {
-  isLoading.value = true
-  axios.request("/yuurei/cropPic", "post", qs.stringify({
-    imgPath: src.value,
-    x: detail.value.x,
-    y: detail.value.y,
-    width: detail.value.width,
-    height: detail.value.height
-  })).then((res: any) => {
-    console.log(res)
-    if (res.code === 200) {
-      src.value = res.data.data
-      count.value += 1
-      emit('confirm', src.value)
-    }
-    isLoading.value = false
+  if (!isConfirming.value) {
+    isConfirming.value = true
+    axios.request("/yuurei/cropPic", "post", qs.stringify({
+      imgPath: src.value,
+      x: detail.value.x,
+      y: detail.value.y,
+      width: detail.value.width,
+      height: detail.value.height
+    })).then((res: any) => {
+      console.log(res)
+      if (res.code === 200) {
+        src.value = res.data.data
+        count.value += 1
+        emit('confirm', src.value)
+      }
+      isConfirming.value = false
 
-  })
+    })
+  }
 }
 
 function crop() {
-  cropFile.value.click()
+  if (!isLoading) {
+    cropFile.value.click()
+  }
 }
 
 function upload() {
-  inputFile.value.click()
+  console.log("hel")
+  if (!isUploading.value) {
+    inputFile.value.click()
+  }
 }
 
 function getFile(event: any) {
-  console.log("upload")
   isUploading.value = true
-  src.value = "1"
+  // src.value = "1"
   let formFile = new FormData()
   formFile.append("file", event.target.files[0]);
   formFile.append("apply_info_id", RndNum(12));
   formFile.append("file_type", '');
   axios.file_upload(`/yuurei/uploadImg?qua=${props.quality}&dir=${props.directory}`, formFile).then((res: any) => {
     src.value = res.data.fileName
+    inputFile.value.value = ""
     isUploading.value = false
   })
+
 }
 
 import qs from 'qs'
 
 function cropPic(event: any) {
-  isLoading.value = true
-  axios.request("/yuurei/cropPic", "post", qs.stringify({
-    imgPath: src.value,
-    x: detail.value.x,
-    y: detail.value.y,
-    width: detail.value.width,
-    height: detail.value.height
-  })).then((res: any) => {
-    if (res.code === 200) {
-      src.value = res.data.data
-      count.value += 1
-    }
-    isLoading.value = false
-  })
+  if (!isLoading.value) {
+    isLoading.value = true
+    axios.request("/yuurei/cropPic", "post", qs.stringify({
+      imgPath: src.value,
+      x: detail.value.x,
+      y: detail.value.y,
+      width: detail.value.width,
+      height: detail.value.height
+    })).then((res: any) => {
+      if (res.code === 200) {
+        src.value = res.data.data
+        count.value += 1
+      }
+      isLoading.value = false
+    })
+
+  }
 }
 
 

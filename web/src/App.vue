@@ -55,7 +55,7 @@ router.beforeEach((to, from, next) => {
     // return false
   }
 
-  if (userInfo.user.Username === null) {
+  if (userInfo.user.Username === null && localStorage.getItem("token") != null) {
     axios.get("/yuurei/info", {}).then((res: any) => {
       if (res.code === 200) {
         userInfo.user = res.data.user
@@ -74,7 +74,8 @@ function showNav() {
 
 onMounted(() => {
   let user = userInfo.user
-  if (user.Username === null) {
+  if (user.Username === null && localStorage.getItem("token") != null) {
+    console.log("是这里吗")
     axios.get("/yuurei/info", {}).then((res: any) => {
       if (res.code === 200) {
         userInfo.user = res.data.user

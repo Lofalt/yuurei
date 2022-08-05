@@ -16,7 +16,7 @@
           </div>
         </div>
       </div>
-      <div class="articleContent" v-html="article.ArticleContent"/>
+      <div class="articleContent" v-html="article.ArticleContent" v-highlight/>
     </div>
     <div class="preAndNext">
       <div class="preAndNextBox" v-if="hasPre">
@@ -255,17 +255,22 @@ function jump(id: number) {
 .article {
   .articleContent {
 
+
     * {
       /*margin-top:15px;*/
       font-size: 16px;
-      padding-bottom: 15px;
-      color: rgb(49, 49, 49)
+      padding-top: 15px;
+      //color: rgb(49, 49, 49)
       /*color: #005cc5;*/
       /*color: #009486;*/
     }
 
-    p:nth-child(1) {
-      padding-top: 50px;
+    p {
+      color: rgb(49, 49, 49)
+    }
+
+    &:nth-child(1) {
+      margin-top: 50px;
     }
 
     a img {

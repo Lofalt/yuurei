@@ -3,10 +3,14 @@
     <div class="inside">
       <n-tabs type="segment" animated style="margin: 0 auto">
         <n-tab-pane name="login" tab="登陆" display-directive="show">
-          <login/>
+          <n-message-provider>
+            <login/>
+          </n-message-provider>
         </n-tab-pane>
         <n-tab-pane name="signin" tab="注册" display-directive="show">
-          <signin/>
+          <n-message-provider>
+            <signin/>
+          </n-message-provider>
         </n-tab-pane>
 
       </n-tabs>
@@ -17,7 +21,7 @@
 </template>
 
 <script lang="ts" setup>
-import {NTabs, NTabPane} from "naive-ui"
+import {NTabs, NTabPane, NMessageProvider} from "naive-ui"
 import Login from "./Login.vue"
 import Signin from "./Signup.vue"
 </script>
@@ -36,6 +40,8 @@ import Signin from "./Signup.vue"
   }
 
   .inside {
+    border: 4px solid rgb(49, 49, 49);
+
     //display: flex;
     //justify-content: center;
     //align-items: center;

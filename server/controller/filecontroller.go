@@ -26,7 +26,14 @@ func UploadImg(c *gin.Context) {
 
 	timeStamp := strconv.Itoa(int(time.Now().UnixMilli())) + "." + suffix
 
-	filepath := "./img/" + dir + "/"
+	var filepath string
+	if dir != "" {
+		filepath = "./img/" + dir + "/"
+
+	} else {
+		filepath = "./img/"
+
+	}
 	if exit, _ := util.HasDir(filepath); exit == false {
 		os.Mkdir(filepath, os.ModePerm)
 	}
@@ -41,8 +48,13 @@ func UploadImg(c *gin.Context) {
 		util.Compress(filename, quality)
 
 	}
+	var responFileName string
+	if dir != "" {
+		responFileName = "/img/" + dir + "/" + timeStamp
+	} else {
+		responFileName = "/img/" + timeStamp
 
-	responFileName := "/img/" + dir + "/" + timeStamp
+	}
 	response.Success(c, gin.H{
 		"fileName": responFileName,
 	}, "success")
@@ -105,4 +117,53 @@ func CropImg(c *gin.Context) {
 		response.Fail(c, gin.H{}, err.Error())
 	}
 	response.Success(c, gin.H{"data": path}, "success")
+}
+
+func ArticleImg(c *gin.Context) {
+	// 单文件
+	file, _ := c.FormFile("your-custom-name")
+	quality, _ := strconv.Atoi(c.Query("qua"))
+	dir := c.Query("dir")
+	fmt.Println("sasdasda")
+	fmt.Println(file.Filename)
+	// 上传文件至指定目录
+	// c.SaveUploadedFile(file, dst)
+	suffix := strings.Split(file.Filename, ".")[len(strings.Split(file.Filename, "."))-1]
+
+	timeStamp := strconv.Itoa(int(time.Now().UnixMilli())) + "." + suffix
+
+	var filepath string
+	if dir != "" {
+		filepath = "./img/" + dir + "/"
+
+	} else {
+		filepath = "./img/"
+
+	}
+	if exit, _ := util.HasDir(filepath); exit == false {
+		os.Mkdir(filepath, os.ModePerm)
+	}
+	filename := filepath + timeStamp
+
+	err := c.SaveUploadedFile(file, filename)
+	if err != nil {
+		response.Fail(c, gin.H{}, err.Error())
+		return
+	}
+	if quality != 0 && (suffix == "jpg" || suffix == "jpeg") {
+		util.Compress(filename, quality)
+
+	}
+	var responFileName string
+	if dir != "" {
+		responFileName = "/img/" + dir + "/" + timeStamp
+	} else {
+		responFileName = "/img/" + timeStamp
+
+	}
+	c.JSON(200, gin.H{
+		"errno": 0,
+		"data":  gin.H{"url": responFileName},
+	})
+	//c.String(http.StatusOK, fmt.Sprintf("'%s' uploaded!", file.Filename))
 }
