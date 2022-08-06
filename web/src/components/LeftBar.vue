@@ -5,20 +5,20 @@
     <div class="name">{{ MyName }}</div>
     <div class="icon1">
       <a href="javascript:">
-        <n-icon size="20" color="#484848">
-          <grin-tongue/>
+        <n-icon size="2.5vh" color="#484848">
+          <github/>
         </n-icon>
       </a>
       <a href="javascript:">
-        <n-icon size="20" color="#484848">
+        <n-icon size="2.5vh" color="#484848">
           <weibo/>
         </n-icon>
       </a>
       <!-- </div> -->
       <!-- <div> -->
       <a href="javascript:">
-        <n-icon size="20" color="#484848    ">
-          <twitter/>
+        <n-icon size="2.5vh" color="#484848    ">
+          <device-tv/>
         </n-icon>
       </a>
       <!-- </div> -->
@@ -29,16 +29,16 @@
       <button class="footerbox" @click="changePage(2)" :class="isThisPage(2) ? 'active' : ``">ABOUT</button>
       <!--      <button class="footerbox" @click="changePage(3)" :class="isThisPage(3) ? 'active' : ``">WRITE</button>-->
     </div>
-    <n-icon v-show="isAdmin" class="settings" size="20" color="#484848" @click="jumpTo(`/admin`)">
+    <n-icon v-show="isAdmin" class="settings" size="2.3vh" color="#484848" @click="jumpTo(`/admin`)">
       <settings/>
     </n-icon>
-    <n-icon class="home" size="20" color="#484848" @click="jumpTo(`/home`)">
+    <n-icon class="home" size="2.3vh" color="#484848" @click="jumpTo(`/home`)">
       <home/>
     </n-icon>
-    <n-icon v-show="!isLogin" class="login" size="20" color="#484848" @click="logIn">
+    <n-icon v-show="!isLogin" class="login" size="2.3vh" color="#484848" @click="logIn">
       <login/>
     </n-icon>
-    <n-icon v-show="isLogin" class="logout" size="20" color="#484848" @click="logOut">
+    <n-icon v-show="isLogin" class="logout" size="2.3vh" color="#484848" @click="logOut">
       <logout/>
     </n-icon>
 
@@ -55,10 +55,10 @@ export default {
 <script lang="ts" setup>
 import {computed, inject, onMounted, reactive, ref} from 'vue';
 import {useRouter} from 'vue-router';
-import {Weibo, Twitter, GrinTongue} from '@vicons/fa'
+import {Weibo, Twitter, GrinTongue,Github} from '@vicons/fa'
 import {NIcon} from "naive-ui"
 import {usePageData} from '@/store/pageData';
-import {Settings, Home, Login, Logout} from '@vicons/tabler'
+import {Settings, Home, Login, Logout,DeviceTv} from '@vicons/tabler'
 import {useUserInfo} from "@/store/UserInfo";
 import {useDialog} from "naive-ui";
 
@@ -177,7 +177,7 @@ a {
 
 .settings {
   position: absolute;
-  left: 30px;
+  left: 3.2vh;
   bottom: 5px;
   cursor: pointer !important;
 }
@@ -220,7 +220,7 @@ a {
 
 .leftbar {
   user-select: none;
-  border-right: 4px solid rgb(49, 49, 49);
+  border-right: .4vh solid rgb(49, 49, 49);
   height: 100vh;
   color: white;
   position: fixed;
@@ -238,26 +238,28 @@ a {
   transition: all .3s ease-in-out;
   overflow: hidden;
 
-  @media (max-width: 1024px) {
+  @media screen and (max-aspect-ratio: 1/1) {
     //left: -16.5%
-    transform: translateX(-300px);
+    transform: translateX(-70vw);
     //display: none;
   }
 
   .header {
     position: relative;
     color: black;
-    top: 20px;
-    font-size: 2em;
+    top: 2vh;
+    font-size: 3vh;
     //border:3px solid rgb(49,49,49);
     //border-radius: 2px;
     box-shadow: -1px 1px 4px 1px rgba(49, 49, 49, .5);
-    width: 12vw;
+    width: 24vh;
     background-color: rgb(55, 166, 187);
     color: white;
 
-    @media (max-width: 1024px) {
-      width: 200px;
+    @media (max-aspect-ratio: 1/1) {
+      //width: 200px;
+      width: 26vh;
+
     }
   }
 
@@ -268,12 +270,12 @@ a {
 
   .profile {
 
-    border: 4px rgb(49, 49, 49) solid;
+    border: .4vh rgb(49, 49, 49) solid;
     position: relative;
     margin: 0 auto;
     // display: flex;
-    width: 12vw;
-    height: 15vw;
+    width: 24vh;
+    height: 30vh;
     // font-weight: 5000;
     // font-family: Verdana, Geneva, Tahoma, sans-serif;
     // border-radius: 50%;
@@ -290,23 +292,23 @@ a {
     background-position: center;
     background-repeat: no-repeat;
 
-    @media (max-width: 1024px) {
-      width: 200px;
-      height: 250px;
+    @media (max-aspect-ratio: 1/1) {
+      width: 26vh;
+      height: 32.5vh;
     }
   }
 
   .name {
-    margin-top: 55px;
+    margin-top: 5vh;
     width: 80%;
     color: rgb(78, 78, 78);
     text-align: center;
     // font-weight: 600;
     // font-family: 'Times New Roman', Times, serif;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    font-size: 1.75em;
+    font-size: 3.2vh;
     text-justify: inter-word;
-    letter-spacing: 2px;
+    letter-spacing: .5vh;
     text-indent: 5px;
     word-wrap: break-word;
     text-shadow: 0px 0px 2px rgba(235, 235, 235, 0.5);
@@ -318,7 +320,7 @@ a {
     justify-content: space-around;
     align-items: center;
     width: 50%;
-    margin: 20px auto;
+    margin: 2vh auto;
 
     div {
       color: rgb(241, 91, 91);
@@ -343,11 +345,12 @@ a {
       cursor: pointer;
       width: 80%;
       background-color: #ffffff;
-      height: 30px;
+      height: 3.1vh;
+      font-size: 1.6vh;
       border-radius: 2px;
       outline-style: none;
-      border: 3px solid rgb(51, 51, 51);
-      box-shadow: -1px 1px 0 1px rgb(51, 51, 51);
+      border: .3vh solid rgb(51, 51, 51);
+      box-shadow: -0.15vh .15vh 0 .05vh  rgb(51, 51, 51);
 
       &:hover {
         //background-color: rgb(255, 83, 83) !important;

@@ -236,7 +236,7 @@ const wang = ref<InstanceType<typeof WangEditorMini>>();
 // const wang = ref(null)
 
 function changeModal() {
-  if (document.body.clientWidth > 800) {
+  if ((document.body.clientWidth / document.body.clientHeight) >1) {
     showModal.value = !showModal.value
   } else {
     showTheModal.value = !showTheModal.value
@@ -313,7 +313,7 @@ function getFile(event: any) {
   width: 50vw;
   //min-width: 50vw;
   border: 3px solid black;
-  @media (max-width: 800px) {
+  @media (max-aspect-ratio: 1/1) {
     width: 100vw;
   }
 
@@ -363,7 +363,7 @@ function getFile(event: any) {
     left: -3px;
     top: -3px;
     border: 3px solid rgba(49, 49, 49, 0.2);
-    @media (max-width: 1024px) {
+    @media (max-aspect-ratio: 1/1) {
       visibility: visible !important;
 
     }
@@ -481,13 +481,13 @@ function getFile(event: any) {
         position: absolute;
         background: rgba(0, 0, 0, .3);
 
-        @media (max-width: 800px) {
+        @media (max-aspect-ratio: 1/1) {
           visibility: visible;
         }
 
       }
 
-      @media (max-width: 1024px) {
+      @media (max-aspect-ratio: 1/1) {
         width: 100px  ;
         height: 150px;
         &:nth-child(3) {
@@ -501,7 +501,7 @@ function getFile(event: any) {
   @media (max-height: 800px) {
     height: 180px;
   }
-  @media (max-width: 800px) {
+  @media (max-aspect-ratio: 1/1) {
     height: 300px;
     margin: 0 auto;
     left: 0;
@@ -519,13 +519,13 @@ function getFile(event: any) {
     border-right-color: rgb(49, 49, 49);
     border-bottom-color: rgba(49, 49, 49);
 
-    @media (max-width: 800px) {
+    @media (max-aspect-ratio: 1/1) {
       display: none;
     }
   }
 
   .inputTextarea {
-    height: 120px;
+    height: 150px;
     width: 100%;
     resize: none;
     outline: none;
@@ -539,7 +539,7 @@ function getFile(event: any) {
     border-top: 1px solid rgba(49, 49, 49, .1);
     box-sizing: border-box;
 
-    @media (max-width: 800px) {
+    @media (max-aspect-ratio: 1/1) {
       height: 240px;
     }
   }
@@ -558,7 +558,7 @@ function getFile(event: any) {
     width: 100%;
     padding: 10px;
 
-    @media (max-width: 800px) {
+    @media (max-aspect-ratio: 1/1) {
       //height: 100px;
     }
 
@@ -582,7 +582,7 @@ function getFile(event: any) {
 
       border: 3px solid rgb(49, 49, 49); // transition: all 1s;
 
-      @media (max-width: 800px) {
+      @media (max-aspect-ratio: 1/1) {
         width: 100px;
       }
 
@@ -600,7 +600,7 @@ function getFile(event: any) {
   //left: 10% !important;
   top: -120px !important;
   z-index: 10;
-  @media (max-width: 1024px) {
+  @media (max-aspect-ratio: 1/1) {
     right: 0px !important;
   }
 }
@@ -611,7 +611,7 @@ function getFile(event: any) {
   top: -13px;
   z-index: 1;
   width: 20vw;
-  @media (max-width: 800px) {
+  @media (max-aspect-ratio: 1/1) {
     top: -50px;
   }
 

@@ -9,7 +9,7 @@
       <div class="icons"></div>
     </div>
     <transition>
-      <n-icon size="40" color="#ffffff" @click="changePage(0)" class="fixedButton" v-show="pageData.pagedata.count!=0">
+      <n-icon size="5vh" color="#ffffff" @click="changePage(0)" class="fixedButton" v-show="pageData.pagedata.count!=0">
         <arrow-bar-to-up/>
       </n-icon>
     </transition>
@@ -126,8 +126,11 @@ function changePage(num: number) {
 </script>
 
 <style lang="less" scoped>
+
+
+
 .lefting {
-  transform: translateX(300px);
+  transform: translateX(70vw);
 }
 
 .showing {
@@ -146,8 +149,8 @@ function changePage(num: number) {
 
 .leftBar {
   z-index: 5;
-  @media (max-width: 1024px) {
-    width: 300px;
+  @media (max-aspect-ratio: 1/1) {
+    width: 70vw;
   }
 }
 
@@ -315,29 +318,29 @@ button {
   border-radius: 2px;
   z-index: 10;
   left: 0;
-  top: 50px;
+  top: 5px;
 
   &:hover {
     cursor: pointer;
   }
 
-  @media screen and (min-width: 1024px) {
+  @media screen and (min-aspect-ratio: 1/1) {
     display: none;
   }
 
   .icons {
-    height: 2px;
-    min-width: 20px;
-    margin: 5px 8px;
+    height: .2vh;
+    min-width: 2.5vh;
+    margin: 1vh 1vh;
     background-color: #3d3535;
     border-radius: 2px;
 
     &:nth-of-type(1) {
-      margin-top: 8px;
+      margin-top: .8vh;
     }
 
     &:nth-of-type(3) {
-      margin-bottom: 8px;
+      margin-bottom: .8vh;
     }
   }
 

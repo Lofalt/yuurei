@@ -155,18 +155,19 @@ watch(currentCat, (newValue, oldValue) => {
   .cat {
     cursor: pointer;
     margin-top: 20px;
-    padding: 3px 20px;
+    padding: .1vh 3vh;
     //height:30px;
     //width: 80px;
+    font-size: 1.5vh;
     font-weight: bold;
     font-family: 微软雅黑;
     background-color: white;
     text-align: center;
-    border: 3px solid rgb(49, 49, 49);
-    border-radius: 2px;
-    box-shadow: -1px 1px 0px 0px rgb(49, 49, 49);
-    @media (max-width: 1024px) {
-      padding: 0px 40px;
+    border: .3vh solid rgb(49, 49, 49);
+    border-radius: .2vh;
+    box-shadow: -.05vh .05vh 0px 0px rgb(49, 49, 49);
+    @media (max-aspect-ratio: 1/1) {
+      padding: 0px 3vh;
     }
 
     &:hover {

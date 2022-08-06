@@ -20,12 +20,24 @@ func UploadImg(c *gin.Context) {
 	quality, _ := strconv.Atoi(c.Query("qua"))
 	dir := c.Query("dir")
 
+	switch {
+	case file.Size < 1024*1024:
+		quality = 80
+	case file.Size > 1024*1024 && file.Size < 1024*1024*5:
+		quality = 60
+	case file.Size >= 1024*1024*5:
+		quality = 40
+	}
 	fmt.Println(quality)
 	// 上传文件至指定目录
 	// c.SaveUploadedFile(file, dst)
 	suffix := strings.Split(file.Filename, ".")[len(strings.Split(file.Filename, "."))-1]
 
 	timeStamp := uuid.NewV4().String() + strconv.Itoa(int(time.Now().UnixMilli())) + "." + suffix
+
+	if exit, _ := util.HasDir("./img"); exit == false {
+		os.Mkdir("./img", os.ModePerm)
+	}
 
 	var filepath string
 	if dir != "" {
@@ -54,6 +66,17 @@ func UploadImg(c *gin.Context) {
 		}
 
 	}
+	if quality != 0 && (suffix == "png") {
+		err = util.CompressPng(filename, quality)
+		timeStamp = timeStamp + ".jpg"
+		os.Remove(filename)
+		if err != nil {
+			response.Fail(c, gin.H{}, err.Error())
+			return
+		}
+
+	}
+
 	var responFileName string
 	if dir != "" {
 		responFileName = "/img/" + dir + "/" + timeStamp

@@ -108,6 +108,10 @@ function changePage(num: number) {
 
 <style lang="less" scoped>
 
+*{
+  font-size: 1.6vh;
+}
+
 .player {
   height: 100% !important;
   width: 100% !important;
@@ -135,7 +139,7 @@ function changePage(num: number) {
   // overflow: hidden;
   transition: all .8s ease-in-out;
 
-  @media (max-width: 1024px) {
+  @media (max-aspect-ratio: 1/1) {
     width: 100%;
   }
 }
@@ -169,7 +173,7 @@ iframe {
 .infoPage {
   overflow: auto;
   // background-image: url("./assets/wallhaven-p262de.jpg");
-  border: 5px solid rgb(49, 49, 49);
+  border: .5vh solid rgb(49, 49, 49);
   width: 85%;
   height: 90%;
   position: relative;

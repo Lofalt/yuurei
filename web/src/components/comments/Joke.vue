@@ -112,7 +112,7 @@ function deleteMsg() {
     background-position: center;
     box-shadow: -4px 4px 1px 0 rgba(49, 49, 49, 0.2);
 
-    @media (max-width: 1024px) {
+    @media (max-aspect-ratio: 1/1) {
       width: 8vh;
       height: 8vh;
     }
@@ -152,8 +152,8 @@ function deleteMsg() {
     .delete {
       cursor: pointer;
       position: absolute;
-      bottom: -40px;
-      right: 160px;
+      bottom: -4vh;
+      right: 16vh;
       //text-shadow: -1px 1px 2px rgb(49,49,49);
       text-shadow: -1px 1px 5px rgba(49, 49, 49, .4);
 
@@ -163,7 +163,7 @@ function deleteMsg() {
 
     .date {
       position: absolute;
-      bottom: -40px;
+      bottom: -4vh;
       right: 2px;
       text-shadow: -1px 1px 5px rgba(164, 74, 74, 0.4);
       text-align: right;
@@ -177,7 +177,7 @@ function deleteMsg() {
 
     }
 
-    @media (max-width: 1024px) {
+    @media (max-aspect-ratio: 1/1) {
       min-height: 10vh;
       width: 70%;
       border: 3px solid rgb(49, 49, 49);
@@ -200,7 +200,7 @@ function deleteMsg() {
       border-right-color: rgb(49, 49, 49);
       border-radius: 2px;
 
-      @media (max-width: 1024px) {
+      @media (max-aspect-ratio: 1/1) {
         border: 8px solid transparent ;
         border-top-color: rgb(49, 49, 49);
         border-right-color: rgb(49, 49, 49);
@@ -212,7 +212,7 @@ function deleteMsg() {
     &::before {
       position: absolute;
       display: block;
-      left: -8px;
+      left: -9px;
       // top: 5px;
       z-index: 10;
       top: 6px;
@@ -223,11 +223,14 @@ function deleteMsg() {
       border: 8px solid transparent;
       border-top-color: white;
       border-right-color: white;
-      @media (max-width: 1024px) {
+      @media (max-aspect-ratio: 1/1) {
 
         left: -7px;
         top: 4px;
 
+      }
+      @media (min-width: 2200px){
+        left: -7px;
       }
 
     }
@@ -259,7 +262,7 @@ function deleteMsg() {
   align-self: flex-start;
   cursor: pointer;
 
-  @media (max-width: 1024px) {
+  @media (max-aspect-ratio: 1/1) {
     max-width: 90%;
   }
 }

@@ -255,14 +255,15 @@ watch(colRaw, () => {
 }
 
 .photoInfo {
+  box-sizing: content-box;
   background-color: rgba(43, 43, 43, 0.738);
   width: 100%;
   // width: auto;
   height: 100%;
   position: absolute;
   // position: fixed;
-  top: 0;
-  left: 0;
+  top: 0vh;
+  left: 0vh;
   // z-index: 10;
   background-size: contain;
   background-repeat: no-repeat;

@@ -17,7 +17,7 @@
       </div>
     </div>
   </div>
-  <input type="file" accept="image/jpeg" ref="inputFile" @change="getFile"
+  <input type="file" accept="image/jpeg,image/png" ref="inputFile" @change="getFile"
          style="display: none">
   <input type="crop" accept="image/jpeg" ref="cropFile" @change="cropPic"
          style="display: none">

@@ -157,7 +157,7 @@ function pushCard() {
   .activeCard {
     right: -74vw !important;
 
-    @media (max-width: 1024px) {
+    @media (max-aspect-ratio: 1/1) {
       right: -89vw !important;
     }
   }
@@ -175,7 +175,7 @@ function pushCard() {
     background-color: #fff;
     // backdrop-filter: blur(3px);
     transition: all .5s ease-in-out; // transition: all 1.5s cubic-bezier(0.19, 1, 0.22, 1);
-    border: 4px solid rgb(49, 49, 49);
+    border: .5vh solid rgb(49, 49, 49);
     border-right: none;
     border-radius: 5px;
     // right: -65vw;
@@ -193,7 +193,7 @@ function pushCard() {
       border-radius: 10px;
     }
 
-    @media (max-width: 1024px) {
+    @media (max-aspect-ratio: 1/1) {
       width: 90vw;
       // right: -85vw;
     }
@@ -239,8 +239,8 @@ function pushCard() {
     .showtag {
       // box-sizing: content-box;
       display: flex;
-      justify-content: flex-start;
-      align-items: center;
+      //justify-content: flex-start;
+      //align-items: flex-start;
       // border: 4px solid rgba(73, 73, 73, 1);
       // box-sizing: content-box;
       z-index: 10;
@@ -255,13 +255,31 @@ function pushCard() {
       border-radius: 3px;
       writing-mode: vertical-lr;
       //text-align:s;
-      align-items: flex-end;
+      //align-items: flex-end;
       color: rgb(255, 255, 255);
       font-size: 1.3em;
-      padding: 8px 5px;
+      padding-top:1vh;
       border-top: 3px solid rgb(49, 49, 49);
       border-bottom: 3px solid rgb(49, 49, 49);
 
+      box-shadow: -.3vh 0px 0px 2px rgb(49, 49, 49);
+      left: -4vh;
+      width:4vh;
+      height:11vh;
+      font-size: 2vh;
+      border-top: .3vh solid rgb(49, 49, 49);
+      border-bottom: .3vh solid rgb(49, 49, 49);
+
+
+      @media (min-width: 1600px){
+        box-shadow: -.3vh 0px 0px 2px rgb(49, 49, 49);
+        left: -4vh;
+        width:4vh;
+        height:10vh;
+        font-size: 2vh;
+        border-top: .3vh solid rgb(49, 49, 49);
+        border-bottom: .3vh solid rgb(49, 49, 49);
+      }
 
       &:hover {
         background-color: rgb(49, 49, 49);

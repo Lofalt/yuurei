@@ -23,13 +23,13 @@
       <td>留言框默认头像</td>
       <td>
         <upload-pic @confirm="acceptMessageIcon" name="上传头像" :raw-src="MessageIcon" directory="messageIcon"
-                    :quality="50" :ratio="1"/>
+                    :quality="40" :ratio="1"/>
       </td>
     </tr>
     <tr>
       <td>头像</td>
       <td>
-        <upload-pic @confirm="acceptMyIcon" name="上传头像" :raw-src="MyIcon" directory="MyIcon" :quality="80"
+        <upload-pic @confirm="acceptMyIcon" name="上传头像" :raw-src="MyIcon" directory="MyIcon" :quality="40"
                     :ratio="0.8"/>
       </td>
     </tr>
@@ -37,7 +37,7 @@
       <td>背景图</td>
       <td>
         <upload-pic @confirm="acceptBackground" name="上传背景" :raw-src="BackgroundImage" directory="background"
-                    quality="80" :ratio="16/9"/>
+                    quality="40" :ratio="16/9"/>
       </td>
     </tr>
     <tr>
@@ -45,7 +45,7 @@
       <td>
         <upload-pic @confirm="acceptMobileBackground" name="上传背景" :raw-src="MobileBackgroundImage"
                     directory="mobileBackground"
-                    quality="80" :ratio="0.5"/>
+                    quality="40" :ratio="0.5"/>
       </td>
     </tr>
     <tr>
