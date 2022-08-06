@@ -8,7 +8,7 @@
     </thead>
     <tbody>
     <tr>
-      <td>用户名 </td>
+      <td>用户名</td>
       <td>
         <n-input type="text" v-model:value="MyName"/>
       </td>
@@ -41,6 +41,14 @@
       </td>
     </tr>
     <tr>
+      <td>手机端</td>
+      <td>
+        <upload-pic @confirm="acceptMobileBackground" name="上传背景" :raw-src="MobileBackgroundImage"
+                    directory="mobileBackground"
+                    quality="80" :ratio="0.5"/>
+      </td>
+    </tr>
+    <tr>
       <td>日期颜色</td>
       <td>
         <n-color-picker :modes="[`hex`]" v-model:value="DateColor"/>
@@ -56,6 +64,7 @@
 
   </n-table>
   <n-button type="info" @click="edit">修改</n-button>
+  <n-button type="default" @click="create">初始化</n-button>
 </template>
 
 <script lang="ts" setup>
@@ -71,23 +80,48 @@ const WebsiteName = ref("")
 const MessageIcon = ref("")
 const MyIcon = ref('')
 const BackgroundImage = ref('')
+const MobileBackgroundImage = ref("")
 const DateColor = ref('')
 const ButtonColor = ref('')
 const router = useRouter()
 
-function acceptMessageIcon(url:string){
+function acceptMobileBackground(url: string) {
+  MobileBackgroundImage.value = url
+}
+
+function acceptMessageIcon(url: string) {
   MessageIcon.value = url
 }
-function acceptMyIcon(url:string){
+
+function acceptMyIcon(url: string) {
   MyIcon.value = url
 }
-function acceptBackground(url:string){
+
+function acceptBackground(url: string) {
   BackgroundImage.value = url
 }
+
 getConfig()
 
+function create() {
+  axios.request("/yuurei/settings", "post", {
+    MyName: MyName.value,
+    WebsiteName: WebsiteName.value,
+    MessageDefaultIcon: MessageIcon.value,
+    Icon: MyIcon.value,
+    BackgroundImage: BackgroundImage.value,
+    DateColor: DateColor.value,
+    ButtonColor: ButtonColor.value,
+  }).then((res: any) => {
+    if (res.code == 200) {
+      router.go(0)
+      // router.replace("/home")
+    }
+  })
+}
 
-function getConfig(){
+
+function getConfig() {
   axios.get("/yuurei/settings/1", {}).then((res: any) => {
     let set = res.data.data
     MyName.value = set.MyName
@@ -97,10 +131,12 @@ function getConfig(){
     BackgroundImage.value = set.BackgroundImage
     DateColor.value = set.DateColor
     ButtonColor.value = set.ButtonColor
+    MobileBackgroundImage.value = set.MobileBackgroundImage
   })
 }
+
 onMounted(() => {
-getConfig()
+  getConfig()
 })
 
 function edit() {
@@ -112,8 +148,9 @@ function edit() {
     BackgroundImage: BackgroundImage.value,
     DateColor: DateColor.value,
     ButtonColor: ButtonColor.value,
-  }).then((res:any)=>{
-    if(res.code==200){
+    MobileBackgroundImage: MobileBackgroundImage.value
+  }).then((res: any) => {
+    if (res.code == 200) {
       router.go(0)
       // router.replace("/home")
     }

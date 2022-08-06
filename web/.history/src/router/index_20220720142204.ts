@@ -13,7 +13,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "pages",
         components: {
-          default: import("../../../src/views/ArticlePage.vue")
+          default: import("../../../src/views/RightBar/ArticlePage.vue")
         }
       }
     ]

@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-import PicPage from "../../../src/views/ArticlePage.vue";
+import PicPage from "../../../src/views/RightBar/ArticlePage.vue";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",

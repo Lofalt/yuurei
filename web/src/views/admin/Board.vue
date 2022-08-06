@@ -38,7 +38,7 @@ import Config from "./Config.vue"
   float: right;
   overflow: auto;
 
-  @media (max-width: 800px) {
+  @media (max-width: 1024px) {
     width: 100%;
   }
 }

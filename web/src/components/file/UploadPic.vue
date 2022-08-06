@@ -45,17 +45,16 @@ const props = defineProps<{
   name: string,
   rawSrc: string
 }>()
-console.log(props.rawSrc)
 const inputFile = ref(null) as any
 const cropFile = ref(null) as any
 const detail = ref(null) as any
 // src.value = props.rawSrc
 
-const image = computed(()=>{
-  if(src.value==null){
+const image = computed(() => {
+  if (src.value == null) {
     return props.rawSrc
-  }else{
-    return  src.value
+  } else {
+    return src.value
   }
 })
 
@@ -73,7 +72,6 @@ function confirm() {
       width: detail.value.width,
       height: detail.value.height
     })).then((res: any) => {
-      console.log(res)
       if (res.code === 200) {
         src.value = res.data.data
         count.value += 1
@@ -92,7 +90,6 @@ function crop() {
 }
 
 function upload() {
-  console.log("hel")
   if (!isUploading.value) {
     inputFile.value.click()
   }

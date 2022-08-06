@@ -6,7 +6,8 @@
         <span class="label">
         用户名:
           </span>
-      <n-input type="text" @change.lazy="checkName" v-model:value="username" placeholder="输入用户名"/>
+      <n-input class="input" type="text" @change.lazy="checkName" v-model:value="username"
+               placeholder="输入用户名"/>
       <div v-show="!hasName" class="error">用户名不能为空</div>
     </div>
     <div class="cardContainer">
@@ -19,7 +20,7 @@
     </div>
 
     <div class="footer">
-      <n-button @click="login" class="btn" type="info">登陆</n-button>
+      <button @click="login" class="btn" type="info">登陆</button>
     </div>
     <!--      </n-space>-->
 
@@ -124,6 +125,17 @@ function login() {
 
 .btn {
   margin: 0px 20px;
+  background-color: #fff;
+  color: rgba(49, 49, 49, .8);
+  border: 1px solid rgba(49, 49, 49, .2);
+  padding: 5px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    color: white;
+    background-color: var(--button-color);
+  }
 }
 
 .error {
@@ -131,4 +143,19 @@ function login() {
   bottom: -25px;
   color: #ff4d4d;
 }
+
+//.n-input {
+//  outline: none !important;
+//  --n-border-hover: 1px solid black !important;
+//  --n-border-focus: 1px solid black !important;
+//  --n-loading-color: black !important;
+//  --n-caret-color: black !important;
+//  --n-border: 3px solid black !important;
+//  --n-bar-color: black !important;
+//}
+//
+//.input {
+//  outline: none;
+//  //border: 3px solid black;
+//}
 </style>

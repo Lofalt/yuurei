@@ -47,10 +47,10 @@ export default {
 <script lang="ts" setup>
 import {provide, ref} from 'vue';
 import {useRouter} from 'vue-router'
-import AnliPage from '@/views/PicPage.vue';
-import ArticlePage from "@/views/ArticlePage.vue";
-import LovePage from "@/views/LovePage.vue";
-import BlogPage from "@/views/MessageBoard.vue";
+import AnliPage from '@/views/RightBar/PicPage.vue';
+import ArticlePage from "@/views/RightBar/ArticlePage.vue";
+import LovePage from "@/views/RightBar/LovePage.vue";
+import BlogPage from "@/views/RightBar/MessageBoard.vue";
 import {NMessageProvider} from 'naive-ui'
 
 const router = useRouter();
@@ -163,6 +163,7 @@ function pushCard() {
   }
 
   .showpage {
+    user-select: none;
     // background-attachment: fixed;
     // overflow: ;
     position: absolute;

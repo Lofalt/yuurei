@@ -7,7 +7,7 @@
           <div class="up">
             <img style="max-height:50vh;max-width: 30vw" :src="backgroundImg"/>
           </div>
-<!--          <upload-pic  :name="`上传图片`" :ratio="2.5" directory="categoryHeadPic" quality="40" @confirm="changeImg"/>-->
+          <!--          <upload-pic  :name="`上传图片`" :ratio="2.5" directory="categoryHeadPic" quality="40" @confirm="changeImg"/>-->
 
           <input class="inputC" type="text" v-model="des" placeholder="输入图片描述:">
           <input type="file" accept="image/jpeg,image/png,image/bmp,image/gif" ref="inputFile" @change="getFile"
@@ -18,21 +18,23 @@
       </n-card>
     </n-modal>
     <div v-if="picList.value!=[]">
-    <n-card  v-for="item in picList" :key="item.ID" style="width: 20vw;float:left">
-      <template #cover>
-        <img :src="item.Path" style="max-width: 20vw">
-      </template>
-      <div style="margin-top:20px">
-      {{item.Description}}
-      </div>
-      <n-button type="warning" @click="deletePic(item.ID)" style="margin-top: 20px">删除</n-button>
-      <n-button type="info" @click="updatePic(item.ID)" style="margin-left: 20px;margin-top:20px">修改描述</n-button>
+      <n-card v-for="item in picList" :key="item.ID" style="width: 20vw;float:left">
+        <template #cover>
+          <img :src="item.Path" style="max-width: 20vw">
+        </template>
+        <div style="margin-top:20px">
+          {{ item.Description }}
+        </div>
+        <n-button type="warning" @click="deletePic(item.ID)" style="margin-top: 20px">删除</n-button>
+        <n-button type="info" @click="updatePic(item.ID)" style="margin-left: 20px;margin-top:20px">修改描述</n-button>
 
-    </n-card>
+      </n-card>
     </div>
     <n-modal v-model:show="showPic">
       <n-card style="width: 400px;height: 200px">
-        <input @keyup.enter="send" style="height: 80%;width: 90%;display: block;margin: 0 auto;outline: none;border:1px solid rgb(49,49,49);text-align: center"  type="text" v-model="currentPic.Description">
+        <input @keyup.enter="send"
+               style="height: 80%;width: 90%;display: block;margin: 0 auto;outline: none;border:1px solid rgb(49,49,49);text-align: center"
+               type="text" v-model="currentPic.Description">
         <n-button style="margin:10px" type="info" @click="send">提交</n-button>
       </n-card>
     </n-modal>
@@ -49,56 +51,59 @@ import UploadPic from "@/components/file/UploadPic.vue"
 const inputFile = ref(null) as any
 const backgroundImg = ref(null)
 const showModal = ref(false)
-const des =ref('')
+const des = ref('')
 const picList = ref([])
 const currentPic = ref(null) as any
 const showPic = ref(false)
 
-function updatePic(id:number){
+function updatePic(id: number) {
 
-  picList.value.forEach((pic:any)=>{
-    if(pic.ID===id){
+  picList.value.forEach((pic: any) => {
+    if (pic.ID === id) {
       currentPic.value = pic
     }
   })
   showPic.value = !showPic.value
 }
 
-function send(){
-  axios.request("/yuurei/gallery/"+currentPic.value.ID,"put",{
-    Description:currentPic.value.Description
-  }).then((res)=>{
+function send() {
+  axios.request("/yuurei/gallery/" + currentPic.value.ID, "put", {
+    Description: currentPic.value.Description
+  }).then((res) => {
     console.log(res)
     getPic()
     showPic.value = !showPic.value
   })
 }
 
-function deletePic(id:number){
-  axios.request("/yuurei/gallery/"+id,"delete",{}).then((res)=>{
+function deletePic(id: number) {
+  axios.request("/yuurei/gallery/" + id, "delete", {}).then((res) => {
     console.log(res)
     getPic()
   })
 }
-onMounted(()=>{
+
+onMounted(() => {
   getPic()
 })
+
 function upload() {
   console.log(inputFile.value.click())
 }
 
 function getPic() {
-  axios.get(`/yuurei/gallery/all`,{}).then((result:any) => {
+  axios.get(`/yuurei/gallery/all`, {}).then((result: any) => {
     picList.value = result.data.data
   })
 }
+
 function newCard() {
-  axios.request("/yuurei/gallery","post",{
-    Description:des.value,
-    Path:backgroundImg.value
-  }).then((res)=>{
+  axios.request("/yuurei/gallery", "post", {
+    Description: des.value,
+    Path: backgroundImg.value
+  }).then((res) => {
     console.log(res)
-    showModal.value =!showModal.value
+    showModal.value = !showModal.value
     getPic()
   })
 }
@@ -108,7 +113,7 @@ function getFile(event: any) {
   formFile.append("file", event.target.files[0]);
   formFile.append("apply_info_id", RndNum(12));
   formFile.append("file_type", '');
-  axios.file_upload("/yuurei/uploadGallery?qua=80", formFile).then((res: any) => {
+  axios.file_upload("/yuurei/uploadGallery?qua=30", formFile).then((res: any) => {
     console.log(res)
     backgroundImg.value = res.data.fileName
   })
@@ -128,7 +133,7 @@ function RndNum(num: number) {
 
   .inputC {
     height: 10vh;
-    padding:10px
+    padding: 10px
   }
 
   .up {

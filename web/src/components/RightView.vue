@@ -5,7 +5,6 @@
       <Date v-show="pageData.pagedata.count===0"></Date>
     </transition>
     <div class="middle">
-      <!-- <router-view></router-view> -->
       <right-bar @wheel.self="wheeling"></right-bar>
     </div>
     <div class="info" @wheel.self="wheeling">
@@ -15,24 +14,12 @@
       </div>
     </div>
     <div class=" bottom" @wheel.self="wheeling">
-      <div class="bottomPage">
-        <!-- <anli-page></anli-page> -->
-        <!--          <iframe src="//player.bilibili.com/player.html?aid=4539251&bvid=BV1Ds411q7Xp&cid=7360965&page=1"-->
-        <!--                  scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>-->
-        <!--        <iframe class="player" src="//player.bilibili.com/player.html?aid=290694593&bvid=BV1yf4y1Y7V1&cid=341769102&page=1"-->
-        <!--                scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>-->
-        <!--        <video class="player" src="../assets/单向箭头finn_x264.mp4" width="80vw" height="80vh" controls="controls" loop>s?-->
-        <!--        </video>-->
+      <div class="bottomPage" @touchend.stop="">
+        <about v-if="pageData.pagedata.count==2"/>
 
       </div>
     </div>
     <div class=" bottom" @wheel.self="wheeling" v-show="isAdmin">
-      <!--        <div class="bottomPage">-->
-      <!--      <article-editor/>-->
-      <!--        </div>-->
-      <!--        <home/>-->
-      <!--      <crop-img/>-->
-
     </div>
   </div>
 
@@ -43,6 +30,7 @@ import {computed, onMounted, ref, watch} from 'vue';
 import RightBar from '@/components/RightBar.vue'
 import {usePageData} from '@/store/pageData';
 import Date from "@/components/Date.vue";
+import About from "@/views/RightBar/About.vue";
 
 const isShow = ref(true)
 const pageData = usePageData()
@@ -63,7 +51,7 @@ function touchEnd(event: any) {
   let touchYEnd = event.changedTouches[0].pageY
   let touches = touchYEnd - touchY
   if (touches < -90) {
-    if (pageData.pagedata.count < 3) {
+    if (pageData.pagedata.count < 2) {
       pageData.pagedata.count++
     }
   }
@@ -101,8 +89,8 @@ function wheeling(event: any) {
 }
 
 onMounted(() => {
-  const rightPage = document.getElementById("rightbar") as HTMLSelectElement
-  rightPage.style.transform = `translateY(-${pageData.pagedata.count}00vh)`
+  // const rightPage = document.getElementById("rightbar") as HTMLSelectElement
+  // rightPage.style.transform = `translateY(-${pageData.pagedata.count}00vh)`
 })
 
 watch(pageData.pagedata, (newValue, oldValue) => {
@@ -191,12 +179,17 @@ iframe {
   background-color: rgb(255, 255, 255);
   // padding: 100px;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  flex-direction: column;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
 
   &::-webkit-scrollbar-thumb {
-    width: 30px;
-    background-color: rgba(73, 73, 73, .5);
+    width: 5px;
+    background-color: rgba(73, 73, 73, .2);
     color: black;
     border-radius: 20px;
   }
@@ -204,8 +197,8 @@ iframe {
 }
 
 .bottomPage {
-  //background-color: rgba(0, 0, 0, 1);
-  border: 0px;
+  //background-color: #fffdf7;
+  //border: 3px;
 }
 
 .infoPage {

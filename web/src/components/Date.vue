@@ -27,10 +27,11 @@ setInterval(() => {
 <style lang="less" scoped>
 
 .date {
+  user-select: none;
   width: 1000px;
   height: 1000px;
   //background-color: #fff;
-  color:var(--date-color);
+  color: var(--date-color);
   position: absolute;
   top: 20vh;
   left: 5vw;

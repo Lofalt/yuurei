@@ -16,7 +16,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "pages",
         components: {
-          default: import("../../../src/views/ArticlePage.vue"),
+          default: import("../../../src/views/RightBar/ArticlePage.vue"),
           BlogPage,
           VlogPage,
           LovePage
@@ -25,7 +25,7 @@ const routes: Array<RouteRecordRaw> = [
         children: [
           {
             path: "anli",
-            component: import("../../../src/views/PicPage.vue"),
+            component: import("../../../src/views/RightBar/PicPage.vue"),
             props: true,
           }
         ]

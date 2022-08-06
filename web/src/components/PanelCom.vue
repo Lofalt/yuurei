@@ -61,7 +61,7 @@ function archive(articleId: number) {
   }
 
   .panelSummary {
-    color: white;
+    color: #252525;
     position: relative;
     text-overflow: ellipsis;
     text-align: center;

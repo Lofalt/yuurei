@@ -24,8 +24,19 @@ func NewSettingController() ISettingController {
 }
 
 func (s SettingController) Create(c *gin.Context) {
-	//TODO implement me
-	panic("implement me")
+	var set model.GlobalConfig
+
+	err := c.ShouldBind(&set)
+	if err != nil {
+		response.Fail(c, gin.H{}, err.Error())
+		return
+	}
+	if err2 := s.DB.Create(&set).Error; err2 != nil {
+		response.Fail(c, gin.H{}, err2.Error())
+		return
+	}
+
+	response.Success(c, gin.H{"data": set}, "创建成功")
 }
 
 func (s SettingController) Update(c *gin.Context) {

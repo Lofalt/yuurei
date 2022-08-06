@@ -43,12 +43,12 @@ export default {
 import WaterPage from "../views/WaterPage.vue"
 import { onDeactivated, onUnmounted, provide, ref } from 'vue';
 import { useRouter } from 'vue-router'
-import AnliPage from '../../../src/views/PicPage.vue';
-import PicPage from "../../../src/views/ArticlePage.vue";
+import AnliPage from '../../../src/views/RightBar/PicPage.vue';
+import PicPage from "../../../src/views/RightBar/ArticlePage.vue";
 import VlogPage from "@/views/VlogPage.vue";
-import LovePage from "@/views/LovePage.vue";
-import BlogPage from "../../../src/views/MessageBoard.vue";
-import LovePage from "@/views/LovePage.vue";
+import LovePage from "../../../src/views/RightBar/LovePage.vue";
+import BlogPage from "../../../src/views/RightBar/MessageBoard.vue";
+import LovePage from "../../../src/views/RightBar/LovePage.vue";
 const router = useRouter();
 const showBlog = ref(false)
 const showVlog = ref(false)

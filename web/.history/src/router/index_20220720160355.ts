@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-import PicPage from "../../../src/views/ArticlePage.vue";
+import PicPage from "../../../src/views/RightBar/ArticlePage.vue";
 import BlogPage from "../views/BlogPage.vue"
 import VlogPage from "../views/VlogPage.vue"
 import LovePage from "../views/LovePage.vue"
-import AnliPage from "../../../src/views/PicPage.vue"
+import AnliPage from "../../../src/views/RightBar/PicPage.vue"
 
 const routes: Array<RouteRecordRaw> = [
   {

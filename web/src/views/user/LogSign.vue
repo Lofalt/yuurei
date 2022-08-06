@@ -40,7 +40,7 @@ import Signin from "./Signup.vue"
   }
 
   .inside {
-    border: 4px solid rgb(49, 49, 49);
+    //border: 4px solid rgb(49, 49, 49);
 
     //display: flex;
     //justify-content: center;

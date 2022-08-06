@@ -38,7 +38,7 @@ export default {
 <script lang="ts" setup>
 import { onDeactivated, onUnmounted, ref } from 'vue';
 import { useRouter } from 'vue-router'
-import AnliPage from '../../../src/views/PicPage.vue';
+import AnliPage from '../../../src/views/RightBar/PicPage.vue';
 const router = useRouter();
 const showBlog = ref(false)
 const showVlog = ref(true)
@@ -135,26 +135,21 @@ function pushCard() {
         &:nth-child(4) {
             z-index: 4;
             transform: translateX(20vw);
-            // overflow: auto;
-            // background-image: url(../assets/91375949_p0.jpg);
         }
 
         &:nth-child(3) {
             z-index: 3;
             transform: translateX(15vw);
-            // background-image: url(../assets/89025157_p0.jpg);
         }
 
         &:nth-child(2) {
             z-index: 2;
             transform: translateX(10vw);
-            // background-image: url(../assets/wallhaven-k71327.jpg);
         }
 
         &:nth-child(1) {
             z-index: 1;
             transform: translateX(5vw);
-            // background-image: url(../assets/ec8ce499ly1h1hhm1o6m1j22pg1ww4qp.jpg);
         }
 
         .showtag {

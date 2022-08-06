@@ -1,10 +1,10 @@
 import {createRouter, createWebHistory, RouteRecordRaw} from "vue-router";
 import HomeView from "../views/HomeView.vue";
-import PicPage from "@/views/ArticlePage.vue";
-import BlogPage from "../views/MessageBoard.vue"
+import PicPage from "@/views/RightBar/ArticlePage.vue";
+import BlogPage from "../views/RightBar/MessageBoard.vue"
 import VlogPage from "../views/VlogPage.vue"
-import LovePage from "../views/LovePage.vue"
-import AnliPage from "@/views/PicPage.vue"
+import LovePage from "../views/RightBar/LovePage.vue"
+import AnliPage from "@/views/RightBar/PicPage.vue"
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -18,7 +18,7 @@ const routes: Array<RouteRecordRaw> = [
         children: [
             {
                 path: "/archive/article/:id",
-                component: () => import("@/views/Archive.vue"),
+                component: () => import("@/views/RightBar/Archive.vue"),
                 props: true
 
             }
@@ -65,7 +65,7 @@ const routes: Array<RouteRecordRaw> = [
     // },
     {
         path: "/About",
-        component: () => import("@/views/About.vue")
+        component: () => import("@/views/RightBar/About.vue")
     },
 
 

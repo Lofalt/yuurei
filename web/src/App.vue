@@ -1,6 +1,7 @@
 <template>
 
-  <div class="app" :style="[{backgroundImage:backgroundImage},`--button-color:${ButtonColor};--date-color:${DateColor}`]" >
+  <div class="app"
+       :style="[{backgroundImage:backgroundImage},`--button-color:${ButtonColor};--date-color:${DateColor}`]">
     <div :class="[isActive?`activeClass`:`unActive`,`mask`]" @click="showNav"></div>
     <div :class="[isActive?`lefting`:``,`navButton`]" @click="showNav">
       <div class="icons"></div>
@@ -37,40 +38,43 @@ let isWheeling = false
 const isAdmin = ref(true)
 const userInfo = useUserInfo()
 const isActive = ref(false)
-const config  = ref(null) as any
+const config = ref(null) as any
 
-const backgroundImage = computed(()=>{
-  if (config.value==null){
+const backgroundImage = computed(() => {
+  if (config.value == null) {
     return ''
+  }
+  if (document.body.clientWidth < 500) {
+    return `url(${config.value.MobileBackgroundImage})`
   }
   return `url(${config.value.BackgroundImage})`
 })
 
-const ButtonColor = computed(()=>{
-  if (config.value==null){
+const ButtonColor = computed(() => {
+  if (config.value == null) {
     return ''
   }
   return config.value.ButtonColor
 })
-const DateColor = computed(()=>{
-  if (config.value==null){
+const DateColor = computed(() => {
+  if (config.value == null) {
     return ''
   }
   return config.value.DateColor
 })
 
-    provide('globalConfig',config)
-axios.get("/yuurei/settings/1",{}).then((res:any)=>{
-  if(res.code==200){
+provide('globalConfig', config)
+axios.get("/yuurei/settings/1", {}).then((res: any) => {
+  if (res.code == 200) {
 
-  config.value = res.data.data
+    config.value = res.data.data
   }
 })
 
 
 watch(router.currentRoute, (newValue: any) => {
   if (newValue.path.startsWith("/archive")) {
-    pageData.pagedata.count = 1
+    // pageData.pagedata.count = 1
 
   }
 })
@@ -159,7 +163,7 @@ function changePage(num: number) {
 .fixedButton {
   position: fixed;
   top: 5vh;
-  right: 18vw;
+  right: 2vw;
   z-index: 5;
   cursor: pointer;
   @media (max-width: 1024px) {
@@ -265,7 +269,7 @@ button {
 .app {
   background-size: cover;
   background-repeat: repeat-y;
-  background-image: url("./assets/1659613675111.jpg");
+  //background-image: url("./assets/1659613675111.jpg");
   position: relative;
   min-height: 100vh;
   overflow: hidden;

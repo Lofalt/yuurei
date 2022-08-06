@@ -45,8 +45,13 @@ func UploadImg(c *gin.Context) {
 		response.Fail(c, gin.H{}, err.Error())
 		return
 	}
+	suffix = strings.ToLower(suffix)
 	if quality != 0 && (suffix == "jpg" || suffix == "jpeg") {
-		util.Compress(filename, quality)
+		err = util.Compress(filename, quality)
+		if err != nil {
+			response.Fail(c, gin.H{}, err.Error())
+			return
+		}
 
 	}
 	var responFileName string
@@ -68,11 +73,11 @@ func GalleryPic(c *gin.Context) {
 	log.Println(file.Filename)
 	quality, _ := strconv.Atoi(c.Query("qua"))
 
-	suffix := strings.Split(file.Filename, ".")[len(strings.Split(file.Filename, "."))-1]
+	suffix := strings.ToUpper(strings.Split(file.Filename, ".")[len(strings.Split(file.Filename, "."))-1])
 
 	// 上传文件至指定目录
 	// c.SaveUploadedFile(file, dst)
-	timeStamp := strconv.Itoa(int(time.Now().UnixMilli())) + "." + strings.Split(file.Filename, ".")[len(strings.Split(file.Filename, "."))-1]
+	timeStamp := uuid.NewV4().String() + strconv.Itoa(int(time.Now().UnixMilli())) + "." + suffix
 
 	filepath := "./img/gallery"
 	if exit, _ := util.HasDir(filepath); exit == false {
@@ -85,7 +90,6 @@ func GalleryPic(c *gin.Context) {
 		response.Fail(c, gin.H{}, err.Error())
 		return
 	}
-	suffix = strings.ToUpper(suffix)
 	if quality != 0 && (suffix == "JPG" || suffix == "JPEG") {
 		util.Compress(filename, quality)
 
@@ -152,7 +156,7 @@ func ArticleImg(c *gin.Context) {
 		return
 	}
 	if quality != 0 && (suffix == "jpg" || suffix == "jpeg") {
-		util.Compress(filename, quality)
+		util.Compress(filename, 40)
 
 	}
 	var responFileName string
@@ -167,4 +171,13 @@ func ArticleImg(c *gin.Context) {
 		"data":  gin.H{"url": responFileName},
 	})
 	//c.String(http.StatusOK, fmt.Sprintf("'%s' uploaded!", file.Filename))
+}
+
+func DeleteFile(c *gin.Context) {
+	fileName := c.Query("fileName")
+	if err := os.Remove("." + fileName); err != nil {
+		response.Fail(c, gin.H{}, err.Error())
+		return
+	}
+	response.Success(c, gin.H{}, "删除成功")
 }

@@ -251,6 +251,7 @@ function deleteMsg() {
 
 <style lang="less">
 .insertPic {
+  user-select: none;
   max-width: 50%;
   max-height: 300px;
   margin-top: 20px;

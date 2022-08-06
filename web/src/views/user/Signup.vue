@@ -14,9 +14,7 @@
         用户名:
           </span>
       <n-input @change.lazy="checkName" type="text" v-model:value="username" placeholder="输入用户名"/>
-      <div v-show="!hasName" class="error">用户名不能为空</div>
-      <div v-show="!wrongName" class="error">用户名包含非法字符</div>
-      <div v-show="!shortName" class="error">用户名过短(少于6位)</div>
+      <div class="error">{{ nameErrorMessage }}</div>
     </div>
     <div class="cardContainer">
         <span class="label">
@@ -24,12 +22,10 @@
           </span>
       <n-input @keyup.enter="signup" @change.lazy="checkPass" type="password" v-model:value="password"
                placeholder="输入密码"/>
-      <div v-show="!hasPass" class="error">密码不能为空</div>
-      <div v-show="!wrongPass" class="error">密码包含非法字符</div>
-      <div v-show="!shortPass" class="error">密码过短(少于6位)</div>
+      <div class="error">{{ passErrorMessage }}</div>
     </div>
     <div class="footer">
-      <n-button @click="signup" class="btn" type="info">注册</n-button>
+      <button @click="signup" class="btn" type="info">注册</button>
     </div>
     <!--      </n-space>-->
 
@@ -56,6 +52,8 @@ const wrongName = ref(true)
 const wrongPass = ref(true)
 const shortName = ref(true)
 const shortPass = ref(true)
+const passErrorMessage = ref("")
+const nameErrorMessage = ref("")
 
 function signup() {
   checkName()
@@ -80,42 +78,30 @@ function signup() {
 }
 
 function checkName() {
+  nameErrorMessage.value = ''
   if (username.value == "") {
-    hasName.value = false
-  } else {
-    hasName.value = true
-    if (username.value.indexOf(" ") >= 0 || username.value.indexOf("?") >= 0) {
-      wrongName.value = false
-    } else {
-      wrongName.value = true
-      if (username.value.length < 6) {
-        shortName.value = false
-      } else {
-        shortName.value = true
-      }
-    }
+    nameErrorMessage.value += " 用户名不能为空"
+  } else if (username.value.length < 6) {
+    nameErrorMessage.value += "用户名过短"
   }
-  return hasName.value && wrongName.value && shortName.value
+  if (username.value.indexOf(" ") >= 0 || username.value.indexOf("?") >= 0) {
+    nameErrorMessage.value += " 包含非法字符"
+  }
+  return nameErrorMessage.value == ""
 }
 
 function checkPass() {
+  passErrorMessage.value = ''
   if (password.value == "") {
-    hasPass.value = false
-  } else {
-    hasPass.value = true
-    if (password.value.indexOf(" ") >= 0 || password.value.indexOf("?") >= 0) {
-      wrongPass.value = false
-    } else {
-      wrongPass.value = true
-      if (password.value.length < 6) {
-        shortPass.value = false
-      } else {
-        shortPass.value = true
-      }
-    }
+    passErrorMessage.value += " 密码不能为空"
+  } else if (password.value.length < 6) {
+    passErrorMessage.value += "密码过短"
+  }
+  if (password.value.indexOf(" ") >= 0 || password.value.indexOf("?") >= 0) {
+    passErrorMessage.value += " 包含非法字符"
   }
 
-  return hasPass.value && wrongPass.value && shortPass.value
+  return passErrorMessage.value == ""
 }
 </script>
 
@@ -159,6 +145,17 @@ function checkPass() {
 
 .btn {
   margin: 0px 20px;
+  background-color: #fff;
+  color: rgba(49, 49, 49, .8);
+  border: 1px solid rgba(49, 49, 49, .2);
+  padding: 5px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    color: white;
+    background-color: var(--button-color);
+  }
 }
 
 .error {

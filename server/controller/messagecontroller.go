@@ -6,7 +6,9 @@ import (
 	"github.com/Lofalt/yuurei/response"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
+	"os"
 	"strconv"
+	"strings"
 )
 
 type IMessageController interface {
@@ -110,6 +112,11 @@ func (m MessageController) Delete(c *gin.Context) {
 			ID: uint(id),
 		},
 	}
+	err := m.DB.First(&msg).Error
+	if err != nil {
+		response.Fail(c, gin.H{}, err.Error())
+		return
+	}
 
 	//if err := c2.DB.Unscoped().Delete(&msg).Error; err != nil {\
 	if err := m.DB.Delete(&msg).Error; err != nil {
@@ -117,7 +124,11 @@ func (m MessageController) Delete(c *gin.Context) {
 		response.Fail(c, gin.H{}, err.Error())
 		return
 	}
-
+	pics := strings.Split(msg.Pics, ",")
+	for _, item := range pics {
+		path := "." + item
+		os.Remove(path)
+	}
 	response.Success(c, gin.H{}, "删除成功")
 
 }

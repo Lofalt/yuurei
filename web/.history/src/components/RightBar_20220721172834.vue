@@ -36,7 +36,7 @@ export default {
 <script lang="ts" setup>
 import { onDeactivated, onUnmounted, ref } from 'vue';
 import { useRouter } from 'vue-router'
-import AnliPage from '../../../src/views/PicPage.vue';
+import AnliPage from '../../../src/views/RightBar/PicPage.vue';
 const router = useRouter();
 const showBlog = ref(false)
 const showVlog = ref(true)

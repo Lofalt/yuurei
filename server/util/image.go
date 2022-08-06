@@ -9,33 +9,33 @@ import (
 	"os"
 )
 
-func Compress(imagePath string, quality int) {
+func Compress(imagePath string, quality int) error {
 	imgfile, err := os.ReadFile(imagePath)
 	if err != nil {
 		log.Println(err.Error())
-		return
+		return err
 	}
 
 	jpgimg, err := jpeg.Decode(bytes.NewReader(imgfile))
 	if err != nil {
 		fmt.Println(imgfile[:5])
 		log.Println("decoding:" + err.Error())
-		return
+		return err
 	}
 	newfile, err := os.Create(imagePath)
 	if err != nil {
 		log.Println("creating:" + err.Error())
-		return
+		return err
 	}
 	defer newfile.Close()
 
 	err = jpeg.Encode(newfile, jpgimg, &jpeg.Options{Quality: quality})
 	if err != nil {
 		log.Println("encoding:" + err.Error())
-		return
+		return err
 	}
 
-	return
+	return nil
 
 }
 

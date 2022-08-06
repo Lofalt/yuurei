@@ -1,5 +1,5 @@
 <template>
-  <div class="leftbar" >
+  <div class="leftbar">
     <div class="header">{{ WebsiteName }}</div>
     <div class="profile" :style="{backgroundImage:backgroundImage}"></div>
     <div class="name">{{ MyName }}</div>
@@ -69,21 +69,21 @@ const userInfo = useUserInfo()
 const emit = defineEmits(['toggleNav'])
 const config = inject("globalConfig") as any
 
-const backgroundImage = computed(()=>{
-  if(config.value==null){
+const backgroundImage = computed(() => {
+  if (config.value == null) {
     return ``
   }
   return `url(${config.value.Icon})`
 })
-const WebsiteName = computed(()=>{
-  if(config.value==null){
+const WebsiteName = computed(() => {
+  if (config.value == null) {
     return 'NULL'
   }
   return config.value.WebsiteName
 })
 
-const MyName = computed(()=>{
-  if(config.value==null){
+const MyName = computed(() => {
+  if (config.value == null) {
     return 'NULL'
   }
   return config.value.MyName
@@ -118,9 +118,10 @@ function jumpTo(path: string) {
   }
 }
 
-function toggle(){
+function toggle() {
   emit('toggleNav')
 }
+
 function logIn() {
   router.push("/login")
   toggle()
@@ -151,7 +152,7 @@ function logOut() {
 }
 
 function changePage(num: number) {
-  if(router.currentRoute.value.path.startsWith("/login")){
+  if (router.currentRoute.value.path.startsWith("/login")) {
     router.push("/home")
     emit('toggleNav')
   }
@@ -218,6 +219,7 @@ a {
 }
 
 .leftbar {
+  user-select: none;
   border-right: 4px solid rgb(49, 49, 49);
   height: 100vh;
   color: white;
@@ -250,9 +252,13 @@ a {
     //border:3px solid rgb(49,49,49);
     //border-radius: 2px;
     box-shadow: -1px 1px 4px 1px rgba(49, 49, 49, .5);
-    width: 250px;
-    background-color: rgb(155, 176, 180);
+    width: 12vw;
+    background-color: rgb(55, 166, 187);
     color: white;
+
+    @media (max-width: 1024px) {
+      width: 200px;
+    }
   }
 
   div {

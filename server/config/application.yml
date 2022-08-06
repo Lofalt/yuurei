@@ -1,21 +1,21 @@
 server:
   port: 8081
-datasource:
-  host: localhost
-  port: 3306
-  name: yuurei001
-  username: root
-  password: wsy20010219
-  charset: utf8mb4
-  loc: Asia%2FShanghai
 #datasource:
 #  host: localhost
 #  port: 3306
-#  name: 20220726
+#  name: yuurei001
 #  username: root
-#  password: root
+#  password: wsy20010219
 #  charset: utf8mb4
 #  loc: Asia%2FShanghai
+datasource:
+  host: localhost
+  port: 3306
+  name: 20220726
+  username: root
+  password: root
+  charset: utf8mb4
+  loc: Asia%2FShanghai
 #datasource:
 #  host: 127.0.0.1
 #  port: 3306
