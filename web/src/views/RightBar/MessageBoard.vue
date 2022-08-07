@@ -10,7 +10,7 @@
     </div>
     <div class="left">
 
-      <n-icon size="30" color="#000000" class="messageIcon" @click="changeModal">
+      <n-icon size="3vh" color="#000000" class="messageIcon" @click="changeModal">
         <message-circle/>
       </n-icon>
       <transition>
@@ -23,10 +23,10 @@
           <!--                    <wang-editor-mini ref="wang" @change-content="changeContent"></wang-editor-mini>-->
           <emoji @emit-emoji="insertEmoji" v-show="showEmoji" class="emojiCard"/>
           <div class="messageHeader">
-            <n-icon @click="upload" class="messageHeaderIcon" color="black" size="30">
+            <n-icon @click="upload" class="messageHeaderIcon" color="black" size="3vh">
               <picture-outlined/>
             </n-icon>
-            <n-icon class="messageHeaderIcon" @click="toggleEmoji" color="black" size="30">
+            <n-icon class="messageHeaderIcon" @click="toggleEmoji" color="black" size="3vh">
               <smile-outlined/>
             </n-icon>
             <div style="width: 90%"></div>
@@ -51,7 +51,7 @@
       </n-card>
     </n-modal>
     <n-modal v-model:show="showTheModal" :display-directive="'if'" :transform-origin="'mouse'">
-      <n-card size="huge" aria-modal="true" style="width: 100%; height:450px;position: fixed;top: 0;">
+      <n-card size="huge" aria-modal="true" style="width: 100%; height:100vw;position: fixed;top: 0;">
         <!-- <button @click="post">点我发送</button> -->
         <div class="messageDiv">
           <div class="insertPic">
@@ -64,7 +64,7 @@
           <!-- <transition name="button"> -->
           <!--          <button class="sendButton" @click="sendMsg">send</button>-->
           <div class="messageHeader">
-            <n-icon @click="upload" class="messageHeaderIcon" color="black" size="30">
+            <n-icon @click="upload" class="messageHeaderIcon" color="black" size="7vw">
               <picture-outlined/>
             </n-icon>
             <div style="width: 90%"></div>
@@ -236,7 +236,7 @@ const wang = ref<InstanceType<typeof WangEditorMini>>();
 // const wang = ref(null)
 
 function changeModal() {
-  if ((document.body.clientWidth / document.body.clientHeight) >1) {
+  if ((document.body.clientWidth / document.body.clientHeight) > 1) {
     showModal.value = !showModal.value
   } else {
     showTheModal.value = !showTheModal.value
@@ -334,38 +334,47 @@ function getFile(event: any) {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100px;
-  height: 100px;
+  width: 10vh;
+  height: 10vh;
   background-color: #ffffff;
   background-size: cover;
   background-position: center;
   position: absolute;
-  top: -110px;
+  top: -11vh;
   //left: 200px;
   right: 0;
   cursor: pointer;
-  border: 3px solid rgb(49, 49, 49);
+  border: .4vh solid rgb(49, 49, 49);
+
+  @media (max-aspect-ratio: 1/1) {
+    width: 23vw;
+    height: 23vw;
+    top: -25vw !important;
+
+  }
 
   &::after {
     content: "修改头像";
     //z-index: -1 ;
     box-sizing: border-box;
+    font-size: 1.5vh;
     display: flex;
     justify-content: center;
     align-items: center;
     color: white;
-    width: 100px;
-    height: 100px;
+    width: 101%;
+    height: 101%;
     //display: none;
     visibility: hidden;
     background: rgba(49, 49, 49, .2);
     position: absolute;
-    left: -3px;
-    top: -3px;
-    border: 3px solid rgba(49, 49, 49, 0.2);
+    //left: -3px;
+    //top: -3px;
+    //border: 3px solid rgba(49, 49, 49, 0.2);
     @media (max-aspect-ratio: 1/1) {
       visibility: visible !important;
-
+      border: .6vw solid rgba(49, 49, 49, 0.2);
+      font-size: 4vw;
     }
 
   }
@@ -405,8 +414,8 @@ function getFile(event: any) {
     // float: left;
     // margin: 10px;
     // vertical-align: bottom;
-    bottom: 15px;
-    left: 15px;
+    bottom: 1.5vh;
+    left: 2vh;
     cursor: pointer;
   }
 
@@ -414,15 +423,15 @@ function getFile(event: any) {
   .inputUsername {
     position: absolute;
     left: -3px;
-    top: -40px;
+    top: -4.5vh;
     z-index: 1;
     //width: 40%;
     input {
       // width: 10%;
       padding-left: 10px;
-      height: 30px;
+      height: 3.5vh;
       outline: none;
-      border: 3px solid rgb(49, 49, 49)
+      border: .35vh solid rgb(49, 49, 49)
     }
   }
 
@@ -430,13 +439,13 @@ function getFile(event: any) {
 
 .messageDiv {
   background-color: #fff;
-  width: 80%;
+  width: 90%;
   //float: left;
-  left: 60px;
+  left: 6.5vh;
   position: absolute;
-  bottom: 25px;
-  height: 210px;
-  border: 3px solid black;
+  bottom: 2.5vh;
+  height: 22vh;
+  border: .35vh solid black;
   z-index: 10;
   // left: 60px;
   // height: 23vh;
@@ -447,8 +456,8 @@ function getFile(event: any) {
   .insertPic {
     position: absolute;
     width: 100%;
-    bottom: -120px;
-    height: 100px;
+    bottom: -12vh;
+    height: 10vh;
 
     .insidePic {
       cursor: pointer;
@@ -456,8 +465,8 @@ function getFile(event: any) {
       background-position: center;
       background-color: #fff;
       border: 3px solid rgb(49, 49, 49);
-      width: 70px;
-      height: 80px;
+      width: 8vh;
+      height: 10vh;
       float: left;
       margin-right: 20px;
       position: relative;
@@ -499,10 +508,11 @@ function getFile(event: any) {
   }
 
   @media (max-height: 800px) {
-    height: 180px;
+    //height: 180px;
   }
   @media (max-aspect-ratio: 1/1) {
-    height: 300px;
+    border: .7vw solid black;
+    height: 70vw;
     margin: 0 auto;
     left: 0;
     width: 100%;
@@ -512,10 +522,10 @@ function getFile(event: any) {
     content: '';
     width: 0px;
     height: 0px;
-    border: 6px solid transparent;
+    border: .7vh solid transparent;
     position: absolute;
-    left: -14px;
-    bottom: -3px;
+    left: -1.5vh;
+    bottom: -.3vh;
     border-right-color: rgb(49, 49, 49);
     border-bottom-color: rgba(49, 49, 49);
 
@@ -525,7 +535,7 @@ function getFile(event: any) {
   }
 
   .inputTextarea {
-    height: 150px;
+    height: 16vh;
     width: 100%;
     resize: none;
     outline: none;
@@ -536,17 +546,18 @@ function getFile(event: any) {
     position: absolute;
     bottom: 0;
     left: 0;
-    border-top: 1px solid rgba(49, 49, 49, .1);
+    border-top: .2vh solid rgba(49, 49, 49, .1);
     box-sizing: border-box;
 
     @media (max-aspect-ratio: 1/1) {
-      height: 240px;
+      height: 57vw;
+      border-top: .4vw solid rgba(49, 49, 49, .1);
     }
   }
 
   .emojiCard {
     position: absolute;
-    top: -210px;
+    top: -21vh;
     left: 0;
     z-index: 10;
 
@@ -555,16 +566,19 @@ function getFile(event: any) {
   .messageHeader {
     display: flex;
     justify-content: flex-start;
+    align-items: center;
     width: 100%;
-    padding: 10px;
+    //padding: 10px;
+    height: 5vh;
 
     @media (max-aspect-ratio: 1/1) {
       //height: 100px;
+      height: 12vw;
     }
 
     .messageHeaderIcon {
       cursor: pointer;
-      margin-left: 5px;
+      margin-left: 1vh;
 
     }
 
@@ -573,17 +587,23 @@ function getFile(event: any) {
       //right: 40px;
       //top: 15px;
       outline: none;
-      border: none;
-      padding: 5px 8px;
+      //padding: .6vh 1vh;
+      height: 4vh;
+      width: 6.5vh;
       background-color: #fff;
       cursor: pointer;
       justify-self: flex-end;
       place-self: flex-end;
-
-      border: 3px solid rgb(49, 49, 49); // transition: all 1s;
+      font-size: 1em;
+      margin-right: 1vh;
+      border: .4vh solid rgb(49, 49, 49); // transition: all 1s;
 
       @media (max-aspect-ratio: 1/1) {
-        width: 100px;
+        width: 15vw;
+        border: .8vw solid rgb(49, 49, 49); // transition: all 1s;
+        height: 8vw;
+        align-self: center;
+        font-size: 4vw;
       }
 
       &:hover {
@@ -598,7 +618,7 @@ function getFile(event: any) {
 
 .inside {
   //left: 10% !important;
-  top: -120px !important;
+  //top: -120px !important;
   z-index: 10;
   @media (max-aspect-ratio: 1/1) {
     right: 0px !important;
@@ -608,19 +628,26 @@ function getFile(event: any) {
 .inputUsernameModal {
   position: absolute;
   left: 0px;
-  top: -13px;
+  top: -80vw;
   z-index: 1;
-  width: 20vw;
+  width: 40vw;
   @media (max-aspect-ratio: 1/1) {
-    top: -50px;
+    top: -10vw;
   }
 
   input {
-    // width: 10%;
-    padding-left: 10px;
-    height: 30px;
+    width: 100%;
+    padding-left: 2vw;
+    height: 7vw;
     outline: none;
-    border: 3px solid rgb(49, 49, 49)
+    border: .3vh solid rgb(49, 49, 49);
+
+    @media (max-aspect-ratio: 1/1) {
+      font-size: 3vw;
+      //top: -50px;
+      border: .5vw solid rgb(49, 49, 49);
+
+    }
   }
 }
 

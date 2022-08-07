@@ -78,9 +78,10 @@ function deleteMsg() {
 
 .messageBox {
   // float: left;
-  width: 90%;
+  width: 95%;
   margin: 8vh auto;
   position: relative;
+  display: flex;
 
   // height: 100%;
   &::after,
@@ -102,15 +103,15 @@ function deleteMsg() {
   .icon {
     background-image: url("../../assets/ec8ce499ly1h1hhm1o6m1j22pg1ww4qp.jpg");
     background-size: cover;
-    border: 3px solid rgb(49, 49, 49);
+    border: .4vh solid rgb(49, 49, 49);
     float: left;
     width: 6vw;
     height: 6vw;
     background-color: rgb(49, 49, 49);
-    margin-right: 20px;
+    margin-right: 3vh;
     position: relative;
     background-position: center;
-    box-shadow: -4px 4px 1px 0 rgba(49, 49, 49, 0.2);
+    box-shadow: -.4vh .4vh 1px 0 rgba(49, 49, 49, 0.2);
 
     @media (max-aspect-ratio: 1/1) {
       width: 8vh;
@@ -134,13 +135,13 @@ function deleteMsg() {
   }
 
   .messageInfo {
-    border: 4px solid rgb(49, 49, 49);
-    border-left: 6px solid rgb(49, 49, 49);
-    border-bottom: 6px solid rgb(49, 49, 49);
+    border: .4vh solid rgb(49, 49, 49);
+    border-left: .6vh solid rgb(49, 49, 49);
+    border-bottom: .6vh solid rgb(49, 49, 49);
     padding: 1vw;
     float: left;
-    width: 80%;
-    border-radius: 3px;
+    width: 90%;
+    border-radius: .3vh;
     min-height: 15vh;
     //white-space: pre-line;
     // background-color: aquamarine;
@@ -153,7 +154,7 @@ function deleteMsg() {
       cursor: pointer;
       position: absolute;
       bottom: -4vh;
-      right: 16vh;
+      right: 17vh;
       //text-shadow: -1px 1px 2px rgb(49,49,49);
       text-shadow: -1px 1px 5px rgba(49, 49, 49, .4);
 
@@ -179,61 +180,61 @@ function deleteMsg() {
 
     @media (max-aspect-ratio: 1/1) {
       min-height: 10vh;
-      width: 70%;
-      border: 3px solid rgb(49, 49, 49);
-      border-left: 5px solid rgb(49, 49, 49);
-      border-bottom: 5px solid rgb(49, 49, 49);
+      width: 75%;
+      border: .3vh solid rgb(49, 49, 49);
+      border-left: .5vh solid rgb(49, 49, 49);
+      border-bottom: .5vh solid rgb(49, 49, 49);
 
     }
 
     &::after {
       position: absolute;
       display: block;
-      left: -15.5px;
+      left: -1.4vh;
       top: 4px;
       transform: rotate(225deg);
       content: '';
       width: 0;
       height: 0;
-      border: 10px solid transparent;
+      border: 1.2vh solid transparent;
       border-top-color: rgb(49, 49, 49);
       border-right-color: rgb(49, 49, 49);
       border-radius: 2px;
 
       @media (max-aspect-ratio: 1/1) {
-        border: 8px solid transparent ;
+        border: .8vh solid transparent ;
         border-top-color: rgb(49, 49, 49);
         border-right-color: rgb(49, 49, 49);
-        border-radius: 2px;
-        left: -12.5px;
+        border-radius: .1vh;
+        left: -1.2vh;
       }
     }
 
-    &::before {
-      position: absolute;
-      display: block;
-      left: -9px;
-      // top: 5px;
-      z-index: 10;
-      top: 6px;
-      transform: rotate(225deg);
-      content: '';
-      width: 0;
-      height: 0;
-      border: 8px solid transparent;
-      border-top-color: white;
-      border-right-color: white;
-      @media (max-aspect-ratio: 1/1) {
-
-        left: -7px;
-        top: 4px;
-
-      }
-      @media (min-width: 2200px){
-        left: -7px;
-      }
-
-    }
+    //&::before {
+    //  position: absolute;
+    //  display: block;
+    //  left: -1vh;
+    //  // top: 5px;
+    //  z-index: 10;
+    //  top: 6px;
+    //  transform: rotate(225deg);
+    //  content: '';
+    //  width: 0;
+    //  height: 0;
+    //  border: .9vh solid transparent;
+    //  border-top-color: white;
+    //  border-right-color: white;
+    //  @media (max-aspect-ratio: 1/1) {
+    //
+    //    left: -7px;
+    //    top: 4px;
+    //
+    //  }
+    //  @media (min-width: 2200px) {
+    //    left: -7px;
+    //  }
+    //
+    //}
 
     .info {
       font-family: "微软雅黑";
@@ -255,8 +256,8 @@ function deleteMsg() {
 <style lang="less">
 .insertPic {
   user-select: none;
-  max-width: 50%;
-  max-height: 300px;
+  max-width: 50vw;
+  max-height: 30vh;
   margin-top: 20px;
   margin-right: 20px;
   align-self: flex-start;

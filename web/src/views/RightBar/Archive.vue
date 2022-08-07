@@ -222,6 +222,10 @@ function jump(id: number) {
 
 <style lang="less">
 
+//* {
+//  font-size: 1.6vh;
+//}/
+
 .preAndNextBox {
   display: flex;
   justify-content: center;

@@ -37,14 +37,15 @@ function archive(articleId: number) {
 
 <style lang="less" scoped>
 .panel {
-  border: 3px solid rgb(53, 53, 53);
+  font-size: 1.6vh;
+  border: .35vh solid rgb(53, 53, 53);
   color: rgb(39, 39, 39);
   position: relative;
   margin-left: 10px;
   margin-right: 10px;
   margin-bottom: 50px;
   height: 250px;
-  border-radius: 7px;
+  border-radius: .7vh;
   box-shadow: 0 0 5px rgba(100, 100, 100, .5);
   text-overflow: ellipsis;
   overflow: hidden;
@@ -82,7 +83,7 @@ function archive(articleId: number) {
     .panelTitle {
       transform: translate3d(0, -10px, 0);
       -webkit-transition: .2s ease all;
-      font-size: 30px;
+      font-size: 2em;
       white-space: nowrap;
 
     }
@@ -110,7 +111,7 @@ function archive(articleId: number) {
     color: black;
     padding-right: 100px;
     bottom: 5px;
-    margin-left: 2px;
+    margin-left: .4vh;
     transform: translate3d(0, -10px, 0);
     opacity: 0;
     transition: .3s ease all;
@@ -130,8 +131,8 @@ function archive(articleId: number) {
   .panelTitle {
     text-align: center;
     position: relative;
-    margin-top: -180px;
-    font-size: 25px;
+    margin-top: -20%;
+    font-size: 2em;
     color: black;
     transition: .3s ease all;
     -webkit-transition: .3s ease all;
@@ -164,14 +165,19 @@ function archive(articleId: number) {
   // background-size: cover;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-aspect-ratio: 1/1) {
   .panel {
     /*width:100%;*/
     height: 200px;
-    font-size: 14px;
+    font-size: 2.8vw;
+
+    .background {
+      min-height: 0;
+      height: 35vw;
+    }
 
     .panelTitle {
-      margin-top: -200px;
+      margin-top: -30vw;
       opacity: 1;
       transform: translate3d(0, 0, 0);
     }

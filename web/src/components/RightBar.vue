@@ -195,6 +195,7 @@ function pushCard() {
 
     @media (max-aspect-ratio: 1/1) {
       width: 90vw;
+      min-height: 150vw;
       // right: -85vw;
     }
 
@@ -258,24 +259,24 @@ function pushCard() {
       //align-items: flex-end;
       color: rgb(255, 255, 255);
       font-size: 1.3em;
-      padding-top:1vh;
+      padding-top: 1vh;
       border-top: 3px solid rgb(49, 49, 49);
       border-bottom: 3px solid rgb(49, 49, 49);
 
       box-shadow: -.3vh 0px 0px 2px rgb(49, 49, 49);
       left: -4vh;
-      width:4vh;
-      height:11vh;
+      width: 4vh;
+      height: 11vh;
       font-size: 2vh;
       border-top: .3vh solid rgb(49, 49, 49);
       border-bottom: .3vh solid rgb(49, 49, 49);
 
 
-      @media (min-width: 1600px){
+      @media (min-width: 1600px) {
         box-shadow: -.3vh 0px 0px 2px rgb(49, 49, 49);
         left: -4vh;
-        width:4vh;
-        height:10vh;
+        width: 4vh;
+        height: 10vh;
         font-size: 2vh;
         border-top: .3vh solid rgb(49, 49, 49);
         border-bottom: .3vh solid rgb(49, 49, 49);

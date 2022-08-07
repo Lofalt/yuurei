@@ -21,7 +21,7 @@ type ArticleCategory struct {
 	gorm.Model
 	ArticleCategoryName string `gorm:"type:varchar(20)"`
 	Color               string `gorm:"type:varchar(10)"`
-	HeaderPic           string `gorm:"type:varchar(50)"`
+	HeaderPic           string `gorm:"type:varchar(100)"`
 }
 
 type Tag struct {

@@ -154,7 +154,7 @@ watch(currentCat, (newValue, oldValue) => {
 
   .cat {
     cursor: pointer;
-    margin-top: 20px;
+    margin-top: 3vh;
     padding: .1vh 3vh;
     //height:30px;
     //width: 80px;
@@ -201,9 +201,13 @@ watch(currentCat, (newValue, oldValue) => {
   //background-color: rgba(109, 155, 255, 0.8);
   width: 80%;
   height: 25vh;
-  margin: 30px auto;
-  border-radius: 5px;
+  margin: 3vh auto;
+  border-radius: .5vh;
   text-align: center;
   cursor: pointer;
+
+  @media (max-aspect-ratio: 1/1) {
+    height: 35vw;
+  }
 }
 </style>

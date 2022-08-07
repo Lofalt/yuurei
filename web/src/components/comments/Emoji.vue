@@ -39,11 +39,11 @@ onMounted(() => {
 
 .emojiContainer {
   border: 3px solid rgba(49, 49, 49, 1);
-  width: 280px;
+  width: 28vh;
   background-color: #fff;
   border-radius: 10px;
   padding: 15px;
-  height: 200px;
+  height: 20vh;
   display: flex;
   flex-wrap: wrap;
   overflow: auto;
@@ -68,8 +68,8 @@ onMounted(() => {
   text-align: center;
   font-size: 1.2em;
   margin: 2px;
-  width: 30px;
-  height: 30px;
+  //width: 30px;
+  //height: 30px;
   padding: 1px;
 }
 
