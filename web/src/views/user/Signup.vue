@@ -118,10 +118,15 @@ function checkPass() {
   justify-content: center;
   flex-direction: column;
   //margin-bottom: 20px;
-  @media (max-width: 600px) {
+  @media (max-aspect-ratio: 9/16) {
     width: 100vw;
-    height: 250px;
+    height: 70vw;
   }
+  @media (max-height: 500px){
+  width: 100vw;
+  height: 70vw;
+}
+
 
   .cardContainer {
     margin: 15px auto;

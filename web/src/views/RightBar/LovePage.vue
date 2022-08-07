@@ -24,7 +24,7 @@ import Entry from "../../components/Entry.vue"
 <style lang="less" scoped>
 .container {
   width: 100%;
-  padding: 20px;
+  padding: 4vh 1vh;
   overflow: auto;
   height: 100%;
   margin: 0 auto;

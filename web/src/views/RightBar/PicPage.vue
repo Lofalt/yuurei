@@ -159,7 +159,7 @@ function waterFall() {
     for (let i = 0; i < childs.length; i++) {
       boxHeight = childs[i].offsetHeight
       if (i < col) {
-        heightArr.push(boxHeight + 50)
+        heightArr.push(boxHeight+30)
         childs[i].style.position = 'absolute'
         childs[i].style.left = i * boxWidth + 'px'
         childs[i].style.top = 3 + '0px'

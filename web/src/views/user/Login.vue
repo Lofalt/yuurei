@@ -89,8 +89,8 @@ function login() {
 
 
 .card {
-  width: 500px;
-  height: 200px;
+  width: 25vw;
+  height: 15vw;
   background-color: #fff;
   border-radius: 10px;
   display: flex;
@@ -98,9 +98,14 @@ function login() {
   justify-content: center;
   flex-direction: column;
   //margin-bottom: 20px;
-  @media (max-width: 600px) {
+  @media (max-aspect-ratio: 9/16) {
     width: 100vw;
-    height: 200px;
+    height: 50vw;
+  }
+
+  @media (max-height: 500px){
+    width: 100vw;
+    height: 50vw;
   }
 
   .cardContainer {
@@ -118,7 +123,7 @@ function login() {
 
     .label {
       display: inline-block;
-      width: 80px;
+      width: 8vh;
     }
   }
 }

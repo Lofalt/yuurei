@@ -89,8 +89,8 @@ function wheeling(event: any) {
 }
 
 onMounted(() => {
-  // const rightPage = document.getElementById("rightbar") as HTMLSelectElement
-  // rightPage.style.transform = `translateY(-${pageData.pagedata.count}00vh)`
+  const rightPage = document.getElementById("rightbar") as HTMLSelectElement
+  rightPage.style.transform = `translateY(-${pageData.pagedata.count}00vh)`
 })
 
 watch(pageData.pagedata, (newValue, oldValue) => {

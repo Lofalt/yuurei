@@ -36,20 +36,31 @@ function archive(articleId: number) {
 
 
 <style lang="less" scoped>
+
+@keyframes enter {
+  from{
+    opacity: 0;
+  }
+}
 .panel {
+  //color:var(--button-color);
+  color:white;
   font-size: 1.6vh;
-  border: .35vh solid rgb(53, 53, 53);
-  color: rgb(39, 39, 39);
+  //border: .35vh solid rgb(53, 53, 53);
+  //color: rgb(39, 39, 39);
   position: relative;
   margin-left: 10px;
   margin-right: 10px;
   margin-bottom: 50px;
   height: 250px;
   border-radius: .7vh;
-  box-shadow: 0 0 5px rgba(100, 100, 100, .5);
+  box-shadow: 0 0 .5vh rgba(100, 100, 100, .5);
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+  animation : enter .7s ease;
+  animation-delay: calc(Var(--i)*0.1s);
+  animation-fill-mode: backwards;
 
 
   .panelJump {
@@ -62,7 +73,7 @@ function archive(articleId: number) {
   }
 
   .panelSummary {
-    color: #252525;
+    //color: #252525;
     position: relative;
     text-overflow: ellipsis;
     text-align: center;
@@ -108,7 +119,7 @@ function archive(articleId: number) {
     position: absolute;
     left: 5px;
     padding-top: 10px;
-    color: black;
+    //color: black;
     padding-right: 100px;
     bottom: 5px;
     margin-left: .4vh;
@@ -131,9 +142,9 @@ function archive(articleId: number) {
   .panelTitle {
     text-align: center;
     position: relative;
-    margin-top: -20%;
+    margin-top: -13.5vh;
     font-size: 2em;
-    color: black;
+    //color: black;
     transition: .3s ease all;
     -webkit-transition: .3s ease all;
     cursor: pointer;
@@ -157,15 +168,15 @@ function archive(articleId: number) {
   background-size: cover;
   /*<!--background-position:  0 -200px;-->*/
   width: 100%;
-  height: 30vh;
-  min-height: 250px;
+  height: 100%;
+  //min-height: 250px;
   transition: .3s all ease;
   //background-image: url(../assets/ec8ce499ly1h1hhm1o6m1j22pg1ww4qp.jpg);
   background-position: top;
   // background-size: cover;
 }
 
-@media screen and (max-aspect-ratio: 1/1) {
+@media screen and (max-aspect-ratio: 9/16) {
   .panel {
     /*width:100%;*/
     height: 200px;
@@ -177,7 +188,7 @@ function archive(articleId: number) {
     }
 
     .panelTitle {
-      margin-top: -30vw;
+      margin-top: -25vw;
       opacity: 1;
       transform: translate3d(0, 0, 0);
     }

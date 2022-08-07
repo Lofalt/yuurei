@@ -37,7 +37,7 @@ setInterval(() => {
   left: 5vw;
 
   @media (max-width: 800px) {
-    display: none;
+    //display: none;
   }
 
   .time {

@@ -120,7 +120,7 @@ function deleteMsg() {
 
     .name {
       position: absolute;
-      bottom: -30px;
+      bottom: -2.5vh;
       width: 100%;
       text-align: center;
       display: inline-block;
@@ -129,8 +129,8 @@ function deleteMsg() {
       height: 15px;
       //word-break: keep-all;
       //line-height: 100%;
-      text-shadow: -1px 1px 1px rgb(180, 157, 157);
-
+      text-shadow: -.1vh .1vh .1vh rgba(124, 101, 101, 0.44);
+      font-weight: bold;
     }
   }
 
@@ -138,7 +138,7 @@ function deleteMsg() {
     border: .4vh solid rgb(49, 49, 49);
     border-left: .6vh solid rgb(49, 49, 49);
     border-bottom: .6vh solid rgb(49, 49, 49);
-    padding: 1vw;
+    padding: 2vh;
     float: left;
     width: 90%;
     border-radius: .3vh;

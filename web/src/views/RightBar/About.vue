@@ -64,8 +64,13 @@
   display: inline-block;
   float: right;
   //height: 60vh;
-  max-width: 30vw;
+  max-width: 10vw;
   margin-bottom: 4vh;
+
+
+  @media (max-aspect-ratio: 9/16){
+    max-width: 30vw;
+  }
 }
 
 .hr {

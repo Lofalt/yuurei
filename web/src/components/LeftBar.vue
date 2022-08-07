@@ -152,11 +152,11 @@ function logOut() {
 }
 
 function changePage(num: number) {
+  pageData.pagedata.count = num;
   if (router.currentRoute.value.path.startsWith("/login")) {
     router.push("/home")
     emit('toggleNav')
   }
-  pageData.pagedata.count = num;
 
 }
 </script>

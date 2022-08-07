@@ -1,27 +1,32 @@
 <template>
   <div class="entry">
     <div class="entry-pic">
-
+      <n-rate color="var(--button-color)" class="star" readonly :default-value="4" allow-half/>
     </div>
     <div class="entry-right">
       <div class="entry-title">
-        春宵苦短，少女前进吧！
+        捡来的男人
       </div>
       <div class="entry-summary">
 
         &nbsp;&nbsp;
         &nbsp;&nbsp;
-        我总是思来想去，千方百计拖延早该迈出的告白那一步。
-
-        因此，这不是我的故事，而是她的故事。
-
-        这是她威风凛凛地穿越京都奇妙之夜的游记，也是我终究无法登上主角宝座、只得充当路边石子的苦涩记录。请读者诸贤细细玩味她的可爱和我的愚蠢，用心感受有如杏仁豆腐滋味的人生妙趣。
-
-        还请多多支持。
+        松户谕（仲野太贺饰）虽然有“想成为演员”的梦想，但没有门路和金钱。
+        <br/>
+        他离开故乡兵库西宫，投靠青梅竹马杉田（大东骏介饰），住进东京表参道的公寓。
+        <br/>
+        有一天，他在自动贩卖机下面捡到一张机票，发现机票的主人是模特事务所社长山村（药师丸博子饰）。因为厚脸皮和昭和风格的样貌被山村看中，谕的演员人生突然拉开帷幕。就在这时，得知音信全无的哥哥武志（草彅刚饰）在美国病倒，他踏上了去美国接哥哥的旅程
       </div>
     </div>
   </div>
 </template>
+
+<script lang="ts" setup>
+import {NRate} from 'naive-ui'
+
+
+
+</script>
 
 <style lang="less" scoped>
 
@@ -30,13 +35,25 @@
   //background-color: #2dc26b;
   //border: 5px solid rgba(49, 49, 49, .8);
   //margin: 0px 100px 100px 100px;
-  margin-bottom: 20px;
-  margin-right: 10px;
-  width: 450px;
-  height: 350px;
+  margin-bottom: 4vh;
+  //margin-top: 4vh;
+  margin-right: 1vh;
+  width: 60vh;
+  height: 35vh;
   float: left;
   cursor: pointer;
   transition: all .2s ease;
+  //background-color: black;
+  //
+  //@media (max-aspect-ratio: 16/12){
+  //  width: 80vw;
+  //  height:40vw;
+  //}
+  @media (max-aspect-ratio: 1/1){
+    width:80vw;
+    height:46vw;
+  }
+
 
   &:hover {
     transform: translate(-10px, -10px);
@@ -44,11 +61,11 @@
 
   }
 
-  @media (max-width: 800px) {
-    width: 300px;
-    height: 200px;
-    overflow-x: hidden;
-  }
+  //@media (max-width: 800px) {
+  //  width: 300px;
+  //  height: 200px;
+  //  overflow-x: hidden;
+  //}
 
   &:nth-child(2n+0) {
   }
@@ -69,21 +86,35 @@
   }
 
   .entry-pic {
-    width: 190px;
-    height: 274px;
+    width: 20.9vh;
+    height: 30vh;
     background-color: #fff;
     position: relative;
-    top: 20px;
-    border: 3px solid rgb(49, 49, 49);
+    top: 2vh;
+    //border: .3vh solid rgb(49, 49, 49);
 
-    left: 15px;
+    left: 2vh;
     float: left;
-    background-image: url("../assets/s33712391.jpg");
+    background-image: url("../assets/p2874590316.webp");
     background-size: cover;
 
-    @media (max-width: 800px) {
-      width: 115px;
-      height: 165px;
+    //@media (max-width: 800px) {
+    //  width: 115px;
+    //  height: 165px;
+    //}
+    @media (max-aspect-ratio: 1/1){
+      width:27vw;
+      height:39.23vw;
+    }
+
+    .star{
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      bottom:-3vh;
+      left:0;
+      display: flex;
+      justify-content: center;
     }
   }
 
@@ -92,15 +123,20 @@
     right: 15px;
     top: 20px;
     float: right;
-    width: 200px;
+    width: 33vh;
     background-color: #fff;
-    height: 300px;
+    height: 30vh;
     text-align: center;
-
-    @media (max-width: 800px) {
-      width: 140px;
-      height: 165px;
+    @media (max-aspect-ratio: 1/1){
+      width:40vw;
+      height:39.23vw;
     }
+
+
+    //@media (max-width: 800px) {
+    //  width: 140px;
+    //  height: 165px;
+    //}
 
     .entry-title {
       margin-top: 10px;
@@ -117,7 +153,7 @@
         border-bottom: 1px solid rgba(49, 49, 49, .1);
         //position: relative;
         position: absolute;
-        left: 38px;
+        left: 6vh;
         //background-color: #000;
         top: 3px;
 
@@ -149,7 +185,11 @@
       -webkit-box-orient: vertical;
       //white-space: nowrap;
 
-      @media (max-width: 800px) {
+      @media (max-aspect-ratio: 6/10) {
+        -webkit-line-clamp: 7;
+
+      }
+      @media (max-aspect-ratio: 9/16) {
         -webkit-line-clamp: 5;
 
       }

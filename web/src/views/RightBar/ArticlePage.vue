@@ -6,11 +6,12 @@
         {{ item.ArticleCategoryName }}
       </div>
     </div>
-    <panel-com v-for="item in articleList"
+    <panel-com v-for="(item,index) in articleList"
                @click="changePage(1)"
+               :style="`--i:${index}`"
                :article="item" :key="item.ID"></panel-com>
     <!--    <n-pagination v-model:page="pageNum" :page-count="pageTotal" show-quick-jumper class="page" v-show="needToShow">-->
-    <n-pagination v-model:page="pageNum" :page-count="pageTotal" class="page" v-show="needToShow">
+    <n-pagination size="large" v-model:page="pageNum" :page-count="pageTotal" class="page" v-show="needToShow">
       <!--      <template #goto v-show="isShow">-->
       <!--        跳转-->
       <!--      </template>-->
@@ -108,7 +109,7 @@ watch(currentCat, (newValue, oldValue) => {
   --n-item-text-color-active: white !important;
   --n-item-color-active: var(--button-color) !important;
 
-  --n-item-border-active: 2px solid black !important;
+  --n-item-border-active: 0px solid black !important;
   --n-item-text-color-hover: white !important;
   --n-item-color-hover: var(--button-color) !important;
   --n-item-color-active-hover: var(--button-color) !important;
@@ -133,7 +134,7 @@ watch(currentCat, (newValue, oldValue) => {
 
   .catList {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     flex-wrap: wrap;
 
     &::after,
@@ -158,6 +159,8 @@ watch(currentCat, (newValue, oldValue) => {
     padding: .1vh 3vh;
     //height:30px;
     //width: 80px;
+    margin-left: .9vh;
+    //margin-right: .6vh;
     font-size: 1.5vh;
     font-weight: bold;
     font-family: 微软雅黑;
@@ -206,7 +209,7 @@ watch(currentCat, (newValue, oldValue) => {
   text-align: center;
   cursor: pointer;
 
-  @media (max-aspect-ratio: 1/1) {
+  @media (max-aspect-ratio: 9/16) {
     height: 35vw;
   }
 }

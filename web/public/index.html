@@ -3,16 +3,21 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta id="viewportMeta" name="viewport" content="width=device-width,initial-scale=1.0">
+<!--    <meta name="viewport" id="viewportMeta">-->
+
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <!--      <link rel="icon" href="<%= BASE_URL %>favicon.ico">-->
+    <!--      <link rel="icon" href="<%= BASE_URL %>favicon3.ico">-->
     <script src="<%= BASE_URL %>iconfont.js"></script>
     <!--    <link href="http://cdn.bootcss.com/highlight.js/11.6.0/styles/monokai_sublime.min.css" rel="stylesheet">-->
     <!--    <script src="http://cdn.bootcss.com/highlight.js/11.6.0/highlight.min.js"></script>-->
 <!--    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>-->
     <script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+<!--    <link rel="stylesheet"-->
+<!--          href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.6.0/styles/base16/github.min.css">-->
     <link rel="stylesheet"
-          href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.6.0/styles/base16/zenburn.min.css">
+          href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+
     <title><%= htmlWebpackPlugin.options.title %></title>
 </head>
 <body>
@@ -22,6 +27,16 @@
 </noscript>
 <div id="app"></div>
 <!-- built files will be auto injected -->
+<script>
+    var initViewport = function(height){
+        var metaEl = document.querySelector("#viewportMeta");
+        var content = "width=device-width,initial-scale=1.0,user-scalable=no,maximum-scale=1.0,height=" + height;
+        metaEl.setAttribute('name', 'viewport');
+        metaEl.setAttribute('content', content);
+    }
+
+    initViewport(window.innerHeight);
+</script>
 </body>
 <style>
     * {
@@ -37,4 +52,6 @@
 
     }
 </style>
+
+
 </html>

@@ -20,7 +20,7 @@
     </div>
     <div class="preAndNext">
       <div class="preAndNextBox" v-if="hasPre">
-        <n-icon color="#000000" size="15">
+        <n-icon color="#000000" size="1.5vh">
           <arrow-left/>
         </n-icon>
         &nbsp;<a href="javascript:" @click="jump(pre.ID)">{{ pre.ArticleTitle }}</a>
@@ -31,7 +31,7 @@
       </div>
       <div class="preAndNextBox" v-if="hasNext">
         <a href="javascript:" @click="jump(next.ID)">{{ next.ArticleTitle }}</a> &nbsp;
-        <n-icon color="#000000" size="15">
+        <n-icon color="#000000" size="1.5vh">
           <arrow-right/>
         </n-icon>
       </div>
@@ -46,7 +46,7 @@
 
 
 <script lang="ts" setup>
-
+// import '@wangeditor/editor/dist/css/style.css'
 
 import {computed, onMounted, reactive, ref, watch} from "vue";
 // import axios from "axios"
@@ -226,6 +226,41 @@ function jump(id: number) {
 //  font-size: 1.6vh;
 //}/
 
+.hljs{
+  background: #f8feff!important;
+  font-family: Consolas;
+}
+iframe{
+  width: 100%;
+  min-height: 80vh;
+
+
+  @media (max-aspect-ratio: 9/16){
+    //height: 50vw;
+    min-height: 0;
+    //height: 100px;
+  }
+}
+
+blockquote {
+  background: #f9f9f9;
+  border-left: 10px solid #ccc;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+  quotes: "\201C""\201D""\2018""\2019";
+}
+blockquote:before {
+  color: #ccc;
+  content: open-quote;
+  font-size: 4em;
+  line-height: 0.1em;
+  margin-right: 0.25em;
+  vertical-align: -0.4em;
+}
+blockquote p {
+  display: inline;
+}
+
 .preAndNextBox {
   display: flex;
   justify-content: center;
@@ -234,13 +269,13 @@ function jump(id: number) {
 }
 
 .articlePage {
-  /*color: white;*/
+  //font-size: 1.2vh;
   height: 100%;
   width: 100%;
   //padding-top:20px;
   background-color: #ffffff;
   font-family: 微软雅黑;
-  font-size: 20px;
+  //font-size: 20px;
   overflow: auto;
 
   &::-webkit-scrollbar {
@@ -262,8 +297,9 @@ function jump(id: number) {
 
     * {
       /*margin-top:15px;*/
-      font-size: 16px;
-      padding-top: 15px;
+      //font-size: 16px;
+
+      padding-top: 1.5vh;
       //color: rgb(49, 49, 49)
       /*color: #005cc5;*/
       /*color: #009486;*/
@@ -290,18 +326,19 @@ function jump(id: number) {
   }
 
   .articleSummary {
-    font-size: 17px;
+    //font-size: 17px;
+    font-size: 1.05em;
     text-align: center;
     background-color: #524444;
-    /*width: 60%;*/
+    width: 70%;
     color: white;
     margin: 0 auto;
     min-height: 80px;
     /*padding-top:30px;*/
     box-sizing: border-box;
-    margin-top: -30px;
+    margin-top: -3vh;
     display: flex;
-    padding: 20px;
+    padding: 2vh;
     justify-content: center;
     align-items: center;
     border-radius: 2px;
@@ -310,8 +347,10 @@ function jump(id: number) {
     /*border-bottom: 1px solid black ;*/
     box-shadow: -1px 1px 0px .5px rgb(49, 49, 49);
 
-    .summary {
+    @media (max-aspect-ratio: 1/1){
+      width:100%;
     }
+
   }
 
   margin: 50px 50px 20px 50px;
@@ -328,30 +367,29 @@ function jump(id: number) {
 
   .articleHeader {
     .articleTitle {
-      margin-top: 10px;
-      margin-bottom: 20px;
+      margin-top: 1vh;
+      margin-bottom: 2vh;
       text-align: center;
-      font-size: 30px;
-      font-weight: 500;
+      font-size: 1.5em;
+      font-weight: bold;
       color: #494a4c;
 
     }
 
     .articleInfo {
       text-align: center;
-      padding-bottom: 10px;
-      margin-bottom: 50px;
+      padding-bottom: 1vh;
+      margin-bottom: 5vh;
       border-bottom: 1px solid rgba(65, 65, 65, 0.1);
 
       span {
         margin-left: 10px;
-        font-size: 15px;
+        font-size: 1em;
         color: rgb(52, 40, 40);
       }
     }
   }
 }
-
 .preAndNext {
   position: relative;
   //float: left;
@@ -359,7 +397,7 @@ function jump(id: number) {
   display: flex;
   justify-content: space-between;
   margin: 0 50px;
-  font-size: 16px;
+  font-size: 1em;
   margin-bottom: 20px;
 
   a {
@@ -374,28 +412,28 @@ function jump(id: number) {
   }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-aspect-ratio: 1/1) {
   .preAndNext {
-    margin: 10px 5px;
+    margin: 1vh .5vh;
   }
 
   .article {
     //height: 100%;
-    padding: 10px;
+    padding: 1vh;
     margin: 0 5px;
   }
 
   .articlePage {
-    /*padding:0 10px;*/
+    /*padding:0 10px;
     margin: 0;
     /*max-width: 100%;*/
   }
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (max-aspect-ratio: 10/16) {
 
   .articleSummary {
-    width: 80%;
+    width: 100%;
   }
 
 

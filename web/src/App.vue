@@ -44,7 +44,7 @@ const backgroundImage = computed(() => {
   if (config.value == null) {
     return ''
   }
-  if (document.body.clientWidth < 500) {
+  if ((document.body.clientWidth/document.body.clientHeight) < 9/16) {
     return `url(${config.value.MobileBackgroundImage})`
   }
   return `url(${config.value.BackgroundImage})`

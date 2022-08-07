@@ -28,6 +28,7 @@ import Signin from "./Signup.vue"
 
 <style lang="less" scoped>
 .container {
+  //font-size: 1.5vh;
   float: right;
   width: 83.5%;
   min-height: 100vh;
@@ -35,9 +36,14 @@ import Signin from "./Signup.vue"
   justify-content: center;
   align-items: center;
 
-  @media (max-width: 504px) {
+  @media (max-aspect-ratio: 9/16) {
     width: 100%;
   }
+  @media (max-height: 500px){
+    width: 100%;
+
+  }
+
 
   .inside {
     //border: 4px solid rgb(49, 49, 49);
