@@ -12,9 +12,6 @@
                :article="item" :key="item.ID"></panel-com>
     <!--    <n-pagination v-model:page="pageNum" :page-count="pageTotal" show-quick-jumper class="page" v-show="needToShow">-->
     <n-pagination size="large" v-model:page="pageNum" :page-count="pageTotal" class="page" v-show="needToShow">
-      <!--      <template #goto v-show="isShow">-->
-      <!--        跳转-->
-      <!--      </template>-->
     </n-pagination>
   </div>
 </template>

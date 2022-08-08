@@ -11,7 +11,7 @@ type Entry struct {
 	MyWord          string `gorm:"not null"`
 	About           string `gorm:"not null"`
 	HeaderPicture   string `gorm:"type:varchar(100)"`
-	Infos           []EntryInfo
+	Infos           *[]EntryInfo
 	MainColor       string `gorm:"type:varchar(15)"`
 	SecColor        string `gorm:"type:varchar(15)"`
 	ThirdColor      string `gorm:"type:varchar(15)"`

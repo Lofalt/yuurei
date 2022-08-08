@@ -1,5 +1,5 @@
 <template>
-  <div class="messageBox">
+  <div class="messageBox" >
     <div class="icon" :style="{backgroundImage:`url(${backgroundImg})`}">
       <div class="name">{{ msg.UserName }}</div>
     </div>
@@ -265,6 +265,8 @@ function deleteMsg() {
 
   @media (max-aspect-ratio: 1/1) {
     max-width: 90%;
+    max-height: 80vh;
+
   }
 }
 

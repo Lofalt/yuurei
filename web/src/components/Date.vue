@@ -6,6 +6,9 @@
     <div class="day">
       {{ day + "\n\r" + youbi }}
     </div>
+    <div class="word">
+      立秋了啊。
+    </div>
   </div>
 </template>
 
@@ -47,6 +50,10 @@ setInterval(() => {
 
   .day {
     font-size: 2em;
+  }
+  .word{
+    font-size: 2em;
+    margin-top: 2.5vh;
   }
 }
 

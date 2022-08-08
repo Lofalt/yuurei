@@ -1,16 +1,13 @@
 <template>
-  <div class="container"
+  <div class="enryContainer"
        :style="`--entry-main-color:${Entry.MainColor};--entry-sec-color:${Entry.SecColor};--entry-third-color:${Entry.ThirdColor}`">
     <div class="actualHeader">
       <h3>{{ Entry.Quote }}
       </h3></div>
     <div class="header">
       <div class="profile">
-        <br/>
-        <h1>东京事变</h1>
-        <br/>
-        <h2>作品简介</h2>
-        <div v-html="Entry.Detail"></div>
+        <h1>简介</h1>
+        <div class="content" v-html="Entry.Detail"></div>
       </div>
       <div class="info">
         <div class="infoHeader">
@@ -29,21 +26,28 @@
     </div>
     <div style=";width: 100%" class="body">
       <h1>我的话</h1>
-      <div v-html="Entry.MyWord"></div>
+      <hr>
+      <div class="content" v-html="Entry.MyWord"></div>
     </div>
     <br/>
     <br/>
     <div style="min-height: 100vh;width: 100%" class="body">
       <h1>相关影音</h1>
       <hr/>
-      <div v-html="Entry.About"></div>
+      <div class="content" v-html="Entry.About"></div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import axios from "../../request/index"
-import {ref} from 'vue'
+import {ref, watch} from 'vue'
+import {useRouter} from "vue-router";
+
+const router = useRouter()
+const props = defineProps<{
+  id:number
+}>()
 
 const Entry = ref({
   Title: "",
@@ -60,15 +64,25 @@ const Entry = ref({
   EntryCategoryID: "",
 })
 
-axios.get("/yuurei/entry/6", {}).then((res: any) => {
+axios.get("/yuurei/entry/"+props.id, {}).then((res: any) => {
   Entry.value = res.data.data
+})
+
+watch(router.currentRoute,(newValue:any)=>{
+  axios.get("/yuurei/entry/"+newValue.params.id, {}).then((res: any) => {
+    Entry.value = res.data.data
+  })
 })
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 
-.container {
-  font-size: 1.8vh;
+
+
+.enryContainer {
+
+  color: #2a3746;
+  font-size: 1.5vh;
   padding-left: 5vh;
   display: flex;
   flex-direction: column;
@@ -79,12 +93,40 @@ axios.get("/yuurei/entry/6", {}).then((res: any) => {
   //background-color: ghostwhite;
   background-attachment: unset;
 
+
+
+  .content{
+
+    a{
+      text-decoration: none;
+      color: var(--entry-sec-color);
+    }
+    p{
+      margin-top:1.5vh!important;
+      color: rgba(65, 47, 47, 0.8);
+
+      img{
+        max-width: 40%;
+        margin-right: 5%;
+        //width: auto;
+        //max-height: 50vh;
+
+        @media (max-aspect-ratio: 9/16){
+          max-width: 90%;
+        }
+      }
+    }
+
+
+  }
+
+
   hr {
     border-collapse: collapse;
-    border: 0px solid black;
+    border: 0px solid rgba(49,49,49,.1);
     height: 1px;
     color: black;
-    background-color: black;
+    background-color: rgba(49,49,49,.2);
     margin: 1vh auto;
   }
 
@@ -200,10 +242,12 @@ axios.get("/yuurei/entry/6", {}).then((res: any) => {
 
       .infoHeader {
         text-align: center;
-        height: 8vh;
-        background-color: var(--entry-third-color);
-        line-height: 8vh;
-        font-size: 1.5em;
+        height: 6vh;
+        background-color: var(--entry-main-color);
+        margin-bottom: .3vh;
+        line-height: 6vh;
+        color: whitesmoke;
+        font-size: 1.2em;
         font-weight: bold;
       }
 
@@ -228,11 +272,12 @@ axios.get("/yuurei/entry/6", {}).then((res: any) => {
           text-align: center;
 
           tr td {
-            height: 4vh;
-            borer: 0;
+            font-size: 0.9em;
+            height: 3vh;
+            margin-bottom: 1vh;
 
             &:first-child {
-              width: 40%;
+              width: 30%;
               background-color: var(--entry-sec-color);
             }
 

@@ -1,7 +1,7 @@
 <template>
   <div class="board">
     <n-card title="后台管理" style="margin-bottom: 16px;min-height: 100vh;">
-      <n-tabs type="line" animated default-value="article">
+      <n-tabs type="line" animated default-value="article" @update:value="goEntry">
         <n-tab-pane name="article" tab="文章管理" display-directive="show">
           <n-dialog-provider>
             <article-menu/>
@@ -17,8 +17,11 @@
           <config/>
         </n-tab-pane>
 
-        <n-tab-pane name="entries" tab="词条管理 " display-directive="if">
-          <entry-editing/>
+        <n-tab-pane name="entries" tab="词条管理 " display-directive="if" >
+<!--          <entry-editing/>-->
+          <n-dialog-provider>
+          <router-view/>
+          </n-dialog-provider>
         </n-tab-pane>
       </n-tabs>
     </n-card>
@@ -32,7 +35,18 @@ import ArticleMenu from "@/views/admin/ArticleMenu.vue";
 import CategoryMenu from "@/views/admin/CategoryMenu.vue"
 import PicMenu from "@/views/admin/PicMenu.vue"
 import Config from "./Config.vue"
+import {useRouter} from "vue-router"
 import EntryEditing from "./EntryEditing.vue"
+
+const router = useRouter()
+
+function goEntry(tab:string){
+  console.log(tab)
+  if(tab=="entries"){
+
+  router.push("/admin/entries")
+  }
+}
 </script>
 
 <style lang="less" scoped>

@@ -9,7 +9,7 @@
       <div class="icons"></div>
     </div>
     <transition>
-      <n-icon size="5vh" color="#ffffff" @click="changePage(0)" class="fixedButton" v-show="pageData.pagedata.count!=0">
+      <n-icon size="5vh" color="#ffffff" @click="changePage(0)" class="fixedButton" v-show="pageData.pagedata.count!=0 && router.currentRoute.value.path.startsWith(`/home`)">
         <arrow-bar-to-up/>
       </n-icon>
     </transition>

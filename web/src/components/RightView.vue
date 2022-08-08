@@ -8,11 +8,11 @@
       <right-bar @wheel.self="wheeling"></right-bar>
     </div>
     <div class="info" @wheel.self="wheeling">
+                <span v-show="showSpan"
+                      style="display:block;text-align:center;width:80%;margin:0 auto;z-index:1;position: absolute;font-size: 1.5em;color:rgba(49,49,49,.4)">这里空空如也,就像我的脑袋瓜一样.</span>
       <div class="infoPage" @touchend.stop="">
-        <!--        <span v-show="showSpan"-->
-        <!--              style="display:block;text-align:center;width:80%;margin:0 auto;z-index:1;position: absolute;font-size: 1.5em;color:rgba(49,49,49,.4)">为什么这里空空如也,就像我的脑袋瓜一样?</span>-->
-        <!--        <router-view></router-view>-->
-        <entry-view-info/>
+                <router-view></router-view>
+<!--        <entry-view-info/>-->
       </div>
     </div>
     <div class=" bottom" @wheel.self="wheeling">

@@ -32,16 +32,16 @@ const editorRef = shallowRef()
 const valueHtml = ref('')
 const emit = defineEmits(['uploadContent'])
 const props = defineProps<{
-  article: object
+  article: string
 }>()
 
 
 if (props.article != undefined) {
-  valueHtml.value = props.article.ArticleContent
+  valueHtml.value = props.article
 }
 
 watch(props, (newValue: any) => {
-  valueHtml.value = props.article.ArticleContent
+  valueHtml.value = props.article
 })
 
 function changeContent() {

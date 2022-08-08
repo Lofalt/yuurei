@@ -14,7 +14,7 @@ type Article struct {
 	ArticleSummary    string           `gorm:"NOT NULL;type:varchar(50)"`
 	ArticleCategoryID int              `gorm:"NOT NULL"`
 	ArticleCategory   *ArticleCategory `gorm:"Not null"`
-	Tags              []*Tag           `gorm:"many2many:tag_article_tables"`
+	Tags              *[]Tag           `gorm:"many2many:tag_article_tables"`
 	ArticleComments   []ArticleComment
 }
 type ArticleCategory struct {
@@ -28,7 +28,7 @@ type Tag struct {
 	gorm.Model
 	TagName  string     `gorm:"type:varchar(30)"`
 	TagColor string     `gorm:"type:varchar(30)"`
-	Articles []*Article `gorm:"many2many:tag_article_tables"`
+	Articles *[]Article `gorm:"many2many:tag_article_tables"`
 }
 
 type ArticleComment struct {

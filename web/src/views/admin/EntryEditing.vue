@@ -1,5 +1,5 @@
 <template>
-  {{ content }}
+  <n-button @click="back">返回</n-button>
   <n-table :single-line="false">
     <thead>
     <tr>
@@ -62,13 +62,13 @@
     </tr>
     <tr>
       <td>信息
-        <button @click="copy">+</button>
+        <n-button @click="copy">+</n-button>
       </td>
       <td id="input">
         <div class="input">
-          <button class="delBtn" @click="del">-</button>
-          <input class="infos"/>
-          <input class="infos"/>
+          <n-button class="delBtn" @click="del">-</n-button>
+          <input @keyup.enter="copy" class="infos"/>
+          <input @keyup.enter="copy" class="infos"/>
         </div>
       </td>
     </tr>
@@ -101,7 +101,9 @@ import WangEditor from "../../components/wangeditor/EntryEditor.vue"
 import {NColorPicker, NTable, NInput, NButton, NSpace, NSelect} from "naive-ui"
 import {ref} from "vue";
 import axios from "../../request/index"
+import {useRouter} from "vue-router";
 
+const router = useRouter()
 const content = ref("") as any
 const Title = ref("")
 const Quote = ref("")
@@ -126,6 +128,10 @@ axios.get("/yuurei/entryCategory/all", {}).then((res: any) => {
   }
 })
 
+function back(){
+  router.back()
+}
+
 function acceptDetail(as: string) {
   Detail.value = as
 }
@@ -149,12 +155,30 @@ function acceptMyWord(myword: string) {
 function acceptPic(url: string) {
   HeaderPicture.value = url
 }
+function add(event){
+  if(event.keyCode == 13){
+    let node = document.getElementsByClassName("input")[0] as HTMLSelectElement
+    let father = document.getElementById("input") as HTMLSelectElement
+    let child = node.cloneNode(true)
+    child.childNodes[0].addEventListener("click", del)
+    child.childNodes[1].addEventListener("keyup", add)
+    child.childNodes[2].addEventListener("keyup", add)
+
+    child.childNodes[1].value = ""
+    child.childNodes[2].value = ""
+    // console.log(child.childNodes)
+    father.appendChild(child)
+  }
+}
 
 function copy() {
   let node = document.getElementsByClassName("input")[0] as HTMLSelectElement
   let father = document.getElementById("input") as HTMLSelectElement
   let child = node.cloneNode(true)
   child.childNodes[0].addEventListener("click", del)
+  child.childNodes[1].addEventListener("keyup", add)
+  child.childNodes[2].addEventListener("keyup", add)
+
   child.childNodes[1].value = ""
   child.childNodes[2].value = ""
   // console.log(child.childNodes)
@@ -162,9 +186,12 @@ function copy() {
 }
 
 function del(event: any) {
+  if(document.getElementsByClassName("input").length>1){
   let father = event.parentNode
   console.log(event)
   event.path[2].removeChild(event.path[1])
+
+  }
 }
 
 type info = {
@@ -177,6 +204,7 @@ const infoes = ref([]) as any
 function getInfos() {
   let infos = document.getElementsByClassName("infos") as HTMLCollection
   for (let i = 0; i < infos.length; i += 2) {
+
     infoes.value.push({
       Label: infos[i].value,
       Value: infos[i + 1].value

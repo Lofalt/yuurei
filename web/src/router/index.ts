@@ -21,6 +21,11 @@ const routes: Array<RouteRecordRaw> = [
                 component: () => import("@/views/RightBar/Archive.vue"),
                 props: true
 
+            },
+            {
+                path:"/archive/entry/:id",
+                component:()=> import("@/views/RightBar/EntryViewInfo.vue"),
+                props:true
             }
         ]
     },
@@ -31,7 +36,24 @@ const routes: Array<RouteRecordRaw> = [
         props: true,
         meta: {
             needAuth: true
-        }
+        },
+        children:[
+            {
+                path: "entries",
+                component: () => import("@/views/admin/Entries.vue"),
+                props: true
+
+            },
+            {
+                path:"editEntries/:id",
+                component:() => import("@/views/admin/EditEntry.vue"),
+                props:true
+            },
+            {
+                path:"create_entry",
+                component:()=> import("@/views/admin/EntryEditing.vue")
+            }
+        ]
     },
     {
         path: "/login",

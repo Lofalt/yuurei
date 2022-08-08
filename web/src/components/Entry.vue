@@ -1,21 +1,14 @@
 <template>
-  <div class="entry">
-    <div class="entry-pic">
-      <n-rate color="var(--button-color)" class="star" readonly :default-value="4" allow-half/>
+  <div class="entry" @click="jump">
+    <div class="entry-pic" :style="{backgroundImage:`url(${headPic})`}">
+<!--      <n-rate :size="size" color="var(&#45;&#45;button-color)" class="star" readonly :default-value="4" allow-half/>-->
     </div>
     <div class="entry-right">
       <div class="entry-title">
-        捡来的男人
+        {{ title }}
       </div>
       <div class="entry-summary">
-
-        &nbsp;&nbsp;
-        &nbsp;&nbsp;
-        松户谕（仲野太贺饰）虽然有“想成为演员”的梦想，但没有门路和金钱。
-        <br/>
-        他离开故乡兵库西宫，投靠青梅竹马杉田（大东骏介饰），住进东京表参道的公寓。
-        <br/>
-        有一天，他在自动贩卖机下面捡到一张机票，发现机票的主人是模特事务所社长山村（药师丸博子饰）。因为厚脸皮和昭和风格的样貌被山村看中，谕的演员人生突然拉开帷幕。就在这时，得知音信全无的哥哥武志（草彅刚饰）在美国病倒，他踏上了去美国接哥哥的旅程
+        &nbsp;&nbsp;{{summary}}
       </div>
     </div>
   </div>
@@ -23,8 +16,33 @@
 
 <script lang="ts" setup>
 import {NRate} from 'naive-ui'
+import {computed} from "vue";
+import {useRouter} from "vue-router";
+import {usePageData} from "@/store/pageData";
+
+const pageData = usePageData()
+const router = useRouter()
+const size = computed(()=>{
+  if(document.body.clientWidth<800){
+    return `20`
+  }else{
+  return `normal`
+
+  }
+})
+function jump(){
+  pageData.pagedata.count=1
+  router.push("/archive/entry/"+props.id)
+}
 
 
+const props = defineProps<{
+  headPic:string,
+  title:string,
+  summary:string,
+  id:number
+
+}>()
 
 </script>
 
@@ -35,11 +53,11 @@ import {NRate} from 'naive-ui'
   //background-color: #2dc26b;
   //border: 5px solid rgba(49, 49, 49, .8);
   //margin: 0px 100px 100px 100px;
-  margin-bottom: 4vh;
+  margin-bottom: 2vh;
   //margin-top: 4vh;
   margin-right: 1vh;
   width: 60vh;
-  height: 35vh;
+  height: 37vh;
   float: left;
   cursor: pointer;
   transition: all .2s ease;
@@ -51,13 +69,13 @@ import {NRate} from 'naive-ui'
   //}
   @media (max-aspect-ratio: 1/1){
     width:80vw;
-    height:46vw;
+    height:50vw;
   }
 
 
   &:hover {
     transform: translate(-10px, -10px);
-    box-shadow: 3px 3px 10px 4px rgba(49, 49, 49, .2);
+    //box-shadow: 3px 3px 10px 4px rgba(49, 49, 49, .2);
 
   }
 
@@ -92,6 +110,8 @@ import {NRate} from 'naive-ui'
     position: relative;
     top: 2vh;
     //border: .3vh solid rgb(49, 49, 49);
+    box-shadow: -1vh 1vh .5vh 0vh rgba(49, 49, 49, .1);
+
 
     left: 2vh;
     float: left;

@@ -9,6 +9,7 @@ import (
 	"gorm.io/gorm"
 	"os"
 	"strconv"
+	"strings"
 )
 
 type IPicController interface {
@@ -43,6 +44,10 @@ func (p PicController) ShowAll(c *gin.Context) {
 		return
 	}
 	p.DB.Model(model.PictureEntry{}).Count(&total)
+	for i := 0; i < len(pics); i++ {
+		pics[i].Path = strings.TrimPrefix(pics[i].Path, ".")
+	}
+
 	response.Success(c, gin.H{"data": pics, "total": total}, "查询成功")
 
 }

@@ -2,7 +2,7 @@
 <!--    <div>没什么艺术细胞的人</div>-->
   <div id="main" @wheel="listenScroll" @touchstart.stop="touchStart" @touchend.stop="touchEnd">
     <!-- <button class="scrollToTop" @click="scrollToTop">dmwo</button> -->
-    <img class=" test" v-for="(item, index) in picList" :src="item.Path.slice(1)" :key="item.ID" ref="waterFallItem"
+    <img class=" test" v-for="(item, index) in picList" :src="item.Path" :key="item.ID" ref="waterFallItem"
          @click="zoom(index)" :style="{ animationDelay: (index % 2) * 0.1 + 's' }"/>
   </div>
   <!-- <loading-com class="loading"></loading-com> -->
@@ -89,13 +89,11 @@ function scrollToTop() {
 }
 
 function listenScroll(event: any) {
-  console.log("？")
   const box = document.getElementById("main") as HTMLSelectElement
   if (box.scrollTop + box.offsetHeight + 100 > box.scrollHeight) {
     // offset.value += 5
     // console.log((pageNum.value ) * pageSize.value)
     if (!isLoading.value && picList.value.length < total.value) {
-      console.log(".")
       isLoading.value = true
       setTimeout(() => {
         getNext()

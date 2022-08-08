@@ -25,7 +25,7 @@
     </div>
     <div class="footer">
       <button class="footerbox" @click="changePage(0)" :class="isThisPage(0) ? 'active' : ``">HOME</button>
-      <button class="footerbox" @click="changePage(1)" :class="isThisPage(1) ? 'active' : ``">INFO</button>
+      <button class="footerbox" @click="changePage(1)" :class="isThisPage(1) ? 'active' : ``">VIEW</button>
       <button class="footerbox" @click="changePage(2)" :class="isThisPage(2) ? 'active' : ``">ABOUT</button>
       <!--      <button class="footerbox" @click="changePage(3)" :class="isThisPage(3) ? 'active' : ``">WRITE</button>-->
     </div>
@@ -251,14 +251,15 @@ a {
     font-size: 3vh;
     //border:3px solid rgb(49,49,49);
     //border-radius: 2px;
-    box-shadow: -1px 1px 4px 1px rgba(49, 49, 49, .5);
-    width: 24vh;
-    background-color: rgb(55, 166, 187);
-    color: white;
+    //box-shadow: -1px 1px 4px 1px rgba(49, 49, 49, .5);
+    width: 12vh;
+    //background-color: rgb(193, 211, 215);
+    //color: white;
+    border-bottom: .4vh solid black;
 
     @media (max-aspect-ratio: 1/1) {
       //width: 200px;
-      width: 26vh;
+      width: 13vh;
 
     }
   }
