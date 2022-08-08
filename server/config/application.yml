@@ -1,7 +1,7 @@
 server:
   port: 8081
 datasource:
-  host: localhost
+  host: 192.168.3.173
   port: 3306
   name: yuurei001
   username: root

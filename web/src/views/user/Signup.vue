@@ -7,21 +7,21 @@
         <span class="label">
         昵称:
           </span>
-      <n-input type="text" v-model:value="name" placeholder="输入昵称"/>
+      <input class="input" type="text" v-model="name" placeholder="输入昵称"/>
     </div>
     <div class="cardContainer">
         <span class="label">
         用户名:
           </span>
-      <n-input @change.lazy="checkName" type="text" v-model:value="username" placeholder="输入用户名"/>
+      <input class="input" @change.lazy="checkName" type="text" v-model="username" placeholder="输入用户名"/>
       <div class="error">{{ nameErrorMessage }}</div>
     </div>
     <div class="cardContainer">
         <span class="label">
         密码:
           </span>
-      <n-input @keyup.enter="signup" @change.lazy="checkPass" type="password" v-model:value="password"
-               placeholder="输入密码"/>
+      <input class="input" @keyup.enter="signup" @change.lazy="checkPass" type="password" v-model="password"
+             placeholder="输入密码"/>
       <div class="error">{{ passErrorMessage }}</div>
     </div>
     <div class="footer">
@@ -105,57 +105,147 @@ function checkPass() {
 }
 </script>
 
+<!--<style lang="less" scoped>-->
+
+
+<!--.card {-->
+<!--  width: 600px;-->
+<!--  height: 280px;-->
+<!--  background-color: #fff;-->
+<!--  border-radius: 10px;-->
+<!--  display: flex;-->
+<!--  align-items: center;-->
+<!--  justify-content: center;-->
+<!--  flex-direction: column;-->
+<!--  //margin-bottom: 20px;-->
+<!--  @media (max-aspect-ratio: 9/16) {-->
+<!--    width: 100vw;-->
+<!--    height: 70vw;-->
+<!--  }-->
+<!--  @media (max-height: 500px){-->
+<!--  width: 100vw;-->
+<!--  height: 70vw;-->
+<!--}-->
+
+
+<!--  .cardContainer {-->
+<!--    margin: 15px auto;-->
+<!--    //margin-bottom: 20px;-->
+<!--    display: flex;-->
+<!--    position: relative;-->
+<!--    justify-content: space-around;-->
+<!--    width: 80%;-->
+<!--    text-wrap: nowrap;-->
+
+<!--    &:nth-child(4) {-->
+<!--      margin-bottom: 30px;-->
+<!--    }-->
+
+<!--    .label {-->
+<!--      display: inline-block;-->
+<!--      width: 80px;-->
+<!--    }-->
+<!--  }-->
+<!--}-->
+
+<!--.btn {-->
+<!--  margin: 0px 20px;-->
+<!--  background-color: #fff;-->
+<!--  color: rgba(49, 49, 49, .8);-->
+<!--  border: 1px solid rgba(49, 49, 49, .2);-->
+<!--  padding: 5px 15px;-->
+<!--  border-radius: 5px;-->
+<!--  cursor: pointer;-->
+
+<!--  &:hover {-->
+<!--    color: white;-->
+<!--    background-color: var(&#45;&#45;button-color);-->
+<!--  }-->
+<!--}-->
+
+<!--.error {-->
+<!--  position: absolute;-->
+<!--  bottom: -25px;-->
+<!--  color: #ff4d4d;-->
+<!--}-->
+<!--</style>-->
+
+
 <style lang="less" scoped>
 
 
 .card {
-  width: 600px;
-  height: 280px;
+  width: 90%;
+  //height: 1;
   background-color: #fff;
   border-radius: 10px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  margin-top: 1%;
+  justify-content: flex-start;
   flex-direction: column;
   //margin-bottom: 20px;
   @media (max-aspect-ratio: 9/16) {
-    width: 100vw;
-    height: 70vw;
+    width: 95vw;
+    //height: 50vw;
   }
-  @media (max-height: 500px){
-  width: 100vw;
-  height: 70vw;
-}
 
+  @media (max-height: 500px) {
+    width: 100vw;
+    //height: 50vw;
+  }
 
   .cardContainer {
-    margin: 15px auto;
+    position: relative;
+    margin: 1.5vh auto;
     //margin-bottom: 20px;
     display: flex;
-    position: relative;
-    justify-content: space-around;
-    width: 80%;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
     text-wrap: nowrap;
 
+    @media (max-aspect-ratio: 9/16) {
+      width: 100%;
+    }
+
+    .input {
+      border: .3vh solid black;
+      width: 70%;
+      padding: 2% 3%;
+      margin-right: 1vh;
+    }
+
     &:nth-child(4) {
-      margin-bottom: 30px;
+      margin-bottom: 2.5vh;
     }
 
     .label {
       display: inline-block;
-      width: 80px;
+      width: 15%;
     }
   }
 }
 
+.footer {
+  width: 100%;
+  height: 20%;
+  //display: flex;
+  //justify-content: ;
+  align-items: center;
+  text-align: center;
+}
+
 .btn {
-  margin: 0px 20px;
+  margin: 0px auto;
+  font-size: 1.1em;
   background-color: #fff;
   color: rgba(49, 49, 49, .8);
-  border: 1px solid rgba(49, 49, 49, .2);
-  padding: 5px 15px;
+  border: .3vh solid black;
+  padding: 2% 4%;
   border-radius: 5px;
   cursor: pointer;
+
 
   &:hover {
     color: white;
@@ -164,8 +254,25 @@ function checkPass() {
 }
 
 .error {
+  width: 100%;
   position: absolute;
-  bottom: -25px;
+  bottom: -2.5vh;
+  text-align: center;
   color: #ff4d4d;
 }
+
+//.n-input {
+//  outline: none !important;
+//  --n-border-hover: 1px solid black !important;
+//  --n-border-focus: 1px solid black !important;
+//  --n-loading-color: black !important;
+//  --n-caret-color: black !important;
+//  --n-border: 3px solid black !important;
+//  --n-bar-color: black !important;
+//}
+//
+//.input {
+//  outline: none;
+//  //border: 3px solid black;
+//}
 </style>

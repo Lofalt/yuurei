@@ -62,6 +62,15 @@ func CollecRouter(r *gin.Engine) *gin.Engine {
 	setRoutes.GET(":id", setController.Show)
 	setRoutes.POST("", setController.Create)
 
+	entryRoutes := r.Group("/yuurei/entry")
+	entryController := controller.NewEntryController()
+	entryRoutes.POST("", entryController.Create)
+	entryRoutes.GET(":id", entryController.GetEntryById)
+
+	entryCategoryRoutes := r.Group("/yuurei/entryCategory")
+	entryCategoryController := controller.NewEntryCategoryController()
+	entryCategoryRoutes.GET("all", entryCategoryController.ShowAll)
+
 	r.POST("/yuurei/uploadImgArticle", controller.ArticleImg)
 	r.POST("/yuurei/uploadImg", controller.UploadImg)
 	r.POST("/yuurei/uploadGallery", controller.GalleryPic)

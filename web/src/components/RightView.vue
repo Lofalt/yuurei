@@ -9,8 +9,10 @@
     </div>
     <div class="info" @wheel.self="wheeling">
       <div class="infoPage" @touchend.stop="">
-
-        <router-view></router-view>
+        <!--        <span v-show="showSpan"-->
+        <!--              style="display:block;text-align:center;width:80%;margin:0 auto;z-index:1;position: absolute;font-size: 1.5em;color:rgba(49,49,49,.4)">为什么这里空空如也,就像我的脑袋瓜一样?</span>-->
+        <!--        <router-view></router-view>-->
+        <entry-view-info/>
       </div>
     </div>
     <div class=" bottom" @wheel.self="wheeling">
@@ -31,16 +33,24 @@ import RightBar from '@/components/RightBar.vue'
 import {usePageData} from '@/store/pageData';
 import Date from "@/components/Date.vue";
 import About from "@/views/RightBar/About.vue";
+import {useRouter} from "vue-router";
+import EntryInfo from "@/views/RightBar/EntryView.vue"
+import EntryViewInfo from "../views/RightBar/EntryViewInfo.vue"
 
 const isShow = ref(true)
 const pageData = usePageData()
 let isWheeling = false
 var touchX = 0
 var touchY = 0
+const router = useRouter()
 
 function check(arg: any) {
   alert(arg)
 }
+
+const showSpan = computed(() => {
+  return !router.currentRoute.value.path.startsWith("/archive")
+})
 
 function touchStart(event: any) {
   touchX = event.targetTouches[0].pageX;
@@ -108,7 +118,7 @@ function changePage(num: number) {
 
 <style lang="less" scoped>
 
-*{
+* {
   font-size: 1.6vh;
 }
 

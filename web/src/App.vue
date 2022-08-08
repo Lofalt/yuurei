@@ -44,7 +44,7 @@ const backgroundImage = computed(() => {
   if (config.value == null) {
     return ''
   }
-  if ((document.body.clientWidth/document.body.clientHeight) < 9/16) {
+  if ((document.body.clientWidth / document.body.clientHeight) < 9 / 16) {
     return `url(${config.value.MobileBackgroundImage})`
   }
   return `url(${config.value.BackgroundImage})`
@@ -126,7 +126,6 @@ function changePage(num: number) {
 </script>
 
 <style lang="less" scoped>
-
 
 
 .lefting {
@@ -315,7 +314,7 @@ button {
 
   background-color: white;
   padding: 1px;
-  border-radius: 2px;
+  border-radius: .3vh;
   z-index: 10;
   left: 0;
   top: 5px;

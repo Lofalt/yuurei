@@ -16,6 +16,10 @@
         <n-tab-pane name="config" tab="系统配置 " display-directive="if">
           <config/>
         </n-tab-pane>
+
+        <n-tab-pane name="entries" tab="词条管理 " display-directive="if">
+          <entry-editing/>
+        </n-tab-pane>
       </n-tabs>
     </n-card>
   </div>
@@ -28,6 +32,7 @@ import ArticleMenu from "@/views/admin/ArticleMenu.vue";
 import CategoryMenu from "@/views/admin/CategoryMenu.vue"
 import PicMenu from "@/views/admin/PicMenu.vue"
 import Config from "./Config.vue"
+import EntryEditing from "./EntryEditing.vue"
 </script>
 
 <style lang="less" scoped>

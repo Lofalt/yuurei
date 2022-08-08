@@ -226,16 +226,17 @@ function jump(id: number) {
 //  font-size: 1.6vh;
 //}/
 
-.hljs{
-  background: #f8feff!important;
+.hljs {
+  background: #f8feff !important;
   font-family: Consolas;
 }
-iframe{
+
+iframe {
   width: 100%;
   min-height: 80vh;
 
 
-  @media (max-aspect-ratio: 9/16){
+  @media (max-aspect-ratio: 9/16) {
     //height: 50vw;
     min-height: 0;
     //height: 100px;
@@ -249,6 +250,7 @@ blockquote {
   padding: 0.5em 10px;
   quotes: "\201C""\201D""\2018""\2019";
 }
+
 blockquote:before {
   color: #ccc;
   content: open-quote;
@@ -257,6 +259,7 @@ blockquote:before {
   margin-right: 0.25em;
   vertical-align: -0.4em;
 }
+
 blockquote p {
   display: inline;
 }
@@ -269,7 +272,7 @@ blockquote p {
 }
 
 .articlePage {
-  //font-size: 1.2vh;
+  font-size: 1.8vh;
   height: 100%;
   width: 100%;
   //padding-top:20px;
@@ -347,8 +350,8 @@ blockquote p {
     /*border-bottom: 1px solid black ;*/
     box-shadow: -1px 1px 0px .5px rgb(49, 49, 49);
 
-    @media (max-aspect-ratio: 1/1){
-      width:100%;
+    @media (max-aspect-ratio: 1/1) {
+      width: 100%;
     }
 
   }
@@ -390,6 +393,7 @@ blockquote p {
     }
   }
 }
+
 .preAndNext {
   position: relative;
   //float: left;

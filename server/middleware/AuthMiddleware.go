@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"fmt"
+	"github.com/Lofalt/yuurei/response"
 	"strings"
 
 	"github.com/Lofalt/yuurei/common"
@@ -40,7 +41,7 @@ func AuthMiddleware() gin.HandlerFunc {
 		db := common.GetDb()
 		db.Debug().First(&user, "id = ?", userId)
 		if user.ID == "" {
-			ctx.JSON(500, gin.H{"message": "用户不存在"})
+			response.Fail(ctx, gin.H{}, "用户不存在")
 			ctx.Abort()
 			return
 		}

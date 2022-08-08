@@ -193,18 +193,17 @@ function pushCard() {
       border-radius: 10px;
     }
 
-    @media (max-aspect-ratio: 1/1) AND (min-aspect-ratio: 9/16) AND (min-height: 800px){
+    @media (max-aspect-ratio: 1/1) AND (min-aspect-ratio: 9/16) AND (min-height: 700px) {
       width: 90vw;
       min-height: 80vh;
       //max-height: ;
       // right: -85vw;
     }
 
-    @media (max-aspect-ratio: 9/16){
+    @media (max-aspect-ratio: 9/16) {
       width: 90vw;
       min-height: 150vw;
     }
-
 
 
     &:nth-child(4) {
