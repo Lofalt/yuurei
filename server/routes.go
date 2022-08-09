@@ -12,6 +12,7 @@ func CollecRouter(r *gin.Engine) *gin.Engine {
 	r.POST("/yuurei/login", controller.Login)
 	r.GET("/yuurei/info", middleware.AuthMiddleware(), controller.Info)
 	r.POST("/yuurei/img", controller.Imgs)
+	r.POST("/yuurei/validEmail", controller.SendEmail)
 
 	articleRoutes := r.Group("/yuurei/article")
 	artilceController := controller.CreateArticleController()
@@ -43,7 +44,7 @@ func CollecRouter(r *gin.Engine) *gin.Engine {
 
 	msgRoutes := r.Group("/yuurei/msg")
 	msgController := controller.NewMessageController()
-	msgRoutes.POST("", msgController.Create)
+	msgRoutes.POST("", middleware.Inception(), msgController.Create)
 	msgRoutes.PUT(":id", msgController.Update)
 	msgRoutes.DELETE(":id", msgController.Delete)
 	msgRoutes.GET(":name", msgController.Show)

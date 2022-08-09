@@ -7,7 +7,7 @@
         用户名:
           </span>
       <input class="input" type="text" @change.lazy="checkName" v-model="username"
-             placeholder="输入用户名"/>
+             placeholder="输入邮箱地址"/>
       <div v-show="!hasName" class="error">用户名不能为空</div>
     </div>
     <div class="cardContainer">

@@ -1,7 +1,7 @@
 <template>
-  <div class="messageBox" >
+  <div class="messageBox">
     <div class="icon" :style="{backgroundImage:`url(${backgroundImg})`}">
-      <div class="name">{{ msg.UserName }}</div>
+      <div class="name" :class="msg.IsAdmin?`admin`:``">{{ msg.UserName }}</div>
     </div>
     <div class="messageInfo">
       <div v-show="userInfo.user && userInfo.user.IsAdmin " class="delete" @click="deleteMsg">删除</div>
@@ -82,6 +82,7 @@ function deleteMsg() {
   margin: 8vh auto;
   position: relative;
   display: flex;
+  font-size: 1.7vh;
 
   // height: 100%;
   &::after,
@@ -120,16 +121,18 @@ function deleteMsg() {
 
     .name {
       position: absolute;
-      bottom: -2.5vh;
+      bottom: -3vh;
       width: 100%;
+      font-size: 1.8vh;
+      font-family: "幼圆";
       text-align: center;
       display: inline-block;
       //transform-origin: top;
       //text-wrap: avoid;
-      height: 15px;
+      height: 1.7vh;
       //word-break: keep-all;
       //line-height: 100%;
-      text-shadow: -.1vh .1vh .1vh rgba(124, 101, 101, 0.44);
+      text-shadow: -.15vh .15vh .1vh rgba(124, 101, 101, 0.2);
       font-weight: bold;
     }
   }
@@ -273,5 +276,9 @@ function deleteMsg() {
 .box {
   display: flex;
   flex-wrap: wrap;
+}
+
+.admin {
+  color: var(--button-color)
 }
 </style>

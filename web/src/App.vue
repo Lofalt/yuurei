@@ -9,12 +9,15 @@
       <div class="icons"></div>
     </div>
     <transition>
-      <n-icon size="5vh" color="#ffffff" @click="changePage(0)" class="fixedButton" v-show="pageData.pagedata.count!=0 && router.currentRoute.value.path.startsWith(`/home`)">
+      <n-icon size="5vh" color="#ffffff" @click="changePage(0)" class="fixedButton"
+              v-show="pageData.pagedata.count!=0 && (router.currentRoute.value.path.startsWith(`/home`)||router.currentRoute.value.path.startsWith(`/archive`))">
         <arrow-bar-to-up/>
       </n-icon>
     </transition>
     <n-dialog-provider>
-      <left-bar :class="[isActive?`showing`:`notShowing`,`leftBar`]" @toggle-nav="isActive=false"/>
+      <n-message-provider>
+        <left-bar :class="[isActive?`showing`:`notShowing`,`leftBar`]" @toggle-nav="isActive=false"/>
+      </n-message-provider>
     </n-dialog-provider>
     <router-view></router-view>
   </div>
@@ -29,7 +32,7 @@ import {NIcon} from "naive-ui"
 import {useUserInfo} from "@/store/UserInfo";
 import axios from "@/request/index"
 import {useRouter} from "vue-router";
-import {useMessage, NDialogProvider} from "naive-ui";
+import {useMessage, NMessageProvider, NDialogProvider} from "naive-ui";
 
 const router = useRouter()
 const isShow = ref(true)
@@ -82,10 +85,10 @@ watch(router.currentRoute, (newValue: any) => {
 router.beforeEach((to, from, next) => {
   if (to.meta.needAuth && !userInfo.user.IsAdmin && to.name != "login") {
 
-    // alert("你没有权限")
-    // next({
-    //   name: "home"
-    // })
+    alert("你没有权限")
+    next({
+      name: "home"
+    })
     // return false
   }
 

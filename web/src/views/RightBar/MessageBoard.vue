@@ -1,13 +1,19 @@
 <template>
-  <div class="container">
+  <div class="msgContainer" @wheel="listenScroll" @touchstart.stop="touchStart" @touchend.stop="touchEnd">
     <transition name="scale">
       <div :style="{backgroundImage:`url(${bgi})`}" class="scalePic" @click="showScale=false" v-show="showScale"></div>
     </transition>
     <div class="head" @click.capture="showModal = false">
       <transition-group tag="p" name="jokes">
-        <joke @emit-pic="acceptScale" v-for="(item,index) in msgList" :style="`--i:${index}`" :msg="item" :key="item.ID" @reload="getMsgs"/>
+        <joke @emit-pic="acceptScale" v-for="(item,index) in msgList" :style="`--i:${index%3}`" :msg="item"
+              :key="item.ID"
+              @reload="getMsgs"/>
       </transition-group>
     </div>
+    <div class="loading">
+      <loading-com v-show="isLoading"/>
+    </div>
+    <div class="loading end" v-show="msgList.length===total &&total>5">———— 时间的尽头 ————</div>
     <div class="left">
 
       <n-icon size="3vh" color="#000000" class="messageIcon" @click="changeModal">
@@ -99,7 +105,9 @@ import LoadingCom from "@/components/LoadingCom.vue";
 import UploadPic from "@/components/file/UploadPic.vue"
 import {PictureOutlined, SmileOutlined} from "@vicons/antd"
 import Emoji from "@/components/comments/Emoji.vue"
+import {useUserInfo} from "@/store/UserInfo";
 
+const userInfo = useUserInfo()
 const message = useMessage()
 const showScale = ref(false)
 const picList = ref([]) as any
@@ -110,7 +118,7 @@ const iconEdit = ref(false)
 const isLoading = ref(false)
 const router = useRouter()
 const showModal = ref(false)
-const container = document.getElementsByClassName("container")[0] as HTMLElement
+const msgContainer = document.getElementsByClassName("msgContainer")[0] as HTMLElement
 const showTheModal = ref(false)
 const msgContent = ref("")
 const focus = computed(() => {
@@ -121,8 +129,10 @@ const userName = ref("")
 const msgList = ref([])
 const inputTextarea = ref(null) as any
 const bgi = ref("") as any
-
-getMsgs()
+const total = ref(0)
+const pageSize = ref(6)
+const pageNum = ref(1)
+// const isLoading = ref(false)
 const config = inject("globalConfig") as any
 
 const backgroundImage = computed(() => {
@@ -173,8 +183,9 @@ function check(arg: any) {
 }
 
 function getMsgs() {
-  axios.get("/yuurei/msg/all", {}).then((res: any) => {
+  axios.get(`/yuurei/msg/all?pageNum=${pageNum.value}&pageSize=${pageSize.value}`, {}).then((res: any) => {
     let msgTmp: any[] = []
+    total.value = res.data.total
     res.data.data.forEach((msg: any) => {
       msgTmp.push(msg)
     })
@@ -182,11 +193,82 @@ function getMsgs() {
   })
 }
 
-provide('focus', focus)
+// 懒加载相关
+var touchX = 0
+var touchY = 0
 
-function post() {
-  alert("post!")
+function touchStart(event: any) {
+  touchX = event.targetTouches[0].pageX;
+  touchY = event.targetTouches[0].pageY;
 }
+
+function touchEnd(event: any) {
+  // alert("hello")
+  // alert(touchY)
+  let touchYEnd = event.changedTouches[0].pageY
+  let touches = touchYEnd - touchY
+  if (touches < -90) {
+    if (!isLoading.value && msgList.value.length < total.value) {
+      isLoading.value = true
+      setTimeout(() => {
+        getNext()
+
+      }, 1000);
+    }
+  }
+}
+
+// provide('focus', focus)
+function scrollToTop() {
+  const box = document.getElementsByClassName("msgContainer")[0] as HTMLSelectElement
+  // box.scrollTo(0, 0)
+  scroll(500, box)
+}
+
+function listenScroll(event: any) {
+  const box = document.getElementsByClassName("msgContainer")[0] as HTMLSelectElement
+  if (box.scrollTop + box.offsetHeight + 100 > box.scrollHeight) {
+    if (!isLoading.value && msgList.value.length < total.value) {
+      console.log("我直接疯狂加载")
+      isLoading.value = true
+      setTimeout(() => {
+        getNext()
+
+      }, 1000);
+
+    } else {
+      return
+    }
+  }
+}
+
+function getNext() {
+
+  // if ((pageNum.value + 1) * pageSize.value > total.value) {
+  //   return
+  // }
+  isLoading.value = true
+  pageNum.value += 1
+  axios.get(`/yuurei/msg/all?pageNum=${pageNum.value}&pageSize=${pageSize.value}`, {}).then((result: any) => {
+    for (let i = 0; i < result.data.data.length; i++) {
+      msgList.value.push(result.data.data[i])
+    }
+    total.value = result.data.total
+    isLoading.value = false
+  })
+}
+
+onMounted(() => {
+  getMsgs()
+  window.onscroll = () => {
+    let scrollTop = document.documentElement.scrollTop; //获取滚动距离
+    let scrollHeigh = document.documentElement.scrollHeight; //获取整个页面的高度
+    let clientHeigh = document.documentElement.clientHeight; //获取
+    if (scrollTop + clientHeigh - scrollHeigh >= -50) {
+      getNext()
+    }
+  }
+})
 
 function changeContent(content: string) {
   msgContent.value = content
@@ -201,6 +283,10 @@ const fnlContent = computed(() => {
 
 function sendMsg() {
   console.log(fnlContent.value)
+  if (userInfo.user.Sended) {
+    message.warning("30秒内只能留言一次")
+    // return
+  }
   if (fnlContent.value == "") {
     message.warning("先说点啥吧")
     return
@@ -212,6 +298,7 @@ function sendMsg() {
     MessageContent: fnlContent.value.replace(/\r/ig, '').replace(/\n/ig, '<br/>'),
     Icon: uploadImg.value,
     UserName: userName.value,
+    IsAdmin: userInfo.user.IsAdmin,
     Pics: (() => {
       let pics: string = ""
       for (let i = 0; i < picList.value.length; i++) {
@@ -223,11 +310,17 @@ function sendMsg() {
       return pics
     })()
   }).then((res) => {
-    getMsgs()
+    axios.get(`/yuurei/msg/all?pageNum=1&pageSize=1}`, {}).then((res: any) => {
+      msgList.value.unshift(res.data.data[0])
+    })
+    userInfo.user.Sended = true
     showModal.value = false
     showTheModal.value = false
     msgContent.value = ""
     picList.value = []
+    setTimeout(() => {
+      userInfo.user.Sended = false
+    }, 30000)
   })
 }
 
@@ -236,7 +329,7 @@ const wang = ref<InstanceType<typeof WangEditorMini>>();
 // const wang = ref(null)
 
 function changeModal() {
-  if ((document.body.clientWidth / document.body.clientHeight) > 9/16) {
+  if ((document.body.clientWidth / document.body.clientHeight) > 9 / 16) {
     showModal.value = !showModal.value
   } else {
     showTheModal.value = !showTheModal.value
@@ -453,7 +546,7 @@ function getFile(event: any) {
   // overflow: hidden;
   // white-space: nowrap;
 
-  @media (max-aspect-ratio: 1/1) AND (min-aspect-ratio: 9/16) AND (min-height: 800px){
+  @media (max-aspect-ratio: 1/1) AND (min-aspect-ratio: 9/16) AND (min-height: 800px) {
     width: 80%;
     //max-height: ;
     // right: -85vw;
@@ -638,7 +731,7 @@ function getFile(event: any) {
   top: -80vw;
   z-index: 1;
   width: 40vw;
-    top: -10vw;
+  top: -10vw;
 
   input {
     width: 100%;
@@ -647,15 +740,15 @@ function getFile(event: any) {
     outline: none;
     border: .3vh solid rgb(49, 49, 49);
 
-      font-size: 3vw;
-      //top: -50px;
-      border: .5vw solid rgb(49, 49, 49);
+    font-size: 3vw;
+    //top: -50px;
+    border: .5vw solid rgb(49, 49, 49);
 
   }
 }
 
 
-.container {
+.msgContainer {
   width: 98%;
   height: 100%;
   /* background-color: #fff; */
@@ -757,7 +850,7 @@ function getFile(event: any) {
 .jokes-leave-active,
 .jokes-enter-active {
   transition: all .5s ease;
-  transition-delay: calc(Var(--i)*.3s);
+  transition-delay: calc(Var(--i) * .1s);
 }
 
 .messageDiv2 {
@@ -791,9 +884,9 @@ function getFile(event: any) {
     cursor: pointer;
     border: .4vh solid rgb(49, 49, 49);
 
-      width: 23vw;
-      height: 23vw;
-      top: -25vw !important;
+    width: 23vw;
+    height: 23vw;
+    top: -25vw !important;
 
 
     &::after {
@@ -814,9 +907,9 @@ function getFile(event: any) {
       //left: -3px;
       //top: -3px;
       //border: 3px solid rgba(49, 49, 49, 0.2);
-        visibility: visible !important;
-        border: .6vw solid rgba(49, 49, 49, 0.2);
-        font-size: 4vw;
+      visibility: visible !important;
+      border: .6vw solid rgba(49, 49, 49, 0.2);
+      font-size: 4vw;
 
     }
 
@@ -825,6 +918,7 @@ function getFile(event: any) {
 
     }
   }
+
   .insertPic {
     position: absolute;
     width: 100%;
@@ -863,24 +957,23 @@ function getFile(event: any) {
         position: absolute;
         background: rgba(0, 0, 0, .3);
         font-size: 1.5vh;
-          visibility: visible;
+        visibility: visible;
 
       }
 
-        &:nth-child(3) {
-          margin-right: 0;
-        }
+      &:nth-child(3) {
+        margin-right: 0;
+      }
 
     }
   }
 
 
-
-    border: .7vw solid black;
-    height: 70vw;
-    margin: 0 auto;
-    left: 0;
-    width: 100%;
+  border: .7vw solid black;
+  height: 70vw;
+  margin: 0 auto;
+  left: 0;
+  width: 100%;
 
   &::after {
     content: '';
@@ -893,7 +986,7 @@ function getFile(event: any) {
     border-right-color: rgb(49, 49, 49);
     border-bottom-color: rgba(49, 49, 49);
 
-      display: none;
+    display: none;
   }
 
   .inputTextarea {
@@ -911,8 +1004,8 @@ function getFile(event: any) {
     border-top: .2vh solid rgba(49, 49, 49, .1);
     box-sizing: border-box;
 
-      height: 57vw;
-      border-top: .4vw solid rgba(49, 49, 49, .1);
+    height: 57vw;
+    border-top: .4vw solid rgba(49, 49, 49, .1);
   }
 
   .emojiCard {
@@ -931,8 +1024,8 @@ function getFile(event: any) {
     //padding: 10px;
     height: 5vh;
 
-      //height: 100px;
-      height: 12vw;
+    //height: 100px;
+    height: 12vw;
 
     .messageHeaderIcon {
       cursor: pointer;
@@ -956,11 +1049,11 @@ function getFile(event: any) {
       margin-right: 1vh;
       border: .4vh solid rgb(49, 49, 49); // transition: all 1s;
 
-        width: 15vw;
-        border: .8vw solid rgb(49, 49, 49); // transition: all 1s;
-        height: 8vw;
-        align-self: center;
-        font-size: 4vw;
+      width: 15vw;
+      border: .8vw solid rgb(49, 49, 49); // transition: all 1s;
+      height: 8vw;
+      align-self: center;
+      font-size: 4vw;
 
       &:hover {
         background-color: rgb(49, 49, 49);
@@ -970,5 +1063,21 @@ function getFile(event: any) {
       // }
     }
   }
+}
+
+.loading {
+  position: relative;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+.end {
+  font-weight: bold;
+  color: rgba(49, 49, 49, .2);
+  font-size: 1.3em;
+  line-height: 1.8em;
+  height: 1.8em;
 }
 </style>

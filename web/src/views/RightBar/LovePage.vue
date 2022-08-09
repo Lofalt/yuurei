@@ -8,9 +8,10 @@
     </div>
     <!--    <div class="nav">navbar</div>-->
     <div class="inside">
-      <entry v-for="item in entries" :id="item.ID" :headPic="item.HeaderPicture" :title="item.Title" :summary="item.Summary" :key="item.ID"/>
+      <entry v-for="item in entries" :id="item.ID" :headPic="item.HeaderPicture" :title="item.Title"
+             :summary="item.Summary" :key="item.ID"/>
     </div>
-    <n-pagination size="large" v-model:page="pageNum" :page-count="pageTotal" class="page" v-show="needToShow">
+    <n-pagination size="medium" v-model:page="pageNum" :page-count="pageTotal" class="page" v-show="needToShow">
     </n-pagination>
   </div>
 </template>
@@ -38,7 +39,7 @@ getEnts(pageNum.value, pageSize.value)
 // axios.get("/yuurei/entry/all",{}).then((res:any)=>{
 //   entries.value = res.data.data
 // })
-getEnts(pageNum.value,pageSize.value)
+getEnts(pageNum.value, pageSize.value)
 
 axios.get("/yuurei/entryCategory/all", {}).then((result: any) => {
   result.data.data.forEach((data: any) => {
@@ -70,11 +71,13 @@ function getEnts(pagenum: number, pagesize: number) {
     })
   }
 }
+
 function getEntsByCat(id: number) {
   pageNum.value = 1
   currentCat.value = id
 
 }
+
 const needToShow = computed(() => {
   return pageTotal.value > 1
 })
@@ -91,7 +94,6 @@ function changePage(num: number) {
   pageData.pagedata.count = 1
   // router.push('/About')
 }
-
 
 
 </script>

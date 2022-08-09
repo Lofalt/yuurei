@@ -4,12 +4,12 @@
     <div class="profile" :style="{backgroundImage:backgroundImage}"></div>
     <div class="name">{{ MyName }}</div>
     <div class="icon1">
-      <a href="javascript:">
-        <n-icon size="2.5vh" color="#484848">
+      <a href="javascript:window.open(`https://github.com/Lofalt`)">
+        <n-icon size="2.5vh" color="var(--button-color)">
           <github/>
         </n-icon>
       </a>
-      <a href="javascript:">
+      <a href="javascript:" @click="message.info(`别点了，没东西的`)">
         <n-icon size="2.5vh" color="#484848">
           <weibo/>
         </n-icon>
@@ -55,12 +55,12 @@ export default {
 <script lang="ts" setup>
 import {computed, inject, onMounted, reactive, ref} from 'vue';
 import {useRouter} from 'vue-router';
-import {Weibo, Twitter, GrinTongue,Github} from '@vicons/fa'
+import {Weibo, Twitter, GrinTongue, Github} from '@vicons/fa'
 import {NIcon} from "naive-ui"
 import {usePageData} from '@/store/pageData';
-import {Settings, Home, Login, Logout,DeviceTv} from '@vicons/tabler'
+import {Settings, Home, Login, Logout, DeviceTv} from '@vicons/tabler'
 import {useUserInfo} from "@/store/UserInfo";
-import {useDialog} from "naive-ui";
+import {useDialog, useMessage} from "naive-ui";
 
 const router = useRouter()
 const dialog = useDialog()
@@ -68,6 +68,7 @@ const pageData = usePageData()
 const userInfo = useUserInfo()
 const emit = defineEmits(['toggleNav'])
 const config = inject("globalConfig") as any
+const message = useMessage()
 
 const backgroundImage = computed(() => {
   if (config.value == null) {
@@ -164,10 +165,12 @@ function changePage(num: number) {
 <style lang="less" scoped>
 .n-icon:hover {
   cursor: not-allowed;
+
+
 }
 
 a {
-  cursor: not-allowed;
+  //cursor: not-allowed;
   // pointer-events: none;
 }
 
@@ -351,7 +354,7 @@ a {
       border-radius: 2px;
       outline-style: none;
       border: .3vh solid rgb(51, 51, 51);
-      box-shadow: -0.15vh .15vh 0 .05vh  rgb(51, 51, 51);
+      box-shadow: -0.15vh .15vh 0 .05vh rgb(51, 51, 51);
 
       &:hover {
         //background-color: rgb(255, 83, 83) !important;

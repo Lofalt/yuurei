@@ -6,6 +6,7 @@ import (
 	"github.com/Lofalt/yuurei/response"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 	"os"
 	"strconv"
 	"strings"
@@ -28,13 +29,24 @@ func NewMessageController() IMessageController {
 
 func (m MessageController) ShowAll(c *gin.Context) {
 
-	var msgs []model.Message
+	var messages []model.Message
 
-	if err := m.DB.Model(model.Message{}).Order("created_at desc").Find(&msgs).Error; err != nil {
+	pageNum, _ := strconv.Atoi(c.DefaultQuery("pageNum", "-1"))
+	pageSize, _ := strconv.Atoi(c.DefaultQuery("pageSize", "-1"))
+	var offset int
+	if pageNum == -1 {
+		offset = -1
+	} else {
+		offset = (pageNum - 1) * pageSize
+	}
+	var total int64
+	m.DB.Model(model.Message{}).Count(&total)
+	if err := m.DB.Preload(clause.Associations).Order("created_at desc").Offset(offset).Limit(pageSize).Find(&messages).Error; err != nil {
 		response.Fail(c, gin.H{}, err.Error())
 		return
 	}
-	response.Success(c, gin.H{"data": msgs}, "查询成功")
+
+	response.Success(c, gin.H{"data": messages, "total": total}, "success")
 }
 
 func (m MessageController) Create(c *gin.Context) {

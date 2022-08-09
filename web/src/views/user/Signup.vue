@@ -11,7 +11,7 @@
     </div>
     <div class="cardContainer">
         <span class="label">
-        用户名:
+        邮箱地址:
           </span>
       <input class="input" @change.lazy="checkName" type="text" v-model="username" placeholder="输入用户名"/>
       <div class="error">{{ nameErrorMessage }}</div>
@@ -23,6 +23,18 @@
       <input class="input" @keyup.enter="signup" @change.lazy="checkPass" type="password" v-model="password"
              placeholder="输入密码"/>
       <div class="error">{{ passErrorMessage }}</div>
+
+    </div>
+    <div class="cardContainer">
+      <span class="label">
+        验证码:
+          </span>
+      <input class="input" @keyup.enter="signup" @change.lazy="checkPass" type="password" v-model="validCode"
+             placeholder="输入验证码"/>
+      <button class="validBtn" @click="sendEmail" v-show="!sendedEmail">发送验证码</button>
+      <span class="validMessage" v-show="sendedEmail">{{ timeout }}秒后重新发送</span>
+      <div class="error">{{ codeErrorMessage }}</div>
+
     </div>
     <div class="footer">
       <button @click="signup" class="btn" type="info">注册</button>
@@ -54,17 +66,20 @@ const shortName = ref(true)
 const shortPass = ref(true)
 const passErrorMessage = ref("")
 const nameErrorMessage = ref("")
+const validCode = ref("")
 
 function signup() {
   checkName()
   checkPass()
-  if (!checkName() || !checkPass()) {
+  checkCode()
+  if (!checkName() || !checkPass() || !checkCode()) {
     return
   }
   axios.request("/yuurei/sign_up", "post", qs.stringify({
     username: username.value,
     name: name,
     password: password.value,
+    code: validCode.value
   })).then((res: any) => {
     if (res.code == 200) {
       message.info(res.msg + "马上跳转登陆")
@@ -77,12 +92,61 @@ function signup() {
   })
 }
 
+const sendedEmail = ref(false)
+
+function sendEmail() {
+  if (!checkName()) {
+    return
+  }
+  let timer = reset()
+  axios.request("/yuurei/validEmail", "post", qs.stringify({
+    Email: username.value
+  })).then((res: any) => {
+    if (res.code != 200) {
+      sendedEmail.value = false
+      clearTimeout(timer)
+      nameErrorMessage.value += res.msg
+
+    }
+  }).catch(() => {
+    clearTimeout(timer)
+    sendedEmail.value = false
+  })
+}
+
+const timeout = ref(10)
+
+function reset() {
+  sendedEmail.value = true
+  timeout.value = 60
+  let timer = setInterval(() => {
+    timeout.value -= 1
+  }, 1000)
+  setTimeout(() => {
+    sendedEmail.value = false
+    clearInterval(timer)
+  }, 60000)
+  return timer
+}
+
+const codeErrorMessage = ref("")
+
+function checkCode() {
+  codeErrorMessage.value = ""
+  if (validCode.value == "") {
+    codeErrorMessage.value += "验证码不能为空"
+  }
+  return codeErrorMessage.value == ""
+}
+
 function checkName() {
   nameErrorMessage.value = ''
   if (username.value == "") {
     nameErrorMessage.value += " 用户名不能为空"
   } else if (username.value.length < 6) {
     nameErrorMessage.value += "用户名过短"
+  } else if (!/^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(username.value)) {
+    nameErrorMessage.value += "请输入正确的邮箱"
   }
   if (username.value.indexOf(" ") >= 0 || username.value.indexOf("?") >= 0) {
     nameErrorMessage.value += " 包含非法字符"
@@ -216,7 +280,7 @@ function checkPass() {
       margin-right: 1vh;
     }
 
-    &:nth-child(4) {
+    &:nth-child(5) {
       margin-bottom: 2.5vh;
     }
 
@@ -275,4 +339,26 @@ function checkPass() {
 //  outline: none;
 //  //border: 3px solid black;
 //}
+.validMessage {
+  position: absolute;
+  display: inline-block;
+  right: 6vh;
+}
+
+.validBtn {
+  position: absolute;
+  right: 6vh;
+  font-size: 1em;
+  padding: .5vh 2vh;
+  border: none;
+  background-color: #fff;
+  border: .3vh solid black;
+  border-radius: .5vh;
+  cursor: pointer;
+
+  &:hover {
+    color: white;
+    background-color: var(--button-color);
+  }
+}
 </style>

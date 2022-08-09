@@ -7,21 +7,31 @@ import (
 	"github.com/Lofalt/yuurei/model"
 	"github.com/Lofalt/yuurei/response"
 	"github.com/Lofalt/yuurei/util"
+	"github.com/garyburd/redigo/redis"
 	"github.com/gin-gonic/gin"
+	"github.com/jordan-wright/email"
 	"github.com/satori/go.uuid"
 	"golang.org/x/crypto/bcrypt"
 	"log"
+	"math/rand"
+	"net/smtp"
 	"os"
 	"path/filepath"
 	"strconv"
+	"time"
 )
 
 func Register(c *gin.Context) {
 
 	db := common.GetDb()
+	conn := util.GetRedisConn()
+	defer conn.Close()
 	name := c.PostForm("name")
 	password := c.PostForm("password")
 	username := c.PostForm("username")
+	validCode := c.PostForm("code")
+	code, err := redis.String(conn.Do("Get", username))
+
 	errR := db.AutoMigrate(&model.User{})
 	if errR != nil {
 		return
@@ -32,6 +42,14 @@ func Register(c *gin.Context) {
 
 	if util.UserNameExist(username) {
 		response.Response(c, 200, 400, nil, "当前用户名已被注册")
+		return
+	}
+	if code == "" {
+		response.Fail(c, gin.H{}, "请先发送验证码")
+		return
+	}
+	if validCode != code {
+		response.Fail(c, gin.H{}, "验证码错误")
 		return
 	}
 	//加密密码
@@ -103,4 +121,63 @@ func Imgs(ctx *gin.Context) {
 
 	response.Success(ctx, gin.H{"list": picList[0:picnum]}, "ok")
 
+}
+
+func SendEmail(c *gin.Context) {
+	db := common.GetDb()
+	username := c.PostForm("Email")
+	var user model.User
+	db.Where("UserName=?", username).First(&user)
+	if user.ID != "" {
+		response.Fail(c, gin.H{}, "邮箱已被注册")
+		return
+	}
+	code, err := SendEmailValidate([]string{username})
+	if err != nil {
+		response.Fail(c, gin.H{}, err.Error())
+		return
+	}
+	conn := util.GetRedisConn()
+	defer func(conn redis.Conn) {
+		err := conn.Close()
+		if err != nil {
+			return
+		}
+	}(conn)
+	conn.Do("Set", username, code)
+	conn.Do("expire", username, 300)
+	response.Success(c, gin.H{}, "waiting")
+
+}
+
+func SendEmailValidate(em []string) (string, error) {
+	e := email.NewEmail()
+	e.From = fmt.Sprintf("Lofalt <515636512@qq.com>")
+	e.To = em
+	// 生成6位随机验证码
+	rnd := rand.New(rand.NewSource(time.Now().UnixNano()))
+	vCode := fmt.Sprintf("%06v", rnd.Int31n(1000000))
+	t := time.Now().Format("2006-01-02 15:04:05")
+	//设置文件发送的内容
+	content := fmt.Sprintf(`
+<html>
+	<div>
+		<div>
+			你好
+		</div>
+		<div style="padding: 8px 40px 8px 50px;">
+			<p>你于 %s 提交的邮箱验证，本次验证码为<u><strong>%s</strong></u>，为了保证账号安全，验证码有效期为5分钟。请确认为本人操作，切勿向他人泄露，感谢您的理解与使用。</p>
+		</div>
+		<div>
+			<p>此邮箱为系统邮箱，请勿回复。</p>
+		</div>
+	</div>
+</html>
+	`, t, vCode)
+	e.HTML = []byte(content)
+	e.Subject = "接收验证码"
+	e.AttachFile("../img/MyIcon/2cd5dfc2-28bf-4d6e-944b-9c605f44ee321659793639194.jpg")
+	//设置服务器相关的配置
+	err := e.Send("smtp.qq.com:25", smtp.PlainAuth("", "515636512@qq.com", "knjdcbozvueibhhf", "smtp.qq.com"))
+	return vCode, err
 }

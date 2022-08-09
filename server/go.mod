@@ -46,6 +46,8 @@ require (
 )
 
 require (
+	github.com/garyburd/redigo v1.6.3 // indirect
+	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible // indirect
 	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646 // indirect
 	github.com/satori/go.uuid v1.2.0 // indirect
 	github.com/ser163/png2j v0.1.2-beta // indirect

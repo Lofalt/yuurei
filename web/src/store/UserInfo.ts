@@ -6,7 +6,8 @@ export const useUserInfo = defineStore('userInfo', {
             user: {
                 Name: null,
                 Username: null,
-                IsAdmin: false
+                IsAdmin: false,
+                Sended: false
             }
         }
     },

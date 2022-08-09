@@ -1,7 +1,7 @@
 <template>
   <div class="rightbar" @click.self="pushCard">
     <div class="showpage activeCard" @wheel.stop="" @touchend.stop="">
-      <div class="showtag tag1" @click="pullCard(0)">
+      <div class="showtag tag1" @click.stop="pullCard(0)">
         废话
       </div>
       <!-- <div class="showtag tag1" @click="pullCard(0)"> -->
@@ -11,7 +11,7 @@
       <!-- <router-view v-show="showBlog"></router-view> -->
     </div>
     <div class="showpage activeCard" @wheel.stop="" @touchend.stop="">
-      <div class="showtag tag2" @click="pullCard(1)">
+      <div class="showtag tag2" @click.stop="pullCard(1)">
         留言板
       </div>
       <n-message-provider>
@@ -20,14 +20,14 @@
       <!-- <router-view name="BlogPage" v-show="showMessage"></router-view> -->
     </div>
     <div class="showpage activeCard" @wheel.stop="" @touchend.stop="">
-      <div class="showtag tag3" @click="pullCard(2)">
+      <div class="showtag tag3" @click.stop="pullCard(2)">
         TAG
       </div>
       <!-- <router-view name="LovePage" v-show="showLove"></router-view> -->
       <love-page v-show="showLove"></love-page>
     </div>
     <div class="showpage activeCard" @wheel.stop="" @touchend.stop="">
-      <div class="showtag tag4" @click="pullCard(3)">
+      <div class="showtag tag4" @click.stop="pullCard(3)">
         TAG2
       </div>
       <!-- <router-view name="VlogPage" v-show="showVlog"></router-view> -->
@@ -64,6 +64,21 @@ provide('showVlog', showVlog)
 
 
 function pullCard(num: number): void {
+  switch (num) {
+    case 0:
+      showBlog.value = true;
+      break;
+    case 1:
+      showMessage.value = true
+      break;
+    case 2:
+      showLove.value = true
+      break;
+    case 3:
+      showVlog.value = true
+      break;
+  }
+
   const tags = document.getElementsByClassName("showtag") as HTMLSelectElement
   const cards = document.getElementsByClassName("showpage") as HTMLCollection
   for (let i = num; i >= 0; i--) {
@@ -91,20 +106,7 @@ function pullCard(num: number): void {
   element.className = "showpage"
   tag.classList.add("activeTag")
 
-  switch (num) {
-    case 0:
-      showBlog.value = true;
-      break;
-    case 1:
-      showMessage.value = true
-      break;
-    case 2:
-      showLove.value = true
-      break;
-    case 3:
-      showVlog.value = true
-      break;
-  }
+
 }
 
 function pushCard() {

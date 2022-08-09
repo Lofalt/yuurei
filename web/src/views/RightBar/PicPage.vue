@@ -1,5 +1,5 @@
 <template>
-<!--    <div>没什么艺术细胞的人</div>-->
+  <!--    <div>没什么艺术细胞的人</div>-->
   <div id="main" @wheel="listenScroll" @touchstart.stop="touchStart" @touchend.stop="touchEnd">
     <!-- <button class="scrollToTop" @click="scrollToTop">dmwo</button> -->
     <img class=" test" v-for="(item, index) in picList" :src="item.Path" :key="item.ID" ref="waterFallItem"
@@ -38,9 +38,10 @@ const hover = inject('hover') as Ref<boolean>
 const showVlog = inject('showVlog') as Ref<boolean>
 const isLoading = ref(false)
 const currentInfo = ref("")
+
+
 var touchX = 0
 var touchY = 0
-
 
 function touchStart(event: any) {
   touchX = event.targetTouches[0].pageX;
@@ -157,7 +158,7 @@ function waterFall() {
     for (let i = 0; i < childs.length; i++) {
       boxHeight = childs[i].offsetHeight
       if (i < col) {
-        heightArr.push(boxHeight+30)
+        heightArr.push(boxHeight + 30)
         childs[i].style.position = 'absolute'
         childs[i].style.left = i * boxWidth + 'px'
         childs[i].style.top = 3 + '0px'

@@ -8,6 +8,8 @@ datasource:
   password: wsy20010219
   charset: utf8mb4
   loc: Asia%2FShanghai
+redis:
+  address: 192.168.3.23:6379
 #datasource:
 #  host: localhost
 #  port: 3306

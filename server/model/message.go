@@ -8,4 +8,5 @@ type Message struct {
 	UserName       string `gorm:"type:varchar(50);"`
 	Icon           string `gorm:"type:varchar(100)"`
 	Pics           string `gorm:"type:varchar(500)"`
+	IsAdmin        bool   `gorm:"DEFAULT:0"`
 }
