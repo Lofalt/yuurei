@@ -19,9 +19,11 @@
 
         <n-tab-pane name="entries" tab="词条管理 " display-directive="if" >
 <!--          <entry-editing/>-->
+          <n-message-provider>
           <n-dialog-provider>
           <router-view/>
           </n-dialog-provider>
+          </n-message-provider>
         </n-tab-pane>
       </n-tabs>
     </n-card>
@@ -29,7 +31,7 @@
 </template>
 
 <script lang="ts" setup>
-import {NCard, NTabs, NTabPane, NDialogProvider} from "naive-ui";
+import {NCard, NTabs, NTabPane, NDialogProvider,NMessageProvider} from "naive-ui";
 import articleMenu from "@/views/admin/ArticleMenu.vue";
 import ArticleMenu from "@/views/admin/ArticleMenu.vue";
 import CategoryMenu from "@/views/admin/CategoryMenu.vue"

@@ -72,7 +72,7 @@ func (e EntryController) Create(c *gin.Context) {
 	fmt.Println(entry)
 	result := e.DB.Create(&entry)
 	if result.Error != nil {
-		response.Fail(c, gin.H{"错误信息": result.Error}, "出错了")
+		response.Fail(c, gin.H{"错误信息": result.Error}, result.Error.Error())
 	} else {
 		response.Success(c, gin.H{"data": entry}, "添加成功")
 	}

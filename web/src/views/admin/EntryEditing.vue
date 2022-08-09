@@ -98,7 +98,7 @@
 <script lang="ts" setup>
 import UploadPic from "../../components/file/UploadPic.vue"
 import WangEditor from "../../components/wangeditor/EntryEditor.vue"
-import {NColorPicker, NTable, NInput, NButton, NSpace, NSelect} from "naive-ui"
+import {NColorPicker, NTable, NInput, NButton, NSpace, NSelect, useMessage} from "naive-ui"
 import {ref} from "vue";
 import axios from "../../request/index"
 import {useRouter} from "vue-router";
@@ -118,6 +118,7 @@ const SecColor = ref("#000")
 const ThirdColor = ref("#000")
 const options = ref([])
 const category = ref(null)
+const message = useMessage()
 
 axios.get("/yuurei/entryCategory/all", {}).then((res: any) => {
   for (let i = 0; i < res.data.data.length; i++) {
@@ -224,6 +225,16 @@ function getInfos() {
     SecColor: SecColor.value,
     ThirdColor: ThirdColor.value,
     EntryCategoryID: category.value
+  }).then((res:any)=>{
+    if(res.code==200){
+      message.info(res.msg)
+      setTimeout(()=>{
+        router.back()
+      },1000)
+    }else{
+      message.error(res.msg)
+      infoes.value = []
+    }
   })
 }
 </script>

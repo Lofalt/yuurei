@@ -12,7 +12,7 @@
     </div>
     <div class="showpage activeCard" @wheel.stop="" @touchend.stop="">
       <div class="showtag tag2" @click.stop="pullCard(1)">
-        留言板
+        留言
       </div>
       <n-message-provider>
         <blog-page v-if="showMessage"></blog-page>
@@ -21,14 +21,14 @@
     </div>
     <div class="showpage activeCard" @wheel.stop="" @touchend.stop="">
       <div class="showtag tag3" @click.stop="pullCard(2)">
-        TAG
+        蒐集
       </div>
       <!-- <router-view name="LovePage" v-show="showLove"></router-view> -->
       <love-page v-show="showLove"></love-page>
     </div>
     <div class="showpage activeCard" @wheel.stop="" @touchend.stop="">
       <div class="showtag tag4" @click.stop="pullCard(3)">
-        TAG2
+        面影
       </div>
       <!-- <router-view name="VlogPage" v-show="showVlog"></router-view> -->
       <!-- <div class="father"> -->
@@ -121,6 +121,9 @@ function pushCard() {
     card.className = "showpage activeCard"
     tag.classList.remove("activeTag")
   }
+  if(!showMessage.value && !showVlog.value && !showBlog.value && !showLove.value ){
+    return
+  }
 
   setTimeout(() => {
 
@@ -151,7 +154,7 @@ function pushCard() {
   position: relative;
   overflow: hidden;
   width: 100%;
-  min-height: 100vh;
+  min-height: 95vh;
 
   // min-height: 100vh;
   // width: 83.5vw;

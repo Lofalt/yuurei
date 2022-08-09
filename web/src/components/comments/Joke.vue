@@ -112,7 +112,7 @@ function deleteMsg() {
     margin-right: 3vh;
     position: relative;
     background-position: center;
-    box-shadow: -.4vh .4vh 1px 0 rgba(49, 49, 49, 0.2);
+    box-shadow: .4vh .4vh 1px 0 rgba(49, 49, 49, 0.2);
 
     @media (max-aspect-ratio: 1/1) {
       width: 8vh;
@@ -139,7 +139,7 @@ function deleteMsg() {
 
   .messageInfo {
     border: .4vh solid rgb(49, 49, 49);
-    border-left: .6vh solid rgb(49, 49, 49);
+    border-right: .6vh solid rgb(49, 49, 49);
     border-bottom: .6vh solid rgb(49, 49, 49);
     padding: 2vh;
     float: left;
@@ -185,7 +185,7 @@ function deleteMsg() {
       min-height: 10vh;
       width: 75%;
       border: .3vh solid rgb(49, 49, 49);
-      border-left: .5vh solid rgb(49, 49, 49);
+      border-right: .5vh solid rgb(49, 49, 49);
       border-bottom: .5vh solid rgb(49, 49, 49);
 
     }
@@ -193,8 +193,8 @@ function deleteMsg() {
     &::after {
       position: absolute;
       display: block;
-      left: -1.4vh;
-      top: 4px;
+      left: -1.3vh;
+      top: 0px;
       transform: rotate(225deg);
       content: '';
       width: 0;
@@ -209,7 +209,7 @@ function deleteMsg() {
         border-top-color: rgb(49, 49, 49);
         border-right-color: rgb(49, 49, 49);
         border-radius: .1vh;
-        left: -1.2vh;
+        left: -1vh;
       }
     }
 

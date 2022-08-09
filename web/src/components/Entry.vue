@@ -51,7 +51,7 @@ const props = defineProps<{
 .entry {
   position: relative;
   //background-color: #2dc26b;
-  //border: 5px solid rgba(49, 49, 49, .8);
+  //border-bottom: .1vh solid rgba(49, 49, 49, .1);
   //margin: 0px 100px 100px 100px;
   margin-bottom: 2vh;
   //margin-top: 4vh;
@@ -104,13 +104,13 @@ const props = defineProps<{
   }
 
   .entry-pic {
-    width: 20.9vh;
+    width: 20.7vh;
     height: 30vh;
     background-color: #fff;
     position: relative;
     top: 2vh;
     //border: .3vh solid rgb(49, 49, 49);
-    box-shadow: -1vh 1vh .5vh 0vh rgba(49, 49, 49, .1);
+    box-shadow: 1vh 1vh .5vh .0vh rgba(49, 49, 49, .05);
 
 
     left: 2vh;
@@ -123,7 +123,7 @@ const props = defineProps<{
     //  height: 165px;
     //}
     @media (max-aspect-ratio: 1/1){
-      width:27vw;
+      width:27.06vw;
       height:39.23vw;
     }
 

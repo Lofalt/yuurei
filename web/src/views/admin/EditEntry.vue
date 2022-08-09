@@ -105,7 +105,7 @@
 <script lang="ts" setup>
 import UploadPic from "../../components/file/UploadPic.vue"
 import WangEditor from "../../components/wangeditor/EntryEditor.vue"
-import {NColorPicker, NTable, NInput, NButton, NSpace, NSelect} from "naive-ui"
+import {NColorPicker, NTable, NInput, NButton, NSpace, NSelect, useMessage} from "naive-ui"
 import {ref} from "vue";
 import axios from "../../request/index"
 import {useRouter} from "vue-router";
@@ -130,6 +130,7 @@ const ThirdColor = ref("#000")
 const options = ref([])
 const category = ref(null)
 const rawInfos = ref([])
+const message = useMessage()
 const props = defineProps<{
   id:string
 }>()
@@ -259,7 +260,13 @@ function edit() {
     EntryCategoryID: category.value
   }).then((res:any)=>{
     if(res.code==200){
-      router.push("/admin/entries")
+      message.info(res.msg)
+      setTimeout(()=>{
+        router.back()
+      },1000)
+    }else{
+      message.error(res.msg)
+      Infos.value = []
     }
   })
 }

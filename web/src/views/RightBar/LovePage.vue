@@ -103,9 +103,12 @@ function changePage(num: number) {
   width: 100%;
   padding: 1vh 1vh;
   overflow: auto;
+  //min-height: 50vh;
+  position: relative;
+  bottom: 0;
   height: 100%;
   margin: 0 auto;
-  overflow-x: hidden;
+  //overflow-x: hidden;
 
   .catList {
     display: flex;
@@ -165,10 +168,11 @@ function changePage(num: number) {
     text-align: center;
     margin: 0 auto;
     width: 100%;
-    min-height: 100%;
+    //min-height: 100%;
     padding-left: 70px;
     display: flex;
     justify-content: center;
+    align-content: flex-start;
     flex-wrap: wrap;
     @media (max-width: 800px) {
       padding-left: 0;
