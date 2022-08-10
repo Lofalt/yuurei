@@ -2,8 +2,8 @@
   <div class="enryContainer"
        :style="`--entry-main-color:${Entry.MainColor};--entry-sec-color:${Entry.SecColor};--entry-third-color:${Entry.ThirdColor}`">
     <div class="actualHeader">
-      <h3>{{ Entry.Quote }}
-      </h3></div>
+      <h4>{{ Entry.Quote }}
+      </h4></div>
     <div class="header">
       <div class="profile">
         <h1>简介</h1>
@@ -170,14 +170,14 @@ watch(router.currentRoute,(newValue:any)=>{
       background-color: var(--entry-sec-color);
     }
 
-    h3 {
-      line-height: 10vh;
+    h4 {
+      line-height: 6vh;
       display: inline-block;
       padding-left: 1.7em;
       position: relative;
 
       @media (max-aspect-ratio: 9/16) {
-        line-height: 7vh;
+        line-height: 5vh;
       }
 
       &::before {

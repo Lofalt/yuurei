@@ -21,7 +21,7 @@ module.exports = defineConfig({
         index: {
             entry: "src/main.ts",
             title: "幽居",
-            favicon: "public/practice.ico"
+            favicon: "public/pratice.ico"
         }
     },
     transpileDependencies: true,
@@ -57,7 +57,7 @@ module.exports = defineConfig({
     devServer: {
         open: true,
         port: 8080,
-        host: "192.168.3.159",
+        host: "192.168.3.173",
         proxy: {
             '/api': {
                 target: "http://127.0.0.1:8081",

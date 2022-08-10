@@ -275,7 +275,7 @@ watch(colRaw, () => {
     position: absolute;
     top: 15px;
     left: 2%;
-    background-color: rgb(124, 108, 105);
+    background-color: rgb(124, 119, 118);
     //background-color: rgb(124, 105, 105);
     color: white;
     padding: 10px 20px;

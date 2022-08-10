@@ -183,9 +183,9 @@ iframe {
 .infoPage {
   overflow: auto;
   // background-image: url("./assets/wallhaven-p262de.jpg");
-  border: .5vh solid rgb(49, 49, 49);
-  width: 85%;
-  height: 90%;
+  //border: .5vh solid rgb(49, 49, 49);
+  width: 90%;
+  height: 95%;
   position: relative;
   background-size: cover;
   margin: 10vh auto;

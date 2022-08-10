@@ -249,7 +249,7 @@ a {
 
   .header {
     position: relative;
-    color: black;
+    color: #505050;
     top: 2vh;
     font-size: 3vh;
     //border:3px solid rgb(49,49,49);
@@ -258,7 +258,7 @@ a {
     width: 12vh;
     //background-color: rgb(193, 211, 215);
     //color: white;
-    border-bottom: .4vh solid black;
+    border-bottom: .4vh solid #505050;
 
     @media (max-aspect-ratio: 1/1) {
       //width: 200px;

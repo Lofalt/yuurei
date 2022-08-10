@@ -168,6 +168,7 @@ function deleteMsg() {
     min-height: 15vh;
     //white-space: pre-line;
     // background-color: aquamarine;
+    background-color: #fff;
     word-break: break-word;
     white-space: pre-wrap;
     position: relative;
@@ -217,8 +218,8 @@ function deleteMsg() {
     &::after {
       position: absolute;
       display: block;
-      left: -1.3vh;
-      top: .2vh;
+      left: -1.1vh;
+      top: 0vh;
       transform: rotate(225deg);
       content: '';
       width: 0;
@@ -227,14 +228,16 @@ function deleteMsg() {
       border-top-color: rgb(49, 49, 49);
       border-right-color: rgb(49, 49, 49);
       //border-radius: 2px;
+      z-index: -1;
       border-radius: .4vh;
 
       @media (max-aspect-ratio: 1/1) {
-        border: .8vh solid transparent ;
+        border: 1.2vh solid transparent ;
         border-top-color: rgb(49, 49, 49);
         border-right-color: rgb(49, 49, 49);
-        border-radius: .3vh;
-        left: -1vh;
+        border-radius: .4vh;
+        left: -1.1vh;
+        top:.1vh;
       }
     }
 
@@ -285,7 +288,7 @@ function deleteMsg() {
 .insertPic {
   user-select: none;
   max-width: 50vw;
-  max-height: 60vh;
+  max-height: 40vh;
   margin-top: 20px;
   margin-right: 20px;
   align-self: flex-start;

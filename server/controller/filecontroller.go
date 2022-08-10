@@ -17,20 +17,20 @@ import (
 func UploadImg(c *gin.Context) {
 	// 单文件
 	file, _ := c.FormFile("file")
-	qua := c.Query("qua")
+	//qua := c.Query("qua")
 	quality, _ := strconv.Atoi(c.Query("qua"))
 	dir := c.Query("dir")
-	if qua == "auto" {
+	//if qua == "auto" {
 
-		switch {
-		case file.Size < 1024*1024:
-			quality = 80
-		case file.Size > 1024*1024 && file.Size < 1024*1024*5:
-			quality = 60
-		case file.Size >= 1024*1024*5:
-			quality = 40
-		}
+	switch {
+	case file.Size < 1024*1024:
+		quality = 80
+	case file.Size > 1024*1024 && file.Size < 1024*1024*5:
+		quality = 60
+	case file.Size >= 1024*1024*5:
+		quality = 40
 	}
+	//}
 	fmt.Println(quality)
 	// 上传文件至指定目录
 	// c.SaveUploadedFile(file, dst)
