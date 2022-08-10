@@ -6,7 +6,7 @@
         <span class="label">
         用户名:
           </span>
-      <input class="input" type="text" @change.lazy="checkName" v-model="username"
+      <input @keyup.enter="login" class="input" type="text" @change.lazy="checkName" v-model="username"
              placeholder="输入邮箱地址"/>
       <div v-show="!hasName" class="error">用户名不能为空</div>
     </div>
@@ -156,7 +156,7 @@ function login() {
   background-color: #fff;
   color: rgba(49, 49, 49, .8);
   border: .3vh solid black;
-  padding: 2% 4%;
+  padding: 1% 3%;
   border-radius: 5px;
   cursor: pointer;
 

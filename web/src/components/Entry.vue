@@ -1,14 +1,14 @@
 <template>
   <div class="entry" @click="jump">
     <div class="entry-pic" :style="{backgroundImage:`url(${headPic})`}">
-<!--      <n-rate :size="size" color="var(&#45;&#45;button-color)" class="star" readonly :default-value="4" allow-half/>-->
+      <!--      <n-rate :size="size" color="var(&#45;&#45;button-color)" class="star" readonly :default-value="4" allow-half/>-->
     </div>
     <div class="entry-right">
       <div class="entry-title">
         {{ title }}
       </div>
       <div class="entry-summary">
-        &nbsp;&nbsp;{{summary}}
+        &nbsp;&nbsp;{{ summary }}
       </div>
     </div>
   </div>
@@ -22,25 +22,26 @@ import {usePageData} from "@/store/pageData";
 
 const pageData = usePageData()
 const router = useRouter()
-const size = computed(()=>{
-  if(document.body.clientWidth<800){
+const size = computed(() => {
+  if (document.body.clientWidth < 800) {
     return `20`
-  }else{
-  return `normal`
+  } else {
+    return `normal`
 
   }
 })
-function jump(){
-  pageData.pagedata.count=1
-  router.push("/archive/entry/"+props.id)
+
+function jump() {
+  pageData.pagedata.count = 1
+  router.push("/archive/entry/" + props.id)
 }
 
 
 const props = defineProps<{
-  headPic:string,
-  title:string,
-  summary:string,
-  id:number
+  headPic: string,
+  title: string,
+  summary: string,
+  id: number
 
 }>()
 
@@ -67,9 +68,9 @@ const props = defineProps<{
   //  width: 80vw;
   //  height:40vw;
   //}
-  @media (max-aspect-ratio: 1/1){
-    width:80vw;
-    height:50vw;
+  @media (max-aspect-ratio: 1/1) {
+    width: 80vw;
+    height: 50vw;
   }
 
 
@@ -122,17 +123,17 @@ const props = defineProps<{
     //  width: 115px;
     //  height: 165px;
     //}
-    @media (max-aspect-ratio: 1/1){
-      width:27.06vw;
-      height:39.23vw;
+    @media (max-aspect-ratio: 1/1) {
+      width: 27.06vw;
+      height: 39.23vw;
     }
 
-    .star{
+    .star {
       position: absolute;
       width: 100%;
       text-align: center;
-      bottom:-3vh;
-      left:0;
+      bottom: -3vh;
+      left: 0;
       display: flex;
       justify-content: center;
     }
@@ -147,9 +148,9 @@ const props = defineProps<{
     background-color: #fff;
     height: 30vh;
     text-align: center;
-    @media (max-aspect-ratio: 1/1){
-      width:40vw;
-      height:39.23vw;
+    @media (max-aspect-ratio: 1/1) {
+      width: 40vw;
+      height: 39.23vw;
     }
 
 
@@ -192,7 +193,7 @@ const props = defineProps<{
     }
 
     .entry-summary {
-      color: #094a70;
+      color: #646363;
       text-overflow: ellipsis;
       overflow: hidden;
       //height: 80%;

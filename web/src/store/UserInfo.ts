@@ -7,7 +7,8 @@ export const useUserInfo = defineStore('userInfo', {
                 Name: null,
                 Username: null,
                 IsAdmin: false,
-                Sended: false
+                Sended: false,
+                ID: "",
             }
         }
     },

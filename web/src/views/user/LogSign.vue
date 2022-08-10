@@ -87,12 +87,12 @@ function isActive(arg: string) {
       width: 100%;
 
       .btn {
-        padding: 1.5% 4%;
+        padding: 1% 2%;
         margin: 2% 4%;
         margin-top: 5%;
         border: none;
         font-size: 1.1em;
-        border-radius: 5%;
+        border-radius: 10%;
         cursor: pointer;
         background: none;
         border: .3vh solid black;

@@ -140,7 +140,7 @@ function changePage(num: number) {
     //width: 80px;
     margin-left: .9vh;
     //margin-right: .6vh;
-    font-size: 1.5vh;
+    font-size: 1em;
     font-weight: bold;
     font-family: 微软雅黑;
     background-color: white;

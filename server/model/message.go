@@ -1,6 +1,8 @@
 package model
 
-import "gorm.io/gorm"
+import (
+	"gorm.io/gorm"
+)
 
 type Message struct {
 	gorm.Model
@@ -9,4 +11,6 @@ type Message struct {
 	Icon           string `gorm:"type:varchar(100)"`
 	Pics           string `gorm:"type:varchar(500)"`
 	IsAdmin        bool   `gorm:"DEFAULT:0"`
+	UserID         string `gorm:"type:varchar(50)"`
+	IsAnonymous    bool   `gorm:"default:0"`
 }

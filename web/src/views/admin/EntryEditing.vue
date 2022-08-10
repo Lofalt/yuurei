@@ -57,7 +57,7 @@
     <tr>
       <td>头图</td>
       <td>
-        <upload-pic name="上传头图" raw-src="" directory="" quality="" :ratio="0.666" @confirm="acceptPic"/>
+        <upload-pic name="上传头图" raw-src="" directory="entryPic" quality="auto" :ratio="0.666" @confirm="acceptPic"/>
       </td>
     </tr>
     <tr>
@@ -129,7 +129,7 @@ axios.get("/yuurei/entryCategory/all", {}).then((res: any) => {
   }
 })
 
-function back(){
+function back() {
   router.back()
 }
 
@@ -156,8 +156,9 @@ function acceptMyWord(myword: string) {
 function acceptPic(url: string) {
   HeaderPicture.value = url
 }
-function add(event){
-  if(event.keyCode == 13){
+
+function add(event) {
+  if (event.keyCode == 13) {
     let node = document.getElementsByClassName("input")[0] as HTMLSelectElement
     let father = document.getElementById("input") as HTMLSelectElement
     let child = node.cloneNode(true)
@@ -187,10 +188,10 @@ function copy() {
 }
 
 function del(event: any) {
-  if(document.getElementsByClassName("input").length>1){
-  let father = event.parentNode
-  console.log(event)
-  event.path[2].removeChild(event.path[1])
+  if (document.getElementsByClassName("input").length > 1) {
+    let father = event.parentNode
+    console.log(event)
+    event.path[2].removeChild(event.path[1])
 
   }
 }
@@ -225,13 +226,13 @@ function getInfos() {
     SecColor: SecColor.value,
     ThirdColor: ThirdColor.value,
     EntryCategoryID: category.value
-  }).then((res:any)=>{
-    if(res.code==200){
+  }).then((res: any) => {
+    if (res.code == 200) {
       message.info(res.msg)
-      setTimeout(()=>{
+      setTimeout(() => {
         router.back()
-      },1000)
-    }else{
+      }, 1000)
+    } else {
       message.error(res.msg)
       infoes.value = []
     }

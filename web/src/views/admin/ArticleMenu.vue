@@ -5,7 +5,7 @@
       <n-select v-model:value="category" :options="options" default-value="all"/>
     </n-space>
   </div>
-  <n-modal v-model:show="showUpdateModal" display-directive="show" :on-after-leave="getArticle">
+  <n-modal v-model:show="showUpdateModal" display-directive="if" :on-after-leave="getArticle">
     <!--    <n-card-->
     <!--        style="width: 100vw"-->
     <!--        title="新建文章"-->
@@ -95,7 +95,7 @@ function getCategory() {
 const actions = [{
   name: "删除",
   key: "delete",
-  type:"error",
+  type: "error",
   call: function (id: any) {
     dialog.warning({
       title: '警告',
@@ -116,7 +116,7 @@ const actions = [{
 }, {
   name: "修改",
   key: "update",
-  type:"info",
+  type: "info",
   call: function (id: any) {
     axios.get("/yuurei/article/" + id, {}).then((res: any) => {
       article.value = res.data.data
@@ -152,17 +152,17 @@ const createColumns = ({play}: { play: (row: Article) => void }): DataTableColum
       title: '操作',
       key: 'update',
       render(row) {
-        const action = actions.map((a:any) => {
+        const action = actions.map((a: any) => {
           return h(
               NButton,
               {
-                style:{
-                  marginRight:`6px`
+                style: {
+                  marginRight: `6px`
                 },
                 strong: true,
                 tertiary: true,
                 size: 'small',
-                type:a.type,
+                type: a.type,
                 onClick: () => a.call(row.id)
               },
               {default: () => a.name}

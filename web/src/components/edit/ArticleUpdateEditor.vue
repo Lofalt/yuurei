@@ -1,5 +1,7 @@
 <template>
   <div class="container">
+    <upload-pic name="头图" :raw-src="headerPic" directory="articleHeaderPicture" :quality="30" ratio="2.5"
+                @confirm="acceptPic"/>
     <div class="header">
       <input v-model="title" placeholder="输入标题">
     </div>
@@ -38,6 +40,7 @@ import {NSpace, NSelect, NDynamicTags, NColorPicker} from "naive-ui";
 // import axios from "../../request/index"
 // import axios from "axios"
 import axios from "@/request/index"
+import UploadPic from "../file/UploadPic.vue"
 
 const category = ref(null)
 const title = ref('')
@@ -48,9 +51,17 @@ const options = ref([])
 const article = inject('article') as any
 const emit = defineEmits(['success'])
 const tags = ref([])
+const headerPic = ref("")
+const rawSrc = ref("")
+
+function acceptPic(url: string) {
+  headerPic.value = url
+}
+
 title.value = article.value.ArticleTitle
 summary.value = article.value.ArticleSummary
 category.value = article.value.ArticleCategoryID
+headerPic.value = article.value.HeaderPicture
 article.value.Tags.forEach((obj: any) => {
   tags.value.push({
     label: obj.TagName,
@@ -61,6 +72,8 @@ watch(article, (newValue: any, oldValue: any) => {
   title.value = article.value.ArticleTitle
   summary.value = article.value.ArticleSummary
   category.value = article.value.ArticleCategoryID
+  headerPic.value = ""
+  headerPic.value = article.value.HeaderPicture
   tags.value = []
   article.value.Tags.forEach((obj: any) => {
     tags.value.push({
@@ -105,6 +118,7 @@ function send() {
     ArticleSummary: summary.value,
     ArticleContent: content.value,
     Tags: Tags,
+    HeaderPicture: headerPic.value
   }).then((res) => {
     emit('success', res)
   })

@@ -1,6 +1,7 @@
 <template>
   <div class="container">
-    {{ tags }}
+    <upload-pic @confirm="acceptPic" name="上传头图" raw-src="" directory="articleHeaderPicture" :quality="30"
+                :ratio="2.5"/>
     <div class="header">
       <input v-model="title" placeholder="输入标题">
     </div>
@@ -39,6 +40,7 @@ import {NSpace, NSelect, NDynamicTags, NColorPicker} from "naive-ui";
 // import axios from "../../request/index"
 // import axios from "axios"
 import axios from "@/request/index"
+import UploadPic from "../file/UploadPic.vue"
 
 const category = ref(null)
 const title = ref('')
@@ -46,7 +48,11 @@ const summary = ref('')
 const content: Ref<string> = ref('')
 const tagColor = ref('#000000')
 const options = ref([])
+const headerPic = ref("")
 
+function acceptPic(url: string) {
+  headerPic.value = url
+}
 
 axios.get("/yuurei/articleCategory/all", {}).then((res: any) => {
   for (let i = 0; i < res.data.data.length; i++) {
@@ -84,6 +90,7 @@ function send() {
     ArticleSummary: summary.value,
     ArticleContent: content.value,
     Tags: Tags,
+    HeaderPicture: headerPic.value
   }).then((res) => {
     emit('success', res)
   })

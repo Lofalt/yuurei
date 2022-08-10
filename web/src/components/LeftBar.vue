@@ -142,7 +142,7 @@ function logOut() {
         Username: null,
         IsAdmin: false
       }
-      router.replace(router.currentRoute.value)
+      router.go(0)
       toggle()
     },
     onNegativeClick: () => {

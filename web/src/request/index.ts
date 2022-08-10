@@ -14,7 +14,7 @@ axios.defaults.withCredentials = false;
 axios.defaults.headers.post["Access-Control-Allow-Origin-Type"] = "*";
 
 //设置超时
-axios.defaults.timeout = 15000;
+axios.defaults.timeout = 30000;
 
 axios.interceptors.request.use(
     (config: any) => {

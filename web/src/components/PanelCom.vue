@@ -1,7 +1,7 @@
 <template>
   <div class="panel" @click="archive(article.ID)">
     <!--        <div class="background" :style="{backgroundImage:background}">-->
-    <div class="background" :style="{backgroundImage:`url(${article.ArticleCategory.HeaderPic})`}">
+    <div class="background" :style="{backgroundImage:`url(${article.HeaderPicture})`}">
       <!--            <img src="~assets/img/backgroundimg/background1.png"/>-->
     </div>
     <div class="panelTitle">
@@ -38,13 +38,14 @@ function archive(articleId: number) {
 <style lang="less" scoped>
 
 @keyframes enter {
-  from{
+  from {
     opacity: 0;
   }
 }
+
 .panel {
   //color:var(--button-color);
-  color:white;
+  color: white;
   font-size: 1.6vh;
   //border: .35vh solid rgb(53, 53, 53);
   //color: rgb(39, 39, 39);
@@ -58,8 +59,8 @@ function archive(articleId: number) {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  animation : enter .7s ease;
-  animation-delay: calc(Var(--i)*0.1s);
+  animation: enter .7s ease;
+  animation-delay: calc(Var(--i) * 0.1s);
   animation-fill-mode: backwards;
 
 
@@ -101,7 +102,8 @@ function archive(articleId: number) {
   }
 
   &:hover .background {
-    transform: scale(1.2, 1.2);
+    //transform: scale(1.2, 1.2);
+    filter: blur(5px);
   }
 
   &:hover .panelSummary {

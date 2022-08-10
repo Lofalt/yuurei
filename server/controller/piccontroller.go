@@ -114,10 +114,14 @@ func (p PicController) Delete(c *gin.Context) {
 	}
 	p.DB.First(&pic)
 	fmt.Println(pic)
-	os.Remove(pic.Path)
 	//if err := p.DB.Unscoped().Delete(&pic).Error; err != nil {\
 	if err := p.DB.Delete(&pic).Error; err != nil {
 
+		response.Fail(c, gin.H{}, err.Error())
+		return
+	}
+	err := os.Remove(pic.Path)
+	if err != nil {
 		response.Fail(c, gin.H{}, err.Error())
 		return
 	}

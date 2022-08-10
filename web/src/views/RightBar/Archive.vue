@@ -6,7 +6,7 @@
           {{ article.ArticleTitle }}
         </div>
         <div class="articleInfo">
-          <span>{{ new Date(article.CreatedAt).toLocaleString() }}</span>
+          <span>{{ new Date(article.CreatedAt).Format("yyyy/M/dd  hh:mm:ss") }}</span>
           <!--                <span>阅读数:{{article.ArticleReadTimes}}</span>-->
           <!--                <span>被分享:{{article.articleShareTimes}}</span>-->
         </div>
@@ -346,10 +346,10 @@ blockquote p {
     justify-content: center;
     align-items: center;
     border-radius: 2px;
-    border: 3px solid rgb(49, 49, 49);
+    //border: 3px solid rgb(49, 49, 49);
     /*padding-bottom: 40px;*/
     /*border-bottom: 1px solid black ;*/
-    box-shadow: -1px 1px 0px .5px rgb(49, 49, 49);
+    //box-shadow: -1px 1px 0px .5px rgb(49, 49, 49);
 
     @media (max-aspect-ratio: 1/1) {
       width: 100%;

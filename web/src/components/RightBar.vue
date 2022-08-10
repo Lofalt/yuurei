@@ -121,7 +121,7 @@ function pushCard() {
     card.className = "showpage activeCard"
     tag.classList.remove("activeTag")
   }
-  if(!showMessage.value && !showVlog.value && !showBlog.value && !showLove.value ){
+  if (!showMessage.value && !showVlog.value && !showBlog.value && !showLove.value) {
     return
   }
 
@@ -250,12 +250,7 @@ function pushCard() {
     }
 
     .showtag {
-      // box-sizing: content-box;
       display: flex;
-      //justify-content: flex-start;
-      //align-items: flex-start;
-      // border: 4px solid rgba(73, 73, 73, 1);
-      // box-sizing: content-box;
       z-index: 10;
       position: absolute;
       width: 35px;
@@ -264,29 +259,27 @@ function pushCard() {
       left: -35px;
       top: 5vh;
       cursor: pointer;
-      box-shadow: -3px 0px 0px 2px rgb(49, 49, 49);
-      border-radius: 3px;
+      //box-shadow: -3px 0px 0px 2px rgb(49, 49, 49);
+      border-radius: .3vh;
       writing-mode: vertical-lr;
-      //text-align:s;
-      //align-items: flex-end;
       color: rgb(255, 255, 255);
       font-size: 1.3em;
       padding-top: 1vh;
       border-top: 3px solid rgb(49, 49, 49);
       border-bottom: 3px solid rgb(49, 49, 49);
-
       box-shadow: -.3vh 0px 0px 2px rgb(49, 49, 49);
-      left: -4vh;
+      left: -4.1vh;
       width: 4vh;
       height: 11vh;
       font-size: 2vh;
       border-top: .3vh solid rgb(49, 49, 49);
       border-bottom: .3vh solid rgb(49, 49, 49);
+      border-right: 0;
 
 
       @media (min-width: 1600px) {
         box-shadow: -.3vh 0px 0px 2px rgb(49, 49, 49);
-        left: -4vh;
+        left: -4.1vh;
         width: 4vh;
         height: 10vh;
         font-size: 2vh;

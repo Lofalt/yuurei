@@ -20,6 +20,13 @@
       </td>
     </tr>
     <tr>
+      <td>匿名名字</td>
+      <td>
+        <n-input type="text" v-model:value="AnonymousName"/>
+      </td>
+    </tr>
+
+    <tr>
       <td>留言框默认头像</td>
       <td>
         <upload-pic @confirm="acceptMessageIcon" name="上传头像" :raw-src="MessageIcon" directory="messageIcon"
@@ -63,8 +70,8 @@
     </tbody>
 
   </n-table>
-  <n-button type="info" @click="edit">修改</n-button>
-  <n-button type="default" @click="create">初始化</n-button>
+  <n-button type="info" @click="edit" v-show="HasInited">修改</n-button>
+  <n-button type="default" @click="create" v-show="!HasInited">初始化</n-button>
 </template>
 
 <script lang="ts" setup>
@@ -78,12 +85,16 @@ import {useRouter} from "vue-router";
 const MyName = ref("")
 const WebsiteName = ref("")
 const MessageIcon = ref("")
+const AnonymousName = ref("")
 const MyIcon = ref('')
 const BackgroundImage = ref('')
 const MobileBackgroundImage = ref("")
 const DateColor = ref('')
 const ButtonColor = ref('')
 const router = useRouter()
+
+
+const HasInited = ref(false)
 
 function acceptMobileBackground(url: string) {
   MobileBackgroundImage.value = url
@@ -112,10 +123,13 @@ function create() {
     BackgroundImage: BackgroundImage.value,
     DateColor: DateColor.value,
     ButtonColor: ButtonColor.value,
+    AnonymousName: AnonymousName.value,
   }).then((res: any) => {
     if (res.code == 200) {
       router.go(0)
       // router.replace("/home")
+    } else {
+      alert(res.msg)
     }
   })
 }
@@ -123,6 +137,9 @@ function create() {
 
 function getConfig() {
   axios.get("/yuurei/settings/1", {}).then((res: any) => {
+    if (res.code !== 200) {
+      return
+    }
     let set = res.data.data
     MyName.value = set.MyName
     WebsiteName.value = set.WebsiteName
@@ -132,6 +149,8 @@ function getConfig() {
     DateColor.value = set.DateColor
     ButtonColor.value = set.ButtonColor
     MobileBackgroundImage.value = set.MobileBackgroundImage
+    AnonymousName.value = set.AnonymousName
+    HasInited.value = true
   })
 }
 
@@ -148,11 +167,15 @@ function edit() {
     BackgroundImage: BackgroundImage.value,
     DateColor: DateColor.value,
     ButtonColor: ButtonColor.value,
-    MobileBackgroundImage: MobileBackgroundImage.value
+    MobileBackgroundImage: MobileBackgroundImage.value,
+    AnonymousName: AnonymousName.value,
+
   }).then((res: any) => {
     if (res.code == 200) {
       router.go(0)
       // router.replace("/home")
+    } else {
+      alert(res.msg)
     }
   })
 }

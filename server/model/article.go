@@ -10,6 +10,7 @@ type Article struct {
 	ArticleContent    string `gorm:"NOT NULL"`
 	ArticleReadTimes  int
 	ArticleLoveTimes  int
+	HeaderPicture     string           `gorm:"type:varchar(100)"`
 	IsActive          bool             `gorm:"DEFAULT:1"`
 	ArticleSummary    string           `gorm:"NOT NULL;type:varchar(50)"`
 	ArticleCategoryID int              `gorm:"NOT NULL"`

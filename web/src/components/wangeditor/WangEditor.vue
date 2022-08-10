@@ -56,7 +56,7 @@ const editorConfig = {
   placeholder: '说点啥吧', focus: true,
   MENU_CONF: {
     uploadImage: {
-      server: '/api/yuurei/uploadImgArticle',
+      server: '/api/yuurei/uploadImgArticle?dir=articleImgs',
 
       fieldName: 'your-custom-name',
 

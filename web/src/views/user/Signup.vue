@@ -306,7 +306,7 @@ function checkPass() {
   background-color: #fff;
   color: rgba(49, 49, 49, .8);
   border: .3vh solid black;
-  padding: 2% 4%;
+  padding: 1% 3%;
   border-radius: 5px;
   cursor: pointer;
 

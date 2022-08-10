@@ -151,18 +151,22 @@ watch(currentCat, (newValue, oldValue) => {
   }
 
   .cat {
+    //display: flex;
+    //justify-content: center;
+    //align-items: center;
     cursor: pointer;
     margin-top: 3vh;
-    padding: .1vh 3vh;
+    padding: .2vh 3vh;
     //height:30px;
     //width: 80px;
     margin-left: .9vh;
     //margin-right: .6vh;
-    font-size: 1.5vh;
+    //font-size: 1.5vh;
+    line-height: 1.5em;
     font-weight: bold;
     font-family: 微软雅黑;
     background-color: white;
-    text-align: center;
+    //text-align: center;
     border: .3vh solid rgb(49, 49, 49);
     border-radius: .2vh;
     box-shadow: -.05vh .05vh 0px 0px rgb(49, 49, 49);

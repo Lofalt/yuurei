@@ -39,7 +39,7 @@ const cropping = ref(true)
 const emit = defineEmits(['confirm'])
 const src = ref(null) as any
 const props = defineProps<{
-  quality: number,
+  quality: any,
   directory: string,
   ratio: number,
   name: string,

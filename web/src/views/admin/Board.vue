@@ -7,7 +7,7 @@
             <article-menu/>
           </n-dialog-provider>
         </n-tab-pane>
-        <n-tab-pane name="menu" tab="菜单管理" display-directive="show">
+        <n-tab-pane name="menu" tab="文章分类" display-directive="show">
           <category-menu/>
         </n-tab-pane>
         <n-tab-pane name="pic" tab="图片管理 " display-directive="if">
@@ -16,14 +16,15 @@
         <n-tab-pane name="config" tab="系统配置 " display-directive="if">
           <config/>
         </n-tab-pane>
-
-        <n-tab-pane name="entries" tab="词条管理 " display-directive="if" >
-<!--          <entry-editing/>-->
+        <n-tab-pane name="entries" tab="词条管理 " display-directive="if">
           <n-message-provider>
-          <n-dialog-provider>
-          <router-view/>
-          </n-dialog-provider>
+            <n-dialog-provider>
+              <router-view/>
+            </n-dialog-provider>
           </n-message-provider>
+        </n-tab-pane>
+        <n-tab-pane name="entryCat" tab="词条分类" display-directive="show">
+          <category-entry/>
         </n-tab-pane>
       </n-tabs>
     </n-card>
@@ -31,7 +32,7 @@
 </template>
 
 <script lang="ts" setup>
-import {NCard, NTabs, NTabPane, NDialogProvider,NMessageProvider} from "naive-ui";
+import {NCard, NTabs, NTabPane, NDialogProvider, NMessageProvider} from "naive-ui";
 import articleMenu from "@/views/admin/ArticleMenu.vue";
 import ArticleMenu from "@/views/admin/ArticleMenu.vue";
 import CategoryMenu from "@/views/admin/CategoryMenu.vue"
@@ -39,14 +40,15 @@ import PicMenu from "@/views/admin/PicMenu.vue"
 import Config from "./Config.vue"
 import {useRouter} from "vue-router"
 import EntryEditing from "./EntryEditing.vue"
+import CategoryEntry from "./CategoryEntry.vue"
 
 const router = useRouter()
 
-function goEntry(tab:string){
+function goEntry(tab: string) {
   console.log(tab)
-  if(tab=="entries"){
+  if (tab == "entries") {
 
-  router.push("/admin/entries")
+    router.push("/admin/entries")
   }
 }
 </script>

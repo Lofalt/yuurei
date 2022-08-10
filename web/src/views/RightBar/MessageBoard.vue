@@ -5,15 +5,15 @@
     </transition>
     <div class="head" @click.capture="showModal = false">
       <transition-group tag="p" name="jokes">
-        <joke @emit-pic="acceptScale" v-for="(item,index) in msgList" :style="`--i:${index%3}`" :msg="item"
+        <joke @emit-pic="acceptScale" v-for="(item,index) in msgList" :style="`--i:${index%5}`" :msg="item"
               :key="item.ID"
-              @reload="getMsgs"/>
+              @reload="flush"/>
       </transition-group>
     </div>
     <div class="loading">
       <loading-com v-show="isLoading"/>
     </div>
-    <div class="loading end" v-show="msgList.length===total &&total>5">———— 时间的尽头 ————</div>
+    <div class="loading end" v-show="msgList.length===total &&total>5">— 时间的尽头 —</div>
     <div class="left">
 
       <n-icon size="3vh" color="#000000" class="messageIcon" @click="changeModal">
@@ -147,8 +147,10 @@ const backgroundImage = computed(() => {
 
 const uploadImg = computed(() => {
   if (backgroundImg.value == '' || userName.value == '') {
+    console.log("在这返回")
     return config.value.MessageDefaultIcon
   }
+  console.log("停顿")
   return backgroundImg.value
 })
 
@@ -179,6 +181,9 @@ function toggleEmoji() {
 
 function check(arg: any) {
   backgroundImg.value = arg
+  console.log("提交")
+  console.log(arg)
+  console.log(backgroundImg.value)
   iconEdit.value = false
 }
 
@@ -283,9 +288,9 @@ const fnlContent = computed(() => {
 
 function sendMsg() {
   console.log(fnlContent.value)
-  if (userInfo.user.Sended) {
+  if (userInfo.user.Sended && !userInfo.user.IsAdmin) {
     message.warning("30秒内只能留言一次")
-    // return
+    return
   }
   if (fnlContent.value == "") {
     message.warning("先说点啥吧")
@@ -299,6 +304,8 @@ function sendMsg() {
     Icon: uploadImg.value,
     UserName: userName.value,
     IsAdmin: userInfo.user.IsAdmin,
+    IsAnonymous: userName.value == "",
+    UserId: userInfo.user.ID,
     Pics: (() => {
       let pics: string = ""
       for (let i = 0; i < picList.value.length; i++) {
@@ -310,18 +317,26 @@ function sendMsg() {
       return pics
     })()
   }).then((res) => {
-    axios.get(`/yuurei/msg/all?pageNum=1&pageSize=1}`, {}).then((res: any) => {
-      msgList.value.unshift(res.data.data[0])
-    })
-    userInfo.user.Sended = true
-    showModal.value = false
-    showTheModal.value = false
-    msgContent.value = ""
-    picList.value = []
-    setTimeout(() => {
-      userInfo.user.Sended = false
-    }, 30000)
+    flush()
   })
+}
+
+function flush() {
+  pageNum.value = 1
+  axios.get(`/yuurei/msg/all?pageNum=${pageNum.value}&pageSize=${pageSize.value}`, {}).then((res: any) => {
+    msgList.value = res.data.data
+
+  }).then(() => {
+    document.getElementsByClassName("msgContainer")[0].scrollTo(0, 0)
+  })
+  userInfo.user.Sended = true
+  showModal.value = false
+  showTheModal.value = false
+  msgContent.value = ""
+  picList.value = []
+  setTimeout(() => {
+    userInfo.user.Sended = false
+  }, 30000)
 }
 
 const wang = ref<InstanceType<typeof WangEditorMini>>();
@@ -428,6 +443,7 @@ function getFile(event: any) {
   justify-content: center;
   align-items: center;
   width: 10vh;
+  border-radius: 50%;
   height: 10vh;
   background-color: #ffffff;
   background-size: cover;
@@ -449,6 +465,7 @@ function getFile(event: any) {
   &::after {
     content: "修改头像";
     //z-index: -1 ;
+    border-radius: 50%;
     box-sizing: border-box;
     font-size: 1.5vh;
     display: flex;
@@ -850,7 +867,7 @@ function getFile(event: any) {
 .jokes-leave-active,
 .jokes-enter-active {
   transition: all .5s ease;
-  transition-delay: calc(Var(--i) * .1s);
+  transition-delay: calc(Var(--i) * .05s);
 }
 
 .messageDiv2 {
