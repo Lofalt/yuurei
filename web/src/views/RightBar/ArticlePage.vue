@@ -26,7 +26,7 @@ import axios from '@/request'
 const pageData = usePageData()
 const router = useRouter()
 const pageNum = ref(1)
-const pageTotal = ref(8)
+const pageTotal = ref(0)
 const pageSize = ref(5)
 const currentCat = ref("all") as any
 

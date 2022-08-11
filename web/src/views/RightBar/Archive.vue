@@ -6,7 +6,9 @@
           {{ article.ArticleTitle }}
         </div>
         <div class="articleInfo">
-          <span>{{ new Date(article.CreatedAt).Format("yyyy/M/dd  hh:mm:ss") }}</span>
+          <span>{{
+              new Date(article.CreatedAt).Format("yyyy/M/dd  hh:mm:ss")
+            }}  &nbsp;&nbsp;&nbsp;&nbsp;分类:{{ article.ArticleCategory.ArticleCategoryName }}</span>
           <!--                <span>阅读数:{{article.ArticleReadTimes}}</span>-->
           <!--                <span>被分享:{{article.articleShareTimes}}</span>-->
         </div>
@@ -63,7 +65,10 @@ const article = ref({
   ArticleTitle: '',
   ArticleContent: '',
   ArticleSummary: '',
-  CreatedAt: ''
+  CreatedAt: '',
+  ArticleCategory: {
+    ArticleCategoryName: ""
+  }
 })
 
 const props = defineProps<{
@@ -389,7 +394,8 @@ blockquote p {
       span {
         margin-left: 10px;
         font-size: 1em;
-        color: rgb(52, 40, 40);
+        //color: rgb(52, 40, 40);
+        color: rgba(49, 49, 49, .4);
       }
     }
   }

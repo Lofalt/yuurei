@@ -154,7 +154,7 @@ function pushCard() {
   position: relative;
   overflow: hidden;
   width: 100%;
-  min-height: 95vh;
+  min-height: 100vh;
 
   // min-height: 100vh;
   // width: 83.5vw;

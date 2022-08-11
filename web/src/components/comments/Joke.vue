@@ -51,7 +51,6 @@ backgroundImg.value = props.msg.Icon
 
 const userName = computed(() => {
   if (props.msg.IsAnonymous) {
-    console.log(config.value)
     return config.value.AnonymousName
   }
   return props.msg.UserName
@@ -237,7 +236,7 @@ function deleteMsg() {
         border-right-color: rgb(49, 49, 49);
         border-radius: .4vh;
         left: -1.1vh;
-        top:.1vh;
+        top: .1vh;
       }
     }
 

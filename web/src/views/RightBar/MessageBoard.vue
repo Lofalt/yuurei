@@ -147,10 +147,8 @@ const backgroundImage = computed(() => {
 
 const uploadImg = computed(() => {
   if (backgroundImg.value == '' || userName.value == '') {
-    console.log("在这返回")
     return config.value.MessageDefaultIcon
   }
-  console.log("停顿")
   return backgroundImg.value
 })
 
@@ -181,9 +179,6 @@ function toggleEmoji() {
 
 function check(arg: any) {
   backgroundImg.value = arg
-  console.log("提交")
-  console.log(arg)
-  console.log(backgroundImg.value)
   iconEdit.value = false
 }
 
@@ -234,7 +229,6 @@ function listenScroll(event: any) {
   const box = document.getElementsByClassName("msgContainer")[0] as HTMLSelectElement
   if (box.scrollTop + box.offsetHeight + 100 > box.scrollHeight) {
     if (!isLoading.value && msgList.value.length < total.value) {
-      console.log("我直接疯狂加载")
       isLoading.value = true
       setTimeout(() => {
         getNext()
@@ -287,7 +281,6 @@ const fnlContent = computed(() => {
 })
 
 function sendMsg() {
-  console.log(fnlContent.value)
   if (userInfo.user.Sended && !userInfo.user.IsAdmin) {
     message.warning("30秒内只能留言一次")
     return
@@ -367,7 +360,7 @@ function upload() {
     message.warning("超过上传上限")
     return
   }
-  console.log(inputFile.value.click())
+  inputFile.value.click()
 }
 
 function RndNum(num: number) {

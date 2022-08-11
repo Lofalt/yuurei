@@ -45,7 +45,6 @@ import CategoryEntry from "./CategoryEntry.vue"
 const router = useRouter()
 
 function goEntry(tab: string) {
-  console.log(tab)
   if (tab == "entries") {
 
     router.push("/admin/entries")

@@ -1,7 +1,8 @@
 <template>
   <div class="panel" @click="archive(article.ID)">
     <!--        <div class="background" :style="{backgroundImage:background}">-->
-    <div class="background" :style="{backgroundImage:`url(${article.HeaderPicture})`}">
+    <!--    <div class="background" :style="{backgroundImage:`url(${article.HeaderPicture})`}">-->
+    <div class="background" :style="{backgroundColor:article.ArticleCategory.Color}">
       <!--            <img src="~assets/img/backgroundimg/background1.png"/>-->
     </div>
     <div class="panelTitle">
@@ -90,7 +91,7 @@ function archive(articleId: number) {
   }
 
   &:hover {
-    box-shadow: 0 0 10px rgba(110, 104, 104, 0.8);
+    //box-shadow: 0 0 10px rgba(110, 104, 104, 0.8);
 
     .panelTitle {
       transform: translate3d(0, -10px, 0);
@@ -102,8 +103,8 @@ function archive(articleId: number) {
   }
 
   &:hover .background {
-    //transform: scale(1.2, 1.2);
-    filter: blur(5px);
+    transform: scale(1.2, 1.2);
+    //filter: blur(5px);
   }
 
   &:hover .panelSummary {

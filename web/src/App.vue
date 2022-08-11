@@ -8,7 +8,7 @@
       <div class="icons"></div>
       <div class="icons"></div>
     </div>
-    <transition>
+    <transition name="button">
       <n-icon size="5vh" color="#ffffff" @click="changePage(0)" class="fixedButton"
               v-show="pageData.pagedata.count!=0 && (router.currentRoute.value.path.startsWith(`/home`)||router.currentRoute.value.path.startsWith(`/archive`))">
         <arrow-bar-to-up/>
@@ -168,17 +168,27 @@ function changePage(num: number) {
 
 .fixedButton {
   position: fixed;
-  top: 5vh;
-  right: 2vw;
+  bottom: 5vh;
+  right: .5vw;
   z-index: 5;
+  width: 7vh;
+  height: 7vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--button-color);
+  border-radius: 50%;
+  padding-top: .5vh;
   cursor: pointer;
-  @media (max-width: 1024px) {
-    height: 10vh;
+  @media (max-aspect-ratio: 9/16) {
+    //height: 10vh;
+    height: 6vh;
+    width: 6vh;
     right: 1vw;
     // padding: 10px;
     //padding: 0;
     //width: 8vw;
-    top: 1vh;
+    bottom: 1vh;
     //writing-mode: vertical-lr;
     //background-color: rgb(49, 49, 49);
     //color: white;
@@ -308,6 +318,16 @@ button {
 
 .v-leave-active,
 .v-enter-active {
+  transition: all .8s ease-in-out;
+}
+
+.button-leave-to,
+.button-enter-from {
+  transform: translateY(50vh);
+}
+
+.button-leave-active,
+.button-enter-active {
   transition: all .8s ease-in-out;
 }
 

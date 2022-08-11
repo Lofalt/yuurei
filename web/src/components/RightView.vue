@@ -11,8 +11,8 @@
                 <span v-show="showSpan"
                       style="display:block;text-align:center;width:80%;margin:0 auto;z-index:1;position: absolute;font-size: 1.5em;color:rgba(49,49,49,.4)">这里空空如也,就像我的脑袋瓜一样.</span>
       <div class="infoPage" @touchend.stop="">
-                <router-view></router-view>
-<!--        <entry-view-info/>-->
+        <router-view></router-view>
+        <!--        <entry-view-info/>-->
       </div>
     </div>
     <div class=" bottom" @wheel.self="wheeling">
@@ -119,7 +119,7 @@ function changePage(num: number) {
 <style lang="less" scoped>
 
 * {
-  font-size: 1.6vh;
+  font-size: 1.8vh;
 }
 
 .player {
@@ -195,6 +195,7 @@ iframe {
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  //font-size: 2vh;
   flex-direction: column;
 
   &::-webkit-scrollbar {
