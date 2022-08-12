@@ -348,6 +348,7 @@ a {
     .footerbox {
       cursor: pointer;
       width: 80%;
+      font-weight: bold;
       background-color: #ffffff;
       height: 3.1vh;
       font-size: 1.6vh;

@@ -1,22 +1,28 @@
 <template>
   <div class="articlePage">
+    <img class="headerPic" :src="article.HeaderPicture"/>
     <div v-if="article" class="article">
       <div class="articleHeader">
+      <div class="archive-head">
+<!--        {{article.ArticleSummary}}-->
+        {{new Date(article.CreatedAt).Format("yyyy/M/dd") +"   "+` (${"日月火水木金土".charAt(new Date(article.CreatedAt).getDay())})`}}
+      </div>
         <div class="articleTitle">
           {{ article.ArticleTitle }}
         </div>
         <div class="articleInfo">
-          <span>{{
-              new Date(article.CreatedAt).Format("yyyy/M/dd  hh:mm:ss")
-            }}  &nbsp;&nbsp;&nbsp;&nbsp;分类:{{ article.ArticleCategory.ArticleCategoryName }}</span>
-          <!--                <span>阅读数:{{article.ArticleReadTimes}}</span>-->
+          <span>{{article.ArticleSummary}}</span>
+<!--          <span>分类:{{ article.ArticleCategory.ArticleCategoryName }}</span>-->
+<!--          <span>阅读数:{{ article.ArticleReadTimes }}</span>-->
+<!--          <span v-show="article.CreatedAt!=article.UpdatedAt">修改于 {{new Date(article.UpdatedAt).Format("yyyy/M/dd  hh:mm:ss") }}</span>-->
           <!--                <span>被分享:{{article.articleShareTimes}}</span>-->
         </div>
-        <div class="articleSummary" :style="{backgroundColor:article.ArticleCategory?article.ArticleCategory.Color:``}">
-          <div class="summary">
-            {{ article.ArticleSummary }}
-          </div>
-        </div>
+        <!--        <div class="articleSummary" :style="{backgroundImage:`url(${article.HeaderPicture})`}">-->
+        <!--          <div class="summary">-->
+        <!--            {{ article.ArticleSummary }}-->
+        <!--          </div>-->
+        <!--        </div>-->
+        <!--        <blockquote>{{article.ArticleSummary}}</blockquote>-->
       </div>
       <div class="articleContent" v-html="article.ArticleContent" v-highlight/>
     </div>
@@ -101,6 +107,8 @@ const hasNext = computed(() => {
   return true
 
 })
+
+
 onMounted(() => {
   axios.get(
       "/yuurei/article/" + props.id,
@@ -109,7 +117,6 @@ onMounted(() => {
     article.value = result.data.data
     pre.value = result.data.pre
     next.value = result.data.next
-
   })
 })
 watch(router.currentRoute, (newValue, oldValue) => {
@@ -129,101 +136,6 @@ function jump(id: number) {
 }
 </script>
 
-<!--<script>-->
-<!--    import {request} from "../requests/requests";-->
-<!--    import scrollToTop from "../util/scrollToTop";-->
-<!--    import Comments from "../components/article/Comments";-->
-
-<!--    export default {-->
-<!--    name: "Archive",-->
-<!--      components:{-->
-<!--      Comments-->
-<!--      },-->
-<!--    data(){-->
-<!--      return {-->
-<!--        article:null,-->
-<!--        next:null,-->
-<!--        pre:null,-->
-<!--        id:null,-->
-<!--      }-->
-<!--    },-->
-<!--    created() {-->
-<!--      request({-->
-<!--        url:'/archive/'+this.$route.params.articleId-->
-<!--      }).then((result)=>{-->
-<!--        if(!result.data){-->
-<!--          location.href='/404'-->
-<!--        }-->
-<!--        this.article = result.data-->
-<!--        request({-->
-<!--          url: '/archive/preAndNext',-->
-<!--          params:{-->
-<!--            'articleCreateTime':result.data.articleCreateTime,-->
-<!--            'categoryId':result.data.articleCategories[0].categoryId-->
-<!--          }-->
-<!--          }-->
-<!--        ).then((result2)=> {-->
-<!--          this.next = result2.data.next-->
-<!--          this.pre = result2.data.pre-->
-<!--        })-->
-<!--      })-->
-<!--    },-->
-<!--      beforeRouteUpdate(to,from,next){-->
-<!--        request({-->
-<!--          url:'/archive/'+to.params.articleId-->
-<!--        }).then((result)=>{-->
-<!--          this.article = result.data-->
-<!--          request({-->
-<!--              url: '/archive/preAndNext',-->
-<!--              params:{-->
-<!--                'articleCreateTime':result.data.articleCreateTime,-->
-<!--                'categoryId':result.data.articleCategories[0].categoryId-->
-<!--              }-->
-<!--            }-->
-<!--          ).then((result2)=> {-->
-<!--            this.next = result2.data.next-->
-<!--            this.pre = result2.data.pre-->
-<!--          })-->
-<!--        })-->
-<!--        next()-->
-<!--      },-->
-<!--      methods:{-->
-<!--          jump(id){-->
-<!--            scrollToTop(100)-->
-<!--            this.$router.push({-->
-<!--              path:'/archive/'+id,-->
-<!--            }).catch(err=>{})-->
-<!--          },-->
-<!--      },-->
-<!--      watch:{-->
-<!--      '$route'(to,from){-->
-<!--        if(this.$route.params.articleId){-->
-<!--          request({-->
-<!--            url:'/archive/'+this.$route.params.articleId-->
-<!--          }).then((result)=>{-->
-<!--            this.article = result.data-->
-<!--            request({-->
-<!--                url: '/archive/preAndNext',-->
-<!--                params:{-->
-<!--                  'articleCreateTime':result.data.articleCreateTime,-->
-<!--                  'categoryId':result.data.articleCategories[0].categoryId-->
-<!--                }-->
-<!--              }-->
-<!--            ).then((result2)=> {-->
-<!--              this.next = result2.data.next-->
-<!--              this.pre = result2.data.pre-->
-<!--            })-->
-<!--          })-->
-<!--        }-->
-<!--      }-->
-<!--      },-->
-<!--      beforeRouteLeave(to,from,next){-->
-<!--        this.article = null-->
-<!--        next();-->
-<!--      },-->
-
-<!--  }-->
-<!--</script>-->
 
 <style lang="less">
 
@@ -251,9 +163,9 @@ iframe {
 
 blockquote {
   background: #f9f9f9;
-  border-left: 10px solid #ccc;
-  margin: 1.5em 10px;
-  padding: 0.5em 10px;
+  border-left: 1vh solid #ccc;
+  margin: 1.5em 1vh;
+  padding: 0.5em 1vh;
   quotes: "\201C""\201D""\2018""\2019";
 }
 
@@ -293,9 +205,13 @@ blockquote p {
 
   &::-webkit-scrollbar-thumb {
     width: 5px;
-    background-color: rgba(49, 49, 49, .3);
+    background-color: var(--button-color);
     color: black;
     border-radius: 20px;
+  }
+
+  .headerPic {
+    width: 100%;
   }
 
 }
@@ -303,10 +219,24 @@ blockquote p {
 .article {
   .articleContent {
 
-
+    pre{
+      code{
+        background-color: #fdf1f1!important;
+      }
+      &::before{
+        border-top-left-radius: 2vh;
+        border-top-right-radius: 2vh;
+        display: block;
+        content: "";
+        width: 100%;
+        height: 4vh;
+        //background-color: var(--button-color);
+        background-color: #ffb1b1;
+      }
+    }
     * {
       /*margin-top:15px;*/
-      //font-size: 16px;
+      //font-size: 1px;
 
       padding-top: 1.5vh;
       //color: rgb(49, 49, 49)
@@ -315,7 +245,12 @@ blockquote p {
     }
 
     p {
-      color: rgb(49, 49, 49)
+      //border-bottom: .1vh solid var(--button-color);
+      color: rgb(49, 48, 48);
+      //display: inline;
+      //font-family: "思源宋体","Noto Serif CJK SC","Noto Serif SC","Source Han Serif SC","Source Han Serif",source-han-serif-sc,SongTi SC,SimSum,"Hiragino Sans GB",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,"Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;;
+      //font-family: "思源宋体","微软雅黑 Light";
+      letter-spacing: .1vh;
     }
 
     &:nth-child(1) {
@@ -340,16 +275,18 @@ blockquote p {
     text-align: center;
     background-color: #524444;
     width: 70%;
-    color: white;
+    color: rgb(70, 48, 48);
     margin: 0 auto;
     min-height: 80px;
     /*padding-top:30px;*/
+    background-size: cover;
     box-sizing: border-box;
     margin-top: -3vh;
     display: flex;
     padding: 2vh;
     justify-content: center;
     align-items: center;
+    font-family: 幼圆;
     border-radius: 2px;
     //border: 3px solid rgb(49, 49, 49);
     /*padding-bottom: 40px;*/
@@ -362,23 +299,17 @@ blockquote p {
 
   }
 
-  margin: 50px 50px 20px 50px;
-  /*margin-bottom: 20px;*/
-  /*text-overflow: ellipsis;*/
-  /*overflow: hidden;*/
-  /*max-height: 190px;*/
-  /*background-color: #ffffff;*/
-  padding: 30px;
-  /*border:5px #ffe4b5 dashed;*/
-  /*box-shadow: 0 0 5px rgba(100,100,100,.5);*/
+  margin: 5vh 5vh 2vh 5vh;
+  padding: 3vh;
+  padding-top:0;
   border-bottom: 1px solid rgba(58, 58, 58, 0.1);
-  /*border-radius: 10px;*/
 
   .articleHeader {
+    position: relative;
     .articleTitle {
       margin-top: 1vh;
       margin-bottom: 2vh;
-      text-align: center;
+      //text-align: center;
       font-size: 1.5em;
       font-weight: bold;
       color: #494a4c;
@@ -386,14 +317,14 @@ blockquote p {
     }
 
     .articleInfo {
-      text-align: center;
+      //text-align: center;
       padding-bottom: 1vh;
       margin-bottom: 5vh;
       border-bottom: 1px solid rgba(65, 65, 65, 0.1);
 
       span {
-        margin-left: 10px;
-        font-size: 1em;
+        margin-right: 1vh;
+        font-size: .9em;
         //color: rgb(52, 40, 40);
         color: rgba(49, 49, 49, .4);
       }
@@ -431,7 +362,8 @@ blockquote p {
   .article {
     //height: 100%;
     padding: 1vh;
-    margin: 0 5px;
+    margin: 3vh .6vh;
+    //margin: 5vh 5vh 2vh 5vh;
   }
 
   .articlePage {
@@ -448,5 +380,24 @@ blockquote p {
   }
 
 
+}
+
+.archive-head{
+  position: relative;
+  padding-left: 1.4vh;
+  //height:2vh;
+  font-family: "微软雅黑";
+  color:rgba(49,49,49,.5);
+  margin-bottom: 6vh;
+  &::before{
+    left:0;
+    border-radius: 1vh;
+    content: " ";
+    width: .8vh;
+    height: 100%;
+    display: inline-block;
+    position: absolute;
+    background-color: var(--button-color);
+  }
 }
 </style>

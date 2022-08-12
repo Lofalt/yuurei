@@ -9,7 +9,7 @@
       <div class="icons"></div>
     </div>
     <transition name="button">
-      <n-icon size="5vh" color="#ffffff" @click="changePage(0)" class="fixedButton"
+      <n-icon size="3vh" color="#ffffff" @click="changePage(0)" class="fixedButton"
               v-show="pageData.pagedata.count!=0 && (router.currentRoute.value.path.startsWith(`/home`)||router.currentRoute.value.path.startsWith(`/archive`))">
         <arrow-bar-to-up/>
       </n-icon>
@@ -75,9 +75,10 @@ axios.get("/yuurei/settings/1", {}).then((res: any) => {
 })
 
 
-watch(router.currentRoute, (newValue: any) => {
+watch(router.currentRoute, (newValue: any,oldValue:any) => {
+  console.log(oldValue.path)
   if (newValue.path.startsWith("/archive")) {
-    // pageData.pagedata.count = 1
+    pageData.pagedata.count = 1
 
   }
 })
@@ -171,8 +172,8 @@ function changePage(num: number) {
   bottom: 5vh;
   right: .5vw;
   z-index: 5;
-  width: 7vh;
-  height: 7vh;
+  width: 5vh;
+  height: 5vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -182,8 +183,8 @@ function changePage(num: number) {
   cursor: pointer;
   @media (max-aspect-ratio: 9/16) {
     //height: 10vh;
-    height: 6vh;
-    width: 6vh;
+    height: 4vh;
+    width: 4vh;
     right: 1vw;
     // padding: 10px;
     //padding: 0;
@@ -368,6 +369,9 @@ button {
   }
 
 }
-
+//@font-face {
+//  font-family: 思源宋体;
+//  src: url("./assets/fonts/SourceHanSerifCN-Medium.otf");
+//}
 
 </style>

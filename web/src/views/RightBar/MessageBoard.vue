@@ -5,7 +5,7 @@
     </transition>
     <div class="head" @click.capture="showModal = false">
       <transition-group tag="p" name="jokes">
-        <joke @emit-pic="acceptScale" v-for="(item,index) in msgList" :style="`--i:${index%5}`" :msg="item"
+        <joke @change-name="acceptName" @upload="editPic" @emit-pic="acceptScale" v-for="(item,index) in msgList" :style="`--i:${index%5}`" :msg="item"
               :key="item.ID"
               @reload="flush"/>
       </transition-group>
@@ -135,6 +135,8 @@ const pageNum = ref(1)
 // const isLoading = ref(false)
 const config = inject("globalConfig") as any
 
+
+
 const backgroundImage = computed(() => {
   if (config.value == null) {
     return ``
@@ -152,13 +154,19 @@ const uploadImg = computed(() => {
   return backgroundImg.value
 })
 
+provide('src',uploadImg)
 function editPic() {
-  if (userName.value == '') {
+  if (userName.value == '' && !userInfo.user.IsAdmin) {
     message.warning("请先输入昵称")
     return
   } else {
     iconEdit.value = true
   }
+}
+
+function acceptName(name:string){
+  console.log("?")
+  userName.value = name
 }
 
 
@@ -250,6 +258,8 @@ function getNext() {
   pageNum.value += 1
   axios.get(`/yuurei/msg/all?pageNum=${pageNum.value}&pageSize=${pageSize.value}`, {}).then((result: any) => {
     for (let i = 0; i < result.data.data.length; i++) {
+      console.log("?")
+
       msgList.value.push(result.data.data[i])
     }
     total.value = result.data.total
@@ -766,22 +776,24 @@ function getFile(event: any) {
   overflow: auto;
   // scrollbar-width: none;
   &::-webkit-scrollbar {
-    width: 5px;
+    width: 0;
     // background-color: aquamarine;
     // color: black;
   }
 
 
   &::-webkit-scrollbar-thumb {
-    width: 5px;
-    background-color: rgba(73, 73, 73, .3);
-    color: black;
-    border-radius: 20px;
+    //width: 5px;
+    //background-color: rgba(73, 73, 73, .3);
+    //background-color:var(--button-color);
+    //
+    //color: black;
+    //border-radius: 20px;
   }
 }
 
 ::-webkit-scrollbar {
-  width: 3px;
+  //width: 3px;
   // background: rgba(255, 255, 255, 0.5);
 }
 
@@ -1086,7 +1098,7 @@ function getFile(event: any) {
 .end {
   font-weight: bold;
   color: rgba(49, 49, 49, .2);
-  font-size: 1.3em;
+  font-size: 1em;
   line-height: 1.8em;
   height: 1.8em;
 }

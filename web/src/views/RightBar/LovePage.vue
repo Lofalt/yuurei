@@ -9,7 +9,7 @@
     <!--    <div class="nav">navbar</div>-->
     <div class="inside">
       <entry v-for="item in entries" :id="item.ID" :headPic="item.HeaderPicture" :title="item.Title"
-             :summary="item.Summary" :key="item.ID"/>
+             :summary="item.Summary" :key="item.ID" :style="`--i:${index}`" class="entires"/>
     </div>
     <n-pagination size="medium" v-model:page="pageNum" :page-count="pageTotal" class="page" v-show="needToShow">
     </n-pagination>
@@ -31,7 +31,7 @@ const pageData = usePageData()
 const router = useRouter()
 const pageNum = ref(1)
 const pageTotal = ref(0)
-const pageSize = ref(5)
+const pageSize = ref(6)
 const currentCat = ref("all") as any
 const catList = ref([]) as any
 
@@ -135,26 +135,30 @@ function changePage(num: number) {
   .cat {
     cursor: pointer;
     margin-top: 3vh;
-    padding: .1vh 3vh;
+    padding: 0vh 1vh;
     //height:30px;
     //width: 80px;
     margin-left: .9vh;
     //margin-right: .6vh;
-    font-size: 1em;
+    font-size: .9em;
     font-weight: bold;
     font-family: 微软雅黑;
     background-color: white;
     text-align: center;
-    border: .3vh solid rgb(49, 49, 49);
-    border-radius: .2vh;
-    box-shadow: -.05vh .05vh 0px 0px rgb(49, 49, 49);
+    //border: .3vh solid rgb(49, 49, 49);
+    //border-radius: .2vh;
+    border-bottom: .3vh solid rgba(49,49,49,.1);
+
+    //box-shadow: -.05vh .05vh 0px 0px rgb(49, 49, 49);
     @media (max-aspect-ratio: 1/1) {
-      padding: 0px 3vh;
+      //padding: 0px 3vh;
     }
 
     &:hover {
-      background-color: var(--button-color);
-      color: white;
+      border-bottom: .3vh solid var(--button-color)!important;
+
+      //background-color: var(--button-color);
+      //color: white;
     }
   }
 
@@ -218,10 +222,21 @@ function changePage(num: number) {
 
   .active {
     //background-color: #FF5353FF !important;
-    background-color: var(--button-color) !important;
-    color: white;
+    //background-color: var(--button-color) !important;
+    //color: white;
+    border-bottom: .3vh solid var(--button-color)!important;
+
   }
 }
 
+.entires{
+  animation: entryenter 1s ease;
+  animation-delay: calc(var(--i)*0.1s) ;
+}
 
+@keyframes entryenter {
+    from{
+      opacity: 0;
+    }
+}
 </style>

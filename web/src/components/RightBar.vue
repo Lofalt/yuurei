@@ -1,7 +1,7 @@
 <template>
   <div class="rightbar" @click.self="pushCard">
     <div class="showpage activeCard" @wheel.stop="" @touchend.stop="">
-      <div class="showtag tag1" @click.stop="pullCard(0)">
+      <div @mouseenter.stop="touchCard(0)" class="showtag tag1" @click.stop="pullCard(0)">
         废话
       </div>
       <!-- <div class="showtag tag1" @click="pullCard(0)"> -->
@@ -11,7 +11,7 @@
       <!-- <router-view v-show="showBlog"></router-view> -->
     </div>
     <div class="showpage activeCard" @wheel.stop="" @touchend.stop="">
-      <div class="showtag tag2" @click.stop="pullCard(1)">
+      <div @mouseenter.stop="touchCard(1)" class="showtag tag2" @click.stop="pullCard(1)">
         留言
       </div>
       <n-message-provider>
@@ -20,14 +20,14 @@
       <!-- <router-view name="BlogPage" v-show="showMessage"></router-view> -->
     </div>
     <div class="showpage activeCard" @wheel.stop="" @touchend.stop="">
-      <div class="showtag tag3" @click.stop="pullCard(2)">
+      <div @mouseenter.stop="touchCard(2)" class="showtag tag3" @click.stop="pullCard(2)">
         蒐集
       </div>
       <!-- <router-view name="LovePage" v-show="showLove"></router-view> -->
       <love-page v-show="showLove"></love-page>
     </div>
     <div class="showpage activeCard" @wheel.stop="" @touchend.stop="">
-      <div class="showtag tag4" @click.stop="pullCard(3)">
+      <div @mouseenter.stop="touchCard(3)" class="showtag tag4" @click.stop="pullCard(3)">
         面影
       </div>
       <!-- <router-view name="VlogPage" v-show="showVlog"></router-view> -->
@@ -59,11 +59,23 @@ const showVlog = ref(false)
 const showLove = ref(false)
 const showBlog = ref(false)
 const hover = ref(false)
+const isPushing = ref(false)
 provide('hover', hover)
 provide('showVlog', showVlog)
 
+function touchCard(num:number){
+  if(document.body.clientWidth/document.body.clientHeight < 9/16){
+    return
+  }
+  pullCard(num)
+}
+
 
 function pullCard(num: number): void {
+
+  if(isPushing.value){
+    return
+  }
   switch (num) {
     case 0:
       showBlog.value = true;
@@ -111,6 +123,7 @@ function pullCard(num: number): void {
 
 function pushCard() {
   hover.value = false
+  isPushing.value = true
   const cards = document.getElementsByClassName("showpage") as HTMLCollection
   const tags = document.getElementsByClassName("showtag") as HTMLSelectElement
   for (let i = 0; i < cards.length; i++) {
@@ -122,16 +135,18 @@ function pushCard() {
     tag.classList.remove("activeTag")
   }
   if (!showMessage.value && !showVlog.value && !showBlog.value && !showLove.value) {
+    isPushing.value = false
     return
   }
 
   setTimeout(() => {
+    isPushing.value = false
 
     showMessage.value = false
     showLove.value = false
     showBlog.value = false
     showVlog.value = false
-  }, 500);
+  }, 800);
 }
 
 
@@ -193,7 +208,7 @@ function pushCard() {
 
     &::-webkit-scrollbar-thumb {
       width: 5px;
-      background-color: rgba(110, 110, 110, 0.6);
+      background-color: var(--button-color);
       // transition: all 1s;
       border-radius: 10px;
     }

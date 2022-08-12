@@ -10,6 +10,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type IMessageController interface {
@@ -40,8 +41,10 @@ func (m MessageController) ShowAll(c *gin.Context) {
 		offset = (pageNum - 1) * pageSize
 	}
 	var total int64
-	m.DB.Model(model.Message{}).Count(&total)
-	if err := m.DB.Preload(clause.Associations).Order("created_at desc").Offset(offset).Limit(pageSize).Find(&messages).Error; err != nil {
+	m.DB.Model(model.Message{}).Where("father_id is " +
+		"NULL").Count(&total)
+	if err := m.DB.Preload(clause.Associations).Where("father_id is " +
+		"NULL").Order("created_at desc").Offset(offset).Limit(pageSize).Find(&messages).Error; err != nil {
 		response.Fail(c, gin.H{}, err.Error())
 		return
 	}
@@ -93,26 +96,22 @@ func (m MessageController) Update(c *gin.Context) {
 }
 
 func (m MessageController) Show(c *gin.Context) {
-
-	catid, _ := strconv.Atoi(c.Params.ByName("id"))
-
-	//查找是否存在
-	var msg model.Message
-
-	var newCat model.Message
-	c.ShouldBind(&newCat)
-
-	if err := m.DB.Where("id=?", catid).First(&msg).Error; err != nil {
+	id, _ := strconv.Atoi(c.Params.ByName("id"))
+	message := model.Message{
+		Model: gorm.Model{
+			ID:        uint(id),
+			CreatedAt: time.Time{},
+			UpdatedAt: time.Time{},
+			DeletedAt: gorm.DeletedAt{},
+		},
+	}
+	if err := m.DB.Preload(clause.Associations).Find(&message).Error; err != nil {
 		response.Fail(c, gin.H{}, err.Error())
 		return
 	}
-
-	if err2 := m.DB.Model(&msg).Updates(&newCat).Error; err2 != nil {
-		response.Fail(c, gin.H{}, err2.Error())
-		return
-	}
-
-	response.Success(c, gin.H{"data": msg}, "更改成功")
+	response.Success(c, gin.H{
+		"data": message,
+	}, "success")
 }
 
 func (m MessageController) Delete(c *gin.Context) {

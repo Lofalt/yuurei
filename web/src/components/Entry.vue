@@ -8,7 +8,7 @@
         {{ title }}
       </div>
       <div class="entry-summary">
-        &nbsp;&nbsp;{{ summary }}
+        {{ summary }}
       </div>
     </div>
   </div>
@@ -50,6 +50,8 @@ const props = defineProps<{
 <style lang="less" scoped>
 
 .entry {
+  //display: flex;
+  //justify-content: space-evenly;
   position: relative;
   //background-color: #2dc26b;
   //border-bottom: .1vh solid rgba(49, 49, 49, .1);
@@ -124,6 +126,7 @@ const props = defineProps<{
     //  height: 165px;
     //}
     @media (max-aspect-ratio: 1/1) {
+      //left:3vw;
       width: 27.06vw;
       height: 39.23vw;
     }
@@ -141,13 +144,14 @@ const props = defineProps<{
 
   .entry-right {
     position: relative;
-    right: 15px;
-    top: 20px;
+    //right: 2vh;
+    //margin-left:;
+    top: 2vh;
     float: right;
     width: 33vh;
     background-color: #fff;
     height: 30vh;
-    text-align: center;
+    //text-align: center;
     @media (max-aspect-ratio: 1/1) {
       width: 40vw;
       height: 39.23vw;
@@ -165,21 +169,24 @@ const props = defineProps<{
       font-family: '黑体', serif;
       font-weight: bold;
       position: relative;
-
+    text-align: left;
+      //display: inline-block;
+      //padding-left: 3vh;
       &::after {
         content: '';
         //visibility: hidden;
-        width: 60%;
+        width: 100%;
         height: 100%;
         border-bottom: 1px solid rgba(49, 49, 49, .1);
         //position: relative;
         position: absolute;
-        left: 6vh;
+        //left: 6vh;
+        left:0;
         //background-color: #000;
         top: 3px;
 
         @media (max-width: 800px) {
-          left: 28px;
+          //left: 28px;
         }
 
 
@@ -199,12 +206,13 @@ const props = defineProps<{
       //height: 80%;
       width: 100%;
       padding-top: 10px;
-      padding-left: 10px;
+      //padding-left: 10px;
       padding-right: 10px;
       display: -webkit-box;
       -webkit-line-clamp: 10;
       -webkit-box-orient: vertical;
       //white-space: nowrap;
+      text-align: left;
 
       @media (max-aspect-ratio: 6/10) {
         -webkit-line-clamp: 7;

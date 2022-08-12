@@ -1,8 +1,8 @@
 <template>
   <div class="panel" @click="archive(article.ID)">
     <!--        <div class="background" :style="{backgroundImage:background}">-->
-    <!--    <div class="background" :style="{backgroundImage:`url(${article.HeaderPicture})`}">-->
-    <div class="background" :style="{backgroundColor:article.ArticleCategory.Color}">
+        <div class="background" :style="{backgroundImage:`url(${article.HeaderPicture})`}">
+<!--    <div class="background">-->
       <!--            <img src="~assets/img/backgroundimg/background1.png"/>-->
     </div>
     <div class="panelTitle">
@@ -15,7 +15,7 @@
       <span>{{ new Date(article.CreatedAt).toLocaleDateString() }}</span>
       <!--                        <i class="el-icon-view"/> <span>阅读 {{article.articleReadTimes}}</span>-->
       <!--                        <span>❤ 点赞 {{article.articleLoveTimes}}次</span>-->
-      <i class="el-icon-document"/><span>分类: {{ article.ArticleCategory.ArticleCategoryName }}</span>
+      <i class="el-icon-document"/><span> {{ article.ArticleCategory.ArticleCategoryName }}</span>
     </div>
   </div>
 </template>
@@ -104,7 +104,7 @@ function archive(articleId: number) {
 
   &:hover .background {
     transform: scale(1.2, 1.2);
-    //filter: blur(5px);
+    filter: blur(2px);
   }
 
   &:hover .panelSummary {
@@ -177,6 +177,17 @@ function archive(articleId: number) {
   //background-image: url(../assets/ec8ce499ly1h1hhm1o6m1j22pg1ww4qp.jpg);
   background-position: top;
   // background-size: cover;
+
+
+  &::before{
+    top:0;
+    left:0;
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: rgba(49,49,49,.2);
+  }
 }
 
 @media screen and (max-aspect-ratio: 9/16) {

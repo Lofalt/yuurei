@@ -13,4 +13,6 @@ type Message struct {
 	IsAdmin        bool   `gorm:"DEFAULT:0"`
 	UserID         string `gorm:"type:varchar(50)"`
 	IsAnonymous    bool   `gorm:"default:0"`
+	FatherID       *uint
+	Replies        *[]Message `gorm:"foreignkey:FatherID"`
 }

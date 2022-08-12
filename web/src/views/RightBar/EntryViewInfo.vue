@@ -31,7 +31,7 @@
     </div>
     <br/>
     <br/>
-    <div style="min-height: 100vh;width: 100%" class="body">
+    <div style="width: 100%" class="body">
       <h1>相关影音</h1>
       <hr/>
       <div class="content" v-html="Entry.About"></div>

@@ -28,7 +28,7 @@ const isShow = ref(true)
 const picList = ref<any>([])
 const offset = ref(10)
 const total = ref(0)
-const pageSize = ref(6)
+const pageSize = ref(10)
 const pageNum = ref(1)
 const colRaw = ref(2)
 const screenWidth = ref(0)
@@ -121,6 +121,7 @@ function zoom(event: number) {
 
 }
 
+
 function getNext() {
 
   // if ((pageNum.value + 1) * pageSize.value > total.value) {
@@ -132,7 +133,13 @@ function getNext() {
     for (let i = 0; i < result.data.data.length; i++) {
       picList.value.push(result.data.data[i])
     }
-    waterFall()
+    let timer = setInterval(()=>{
+      waterFall()
+    },1000)
+
+    setTimeout(()=>{
+      clearInterval(timer)
+    },20000)
   })
 }
 
@@ -143,8 +150,14 @@ function getPic() {
     total.value = result.data.total
     setTimeout(() => {
       waterFall()
-
     }, 500);
+    let timer = setInterval(()=>{
+      waterFall()
+    },1000)
+
+    setTimeout(()=>{
+      clearInterval(timer)
+    },20000)
   })
 }
 
@@ -368,7 +381,7 @@ watch(colRaw, () => {
     visibility: hidden;
   }
 
-  @media (max-width: 800px) {
+  @media (max-aspect-ratio: 9/16) {
     // padding-top: 2vh;
     width: 90%
   }

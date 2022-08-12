@@ -25,7 +25,12 @@
         <n-input type="text" v-model:value="AnonymousName"/>
       </td>
     </tr>
-
+    <tr>
+      <td>标语</td>
+      <td>
+        <n-input type="text" v-model:value="Slogan"/>
+      </td>
+    </tr>
     <tr>
       <td>留言框默认头像</td>
       <td>
@@ -44,7 +49,7 @@
       <td>背景图</td>
       <td>
         <upload-pic @confirm="acceptBackground" name="上传背景" :raw-src="BackgroundImage" directory="background"
-                    quality="40" :ratio="16/9"/>
+                    quality="40" :ratio="16/8"/>
       </td>
     </tr>
     <tr>
@@ -92,7 +97,7 @@ const MobileBackgroundImage = ref("")
 const DateColor = ref('')
 const ButtonColor = ref('')
 const router = useRouter()
-
+const Slogan = ref("")
 
 const HasInited = ref(false)
 
@@ -124,6 +129,7 @@ function create() {
     DateColor: DateColor.value,
     ButtonColor: ButtonColor.value,
     AnonymousName: AnonymousName.value,
+    Slogan:Slogan.value
   }).then((res: any) => {
     if (res.code == 200) {
       router.go(0)
@@ -150,6 +156,7 @@ function getConfig() {
     ButtonColor.value = set.ButtonColor
     MobileBackgroundImage.value = set.MobileBackgroundImage
     AnonymousName.value = set.AnonymousName
+    Slogan.value = set.Slogan
     HasInited.value = true
   })
 }
@@ -169,6 +176,7 @@ function edit() {
     ButtonColor: ButtonColor.value,
     MobileBackgroundImage: MobileBackgroundImage.value,
     AnonymousName: AnonymousName.value,
+    Slogan:Slogan.value
 
   }).then((res: any) => {
     if (res.code == 200) {

@@ -120,6 +120,10 @@ function changePage(num: number) {
 
 * {
   font-size: 1.8vh;
+
+  @media (max-aspect-ratio: 9/16){
+    font-size: 3vw;
+  }
 }
 
 .player {
@@ -204,7 +208,7 @@ iframe {
 
   &::-webkit-scrollbar-thumb {
     width: 5px;
-    background-color: rgba(73, 73, 73, .2);
+    background-color: var(--button-color);
     color: black;
     border-radius: 20px;
   }

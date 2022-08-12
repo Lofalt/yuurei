@@ -6,15 +6,16 @@
     <div class="day">
       {{ day + "\n\r" + youbi }}
     </div>
+
     <div class="word">
-      立秋了啊。
+      {{slogan}}
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 
-import {ref} from "vue";
+import {inject, onMounted, ref} from "vue";
 
 interface Date {
   Format(param: string): void;
@@ -35,13 +36,19 @@ Date.prototype.Format = function (fmt: string) {
     if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
   return fmt;
 }
-const time = ref((new Date()).Format("hh:mm:ss"))
+const time = ref((new Date()).Format("hh:mm"))
 const day = ref((new Date()).Format("yyyy/M/d"))
 const youbi = ref("(" + "日月火水木金土".charAt(new Date().getDay()) + ")")
+const slogan = ref("")
 
 
+const config = inject("globalConfig") as any
+
+onMounted(()=>{
+  slogan.value = config.value.Slogan
+})
 setInterval(() => {
-  time.value = (new Date()).Format("hh:mm:ss")
+  time.value = (new Date()).Format("hh:mm")
   day.value = (new Date()).Format("yyyy/M/d")
 }, 1000)
 
@@ -73,9 +80,36 @@ setInterval(() => {
   }
 
   .word {
-    font-size: 2em;
+    display: inline-block;
+    padding-left:1vh;
+    padding-right: 5vh;
+    //text-decoration: #2cd230 solid;
+    //width: 0;
+    font-size: 1.5em;
     margin-top: 2.5vh;
+    //background-color: #fff;
+    color: var(--date-color);
+
+    position: relative;
+    transform-origin: left;
+
+    &::before{
+      content: '';
+      left:0;
+      display: inline-block;
+      position: absolute;
+      width: .5vh;
+      top:10%;
+      height: 80%;
+      background-color: var(--date-color);
+      animation: flush 2s step-start infinite ;
+    }
+  }
+
+}
+@keyframes flush {
+  50%{
+    opacity: 0;
   }
 }
-
 </style>

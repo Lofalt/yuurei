@@ -116,8 +116,10 @@ watch(currentCat, (newValue, oldValue) => {
 
 .active {
   //background-color: #FF5353FF !important;
-  background-color: var(--button-color) !important;
-  color: white;
+  //background-color: var(--button-color) !important;
+  //color: white;
+  border-bottom: .3vh solid var(--button-color)!important;
+
 }
 
 .container {
@@ -156,27 +158,31 @@ watch(currentCat, (newValue, oldValue) => {
     //align-items: center;
     cursor: pointer;
     margin-top: 3vh;
-    padding: .2vh 3vh;
+    padding: 0vh 1vh;
     //height:30px;
     //width: 80px;
+    font-size: .9em;
     margin-left: .9vh;
     //margin-right: .6vh;
     //font-size: 1.5vh;
-    line-height: 1.5em;
+    //line-height: 1.5em;
     font-weight: bold;
     font-family: 微软雅黑;
     background-color: white;
+    border-bottom: .3vh solid rgba(49,49,49,.1);
     //text-align: center;
-    border: .3vh solid rgb(49, 49, 49);
-    border-radius: .2vh;
-    box-shadow: -.05vh .05vh 0px 0px rgb(49, 49, 49);
+    //border: .3vh solid rgb(49, 49, 49);
+    //border-radius: .2vh;
+    //box-shadow: -.1vh .1vh 0px 0px rgb(49, 49, 49);
     @media (max-aspect-ratio: 1/1) {
-      padding: 0px 3vh;
+      //padding: 0px 3vh;
     }
 
     &:hover {
-      background-color: var(--button-color);
-      color: white;
+      border-bottom: .3vh solid var(--button-color)!important;
+
+      //background-color: var(--button-color);
+      //color: white;
     }
   }
 
@@ -189,7 +195,7 @@ watch(currentCat, (newValue, oldValue) => {
 
   &::-webkit-scrollbar-thumb {
     width: 5px;
-    background-color: rgba(73, 73, 73, .3);
+    //background-color:var(--button-color);
     color: black;
     border-radius: 20px;
   }

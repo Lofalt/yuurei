@@ -79,6 +79,7 @@ function isActive(arg: string) {
     //min-height: 50vh;
     width: 80vh;
     border: .4vh solid black;
+    transition: all 1s ease;
 
     .header {
       display: flex;

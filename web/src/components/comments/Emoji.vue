@@ -68,8 +68,8 @@ onMounted(() => {
   text-align: center;
   font-size: 1.2em;
   margin: 2px;
-  //width: 30px;
-  //height: 30px;
+  width: 3vh;
+  height: 3vh;
   padding: 1px;
 }
 

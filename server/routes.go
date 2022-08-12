@@ -47,7 +47,7 @@ func CollecRouter(r *gin.Engine) *gin.Engine {
 	msgRoutes.POST("", msgController.Create)
 	msgRoutes.PUT(":id", middleware.Inception(), msgController.Update)
 	msgRoutes.DELETE(":id", middleware.Inception(), msgController.Delete)
-	msgRoutes.GET(":name", msgController.Show)
+	msgRoutes.GET(":id", msgController.Show)
 	msgRoutes.GET("all", msgController.ShowAll)
 
 	picRoutes := r.Group("/yuurei/gallery")

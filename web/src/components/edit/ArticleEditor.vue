@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <upload-pic @confirm="acceptPic" name="上传头图" raw-src="" directory="articleHeaderPicture" :quality="30"
-                :ratio="2.5"/>
+                :ratio="3.5"/>
     <div class="header">
       <input v-model="title" placeholder="输入标题">
     </div>

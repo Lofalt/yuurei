@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <upload-pic name="头图" :raw-src="headerPic" directory="articleHeaderPicture" :quality="30" ratio="2.5"
+    <upload-pic name="头图" :raw-src="headerPic" directory="articleHeaderPicture" :quality="30" ratio="3.5"
                 @confirm="acceptPic"/>
     <div class="header">
       <input v-model="title" placeholder="输入标题">
