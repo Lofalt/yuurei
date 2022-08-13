@@ -160,11 +160,17 @@ function jump(id: number) {
 
 <style lang="less">
 
+  //@media (max-aspect-ratio: 9/16) {
+  button{
+    cursor: pointer;
+  }
+  textarea{
+    font-family: 微软雅黑;
+  }
 * {
   //font-size: 2vh;
   ////line-height: 3vh;
   //
-  //@media (max-aspect-ratio: 9/16) {
   //  font-size: 3.5vw;
   //}
 }
@@ -245,7 +251,7 @@ blockquote p {
 .article {
   .articleContent {
     line-height: 4vh;
-    font-size: 2vh;
+    font-size: 1.7vh;
     @media (max-aspect-ratio: 9/16) {
       font-size: 3.5vw;
     }
@@ -283,7 +289,7 @@ blockquote p {
       //display: inline;
       //font-family: "思源宋体","Noto Serif CJK SC","Noto Serif SC","Source Han Serif SC","Source Han Serif",source-han-serif-sc,SongTi SC,SimSum,"Hiragino Sans GB",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,"Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;;
       //font-family: "思源宋体","微软雅黑 Light";
-      letter-spacing: .1vh;
+      letter-spacing: .03vh;
     }
 
     &:nth-child(1) {

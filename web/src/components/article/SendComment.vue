@@ -1,10 +1,10 @@
 <template>
   <div class="commentContainer">
     <div class="header">
-      <input v-model="username" class="inputName" type="text" placeholder="输入昵称"/>
+      <input v-model="commentData.commentData.username" class="inputName" type="text" placeholder="*昵称"/>
       <div @click="showModal=true" class="icon" :style="{backgroundImage:`url(${bgi})`}"></div>
     </div>
-    <textarea class="text-area" v-model="msgContent"></textarea>
+    <textarea class="text-area" v-model="msgContent" placeholder="说点啥吧"></textarea>
     <div class="footer">
       <!--      😳-->
       <button @click="send">发送</button>
@@ -22,7 +22,11 @@ import {computed, inject, ref, watch} from 'vue'
 import {useComment} from "@/store/commentData";
 import {NModal, NCard} from "naive-ui"
 import UploadPic from "../file/UploadPic.vue"
+import {useMessage} from "naive-ui"
+import {useUserInfo} from "@/store/UserInfo";
 
+const userInfo = useUserInfo()
+const message = useMessage()
 const commentData = useComment()
 const username = ref('')
 const msgContent = ref('')
@@ -49,10 +53,27 @@ watch(username, (newValue: any, oldValue: any) => {
 })
 
 function send() {
+  if(userInfo.user.Sended  && !userInfo.user.IsAdmin ){
+    message.warning("发言过快,30秒后重试")
+    return
+  }
+  if(commentData.commentData.username=="" && !userInfo.user.IsAdmin ){
+    message.warning("昵称不能为空")
+    return
+  }
+  if(msgContent.value==""){
+    message.warning("先说点啥吧")
+    return
+  }
   emit('send', {
     msg: msgContent.value,
     icon: bgi.value
   })
+  msgContent.value=""
+  userInfo.user.Sended = true
+  setTimeout(()=>{
+    userInfo.user.Sended = false
+  },30000)
 }
 </script>
 
@@ -62,10 +83,13 @@ function send() {
   display: flex;
   flex-direction: column;
   width: 70%;
-  margin: 0 auto;
+  margin-left: 8vh ;
+  margin-bottom: 2vh;
 
   @media (max-aspect-ratio: 9/16) {
     width: 95%;
+    margin: 0 auto;
+
   }
 
   .header {

@@ -62,8 +62,8 @@ setInterval(() => {
 
 .date {
   user-select: none;
-  width: 1000px;
-  height: 1000px;
+  //width: 1000px;
+  //height: 1000px;
   //background-color: #fff;
   color: var(--date-color);
   position: absolute;

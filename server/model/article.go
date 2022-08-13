@@ -16,7 +16,7 @@ type Article struct {
 	ArticleCategoryID int              `gorm:"NOT NULL"`
 	ArticleCategory   *ArticleCategory `gorm:"Not null"`
 	Tags              *[]Tag           `gorm:"many2many:tag_article_tables"`
-	ArticleComments   *[]ArticleComment
+	ArticleComments   []ArticleComment
 }
 type ArticleCategory struct {
 	gorm.Model
@@ -36,9 +36,10 @@ type ArticleComment struct {
 	gorm.Model
 	ArticleCommentContent  string `gorm:"NOT NULL"`
 	ArticleCommentUserName string `gorm:"NOT NULL;type:varchar(50)"`
-	ArticleID              *uint
+	ArticleID              uint
 	UserID                 uint
 	Icon                   string `gorm:"type:varchar(100)"`
 	FatherID               *uint
 	Comments               *[]ArticleComment `gorm:"foreignkey:FatherID"`
+	IsAdmin                bool              `gorm:"default:0"`
 }

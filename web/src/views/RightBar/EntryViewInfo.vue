@@ -81,8 +81,8 @@ watch(router.currentRoute, (newValue: any) => {
 .enryContainer {
 
   color: #2a3746;
-  font-size: 2vh;
-  padding-left: 5vh;
+  font-size: 1.6vh!important;
+  //padding-left: 5vh;
   display: flex;
   flex-direction: column;
   width: 80%;
@@ -223,7 +223,7 @@ watch(router.currentRoute, (newValue: any) => {
       //background-color: #b1f0f1;
 
       @media (max-aspect-ratio: 11/16) {
-        width: 90%;
+        width: 100%;
       }
     }
 
@@ -232,10 +232,11 @@ watch(router.currentRoute, (newValue: any) => {
       //margin-right: 3vh;
       //margin: 3vh;
       //min-height: 50vh;
-      //width: 40vh;
+      width: 35vh;
       //background-color: #b1f0f1;
       display: flex;
       flex-direction: column;
+      flex-shrink: 0;
 
       @media (max-aspect-ratio: 11/16) {
         width: 100%

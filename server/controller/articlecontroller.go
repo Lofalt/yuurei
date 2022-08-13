@@ -80,7 +80,9 @@ func (a ArticleController) SelectArticleById(c *gin.Context) {
 	}
 	var pre model.Article
 	var next model.Article
-	a.DB.Preload("Tags").Preload("ArticleCategory").Find(&article)
+	a.DB.Preload("Tags").Preload("ArticleCategory").Preload("ArticleComments.Comments").Preload("ArticleComments", func(db *gorm.DB) *gorm.DB {
+		return db.Order("created_at DESC").Where("father_id is NULL")
+	}).Find(&article)
 	a.DB.Where("created_at<? AND article_category_id=?", article.CreatedAt, article.ArticleCategoryID).Last(&pre)
 	a.DB.Where("created_at>? AND article_category_id=?", article.CreatedAt, article.ArticleCategoryID).First(&next)
 	response.Success(c, gin.H{
@@ -145,7 +147,7 @@ func (a ArticleController) SelectArticlesByCategoryId(c *gin.Context) {
 	var total int64
 	a.DB.Model(model.Article{}).Where(&article).Count(&total)
 	var articles []model.Article
-	a.DB.Preload(clause.Associations).Where(&article).Offset(offset).Order("created_at desc").Limit(pageSize).Find(&articles)
+	a.DB.Preload("ArticleComments").Preload(clause.Associations).Where(&article).Offset(offset).Order("created_at desc").Limit(pageSize).Find(&articles)
 	response.Success(c, gin.H{"data": articles, "total": total}, "success")
 }
 

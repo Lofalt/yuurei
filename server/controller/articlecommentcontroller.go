@@ -7,6 +7,9 @@ import (
 	"github.com/Lofalt/yuurei/response"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
+	"strconv"
+	"time"
 )
 
 type IArticleCommentController interface {
@@ -38,13 +41,39 @@ func (a ArticleCommentController) Update(c *gin.Context) {
 }
 
 func (a ArticleCommentController) Show(c *gin.Context) {
-	//TODO implement me
-	panic("implement me")
+	id := c.Params.ByName("id")
+	nid, _ := strconv.Atoi(id)
+	fmt.Println(nid)
+	comment := model.ArticleComment{
+		Model: gorm.Model{
+			ID:        uint(nid),
+			CreatedAt: time.Time{},
+			UpdatedAt: time.Time{},
+			DeletedAt: gorm.DeletedAt{},
+		},
+	}
+	a.DB.Preload(clause.Associations).Find(&comment)
+	response.Success(c, gin.H{
+		"data": comment,
+	}, "success")
 }
 
 func (a ArticleCommentController) Delete(c *gin.Context) {
-	//TODO implement me
-	panic("implement me")
+	id, _ := strconv.Atoi(c.Params.ByName("id"))
+
+	com := model.ArticleComment{
+		Model: gorm.Model{
+			ID: uint(id),
+		},
+	}
+	//if err := c2.DB.Unscoped().Delete(&cat).Error; err != nil {\
+	if err := a.DB.Delete(&com).Error; err != nil {
+
+		response.Fail(c, gin.H{}, err.Error())
+		return
+	}
+
+	response.Success(c, gin.H{}, "删除成功")
 }
 
 func NewArticleCommentController() IArticleCommentController {
