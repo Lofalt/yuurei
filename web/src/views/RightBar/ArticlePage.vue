@@ -18,7 +18,7 @@
 <script lang="ts" setup>
 import {NPagination} from 'naive-ui'
 import {usePageData} from '@/store/pageData';
-import PanelCom from '../../components/PanelCom.vue'
+import PanelCom from '../../components/article/PanelCom.vue'
 import {useRouter} from 'vue-router';
 import {computed, ref, watch} from "vue";
 import axios from '@/request'
@@ -118,7 +118,7 @@ watch(currentCat, (newValue, oldValue) => {
   //background-color: #FF5353FF !important;
   //background-color: var(--button-color) !important;
   //color: white;
-  border-bottom: .3vh solid var(--button-color)!important;
+  border-bottom: .3vh solid var(--button-color) !important;
 
 }
 
@@ -169,7 +169,7 @@ watch(currentCat, (newValue, oldValue) => {
     font-weight: bold;
     font-family: 微软雅黑;
     background-color: white;
-    border-bottom: .3vh solid rgba(49,49,49,.1);
+    border-bottom: .3vh solid rgba(49, 49, 49, .1);
     //text-align: center;
     //border: .3vh solid rgb(49, 49, 49);
     //border-radius: .2vh;
@@ -179,7 +179,7 @@ watch(currentCat, (newValue, oldValue) => {
     }
 
     &:hover {
-      border-bottom: .3vh solid var(--button-color)!important;
+      border-bottom: .3vh solid var(--button-color) !important;
 
       //background-color: var(--button-color);
       //color: white;

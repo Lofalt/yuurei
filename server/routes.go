@@ -80,6 +80,10 @@ func CollecRouter(r *gin.Engine) *gin.Engine {
 	entryCategoryRoutes.PUT(":id", middleware.Inception(), entryCategoryController.Update)
 	entryCategoryRoutes.DELETE(":id", middleware.Inception(), entryController.Delete)
 
+	articleCommentsRoutes := r.Group("/yuurei/articleComment")
+	articleCommentController := controller.NewArticleCommentController()
+	articleCommentsRoutes.POST("", articleCommentController.Create)
+
 	r.POST("/yuurei/uploadImgArticle", controller.ArticleImg)
 	r.POST("/yuurei/uploadImg", controller.UploadImg)
 	r.POST("/yuurei/uploadGallery", controller.GalleryPic)

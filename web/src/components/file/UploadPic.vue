@@ -29,7 +29,7 @@ import CropImg from "./CropImg.vue"
 import {computed, ref} from "vue";
 import axios from "@/request";
 import {NButton} from 'naive-ui'
-import LoadingCom from "@/components/LoadingCom.vue";
+import LoadingCom from "@/components/util/LoadingCom.vue";
 
 const isConfirming = ref(false) as any
 const isUploading = ref(false)

@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts" setup>
-import Entry from "../../components/Entry.vue"
+import Entry from "../../components/article/Entry.vue"
 import axios from "../../request/index"
 import {computed, ref, watch} from "vue";
 import {usePageData} from "@/store/pageData";
@@ -147,7 +147,7 @@ function changePage(num: number) {
     text-align: center;
     //border: .3vh solid rgb(49, 49, 49);
     //border-radius: .2vh;
-    border-bottom: .3vh solid rgba(49,49,49,.1);
+    border-bottom: .3vh solid rgba(49, 49, 49, .1);
 
     //box-shadow: -.05vh .05vh 0px 0px rgb(49, 49, 49);
     @media (max-aspect-ratio: 1/1) {
@@ -155,7 +155,7 @@ function changePage(num: number) {
     }
 
     &:hover {
-      border-bottom: .3vh solid var(--button-color)!important;
+      border-bottom: .3vh solid var(--button-color) !important;
 
       //background-color: var(--button-color);
       //color: white;
@@ -224,19 +224,19 @@ function changePage(num: number) {
     //background-color: #FF5353FF !important;
     //background-color: var(--button-color) !important;
     //color: white;
-    border-bottom: .3vh solid var(--button-color)!important;
+    border-bottom: .3vh solid var(--button-color) !important;
 
   }
 }
 
-.entires{
+.entires {
   animation: entryenter 1s ease;
-  animation-delay: calc(var(--i)*0.1s) ;
+  animation-delay: calc(var(--i) * 0.1s);
 }
 
 @keyframes entryenter {
-    from{
-      opacity: 0;
-    }
+  from {
+    opacity: 0;
+  }
 }
 </style>

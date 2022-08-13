@@ -1,0 +1,134 @@
+<template>
+  <div class="commentContainer">
+    <div class="header">
+      <input v-model="username" class="inputName" type="text" placeholder="输入昵称"/>
+      <div @click="showModal=true" class="icon" :style="{backgroundImage:`url(${bgi})`}"></div>
+    </div>
+    <textarea class="text-area" v-model="msgContent"></textarea>
+    <div class="footer">
+      <!--      😳-->
+      <button @click="send">发送</button>
+    </div>
+    <n-modal v-model:show="showModal" display-directive="show">
+      <n-card class="card">
+        <upload-pic @confirm="accept" name="上传头像" raw-src="" directory="commentIcon" quality="30" ratio="1"/>
+      </n-card>
+    </n-modal>
+  </div>
+</template>
+
+<script lang="ts" setup>
+import {computed, inject, ref, watch} from 'vue'
+import {useComment} from "@/store/commentData";
+import {NModal, NCard} from "naive-ui"
+import UploadPic from "../file/UploadPic.vue"
+
+const commentData = useComment()
+const username = ref('')
+const msgContent = ref('')
+const icon = ref('')
+const showModal = ref(false)
+const config = inject('globalConfig') as any
+const props = defineProps<{
+  article: object;
+  fatherId: number;
+  comment: object,
+}>()
+const emit = defineEmits(['send'])
+const bgi = computed(() => {
+  return commentData.commentData.icon === "" ? config.value.MessageDefaultIcon : commentData.commentData.icon
+})
+
+function accept(url: string) {
+  commentData.commentData.icon = url
+  showModal.value = false
+}
+
+watch(username, (newValue: any, oldValue: any) => {
+  commentData.commentData.username = newValue
+})
+
+function send() {
+  emit('send', {
+    msg: msgContent.value,
+    icon: bgi.value
+  })
+}
+</script>
+
+<style lang="less" scoped>
+.commentContainer {
+
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  margin: 0 auto;
+
+  @media (max-aspect-ratio: 9/16) {
+    width: 95%;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    .inputName {
+      padding-left: 2vh;
+      height: 5vh;
+      border-radius: .5vh;
+      outline: none;
+      border: .3vh solid var(--sec-color);
+      //outline: .2vh solid var(--sec-color);
+    }
+
+    .icon {
+      width: 10vh;
+      height: 10vh;
+      background-color: black;
+      border-radius: 50%;
+      background-position: center;
+      background-size: cover;
+      cursor: pointer;
+    }
+  }
+
+  .text-area {
+    height: 20vh;
+    resize: none;
+    margin-top: 1vh;
+    outline: none;
+    padding: 2vh;
+    font-size: 1.1em;
+    //outline: .2vh solid var(--sec-color);
+    border-radius: .5vh;
+    border: .3vh solid var(--sec-color);
+    //border-color: darkgray;
+  }
+
+  .footer {
+    display: flex;
+    margin-top: 1vh;
+
+    button {
+      background-color: var(--button-color);
+      color: white;
+      padding: 1vh 2vh;
+      outline: none;
+      border: none;
+      border-radius: .4vh;
+      //margin-bottom: 1vh;
+    }
+  }
+
+
+}
+
+.card {
+  width: 50%;
+
+  @media (max-aspect-ratio: 1/1) {
+    width: 90%;
+  }
+}
+</style>

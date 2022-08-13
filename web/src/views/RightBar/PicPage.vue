@@ -21,8 +21,8 @@
 
 import axios from "@/request"
 import qs from 'qs'
-import {reactive, ref, onMounted, watch, nextTick, inject, Ref} from "vue";
-import LoadingCom from "../../components/LoadingCom.vue"
+import {reactive, ref, onMounted, watch, nextTick, inject, Ref, onBeforeUnmount} from "vue";
+import LoadingCom from "../../components/util/LoadingCom.vue"
 
 const isShow = ref(true)
 const picList = ref<any>([])
@@ -121,6 +121,7 @@ function zoom(event: number) {
 
 }
 
+const timer = ref(0)
 
 function getNext() {
 
@@ -133,15 +134,19 @@ function getNext() {
     for (let i = 0; i < result.data.data.length; i++) {
       picList.value.push(result.data.data[i])
     }
-    let timer = setInterval(()=>{
+    timer.value = setTimeout(() => {
       waterFall()
-    },1000)
+    }, 1000)
 
-    setTimeout(()=>{
-      clearInterval(timer)
-    },20000)
+    // setTimeout(() => {
+    //   clearInterval(timer.value)
+    // }, 20000)
   })
 }
+
+onBeforeUnmount(() => {
+  clearInterval(timer.value)
+})
 
 // qs.stringify({num: num})
 function getPic() {
@@ -151,13 +156,13 @@ function getPic() {
     setTimeout(() => {
       waterFall()
     }, 500);
-    let timer = setInterval(()=>{
+    timer.value = setTimeout(() => {
       waterFall()
-    },1000)
+    }, 1000)
 
-    setTimeout(()=>{
-      clearInterval(timer)
-    },20000)
+    // setTimeout(() => {
+    //   clearInterval(timer.value)
+    // }, 20000)
   })
 }
 

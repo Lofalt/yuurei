@@ -1,27 +1,28 @@
 <template>
   <div>
-  <div class="messageBox">
-    <div class="icon" :style="{backgroundImage:`url(${backgroundImage})`}">
-      <div class="name" :class="msg.IsAdmin?`admin`:``">{{ userName }}</div>
-    </div>
-    <div class="messageInfo">
-      <div v-show="userInfo.user && userInfo.user.IsAdmin " class="delete" @click="deleteMsg">删除</div>
-      <div class="reply" @click="showReply=!showReply">{{ !showReply?`回复`:`收起` }}</div>
-      <div class="date">{{
-          new Date(msg.CreatedAt).Format("yyyy/M/dd") + " \n\n\n" + (new Date(msg.CreatedAt)).Format("hh:mm:ss")
-        }}
+    <div class="messageBox">
+      <div class="icon" :style="{backgroundImage:`url(${backgroundImage})`}">
+        <div class="name" :class="msg.IsAdmin?`admin`:``">{{ userName }}</div>
       </div>
-      <div :id="`info${msg.ID}`" class="info" v-html="msg.MessageContent">
+      <div class="messageInfo">
+        <div v-show="userInfo.user && userInfo.user.IsAdmin " class="delete" @click="deleteMsg">删除</div>
+        <div class="reply" @click="showReply=!showReply">{{ !showReply ? `回复` : `收起` }}</div>
+        <div class="date">{{
+            new Date(msg.CreatedAt).Format("yyyy/M/dd") + " \n\n\n" + (new Date(msg.CreatedAt)).Format("hh:mm:ss")
+          }}
+        </div>
+        <div :id="`info${msg.ID}`" class="info" v-html="msg.MessageContent">
+        </div>
       </div>
     </div>
-  </div>
     <n-message-provider>
-    <send-reply v-show="showReply" :ID="msg.ID" :UserName="userName" @send="accept" @upload="upload" @change-name="changeName"/>
+      <send-reply v-show="showReply" :ID="msg.ID" :UserName="userName" @send="accept" @upload="upload"
+                  @change-name="changeName"/>
     </n-message-provider>
-  <replies v-for="item in list" :key="item.ID" :child="item" @reload="accept" />
+    <replies v-for="item in list" :key="item.ID" :child="item" @reload="accept"/>
   </div>
 </template>
-  <!--    <div class="messageInfo">as </div>-->
+<!--    <div class="messageInfo">as </div>-->
 
 
 <script lang="ts" setup>
@@ -31,13 +32,13 @@ import {useUserInfo} from "@/store/UserInfo";
 import {isMobile} from "@/util/utils";
 import Replies from "./Replies.vue";
 import SendReply from "./SendReply.vue"
-import {NMessageProvider} from  "naive-ui"
+import {NMessageProvider} from "naive-ui"
 
-const showReply =ref(false)
+const showReply = ref(false)
 const flag = ref(isMobile())
 const backgroundImg = ref("")
 const userInfo = useUserInfo()
-const emit = defineEmits(['reload', 'emitPic','upload','change-name'])
+const emit = defineEmits(['reload', 'emitPic', 'upload', 'change-name'])
 const content = ref("")
 const list = ref([]) as any
 const props = defineProps<{
@@ -48,18 +49,19 @@ function upload() {
   console.log("joke")
   emit('upload')
 }
+
 list.value = props.msg.Replies
 let pics = props.msg.Pics.split(",")
 
-function changeName(name:string){
+function changeName(name: string) {
   console.log(name)
-  emit('change-name',name)
+  emit('change-name', name)
 }
 
-function accept(){
-  axios.get("/yuurei/msg/"+props.msg.ID,{}).then((res:any)=>{
+function accept() {
+  axios.get("/yuurei/msg/" + props.msg.ID, {}).then((res: any) => {
     list.value = res.data.data.Replies
-    showReply.value=false
+    showReply.value = false
   })
 }
 
@@ -71,7 +73,7 @@ const config = inject('globalConfig') as any
 backgroundImg.value = props.msg.Icon
 
 const userName = computed(() => {
-  if(props.msg.IsAdmin){
+  if (props.msg.IsAdmin) {
     return config.value.MyName
   }
   if (props.msg.IsAnonymous) {
@@ -82,7 +84,7 @@ const userName = computed(() => {
 })
 
 const backgroundImage = computed(() => {
-  if(props.msg.IsAdmin){
+  if (props.msg.IsAdmin) {
     return config.value.Icon
   }
   if (props.msg.IsAnonymous) {
@@ -241,6 +243,7 @@ function deleteMsg() {
       }
 
     }
+
     .delete {
       cursor: pointer;
       position: absolute;
@@ -252,22 +255,24 @@ function deleteMsg() {
       text-align: right;
       color: rgb(49, 49, 49)
     }
+
     .reply {
       cursor: pointer;
       position: absolute;
       bottom: -4vh;
-      left:0;
-      background-color: #ff7b7b;
+      left: 0;
+      //background-color: var(--sec-color);
+      background-color: orange;
       //text-shadow: -1px 1px 2px rgb(49,49,49);
       //text-shadow: -1px 1px 10px rgba(49, 49, 49, .4);
       //padding:1vh;
-      padding-left:1vh;
+      padding-left: 1vh;
       padding-right: 1vh;
       border-radius: .5vh;
       font-size: .9em;
       text-align: right;
       //color: rgb(49, 49, 49)
-      color:white;
+      color: white;
     }
 
     .date {
@@ -280,12 +285,12 @@ function deleteMsg() {
       color: white;
       padding: 0px 5px;
       border-radius: 2px;
-      background-color: rgba(49, 49, 49, 0.76);
+      //background-color: rgba(49, 49, 49, 0.76);
+      background-color: var(--sec-color);
       box-shadow: .4vh .4vh .1vh 0 rgba(49, 49, 49, 0.2);
       white-space: nowrap;
 
     }
-
 
 
     .info {

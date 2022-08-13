@@ -13,5 +13,7 @@ type GlobalConfig struct {
 	MobileBackgroundImage string `gorm:"type:varchar(100)"`
 	DateColor             string `gorm:"type:varchar(10)"`
 	ButtonColor           string `gorm:"type:varchar(10)"`
+	SecColor              string `gorm:"type:varchar(10)"`
+	ThirdColor            string `gorm:"type:varchar(10)"`
 	Slogan                string `gorm:"type:varchar(200)"`
 }

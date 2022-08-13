@@ -1,7 +1,10 @@
 <template>
 
   <div class="app"
-       :style="[{backgroundImage:backgroundImage},`--button-color:${ButtonColor};--date-color:${DateColor}`]">
+       :style="[{backgroundImage:backgroundImage},`--button-color:${ButtonColor};
+       --date-color:${DateColor};
+       --sec-color:${SecColor};
+       --third-color:${ThirdColor}`]">
     <div :class="[isActive?`activeClass`:`unActive`,`mask`]" @click="showNav"></div>
     <div :class="[isActive?`lefting`:``,`navButton`]" @click="showNav">
       <div class="icons"></div>
@@ -24,9 +27,9 @@
 </template>
 <script lang="ts" setup>
 import {computed, getCurrentInstance, onMounted, provide, ref, watch} from 'vue';
-import LeftBar from './components/LeftBar.vue';
+import LeftBar from './components/root/LeftBar.vue';
 import {usePageData} from './store/pageData';
-import Date from "./components/Date.vue";
+import Date from "./components/util/Date.vue";
 import {ArrowBarToUp} from "@vicons/tabler"
 import {NIcon} from "naive-ui"
 import {useUserInfo} from "@/store/UserInfo";
@@ -65,6 +68,18 @@ const DateColor = computed(() => {
   }
   return config.value.DateColor
 })
+const SecColor = computed(() => {
+  if (config.value == null) {
+    return ''
+  }
+  return config.value.SecColor
+})
+const ThirdColor = computed(() => {
+  if (config.value == null) {
+    return ''
+  }
+  return config.value.ThirdColor
+})
 
 provide('globalConfig', config)
 axios.get("/yuurei/settings/1", {}).then((res: any) => {
@@ -75,8 +90,7 @@ axios.get("/yuurei/settings/1", {}).then((res: any) => {
 })
 
 
-watch(router.currentRoute, (newValue: any,oldValue:any) => {
-  console.log(oldValue.path)
+watch(router.currentRoute, (newValue: any, oldValue: any) => {
   if (newValue.path.startsWith("/archive")) {
     pageData.pagedata.count = 1
 
@@ -369,6 +383,7 @@ button {
   }
 
 }
+
 //@font-face {
 //  font-family: 思源宋体;
 //  src: url("./assets/fonts/SourceHanSerifCN-Medium.otf");

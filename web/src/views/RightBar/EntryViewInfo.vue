@@ -46,7 +46,7 @@ import {useRouter} from "vue-router";
 
 const router = useRouter()
 const props = defineProps<{
-  id:number
+  id: number
 }>()
 
 const Entry = ref({
@@ -64,12 +64,12 @@ const Entry = ref({
   EntryCategoryID: "",
 })
 
-axios.get("/yuurei/entry/"+props.id, {}).then((res: any) => {
+axios.get("/yuurei/entry/" + props.id, {}).then((res: any) => {
   Entry.value = res.data.data
 })
 
-watch(router.currentRoute,(newValue:any)=>{
-  axios.get("/yuurei/entry/"+newValue.params.id, {}).then((res: any) => {
+watch(router.currentRoute, (newValue: any) => {
+  axios.get("/yuurei/entry/" + newValue.params.id, {}).then((res: any) => {
     Entry.value = res.data.data
   })
 })
@@ -78,11 +78,10 @@ watch(router.currentRoute,(newValue:any)=>{
 <style lang="less">
 
 
-
 .enryContainer {
 
   color: #2a3746;
-  font-size: 1.5vh;
+  font-size: 2vh;
   padding-left: 5vh;
   display: flex;
   flex-direction: column;
@@ -92,26 +91,28 @@ watch(router.currentRoute,(newValue:any)=>{
   //overflow: auto;
   //background-color: ghostwhite;
   background-attachment: unset;
+  @media (max-aspect-ratio: 9/16) {
+    font-size: 3.5vw;
+  }
 
+  .content {
 
-
-  .content{
-
-    a{
+    a {
       text-decoration: none;
       color: var(--entry-sec-color);
     }
-    p{
-      margin-top:1.5vh!important;
+
+    p {
+      margin-top: 1.5vh !important;
       color: rgba(65, 47, 47, 0.8);
 
-      img{
+      img {
         max-width: 40%;
         margin-right: 5%;
         //width: auto;
         //max-height: 50vh;
 
-        @media (max-aspect-ratio: 9/16){
+        @media (max-aspect-ratio: 9/16) {
           max-width: 90%;
         }
       }
@@ -123,10 +124,10 @@ watch(router.currentRoute,(newValue:any)=>{
 
   hr {
     border-collapse: collapse;
-    border: 0px solid rgba(49,49,49,.1);
+    border: 0px solid rgba(49, 49, 49, .1);
     height: 1px;
     color: black;
-    background-color: rgba(49,49,49,.2);
+    background-color: rgba(49, 49, 49, .2);
     margin: 1vh auto;
   }
 
@@ -218,7 +219,7 @@ watch(router.currentRoute,(newValue:any)=>{
       margin: 3vh 0;
       //margin-right: 0;
       //height: 50vh;
-      width: 50vh;
+      //width: 60vh;
       //background-color: #b1f0f1;
 
       @media (max-aspect-ratio: 11/16) {
@@ -231,7 +232,7 @@ watch(router.currentRoute,(newValue:any)=>{
       //margin-right: 3vh;
       //margin: 3vh;
       //min-height: 50vh;
-      width: 40vh;
+      //width: 40vh;
       //background-color: #b1f0f1;
       display: flex;
       flex-direction: column;

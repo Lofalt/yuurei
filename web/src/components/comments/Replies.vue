@@ -1,22 +1,21 @@
-
 <template>
   <div class="replyContainer">
     <div class="replyIcon" :style="{backgroundImage:`url(${backgroundImage})`}">
-      <div :class="child.IsAdmin?`admin`:``" class="name" >{{ name }}</div>
-<!--      :class="msg.IsAdmin?`admin`:``"-->
+      <div :class="child.IsAdmin?`admin`:``" class="name">{{ name }}</div>
+      <!--      :class="msg.IsAdmin?`admin`:``"-->
     </div>
     <div class="reply">
-<!--      {{child.MessageContent}}-->
+      <!--      {{child.MessageContent}}-->
       <div v-show="userInfo.user && userInfo.user.IsAdmin " class="delete" @click="deleteMsg">删除</div>
-      <div class="replys" @click="showReply=!showReply">{{ !showReply?`回复`:`收起` }}</div>
+      <div class="replys" @click="showReply=!showReply">{{ !showReply ? `回复` : `收起` }}</div>
       <div class="date">
-        {{new Date(child.CreatedAt).Format("yyyy/M/dd") + " \n\n\n" + (new Date(child.CreatedAt)).Format("hh:mm:ss")}}
+        {{ new Date(child.CreatedAt).Format("yyyy/M/dd") + " \n\n\n" + (new Date(child.CreatedAt)).Format("hh:mm:ss") }}
       </div>
       <div class="content" v-html="child.MessageContent"></div>
     </div>
   </div>
   <n-message-provider>
-  <send-reply @send="accept" v-show="showReply" :UserName="name" :ID="child.FatherID"/>
+    <send-reply @send="accept" v-show="showReply" :UserName="name" :ID="child.FatherID"/>
   </n-message-provider>
 </template>
 
@@ -25,41 +24,44 @@ import {useUserInfo} from "@/store/UserInfo";
 import axios from "@/request";
 import {computed, inject, ref} from "vue";
 import SendReply from "./SendReply.vue"
+
 const config = inject('globalConfig') as any
 const userInfo = useUserInfo()
 const showReply = ref(false)
 const emit = defineEmits(['reload'])
-import {NMessageProvider} from  "naive-ui"
+import {NMessageProvider} from "naive-ui"
 
-const backgroundImage = computed(()=>{
-  return props.child.IsAnonymous?config.value.MessageDefaultIcon:(props.child.IsAdmin?config.value.Icon:props.child.Icon)
+const backgroundImage = computed(() => {
+  return props.child.IsAnonymous ? config.value.MessageDefaultIcon : (props.child.IsAdmin ? config.value.Icon : props.child.Icon)
 })
 
-const name = computed(()=>{
-  console.log(props.child)
-  return props.child.IsAnonymous?config.value.AnonymousName:(props.child.IsAdmin?config.value.MyName:props.child.UserName)
+const name = computed(() => {
+  return props.child.IsAnonymous ? config.value.AnonymousName : (props.child.IsAdmin ? config.value.MyName : props.child.UserName)
 })
+
 function deleteMsg() {
   axios.request("/yuurei/msg/" + props.child.ID, "delete", {}).then((result) => {
     emit('reload')
   })
 }
-function accept(){
+
+function accept() {
   emit('reload')
-  showReply.value=false
+  showReply.value = false
 }
+
 const props = defineProps<{
-  child:any
+  child: any
 }>()
 
 </script>
 
-<style  lang="less">
+<style lang="less">
 
 .replyContainer {
   font-family: "微软雅黑";
   --replyColor: rgb(63, 61, 61);
-  color:var(--replyColor);
+  color: var(--replyColor);
 
   //float: right;
   width: 95%;
@@ -78,10 +80,11 @@ const props = defineProps<{
     border-radius: 50%;
     margin-right: 2vh;
     position: relative;
-    border:.3vh solid var(--replyColor);
-    @media (max-aspect-ratio: 9/16){
-      border:.6vw solid var(--replyColor);
+    border: .3vh solid var(--replyColor);
+    @media (max-aspect-ratio: 9/16) {
+      border: .6vw solid var(--replyColor);
     }
+
     .name {
       position: absolute;
       bottom: -3vh;
@@ -100,23 +103,26 @@ const props = defineProps<{
     }
 
   }
+
   .replys {
     cursor: pointer;
     position: absolute;
     bottom: -4vh;
     left: 0vh;
-    background-color: #ff7b7b;
+    //background-color: var(--sec-color);
+    background-color: orange;
     //text-shadow: -1px 1px 2px rgb(49,49,49);
     //text-shadow: -1px 1px 10px rgba(49, 49, 49, .4);
     //padding:1vh;
-    padding-left:1vh;
+    padding-left: 1vh;
     padding-right: 1vh;
     border-radius: .5vh;
     font-size: .9em;
     text-align: right;
     //color: rgb(49, 49, 49)
-    color:white;
+    color: white;
   }
+
   .date {
     position: absolute;
     bottom: -4vh;
@@ -127,11 +133,12 @@ const props = defineProps<{
     color: white;
     padding: 0px 5px;
     border-radius: 2px;
-    background-color: rgba(49, 49, 49, 0.2);
+    background-color: var(--third-color);
     //box-shadow: .4vh .4vh .1vh 0 rgba(49, 49, 49, 0.2);
     white-space: nowrap;
 
   }
+
   .reply {
     padding: 2vh;
     height: 100%;
@@ -146,7 +153,6 @@ const props = defineProps<{
     border-bottom: .5vh solid var(--replyColor);
     border-radius: 1vh;
     position: relative;
-
 
 
     @media (max-aspect-ratio: 9/16) {
@@ -194,13 +200,14 @@ const props = defineProps<{
       color: rgb(49, 49, 49)
     }
 
-  .content{
-    color:var(--replyColor);
-    font-weight: bold;
-    a{
-      color:var(--button-color)
+    .content {
+      color: var(--replyColor);
+      font-weight: bold;
+
+      a {
+        color: var(--sec-color)
+      }
     }
-  }
   }
 
 }

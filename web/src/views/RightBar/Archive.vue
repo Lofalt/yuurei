@@ -3,18 +3,20 @@
     <img class="headerPic" :src="article.HeaderPicture"/>
     <div v-if="article" class="article">
       <div class="articleHeader">
-      <div class="archive-head">
-<!--        {{article.ArticleSummary}}-->
-        {{new Date(article.CreatedAt).Format("yyyy/M/dd") +"   "+` (${"日月火水木金土".charAt(new Date(article.CreatedAt).getDay())})`}}
-      </div>
+        <div class="archive-head">
+          <!--        {{article.ArticleSummary}}-->
+          {{
+            new Date(article.CreatedAt).Format("yyyy/M/dd") + "   " + ` (${"日月火水木金土".charAt(new Date(article.CreatedAt).getDay())})`
+          }}
+        </div>
         <div class="articleTitle">
           {{ article.ArticleTitle }}
         </div>
         <div class="articleInfo">
-          <span>{{article.ArticleSummary}}</span>
-<!--          <span>分类:{{ article.ArticleCategory.ArticleCategoryName }}</span>-->
-<!--          <span>阅读数:{{ article.ArticleReadTimes }}</span>-->
-<!--          <span v-show="article.CreatedAt!=article.UpdatedAt">修改于 {{new Date(article.UpdatedAt).Format("yyyy/M/dd  hh:mm:ss") }}</span>-->
+          <span>{{ article.ArticleSummary }}</span>
+          <!--          <span>分类:{{ article.ArticleCategory.ArticleCategoryName }}</span>-->
+          <!--          <span>阅读数:{{ article.ArticleReadTimes }}</span>-->
+          <!--          <span v-show="article.CreatedAt!=article.UpdatedAt">修改于 {{new Date(article.UpdatedAt).Format("yyyy/M/dd  hh:mm:ss") }}</span>-->
           <!--                <span>被分享:{{article.articleShareTimes}}</span>-->
         </div>
         <!--        <div class="articleSummary" :style="{backgroundImage:`url(${article.HeaderPicture})`}">-->
@@ -25,6 +27,12 @@
         <!--        <blockquote>{{article.ArticleSummary}}</blockquote>-->
       </div>
       <div class="articleContent" v-html="article.ArticleContent" v-highlight/>
+      <div class="footer">
+        文章标题:&nbsp;&nbsp;{{ article.ArticleTitle }}<br>
+        发布于&nbsp;&nbsp; {{ new Date(article.CreatedAt).Format("yyyy/M/dd  hh:mm:ss") }}<br>
+        分类:&nbsp;&nbsp;{{ article.ArticleCategory.ArticleCategoryName }}<br>
+        修改于&nbsp;&nbsp; {{ new Date(article.UpdatedAt).Format("yyyy/M/dd  hh:mm:ss") }}
+      </div>
     </div>
     <div class="preAndNext">
       <div class="preAndNextBox" v-if="hasPre">
@@ -48,6 +56,7 @@
 
       </div>
     </div>
+    <comments :article="article"/>
     <!--    <comments :article="article" v-cloak/>-->
   </div>
 </template>
@@ -61,9 +70,10 @@ import {computed, onMounted, reactive, ref, watch} from "vue";
 import axios from "@/request"
 import qs from "qs"
 import {useRouter} from "vue-router"
-import Comments from "../components/article/Comments.vue"
+// import Comments from "../components/article/Comments.vue"
 import {NIcon} from 'naive-ui'
 import {ArrowLeft, ArrowRight} from "@vicons/fa";
+import Comments from "../../components/article/Comments.vue"
 
 const router = useRouter()
 const article = ref({
@@ -130,6 +140,17 @@ watch(router.currentRoute, (newValue, oldValue) => {
 
   })
 })
+watch(props, (newValue, oldValue) => {
+  axios.get(
+      "/yuurei/article/" + newValue.id, {}
+  ).then((result: any) => {
+    article.value = result.data.data
+    pre.value = result.data.pre
+    next.value = result.data.next
+    document.getElementsByClassName("articlePage")[0].scrollTo(0, 0)
+
+  })
+})
 
 function jump(id: number) {
   router.push("/archive/article/" + id)
@@ -139,9 +160,14 @@ function jump(id: number) {
 
 <style lang="less">
 
-//* {
-//  font-size: 1.6vh;
-//}/
+* {
+  //font-size: 2vh;
+  ////line-height: 3vh;
+  //
+  //@media (max-aspect-ratio: 9/16) {
+  //  font-size: 3.5vw;
+  //}
+}
 
 
 .hljs {
@@ -218,12 +244,18 @@ blockquote p {
 
 .article {
   .articleContent {
+    line-height: 4vh;
+    font-size: 2vh;
+    @media (max-aspect-ratio: 9/16) {
+      font-size: 3.5vw;
+    }
 
-    pre{
-      code{
-        background-color: #fdf1f1!important;
+    pre {
+      code {
+        background-color: #fdf1f1 !important;
       }
-      &::before{
+
+      &::before {
         border-top-left-radius: 2vh;
         border-top-right-radius: 2vh;
         display: block;
@@ -234,6 +266,7 @@ blockquote p {
         background-color: #ffb1b1;
       }
     }
+
     * {
       /*margin-top:15px;*/
       //font-size: 1px;
@@ -269,6 +302,12 @@ blockquote p {
     //border-top: 1px solid rgba(58, 58, 58, 0.1);
   }
 
+  .footer {
+    font-size: .9em;
+    margin-top: 10vh;
+    color: darkgray;
+  }
+
   .articleSummary {
     //font-size: 17px;
     font-size: 1.05em;
@@ -301,11 +340,12 @@ blockquote p {
 
   margin: 5vh 5vh 2vh 5vh;
   padding: 3vh;
-  padding-top:0;
+  padding-top: 0;
   border-bottom: 1px solid rgba(58, 58, 58, 0.1);
 
   .articleHeader {
     position: relative;
+
     .articleTitle {
       margin-top: 1vh;
       margin-bottom: 2vh;
@@ -382,15 +422,16 @@ blockquote p {
 
 }
 
-.archive-head{
+.archive-head {
   position: relative;
   padding-left: 1.4vh;
   //height:2vh;
   font-family: "微软雅黑";
-  color:rgba(49,49,49,.5);
+  color: rgba(49, 49, 49, .5);
   margin-bottom: 6vh;
-  &::before{
-    left:0;
+
+  &::before {
+    left: 0;
     border-radius: 1vh;
     content: " ";
     width: .8vh;

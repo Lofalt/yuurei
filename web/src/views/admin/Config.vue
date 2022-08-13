@@ -72,6 +72,18 @@
         <n-color-picker :modes="[`hex`]" v-model:value="ButtonColor"/>
       </td>
     </tr>
+    <tr>
+      <td>辅色</td>
+      <td>
+        <n-color-picker :modes="[`hex`]" v-model:value="SecColor"/>
+      </td>
+    </tr>
+    <tr>
+      <td>次色</td>
+      <td>
+        <n-color-picker :modes="[`hex`]" v-model:value="ThirdColor"/>
+      </td>
+    </tr>
     </tbody>
 
   </n-table>
@@ -98,6 +110,8 @@ const DateColor = ref('')
 const ButtonColor = ref('')
 const router = useRouter()
 const Slogan = ref("")
+const SecColor = ref("")
+const ThirdColor = ref("")
 
 const HasInited = ref(false)
 
@@ -128,8 +142,10 @@ function create() {
     BackgroundImage: BackgroundImage.value,
     DateColor: DateColor.value,
     ButtonColor: ButtonColor.value,
+    SecColor: SecColor.value,
+    ThirdColor: ThirdColor.value,
     AnonymousName: AnonymousName.value,
-    Slogan:Slogan.value
+    Slogan: Slogan.value
   }).then((res: any) => {
     if (res.code == 200) {
       router.go(0)
@@ -154,6 +170,8 @@ function getConfig() {
     BackgroundImage.value = set.BackgroundImage
     DateColor.value = set.DateColor
     ButtonColor.value = set.ButtonColor
+    SecColor.value = set.SecColor
+    ThirdColor.value = set.ThirdColor
     MobileBackgroundImage.value = set.MobileBackgroundImage
     AnonymousName.value = set.AnonymousName
     Slogan.value = set.Slogan
@@ -174,9 +192,11 @@ function edit() {
     BackgroundImage: BackgroundImage.value,
     DateColor: DateColor.value,
     ButtonColor: ButtonColor.value,
+    SecColor: SecColor.value,
+    ThirdColor: ThirdColor.value,
     MobileBackgroundImage: MobileBackgroundImage.value,
     AnonymousName: AnonymousName.value,
-    Slogan:Slogan.value
+    Slogan: Slogan.value
 
   }).then((res: any) => {
     if (res.code == 200) {

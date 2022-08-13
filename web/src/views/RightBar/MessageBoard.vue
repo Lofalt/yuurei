@@ -5,7 +5,8 @@
     </transition>
     <div class="head" @click.capture="showModal = false">
       <transition-group tag="p" name="jokes">
-        <joke @change-name="acceptName" @upload="editPic" @emit-pic="acceptScale" v-for="(item,index) in msgList" :style="`--i:${index%5}`" :msg="item"
+        <joke @change-name="acceptName" @upload="editPic" @emit-pic="acceptScale" v-for="(item,index) in msgList"
+              :style="`--i:${index%5}`" :msg="item"
               :key="item.ID"
               @reload="flush"/>
       </transition-group>
@@ -101,7 +102,7 @@ import Joke from "../../components/comments/Joke.vue"
 import {MessageCircle} from "@vicons/tabler"
 import {NIcon} from "naive-ui"
 import axios from "@/request"
-import LoadingCom from "@/components/LoadingCom.vue";
+import LoadingCom from "@/components/util/LoadingCom.vue";
 import UploadPic from "@/components/file/UploadPic.vue"
 import {PictureOutlined, SmileOutlined} from "@vicons/antd"
 import Emoji from "@/components/comments/Emoji.vue"
@@ -136,7 +137,6 @@ const pageNum = ref(1)
 const config = inject("globalConfig") as any
 
 
-
 const backgroundImage = computed(() => {
   if (config.value == null) {
     return ``
@@ -154,7 +154,8 @@ const uploadImg = computed(() => {
   return backgroundImg.value
 })
 
-provide('src',uploadImg)
+provide('src', uploadImg)
+
 function editPic() {
   if (userName.value == '' && !userInfo.user.IsAdmin) {
     message.warning("请先输入昵称")
@@ -164,7 +165,7 @@ function editPic() {
   }
 }
 
-function acceptName(name:string){
+function acceptName(name: string) {
   console.log("?")
   userName.value = name
 }

@@ -210,7 +210,7 @@ func (a ArticleController) Show(c *gin.Context) {
 			DeletedAt: gorm.DeletedAt{},
 		},
 	}
-	if err := a.DB.Preload("Tags").Preload("ArticleCategory").Find(&article).Error; err != nil {
+	if err := a.DB.Preload(clause.Associations).Find(&article).Error; err != nil {
 		response.Fail(c, gin.H{}, err.Error())
 		return
 	}
