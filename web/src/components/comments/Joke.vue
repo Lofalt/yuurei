@@ -262,7 +262,7 @@ function deleteMsg() {
       bottom: -4vh;
       left: 0;
       //background-color: var(--sec-color);
-      background-color: orange;
+      background-color: #7ca6ce;
       //text-shadow: -1px 1px 2px rgb(49,49,49);
       //text-shadow: -1px 1px 10px rgba(49, 49, 49, .4);
       //padding:1vh;

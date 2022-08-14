@@ -125,6 +125,8 @@ function showNav() {
 }
 
 onMounted(() => {
+  // let windows = document.getElementsByClassName("app")
+  // windows[0]. = window.innerHeight
   let user = userInfo.user
   if (user.Username === null && localStorage.getItem("token") != null) {
     axios.get("/yuurei/info", {}).then((res: any) => {
@@ -293,7 +295,7 @@ button {
 }
 
 #app {
-  min-height: 100vh;
+  height: 100%;
   // overflow: hidden;
 }
 
@@ -302,7 +304,7 @@ button {
   background-repeat: repeat-y;
   //background-image: url("./assets/1659613675111.jpg");
   position: relative;
-  min-height: 100vh;
+  height: 100%;
   overflow: hidden;
 }
 
