@@ -21,8 +21,9 @@
 
 import axios from "@/request"
 import qs from 'qs'
-import {reactive, ref, onMounted, watch, nextTick, inject, Ref, onBeforeUnmount} from "vue";
+import {reactive, ref, onMounted, watch, nextTick, inject, Ref, onBeforeUnmount, createElementVNode} from "vue";
 import LoadingCom from "../../components/util/LoadingCom.vue"
+// import {createE}
 
 const isShow = ref(true)
 const picList = ref<any>([])
@@ -54,7 +55,7 @@ function touchEnd(event: any) {
   let touchYEnd = event.changedTouches[0].pageY
   let touches = touchYEnd - touchY
   if (touches < -90) {
-    if (!isLoading.value && picList.value.length < total.value) {
+    if (!isLoading.value && document.querySelectorAll("img").length < total.value) {
       isLoading.value = true
       setTimeout(() => {
         getNext()
@@ -94,7 +95,7 @@ function listenScroll(event: any) {
   if (box.scrollTop + box.offsetHeight + 100 > box.scrollHeight) {
     // offset.value += 5
     // console.log((pageNum.value ) * pageSize.value)
-    if (!isLoading.value && picList.value.length < total.value) {
+    if (!isLoading.value && document.querySelectorAll("img").length < total.value) {
       isLoading.value = true
       setTimeout(() => {
         getNext()
@@ -131,12 +132,21 @@ function getNext() {
   isLoading.value = true
   pageNum.value += 1
   axios.get(`/yuurei/gallery/all?pageNum=${pageNum.value}&pageSize=${pageSize.value}`, {}).then((result: any) => {
+    // for (let i = 0; i < result.data.data.length; i++) {
+    //   picList.value.push(result.data.data[i])
+    // }
+    let main = document.querySelector("#main") as any
+    let pics = result.data.data
     for (let i = 0; i < result.data.data.length; i++) {
-      picList.value.push(result.data.data[i])
+      let child = document.createElement("img")
+      child.classList.add("test")
+      child.src = pics[i].Path
+      child.addEventListener("load",waterFall)
+      main.appendChild(child)
     }
-    timer.value = setTimeout(() => {
-      waterFall()
-    }, 1000)
+    // timer.value = setTimeout(() => {
+    //   waterFall()
+    // }, 1000)
 
     // setTimeout(() => {
     //   clearInterval(timer.value)
@@ -151,19 +161,48 @@ onBeforeUnmount(() => {
 // qs.stringify({num: num})
 function getPic() {
   axios.get(`/yuurei/gallery/all?pageNum=${pageNum.value}&pageSize=${pageSize.value}`, {}).then((result: any) => {
-    picList.value = result.data.data
+    // picList.value = result.data.data
     total.value = result.data.total
-    setTimeout(() => {
-      waterFall()
-    }, 500);
-    timer.value = setTimeout(() => {
-      waterFall()
-    }, 1000)
+    let main = document.querySelector("#main") as any
+    let pics = result.data.data
+    for (let i = 0; i < result.data.data.length; i++) {
+      let child = document.createElement("img")
+      child.classList.add("test")
+      child.src = pics[i].Path
+      child.addEventListener("load",waterFall)
+      main.appendChild(child)
+    }
+    waterFall()
+    // waitImgLoaded(main).then(()=>{
+
+    // })
+
+    // let childs = document.getElementsByTagName("img")
+    // let main = document.getElementById("main")
+    // setTimeout(() => {
+    //   waterFall()
+    // }, 500);
+    // timer.value = setTimeout(() => {
+    //   waterFall()
+    // }, 1000)
 
     // setTimeout(() => {
     //   clearInterval(timer.value)
     // }, 20000)
   })
+}
+
+const waitImgLoaded = async (root: any) => {
+  const imgs = root instanceof HTMLImageElement ? [root] : root.querySelectorAll('img');
+  console.log(imgs)
+  let imgArr = Array.prototype.slice.call(imgs);
+  return await Promise.all(
+      imgArr.map((img: any) => (
+              new Promise(resolve => (
+                  img.addEventListener('load', () => resolve(img))
+              ))
+          )
+      ))
 }
 
 function waterFall() {
@@ -413,4 +452,40 @@ button {
     opacity: 0;
   }
 }
+
+</style>
+
+<style lang="less">
+.test {
+  cursor: pointer;
+  left: 0px;
+  width: 50%;
+  // height: 100%;
+  box-sizing: border-box;
+  padding: 8px;
+  // margin: 8px;
+  /* margin:15px; */
+  // float: left;
+  transition: opacity 0.2s ease-in-out;
+  // transition: all 1s;
+  // animation: enter 1s;
+  // animation-timing-function: ease-in-out;
+  // animation-fill-mode: backwards;
+  // box-shadow: 0 0 1px 1px rgba(43, 43, 43, 0.738);
+  opacity: 0;
+  // transform: translateY(1000px);
+
+  &:hover {
+    transform: translate(-5px, -5px) !important;
+    box-shadow: -2px 2px 5px 1px rgba(0, 0, 0, 0.1);
+    transition: all .2s ease;
+
+  }
+
+  @media (max-width: 800px) {
+    padding: 5px;
+
+  }
+}
+
 </style>
