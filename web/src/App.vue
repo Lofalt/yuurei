@@ -89,6 +89,18 @@ axios.get("/yuurei/settings/1", {}).then((res: any) => {
   }
 })
 
+onMounted(()=>{
+  let main = document.getElementsByClassName("app")[0] as any
+  main.style.height = window.innerHeight + "px"
+
+  window.onresize = () => {
+    return (() => {
+      let main = document.getElementsByClassName("app")[0] as any
+      main.style.height = window.innerHeight + "px"
+    })()
+  }
+})
+
 
 watch(router.currentRoute, (newValue: any, oldValue: any) => {
   if (newValue.path.startsWith("/archive")) {
@@ -219,25 +231,12 @@ function changePage(num: number) {
 
 }
 
-#rightbar {
-  position: relative;
-  width: 83.5%;
-  height: 100vh;
-  float: right;
-  // overflow: hidden;
-  transition: all .8s ease-in-out;
-
-  @media (max-width: 1024px) {
-    width: 100%;
-  }
-}
-
 .middle {
   float: right;
   position: relative;
   overflow: hidden;
   width: 100%;
-  min-height: 100vh;
+  min-height: 100%;
 }
 
 .bottom,
@@ -245,7 +244,7 @@ function changePage(num: number) {
   position: relative;
   float: right;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   transition: all 2s;
 }
 
@@ -301,7 +300,7 @@ button {
 
 .app {
   background-size: cover;
-  background-repeat: repeat-y;
+  //background-repeat: repeat-y;
   //background-image: url("./assets/1659613675111.jpg");
   position: relative;
   height: 100%;

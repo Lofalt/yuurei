@@ -108,18 +108,29 @@ axios.get("yuurei/article/all?pageNum=1&pageSize=1", {}).then((res) => {
 })
 onMounted(() => {
   const rightPage = document.getElementById("rightbar") as HTMLSelectElement
-  rightPage.style.transform = `translateY(-${pageData.pagedata.count}00vh)`
+  rightPage.style.transform = `translateY(-${pageData.pagedata.count}00%)`
 })
 
 watch(pageData.pagedata, (newValue, oldValue) => {
   const rightPage = document.getElementById("rightbar") as HTMLSelectElement
-  rightPage.style.transform = `translateY(-${newValue.count}00vh)`
+  rightPage.style.transform = `translateY(-${newValue.count}00%)`
 })
 
 function changePage(num: number) {
   pageData.pagedata.count = num
 
 }
+onMounted(()=>{
+  // let rightbar = document.getElementById("rightbar") as any
+  // rightbar.style.height = window.innerHeight + "px"
+
+  // window.onresize = () => {
+    // return (() => {
+    //   let rightbar = document.getElementById("rightbar") as any
+    //   rightbar.style.height = window.innerHeight + "px"
+    // })()
+  // }
+})
 
 
 </script>
@@ -156,7 +167,7 @@ function changePage(num: number) {
 #rightbar {
   position: relative;
   width: 83.5%;
-  height: 100vh;
+  height: 100%;
   float: right;
   // overflow: hidden;
   transition: all .8s ease-in-out;
@@ -171,7 +182,7 @@ function changePage(num: number) {
   position: relative;
   overflow: hidden;
   width: 100%;
-  min-height: 100vh;
+  height: 100%;
 }
 
 .bottom,
@@ -179,7 +190,7 @@ function changePage(num: number) {
   position: relative;
   float: right;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   transition: all 2s;
   display: flex;
   justify-content: center;

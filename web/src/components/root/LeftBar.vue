@@ -224,12 +224,11 @@ a {
 .leftbar {
   user-select: none;
   border-right: .4vh solid rgb(49, 49, 49);
-  height: 100vh;
   color: white;
   position: fixed;
   float: left;
   width: 16.5%;
-  min-height: 100vh;
+  min-height: 100%;
   // background: linear-gradient(#ffff, rgb(255, 244, 232));
   background-color: rgb(255, 255, 255);
   display: block;
