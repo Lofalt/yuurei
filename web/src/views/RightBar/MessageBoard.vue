@@ -16,7 +16,6 @@
     </div>
     <div class="loading end" v-show="msgList.length===total &&total>5">— 时间的尽头 —</div>
     <div class="left">
-
       <n-icon size="3vh" color="#000000" class="messageIcon" @click="changeModal">
         <message-circle/>
       </n-icon>
@@ -39,11 +38,7 @@
             <div style="width: 90%"></div>
             <button class="sendButton" @click="sendMsg">send</button>
           </div>
-          <textarea class="inputTextarea" @click="showEmoji=false" ref="inputTextarea" type="textarea" draggable="false"
-                    v-model="msgContent"> </textarea>
-
-          <!-- <transition name="button"> -->
-          <!-- </transition> -->
+          <textarea class="inputTextarea" @click="showEmoji=false" ref="inputTextarea" draggable="false"> </textarea>
           <input type="file" accept="image/jpeg,image/png" ref="inputFile" @change="getFile" style="display: none">
           <div class="uploadButton" :style="{backgroundImage:backgroundImage}" @click="editPic">
             <loading-com v-show="isLoading"/>
@@ -53,23 +48,18 @@
     </div>
     <n-modal v-model:show="iconEdit" display-directive="if">
       <n-card class="iconCard">
-        <upload-pic @confirm="check" :name="`上传图片`" :ratio="1" directory="profileIcon" quality="40"
-                    @send-pic="changeImg"/>
+        <upload-pic @confirm="check" :name="`上传图片`" :ratio="1" directory="profileIcon" :quality="40"
+                    @send-pic="changeImg" raw-src=""/>
       </n-card>
     </n-modal>
     <n-modal v-model:show="showTheModal" :display-directive="'if'" :transform-origin="'mouse'">
       <n-card size="huge" aria-modal="true" style="width: 100%; height:100vw;position: fixed;top: 0;">
-        <!-- <button @click="post">点我发送</button> -->
         <div class="messageDiv2">
           <div class="insertPic">
             <div @click="deletePic(index)" v-for="(item,index) in picList" :style="{backgroundImage:`url(${item})`}"
                  class="insidePic"></div>
           </div>
-
           <div class="inputUsernameModal"><input type="text" v-model="userName" placeholder="输入昵称,为空匿名"/></div>
-          <!--                    <wang-editor-mini @change-content="changeContent"></wang-editor-mini>-->
-          <!-- <transition name="button"> -->
-          <!--          <button class="sendButton" @click="sendMsg">send</button>-->
           <div class="messageHeader">
             <n-icon @click="upload" class="messageHeaderIcon" color="black" size="7vw">
               <picture-outlined/>
@@ -81,12 +71,7 @@
                     v-model="msgContent"/>
           <div class="uploadButton inside" :style="{backgroundImage:backgroundImage}"
                @click="editPic"></div>
-
-
-          <!-- </transition> -->
         </div>
-        <!-- <template #footer> -->
-        <!-- </template> -->
       </n-card>
     </n-modal>
   </div>
@@ -296,7 +281,7 @@ function sendMsg() {
     message.warning("30秒内只能留言一次")
     return
   }
-  if (fnlContent.value == "") {
+  if (inputTextarea.value == "") {
     message.warning("先说点啥吧")
     return
   } else if (msgContent.value.length > 140) {
@@ -304,7 +289,7 @@ function sendMsg() {
     return
   }
   axios.request("/yuurei/msg", "post", {
-    MessageContent: fnlContent.value.replace(/\r/ig, '').replace(/\n/ig, '<br/>'),
+    MessageContent: inputTextarea.value.value.replace(/\r/ig, '').replace(/\n/ig, '<br/>'),
     Icon: uploadImg.value,
     UserName: userName.value,
     IsAdmin: userInfo.user.IsAdmin,
@@ -337,6 +322,7 @@ function flush() {
   showModal.value = false
   showTheModal.value = false
   msgContent.value = ""
+  inputTextarea.value.value = ""
   picList.value = []
   setTimeout(() => {
     userInfo.user.Sended = false

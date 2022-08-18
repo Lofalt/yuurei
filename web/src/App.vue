@@ -89,7 +89,7 @@ axios.get("/yuurei/settings/1", {}).then((res: any) => {
   }
 })
 
-onMounted(()=>{
+onMounted(() => {
   let main = document.getElementsByClassName("app")[0] as any
   main.style.height = window.innerHeight + "px"
 
@@ -131,8 +131,6 @@ router.beforeEach((to, from, next) => {
 })
 
 function showNav() {
-  // var childs = document.getElementsByClassName("leftBar") as HTMLSelectElement
-  // childs[0].style.transform = `translateX(0)`
   isActive.value = !isActive.value
 }
 

@@ -20,7 +20,7 @@ func AuthMiddleware() gin.HandlerFunc {
 		//验证格式
 		fmt.Println(tokenString)
 		if tokenString == "" || !strings.HasPrefix(tokenString, "Bearer ") {
-			ctx.JSON(500, gin.H{"message": "权限不足捏"})
+			ctx.JSON(403, gin.H{"message": "权限不足捏"})
 			ctx.Abort()
 			return
 		}
@@ -30,7 +30,7 @@ func AuthMiddleware() gin.HandlerFunc {
 		token, claims, err := common.ParseToken(tokenString)
 
 		if err != nil || !token.Valid {
-			ctx.JSON(500, gin.H{"message": "token无效"})
+			ctx.JSON(403, gin.H{"message": "token无效"})
 			ctx.Abort()
 			return
 

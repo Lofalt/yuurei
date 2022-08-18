@@ -9,7 +9,7 @@ import AnliPage from "@/views/RightBar/PicPage.vue"
 const routes: Array<RouteRecordRaw> = [
     {
         path: "/",
-        redirect: "/home"
+        redirect: "home"
     },
     {
         path: "/home",

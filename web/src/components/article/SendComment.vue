@@ -39,10 +39,13 @@ const props = defineProps<{
   comment: object,
 }>()
 const emit = defineEmits(['send'])
-const bgi = ref(config.value.MessageDefaultIcon)
+const bgi = ref(config.value && config.value.MessageDefaultIcon)
 
-watch(commentData,(newValue:any,oldValue:any)=>{
-  bgi.value = newValue.commentData.icon + "?time="+new Date().getTime()
+watch(commentData, (newValue: any, oldValue: any) => {
+  if (newValue.commentData.icon != "") {
+    bgi.value = newValue.commentData.icon + "?time=" + new Date().getTime()
+
+  }
 })
 
 function accept(url: string) {
@@ -57,15 +60,15 @@ watch(username, (newValue: any, oldValue: any) => {
 })
 
 function send() {
-  if(userInfo.user.Sended  && !userInfo.user.IsAdmin ){
+  if (userInfo.user.Sended && !userInfo.user.IsAdmin) {
     message.warning("发言过快,30秒后重试")
     return
   }
-  if(commentData.commentData.username=="" && !userInfo.user.IsAdmin ){
+  if (commentData.commentData.username == "" && !userInfo.user.IsAdmin) {
     message.warning("昵称不能为空")
     return
   }
-  if(msgContent.value==""){
+  if (msgContent.value == "") {
     message.warning("先说点啥吧")
     return
   }
@@ -73,11 +76,11 @@ function send() {
     msg: msgContent.value,
     icon: bgi.value
   })
-  msgContent.value=""
+  msgContent.value = ""
   userInfo.user.Sended = true
-  setTimeout(()=>{
+  setTimeout(() => {
     userInfo.user.Sended = false
-  },30000)
+  }, 30000)
 }
 </script>
 
@@ -87,13 +90,13 @@ function send() {
   display: flex;
   flex-direction: column;
   width: 70%;
-  margin-left: 8vh ;
+  margin-left: 8vh;
   margin-bottom: 2vh;
 
   @media (max-aspect-ratio: 9/16) {
     width: 95%;
     margin: 0 auto;
-    margin-bottom:2vh;
+    margin-bottom: 2vh;
 
 
   }
