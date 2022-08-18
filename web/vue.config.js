@@ -20,7 +20,7 @@ module.exports = defineConfig({
     pages: {
         index: {
             entry: "src/main.ts",
-            title: "幽居",
+            title: "栖息地",
             favicon: "public/pratice.ico"
         }
     },

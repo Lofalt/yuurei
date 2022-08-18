@@ -12,7 +12,7 @@
     </div>
   </div>
   <n-message-provider>
-  <send-comment @send="send" :comment="comment" v-show="showReply" class="comment" father-id="" article=""/>
+  <send-comment @send="send" :comment="comment" v-if="showReply" class="comment" father-id="" article=""/>
   </n-message-provider>
   <div class="child">
     <child-comment @reload="reload" v-for="item in list" :key="item.ID" :comment="item"/>

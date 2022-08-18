@@ -13,7 +13,7 @@
     </div>
   </div>
   <n-message-provider>
-  <send-comment @send="send" :comment="comment" v-show="showReply" class="comment" father-id="" article=""/>
+  <send-comment @send="send" :comment="comment" v-if="showReply" class="comment" father-id="" article=""/>
   </n-message-provider>
 
 </template>
@@ -27,7 +27,7 @@ import {useComment} from "@/store/commentData";
 import {useUserInfo} from "@/store/UserInfo";
 import {NMessageProvider} from "naive-ui";
 
-const config = inject("globalConfig")
+const config = inject("globalConfig") as any
 const commentData = useComment()
 const userInfo = useUserInfo()
 

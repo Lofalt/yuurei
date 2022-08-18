@@ -142,6 +142,12 @@ function getNext() {
       child.classList.add("test")
       child.src = pics[i].Path
       child.addEventListener("load",waterFall)
+      child.addEventListener("click",()=> {
+        showingPage.value = pics[i].Path
+        hover.value = true
+        currentInfo.value = pics[i].Description
+
+      })
       main.appendChild(child)
     }
     // timer.value = setTimeout(() => {
@@ -170,7 +176,14 @@ function getPic() {
       child.classList.add("test")
       child.src = pics[i].Path
       child.addEventListener("load",waterFall)
+      child.addEventListener("click",()=> {
+        showingPage.value = pics[i].Path
+        hover.value = true
+        currentInfo.value = pics[i].Description
+
+      })
       main.appendChild(child)
+
     }
     waterFall()
     // waitImgLoaded(main).then(()=>{

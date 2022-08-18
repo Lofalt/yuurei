@@ -39,13 +39,17 @@ const props = defineProps<{
   comment: object,
 }>()
 const emit = defineEmits(['send'])
-const bgi = computed(() => {
-  return commentData.commentData.icon === "" ? config.value.MessageDefaultIcon : commentData.commentData.icon
+const bgi = ref(config.value.MessageDefaultIcon)
+
+watch(commentData,(newValue:any,oldValue:any)=>{
+  bgi.value = newValue.commentData.icon + "?time="+new Date().getTime()
 })
 
 function accept(url: string) {
+  console.log(url)
   commentData.commentData.icon = url
   showModal.value = false
+  console.log(commentData.commentData.icon)
 }
 
 watch(username, (newValue: any, oldValue: any) => {
