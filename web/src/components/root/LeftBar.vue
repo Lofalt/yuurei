@@ -1,6 +1,6 @@
 <template>
   <div class="leftbar">
-    <div class="header">{{ WebsiteName }}</div>
+    <div class="header"><span>{{ WebsiteName }}</span></div>
     <div class="profile" :style="{backgroundImage:backgroundImage}"></div>
     <div class="name">{{ MyName }}</div>
     <div class="icon1">
@@ -254,15 +254,20 @@ a {
     //border:3px solid rgb(49,49,49);
     //border-radius: 2px;
     //box-shadow: -1px 1px 4px 1px rgba(49, 49, 49, .5);
-    width: 12vh;
+    //width: 12vh;
     //background-color: rgb(193, 211, 215);
     //color: white;
-    border-bottom: .4vh solid #505050;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+
+    span {
+      border-bottom: .4vh solid #505050;
+
+    }
 
     @media (max-aspect-ratio: 1/1) {
-      //width: 200px;
-      width: 13vh;
-
+      //width: 13vh;
     }
   }
 

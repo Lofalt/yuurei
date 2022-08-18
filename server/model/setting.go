@@ -15,5 +15,6 @@ type GlobalConfig struct {
 	ButtonColor           string `gorm:"type:varchar(10)"`
 	SecColor              string `gorm:"type:varchar(10)"`
 	ThirdColor            string `gorm:"type:varchar(10)"`
+	FourthColor           string `gorm:"type:varchar(10)"`
 	Slogan                string `gorm:"type:varchar(200)"`
 }

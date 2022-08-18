@@ -161,7 +161,7 @@ function pushCard() {
 }
 
 .activeTag {
-  background-color: rgb(49, 49, 49) !important;
+  background-color: var(--third-color) !important;
   color: rgb(255, 255, 255) !important;
 }
 
@@ -266,12 +266,13 @@ function pushCard() {
     }
 
     .showtag {
+
       display: flex;
       z-index: 10;
       position: absolute;
       width: 35px;
       height: 110px;
-      background-color: #fff;
+      background-color: var(--sec-color);
       left: -35px;
       top: 5vh;
       cursor: pointer;
@@ -304,13 +305,13 @@ function pushCard() {
       }
 
       &:hover {
-        background-color: rgb(49, 49, 49);
+        background-color: var(--third-color);
         color: rgb(255, 255, 255);
       }
     }
 
     .tag1 {
-      background-color: #9dd498;
+      //background-color: #9dd498;
 
       &:nth-child(2) {
         // box-sizing: content-box;
@@ -329,19 +330,19 @@ function pushCard() {
     }
 
     .tag2 {
-      background-color: rgb(252, 211, 104);
+      //background-color: rgb(252, 211, 104);
       // background: linear-gradient(to right, rgb(255, 83, 83), #ffffff);
       top: 23vh;
       // color: white;
     }
 
     .tag3 {
-      background-color: #f18888;
+      //background-color: #f18888;
       top: 41vh
     }
 
     .tag4 {
-      background-color: #78d2d8;
+      //background-color: #78d2d8;
       top: 59vh;
     }
   }

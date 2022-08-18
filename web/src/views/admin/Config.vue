@@ -84,6 +84,12 @@
         <n-color-picker :modes="[`hex`]" v-model:value="ThirdColor"/>
       </td>
     </tr>
+    <tr>
+      <td>四色</td>
+      <td>
+        <n-color-picker :modes="[`hex`]" v-model:value="FourthColor"/>
+      </td>
+    </tr>
     </tbody>
 
   </n-table>
@@ -112,7 +118,7 @@ const router = useRouter()
 const Slogan = ref("")
 const SecColor = ref("")
 const ThirdColor = ref("")
-
+const FourthColor = ref("")
 const HasInited = ref(false)
 
 function acceptMobileBackground(url: string) {
@@ -144,6 +150,7 @@ function create() {
     ButtonColor: ButtonColor.value,
     SecColor: SecColor.value,
     ThirdColor: ThirdColor.value,
+    FourthColor: FourthColor.value,
     AnonymousName: AnonymousName.value,
     Slogan: Slogan.value
   }).then((res: any) => {
@@ -175,6 +182,7 @@ function getConfig() {
     MobileBackgroundImage.value = set.MobileBackgroundImage
     AnonymousName.value = set.AnonymousName
     Slogan.value = set.Slogan
+    FourthColor.value = set.FourthColor
     HasInited.value = true
   })
 }
@@ -194,6 +202,7 @@ function edit() {
     ButtonColor: ButtonColor.value,
     SecColor: SecColor.value,
     ThirdColor: ThirdColor.value,
+    FourthColor: FourthColor.value,
     MobileBackgroundImage: MobileBackgroundImage.value,
     AnonymousName: AnonymousName.value,
     Slogan: Slogan.value

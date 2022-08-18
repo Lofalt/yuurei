@@ -38,7 +38,8 @@
             <div style="width: 90%"></div>
             <button class="sendButton" @click="sendMsg">send</button>
           </div>
-          <textarea class="inputTextarea" @click="showEmoji=false" ref="inputTextarea" draggable="false"> </textarea>
+          <textarea class="inputTextarea" @click="showEmoji=false" ref="inputTextarea" draggable="false"
+                    v-model="msgContent"/>
           <input type="file" accept="image/jpeg,image/png" ref="inputFile" @change="getFile" style="display: none">
           <div class="uploadButton" :style="{backgroundImage:backgroundImage}" @click="editPic">
             <loading-com v-show="isLoading"/>
@@ -92,6 +93,7 @@ import UploadPic from "@/components/file/UploadPic.vue"
 import {PictureOutlined, SmileOutlined} from "@vicons/antd"
 import Emoji from "@/components/comments/Emoji.vue"
 import {useUserInfo} from "@/store/UserInfo";
+import {getCursortPosition} from "../../util/utils"
 
 const userInfo = useUserInfo()
 const message = useMessage()
@@ -163,8 +165,11 @@ function acceptScale(img: string) {
 
 function insertEmoji(emoji: string) {
   inputTextarea.value.focus()
-  inputTextarea.value.setRangeText(emoji)
+  let crops = inputTextarea.value.selectionStart
   inputTextarea.value.selectionStart += emoji.length
+  msgContent.value = msgContent.value.slice(0, crops) + emoji + msgContent.value.slice(crops, msgContent.value.length)
+  // inputTextarea.value.setRangeText()
+  // msgContent.value += emoji
 }
 
 function toggleEmoji() {
@@ -270,10 +275,10 @@ function changeContent(content: string) {
 }
 
 const fnlContent = computed(() => {
-  if (picList.value[0] != undefined && msgContent.value === "") {
+  if (picList.value[0] != undefined && inputTextarea.value.value == "") {
     return "分享图片"
   }
-  return msgContent.value
+  return inputTextarea.value.value
 })
 
 function sendMsg() {
@@ -281,7 +286,7 @@ function sendMsg() {
     message.warning("30秒内只能留言一次")
     return
   }
-  if (inputTextarea.value == "") {
+  if (fnlContent.value == "") {
     message.warning("先说点啥吧")
     return
   } else if (msgContent.value.length > 140) {
@@ -289,7 +294,7 @@ function sendMsg() {
     return
   }
   axios.request("/yuurei/msg", "post", {
-    MessageContent: inputTextarea.value.value.replace(/\r/ig, '').replace(/\n/ig, '<br/>'),
+    MessageContent: fnlContent.value.replace(/\r/ig, '').replace(/\n/ig, '<br/>'),
     Icon: uploadImg.value,
     UserName: userName.value,
     IsAdmin: userInfo.user.IsAdmin,
@@ -322,7 +327,7 @@ function flush() {
   showModal.value = false
   showTheModal.value = false
   msgContent.value = ""
-  inputTextarea.value.value = ""
+  msgContent.value = ""
   picList.value = []
   setTimeout(() => {
     userInfo.user.Sended = false

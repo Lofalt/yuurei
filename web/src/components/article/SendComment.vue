@@ -39,20 +39,22 @@ const props = defineProps<{
   comment: object,
 }>()
 const emit = defineEmits(['send'])
-const bgi = ref(config.value && config.value.MessageDefaultIcon)
-
-watch(commentData, (newValue: any, oldValue: any) => {
-  if (newValue.commentData.icon != "") {
-    bgi.value = newValue.commentData.icon + "?time=" + new Date().getTime()
-
+const bgi = computed(() => {
+  if (commentData.commentData.icon != "") {
+    return commentData.commentData.icon
   }
+  return config.value && config.value.MessageDefaultIcon
 })
 
+// watch(commentData, (newValue: any, oldValue: any) => {
+//   if (newValue.commentData.icon !== oldValue.commentData.icon) {
+//     bgi.value = newValue.commentData.icon + "?time=" + new Date().getTime()
+//   }
+// })
+
 function accept(url: string) {
-  console.log(url)
-  commentData.commentData.icon = url
+  commentData.commentData.icon = url + "?time=" + new Date().getTime()
   showModal.value = false
-  console.log(commentData.commentData.icon)
 }
 
 watch(username, (newValue: any, oldValue: any) => {
