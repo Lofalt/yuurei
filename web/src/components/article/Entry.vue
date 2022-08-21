@@ -5,7 +5,9 @@
     </div>
     <div class="entry-right">
       <div class="entry-title">
+        <span>
         {{ title }}
+          </span>
       </div>
       <div class="entry-summary">
         {{ summary }}
@@ -170,6 +172,12 @@ const props = defineProps<{
       font-weight: bold;
       position: relative;
       text-align: left;
+
+      span {
+        border-bottom: 1px solid rgba(49, 49, 49, .1);
+        padding-bottom: 1vh;
+      }
+
       //display: inline-block;
       //padding-left: 3vh;
       &::after {
@@ -177,7 +185,7 @@ const props = defineProps<{
         //visibility: hidden;
         width: 100%;
         height: 100%;
-        border-bottom: 1px solid rgba(49, 49, 49, .1);
+        //border-bottom: 1px solid rgba(49, 49, 49, .1);
         //position: relative;
         position: absolute;
         //left: 6vh;

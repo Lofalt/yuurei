@@ -28,7 +28,7 @@
     </div>
     <div class="showpage activeCard" @wheel.stop="" @touchend.stop="">
       <div @mouseenter.stop="touchCard(3)" class="showtag tag4" @click.stop="pullCard(3)">
-        面影
+        记忆
       </div>
       <!-- <router-view name="VlogPage" v-show="showVlog"></router-view> -->
       <!-- <div class="father"> -->
@@ -161,7 +161,7 @@ function pushCard() {
 }
 
 .activeTag {
-  background-color: var(--third-color) !important;
+  background-color: var(--fourth-color) !important;
   color: rgb(255, 255, 255) !important;
 }
 
@@ -282,15 +282,15 @@ function pushCard() {
       color: rgb(255, 255, 255);
       font-size: 1.3em;
       padding-top: 1vh;
-      border-top: 3px solid rgb(49, 49, 49);
-      border-bottom: 3px solid rgb(49, 49, 49);
-      box-shadow: -.3vh 0px 0px 2px rgb(49, 49, 49);
+      border-top: 3px solid rgb(0, 0, 0);
+      border-bottom: 3px solid rgb(0, 0, 0);
+      box-shadow: -.3vh 0px 0px 2px rgb(0, 0, 0);
       left: -4.1vh;
       width: 4vh;
       height: 11vh;
       font-size: 2vh;
-      border-top: .3vh solid rgb(49, 49, 49);
-      border-bottom: .3vh solid rgb(49, 49, 49);
+      border-top: .3vh solid rgb(0, 0, 0);
+      border-bottom: .3vh solid rgb(0, 0, 0);
       border-right: 0;
 
 

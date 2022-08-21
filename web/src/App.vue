@@ -4,7 +4,8 @@
        :style="[{backgroundImage:backgroundImage},`--button-color:${ButtonColor};
        --date-color:${DateColor};
        --sec-color:${SecColor};
-       --third-color:${ThirdColor}`]">
+       --third-color:${ThirdColor};
+       --fourth-color:${FourthColor}`]">
     <div :class="[isActive?`activeClass`:`unActive`,`mask`]" @click="showNav"></div>
     <div :class="[isActive?`lefting`:``,`navButton`]" @click="showNav">
       <div class="icons"></div>
@@ -80,7 +81,12 @@ const ThirdColor = computed(() => {
   }
   return config.value.ThirdColor
 })
-
+const FourthColor = computed(() => {
+  if (config.value == null) {
+    return ""
+  }
+  return config.value.FourthColor
+})
 provide('globalConfig', config)
 axios.get("/yuurei/settings/1", {}).then((res: any) => {
   if (res.code == 200) {

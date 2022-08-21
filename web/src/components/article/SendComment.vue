@@ -4,7 +4,7 @@
       <input v-model="commentData.commentData.username" class="inputName" type="text" placeholder="*昵称"/>
       <div @click="showModal=true" class="icon" :style="{backgroundImage:`url(${bgi})`}"></div>
     </div>
-    <textarea class="text-area" v-model="msgContent" placeholder="说点啥吧"></textarea>
+    <textarea class="text-area" v-model="msgContent" :placeholder="placeHolder"></textarea>
     <div class="footer">
       <!--      😳-->
       <button @click="send">发送</button>
@@ -45,7 +45,15 @@ const bgi = computed(() => {
   }
   return config.value && config.value.MessageDefaultIcon
 })
-
+const placeHolder = computed(() => {
+  if (props.comment == null) {
+    return '说点啥吧'
+  }
+  if (props.comment.IsAdmin) {
+    return '回复@' + config.value.MyName + ":"
+  }
+  return `回复@${props.comment.ArticleCommentUserName}:`
+})
 // watch(commentData, (newValue: any, oldValue: any) => {
 //   if (newValue.commentData.icon !== oldValue.commentData.icon) {
 //     bgi.value = newValue.commentData.icon + "?time=" + new Date().getTime()

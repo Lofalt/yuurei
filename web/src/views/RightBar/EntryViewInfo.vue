@@ -25,14 +25,14 @@
       </div>
     </div>
     <div style=";width: 100%" class="body">
-      <h1>我的话</h1>
+      <h1>是不是该说点啥</h1>
       <hr>
       <div class="content" v-html="Entry.MyWord"></div>
     </div>
     <br/>
     <br/>
     <div style="width: 100%" class="body">
-      <h1>相关影音</h1>
+      <h1>相关资料</h1>
       <hr/>
       <div class="content" v-html="Entry.About"></div>
     </div>
@@ -81,7 +81,7 @@ watch(router.currentRoute, (newValue: any) => {
 .enryContainer {
 
   color: #2a3746;
-  font-size: 1.6vh!important;
+  font-size: 1.6vh !important;
   //padding-left: 5vh;
   display: flex;
   flex-direction: column;
