@@ -129,6 +129,7 @@ function send() {
       width: 10vh;
       height: 10vh;
       background-color: black;
+      border: .1vh solid rgba(49, 49, 49, .2);
       border-radius: 50%;
       background-position: center;
       background-size: cover;

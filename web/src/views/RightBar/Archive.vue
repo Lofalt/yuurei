@@ -136,7 +136,7 @@ watch(router.currentRoute, (newValue, oldValue) => {
     article.value = result.data.data
     pre.value = result.data.pre
     next.value = result.data.next
-    document.getElementsByClassName("articlePage")[0].scrollTo(0, 0)
+    document.getElementsByClassName("articlePage")[1].scrollTo(0, 0)
 
   })
 })
@@ -147,7 +147,7 @@ watch(props, (newValue, oldValue) => {
     article.value = result.data.data
     pre.value = result.data.pre
     next.value = result.data.next
-    document.getElementsByClassName("articlePage")[0].scrollTo(0, 0)
+    document.getElementsByClassName("articlePage")[1].scrollTo(0, 0)
 
   })
 })
@@ -160,13 +160,15 @@ function jump(id: number) {
 
 <style lang="less">
 
-  //@media (max-aspect-ratio: 9/16) {
-  button{
-    cursor: pointer;
-  }
-  textarea{
-    font-family: 微软雅黑;
-  }
+//@media (max-aspect-ratio: 9/16) {
+button {
+  cursor: pointer;
+}
+
+textarea {
+  font-family: 微软雅黑;
+}
+
 * {
   //font-size: 2vh;
   ////line-height: 3vh;
@@ -395,7 +397,7 @@ blockquote p {
     text-shadow: 0 0 3px rgba(255, 245, 231, 0.5);
 
     &:hover {
-      color: var(--button-color);
+      color: var(--fourth-color);
     }
   }
 }

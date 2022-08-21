@@ -4,16 +4,20 @@
       <div class="icon" :style="{backgroundImage:`url(${comment.IsAdmin?config.Icon:comment.Icon})`}"></div>
     </div>
     <div class="right">
-<!--      <div class="header">{{comment.ArticleCommentUserName}} 发表于 2022/8/16 22:22:22</div>-->
-      <div class="header"><span style="font-weight: bold">{{ comment.IsAdmin?config.MyName:comment.ArticleCommentUserName }}</span> <span style="color:darkgray;margin-left: 1vh">{{new Date(comment.CreatedAt).Format("yyyy/M/dd hh:mm:ss")}}</span></div>
+      <!--      <div class="header">{{comment.ArticleCommentUserName}} 发表于 2022/8/16 22:22:22</div>-->
+      <div class="header"><span
+          style="font-weight: bold">{{ comment.IsAdmin ? config.MyName : comment.ArticleCommentUserName }}</span> <span
+          style="color:darkgray;margin-left: 1vh">{{ new Date(comment.CreatedAt).Format("yyyy/M/dd hh:mm:ss") }}</span>
+      </div>
       <div class="info" v-html="comment.ArticleCommentContent"></div>
       <div class="footer">
-        <span @click="showReply=!showReply">{{ showReply ? `收起` : `回复` }}</span>&nbsp;&nbsp;<span v-show="userInfo.user.IsAdmin" @click="del">删除</span>
+        <span @click="showReply=!showReply">{{ showReply ? `收起` : `回复` }}</span>&nbsp;&nbsp;<span
+          v-show="userInfo.user.IsAdmin" @click="del">删除</span>
       </div>
     </div>
   </div>
   <n-message-provider>
-  <send-comment @send="send" :comment="comment" v-if="showReply" class="comment" father-id="" article=""/>
+    <send-comment @send="send" :comment="comment" v-if="showReply" class="comment" father-id="" article=""/>
   </n-message-provider>
 
 </template>
@@ -36,8 +40,9 @@ const emit = defineEmits(['reload'])
 const props = defineProps<{
   comment: any
 }>()
-function del(){
-  axios.request("/yuurei/articleComment/"+props.comment.ID,"delete",{}).then((res)=>{
+
+function del() {
+  axios.request("/yuurei/articleComment/" + props.comment.ID, "delete", {}).then((res) => {
     console.log(res)
     emit('reload')
 
@@ -46,15 +51,15 @@ function del(){
 
 function send(args: any) {
   axios.request("/yuurei/articleComment", "post", {
-    ArticleCommentContent: `<a>@${props.comment.IsAdmin?config.value.MyName:props.comment.ArticleCommentUserName}&nbsp;&nbsp;</a>`+ args.msg.replace(/\r/ig, '').replace(/\n/ig, '<br/>'),
+    ArticleCommentContent: `<a>@${props.comment.IsAdmin ? config.value.MyName : props.comment.ArticleCommentUserName}&nbsp;&nbsp;</a>` + args.msg.replace(/\r/ig, '').replace(/\n/ig, '<br/>'),
     ArticleCommentUserName: commentData.commentData.username,
     ArticleID: props.comment.ArticleID,
     UserID: userInfo.user.ID,
     FatherID: props.comment.FatherID,
     Icon: args.icon,
-    IsAdmin:userInfo.user.IsAdmin,
-  }).then((res:any) => {
-    if(res.code==200){
+    IsAdmin: userInfo.user.IsAdmin,
+  }).then((res: any) => {
+    if (res.code == 200) {
       showReply.value = false
       emit('reload')
     }
@@ -62,7 +67,7 @@ function send(args: any) {
 }
 </script>
 
-<style lang="less" >
+<style lang="less">
 .childCommentContainer {
   display: flex;
   justify-content: flex-start;
@@ -88,6 +93,8 @@ function send(args: any) {
       border-radius: 50%;
       background-position: center;
       background-size: cover;
+      border: .1vh solid rgba(49, 49, 49, .2);
+
 
     }
   }
@@ -117,8 +124,8 @@ function send(args: any) {
       //min-height: 20vh;
       border-radius: 1vh;
       //font-weight: bold;
-      a{
-        color:var(--button-color);
+      a {
+        color: var(--button-color);
       }
     }
 
@@ -131,7 +138,7 @@ function send(args: any) {
         //border-radius: .5vh;
         //background-color: var(--sec-color);
         margin-top: 2vh;
-        color:var(--sec-color);
+        color: var(--sec-color);
         display: inline-block;
         cursor: pointer;
       }

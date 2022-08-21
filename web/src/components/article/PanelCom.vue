@@ -1,8 +1,8 @@
 <template>
   <div class="panel" @click="archive(article.ID)">
     <!--        <div class="background" :style="{backgroundImage:background}">-->
-        <div class="background" :style="{backgroundImage:`url(${article.HeaderPicture})`}">
-<!--    <div class="background">-->
+    <div class="background" :style="{backgroundImage:`url(${article.HeaderPicture})`}">
+      <!--    <div class="background">-->
       <!--            <img src="~assets/img/backgroundimg/background1.png"/>-->
     </div>
     <div class="panelTitle">
@@ -175,18 +175,18 @@ function archive(articleId: number) {
   //min-height: 250px;
   transition: .3s all ease;
   //background-image: url(../assets/ec8ce499ly1h1hhm1o6m1j22pg1ww4qp.jpg);
-  background-position: top;
+  background-position: center;
   // background-size: cover;
 
 
-  &::before{
-    top:0;
-    left:0;
+  &::before {
+    top: 0;
+    left: 0;
     content: '';
     width: 100%;
     height: 100%;
     position: absolute;
-    background-color: rgba(49,49,49,.2);
+    background-color: rgba(49, 49, 49, .2);
   }
 }
 
