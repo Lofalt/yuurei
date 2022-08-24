@@ -17,9 +17,14 @@
       </div>
     </div>
     <div class=" bottom" @wheel.self="wheeling">
-      <div class="bottomPage" @touchend.stop="">
-        <about v-if="pageData.pagedata.count==2"/>
-
+<!--      <div class="bottomPage" @touchend.stop="">-->
+        <div class="bottomPage">
+<!--        <about v-if="pageData.pagedata.count==2"/>-->
+    <div class="bottomTitle">
+      <div>记忆</div>
+      <div>一些碎片</div>
+    </div>
+        <pic-page v-if="pageData.pagedata.count==2"/>
       </div>
     </div>
     <div class=" bottom" @wheel.self="wheeling" v-show="isAdmin">
@@ -29,7 +34,7 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, onMounted, ref, watch} from 'vue';
+import {computed, onMounted, provide, ref, watch} from 'vue';
 import RightBar from '@/components/root/RightBar.vue'
 import {usePageData} from '@/store/pageData';
 import Date from "@/components/util/Date.vue";
@@ -39,6 +44,7 @@ import EntryInfo from "@/views/RightBar/EntryView.vue"
 import EntryViewInfo from "../../views/RightBar/EntryViewInfo.vue"
 import Archive from "../../views/RightBar/Archive.vue"
 import axios from "../../request/index"
+import PicPage from "../../views/RightBar/PicPage.vue"
 
 const isShow = ref(true)
 const pageData = usePageData()
@@ -47,7 +53,10 @@ let isWheeling = false
 var touchX = 0
 var touchY = 0
 const router = useRouter()
-
+const hover = ref(false)
+const isPushing = ref(false)
+provide('hover', hover)
+// provide('showVlog', showVlog)
 
 function check(arg: any) {
   alert(arg)
@@ -237,6 +246,85 @@ iframe {
 .bottomPage {
   //background-color: #fffdf7;
   //border: 3px;
+  padding:4vh 0;
+  padding-bottom: 0;
+  flex-direction: row;
+  position: relative;
+  .bottomTitle{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    justify-content: flex-start;
+    height: 100%;
+    width: 10vh;
+    padding-left: 2vh;
+    flex-shrink: 0;
+    align-content: center;
+    @media (max-aspect-ratio: 9/16){
+      margin-bottom: 1vh;
+      height: 3.5%;
+      padding-left: 0;
+      margin-left: 6%;
+      flex-direction: row;
+      width: 88%;
+      margin:.5vh auto;
+      justify-content: space-between;
+      //padding-left: 5%;
+      //align-content: flex-start;
+      //justify-content: flex-start;
+    }
+    div:nth-child(1){
+    min-height: 1vh;
+      position: relative;
+      padding-left:1.5vh;
+      font-family: -apple-system, BlinkMacSystemFont, Tahoma, Arial, "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      font-size: 1.5em;
+      font-weight: bold;
+      color: #343333;
+
+      @media (max-aspect-ratio: 9/16){
+        font-size: 1.4em;
+        //padding-left: 5%;
+        //align-content: flex-start;
+        //justify-content: flex-start;
+      }
+      &::before {
+      left: 0;
+      border-radius: 1vh;
+      content: " ";
+      width: .8vh;
+      height: 80%;
+        top:10%;
+      display: inline-block;
+      position: absolute;
+      background-color: var(--button-color);
+    }
+    }
+    div:nth-child(2) {
+      margin-top:1vh;
+      color:grey;
+      font-size: .9em;
+    }
+    }
+  &::-webkit-scrollbar {
+    width: 0px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    width: 5px;
+    background-color: var(--button-color);
+    color: black;
+    border-radius: 20px;
+  }
+  @media (max-aspect-ratio: 9/16){
+    flex-direction: column;
+    padding-top:1vh;
+    //align-content: flex-end;
+    align-items: flex-start;
+    //justify-content: flex-start;
+    //padding-left: 5%;
+
+  }
 }
 
 .infoPage {

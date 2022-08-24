@@ -26,7 +26,7 @@ func UploadImg(c *gin.Context) {
 	case file.Size < 1024*1024:
 		quality = 80
 	case file.Size > 1024*1024 && file.Size < 1024*1024*5:
-		quality = 60
+		quality = 40
 	case file.Size >= 1024*1024*5:
 		quality = 40
 	}

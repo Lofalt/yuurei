@@ -136,7 +136,9 @@ watch(router.currentRoute, (newValue, oldValue) => {
     article.value = result.data.data
     pre.value = result.data.pre
     next.value = result.data.next
-    document.getElementsByClassName("articlePage")[1].scrollTo(0, 0)
+    // document.getElementsByClassName("articlePage")[1].scrollTo(0, 0)
+    document.getElementsByClassName("articlePage")[1] &&     document.getElementsByClassName("articlePage")[1].scrollTo(0, 0)
+
 
   })
 })
@@ -147,7 +149,9 @@ watch(props, (newValue, oldValue) => {
     article.value = result.data.data
     pre.value = result.data.pre
     next.value = result.data.next
-    document.getElementsByClassName("articlePage")[1].scrollTo(0, 0)
+    // document.getElementsByClassName("articlePage")[1].scrollTo(0, 0)
+    document.getElementsByClassName("articlePage")[1] &&     document.getElementsByClassName("articlePage")[1].scrollTo(0, 0)
+
 
   })
 })
@@ -229,7 +233,7 @@ blockquote p {
   width: 100%;
   //padding-top:20px;
   background-color: #ffffff;
-  font-family: 微软雅黑;
+  font-family: -apple-system, BlinkMacSystemFont, Tahoma, Arial, "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
   //font-size: 20px;
   overflow: auto;
 
@@ -252,10 +256,10 @@ blockquote p {
 
 .article {
   .articleContent {
-    line-height: 4vh;
-    font-size: 1.7vh;
+    line-height: 3.5vh;
+    font-size: 1.6vh;
     @media (max-aspect-ratio: 9/16) {
-      font-size: 3.5vw;
+      font-size: 3vw;
     }
 
     pre {
@@ -318,7 +322,7 @@ blockquote p {
 
   .articleSummary {
     //font-size: 17px;
-    font-size: 1.05em;
+    font-size: 1em;
     text-align: center;
     background-color: #524444;
     width: 70%;
@@ -333,7 +337,7 @@ blockquote p {
     padding: 2vh;
     justify-content: center;
     align-items: center;
-    font-family: 幼圆;
+    font-family: "幼圆",-apple-system, BlinkMacSystemFont, Tahoma, Arial, "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
     border-radius: 2px;
     //border: 3px solid rgb(49, 49, 49);
     /*padding-bottom: 40px;*/
@@ -434,7 +438,7 @@ blockquote p {
   position: relative;
   padding-left: 1.4vh;
   //height:2vh;
-  font-family: "微软雅黑";
+  font-family: -apple-system, BlinkMacSystemFont, Tahoma, Arial, "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
   color: rgba(49, 49, 49, .5);
   margin-bottom: 6vh;
 

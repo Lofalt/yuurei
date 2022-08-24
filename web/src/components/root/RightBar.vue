@@ -12,27 +12,36 @@
     </div>
     <div class="showpage activeCard" @wheel.stop="" @touchend.stop="">
       <div @mouseenter.stop="touchCard(1)" class="showtag tag2" @click.stop="pullCard(1)">
-        留言
+        蒐集
       </div>
-      <n-message-provider>
-        <blog-page v-if="showMessage"></blog-page>
-      </n-message-provider>
+<!--      <n-message-provider>-->
+<!--        <blog-page v-if="showMessage"></blog-page>-->
+<!--      </n-message-provider>-->
+      <love-page v-show="showMessage"></love-page>
+
       <!-- <router-view name="BlogPage" v-show="showMessage"></router-view> -->
     </div>
     <div class="showpage activeCard" @wheel.stop="" @touchend.stop="">
       <div @mouseenter.stop="touchCard(2)" class="showtag tag3" @click.stop="pullCard(2)">
-        蒐集
+        留言
       </div>
       <!-- <router-view name="LovePage" v-show="showLove"></router-view> -->
-      <love-page v-show="showLove"></love-page>
+      <n-message-provider>
+        <blog-page v-if="showLove"></blog-page>
+      </n-message-provider>
+<!--      <love-page v-show="showLove"></love-page>-->
     </div>
     <div class="showpage activeCard" @wheel.stop="" @touchend.stop="">
       <div @mouseenter.stop="touchCard(3)" class="showtag tag4" @click.stop="pullCard(3)">
-        记忆
+        关于
       </div>
       <!-- <router-view name="VlogPage" v-show="showVlog"></router-view> -->
       <!-- <div class="father"> -->
-      <anli-page v-if="showVlog"></anli-page>
+<!--      <anli-page v-if="showVlog"></anli-page>-->
+      <div class="aboutContainer">
+      <about v-if="showVlog"></about>
+      </div>
+
       <!-- </div> -->
       <!-- <water-page></water-page> -->
     </div>
@@ -52,7 +61,7 @@ import ArticlePage from "@/views/RightBar/ArticlePage.vue";
 import LovePage from "@/views/RightBar/LovePage.vue";
 import BlogPage from "@/views/RightBar/MessageBoard.vue";
 import {NMessageProvider} from 'naive-ui'
-
+import About from "../../views/RightBar/About.vue"
 const router = useRouter();
 const showMessage = ref(false)
 const showVlog = ref(false)
@@ -238,6 +247,28 @@ function pushCard() {
       display: flex;
       justify-content: space-around;
       flex-direction: column;
+      //overflow: auto;
+
+    .aboutContainer{
+      height: 100%;
+      overflow: auto;
+      position: absolute;
+      background-size: cover;
+      //margin: 10vh auto;
+      border-radius: 5px;
+      background-color: rgb(255, 255, 255);
+      // padding: 100px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      //font-size: 2vh;
+      flex-direction: column;
+    }
+      // background-image: url("./assets/wallhaven-p262de.jpg");
+      //border: .5vh solid rgb(49, 49, 49);
+      //width: 90%;
+      //height: 95%;
+
     }
 
     &:nth-child(3) {

@@ -71,8 +71,8 @@ const props = defineProps<{
   margin: 4vh auto;
 
   .replyIcon {
-    width: 7vh;
-    height: 7vh;
+    width: 10vh;
+    height: 10vh;
     background-color: #499ba9;
     background-position: center;
     background-size: cover;
@@ -80,9 +80,14 @@ const props = defineProps<{
     border-radius: 50%;
     margin-right: 2vh;
     position: relative;
-    border: .3vh solid var(--replyColor);
+    //border: .3vh solid var(--replyColor);
+    border: .4vh solid rgb(49, 49, 49);
+
     @media (max-aspect-ratio: 9/16) {
-      border: .6vw solid var(--replyColor);
+      width: 15vw;
+      height: 15vw;
+      margin-right: 2vh;
+      border: .6vw solid rgb(49, 49, 49);
     }
 
     .name {
@@ -110,7 +115,7 @@ const props = defineProps<{
     bottom: -4vh;
     left: 0vh;
     //background-color: var(--sec-color);
-    background-color: #7ca6ce;
+    background-color: var(--fourth-color);
     //text-shadow: -1px 1px 2px rgb(49,49,49);
     //text-shadow: -1px 1px 10px rgba(49, 49, 49, .4);
     //padding:1vh;
@@ -133,7 +138,7 @@ const props = defineProps<{
     color: white;
     padding: 0px 5px;
     border-radius: 2px;
-    background-color: var(--third-color);
+    background-color: var(--sec-color);
     //box-shadow: .4vh .4vh .1vh 0 rgba(49, 49, 49, 0.2);
     white-space: nowrap;
 

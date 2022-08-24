@@ -164,6 +164,11 @@ function changePage(num: number) {
 
 <style lang="less" scoped>
 
+#app{
+  font-family: -apple-system, BlinkMacSystemFont, Tahoma, Arial, "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+
+}
+
 
 .lefting {
   transform: translateX(70vw);

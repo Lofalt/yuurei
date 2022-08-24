@@ -116,9 +116,10 @@ function send() {
         height: 4vh;
         outline: none;
         width: 20vh;
-        border-radius: .2vh;
-        border:.3vh solid black;
-        padding-left:1vh;
+        border-radius: .5vh;
+        border:.4vh solid black;
+        padding-left:2vh;
+
         @media (max-aspect-ratio: 9/16){
           width: 15vh;
         }

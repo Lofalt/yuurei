@@ -154,8 +154,8 @@ function deleteMsg() {
     border-radius: 50%;
     border: .4vh solid rgb(49, 49, 49);
     float: left;
-    width: 6vw;
-    height: 6vw;
+    width: 10vh;
+    height: 10vh;
     background-color: rgb(49, 49, 49);
     margin-right: 4vh;
     position: relative;
@@ -163,10 +163,10 @@ function deleteMsg() {
     box-shadow: .4vh .4vh 1px 0 rgba(49, 49, 49, 0.1);
 
     @media (max-aspect-ratio: 1/1) {
-      width: 8vh;
-      height: 8vh;
+      width: 15vw;
+      height: 15vw;
       margin-right: 2vh;
-      border: .8vw solid rgb(49, 49, 49);
+      border: .6vw solid rgb(49, 49, 49);
 
     }
 
@@ -295,9 +295,9 @@ function deleteMsg() {
 
     .info {
       font-family: "微软雅黑";
-      font-size: 1.2em;
+      font-size: 1em;
       font-weight: 600;
-      color: rgb(98, 95, 95);
+      color: rgb(40, 40, 40);
       padding: 5px;
 
 

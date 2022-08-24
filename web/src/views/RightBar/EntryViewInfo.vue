@@ -96,10 +96,16 @@ watch(router.currentRoute, (newValue: any) => {
   }
 
   .content {
+    font-family: -apple-system, BlinkMacSystemFont, Tahoma, Arial, "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
 
     a {
       text-decoration: none;
-      color: var(--entry-sec-color);
+      color: var(--entry-main-color);
+
+      &:hover{
+        color:var(--entry-sec-color);
+        //border-bottom: .1vh solid var(--entry-main-color);
+      }
     }
 
     p {

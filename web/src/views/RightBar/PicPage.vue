@@ -1,12 +1,21 @@
 <template>
-  <!--    <div>没什么艺术细胞的人</div>-->
   <div id="main" @wheel="listenScroll" @touchstart.stop="touchStart" @touchend.stop="touchEnd">
     <!-- <button class="scrollToTop" @click="scrollToTop">dmwo</button> -->
-    <img class=" test" v-for="(item, index) in picList" :src="item.Path" :key="item.ID" ref="waterFallItem"
-         @click="zoom(index)" :style="{ animationDelay: (index % 2) * 0.1 + 's' }"/>
+<!--    <img class=" test" v-for="(item, index) in picList" :src="item.Path" :key="item.ID" ref="waterFallItem"-->
+<!--         @click="zoom(index)" :style="{ animationDelay: (index % 2) * 0.1 + 's' }"/>-->
+    <div class="picFooter">
+    <loading-com class="loading" v-show="isLoading"></loading-com>
+    <div class="loading last" v-show="isEnd">— 记忆的尽头 —</div>
+      <div class="loading last arrow" v-show="!isEnd&&!isLoading"  @click="getNext">
+<!--    v-show="!isEnd&&!isLoading"   -->
+        <n-icon size="1.5em" color="var(--button-color)">
+          <arrow-forward-ios-filled/>
+        </n-icon>
+      </div>
+
+    </div>
   </div>
   <!-- <loading-com class="loading"></loading-com> -->
-  <loading-com class="loading" v-show="isLoading"></loading-com>
   <!-- <div class="loading" v-show="offset == 15">--</div> -->
   <transition>
     <div @click="zoomout" v-if="hover" class="photoInfo" :style="{ backgroundImage: `url('` + showingPage + `')` }">
@@ -21,7 +30,20 @@
 
 import axios from "@/request"
 import qs from 'qs'
-import {reactive, ref, onMounted, watch, nextTick, inject, Ref, onBeforeUnmount, createElementVNode} from "vue";
+import {
+  reactive,
+  ref,
+  onMounted,
+  watch,
+  nextTick,
+  inject,
+  Ref,
+  onBeforeUnmount,
+  createElementVNode,
+  computed
+} from "vue";
+import {NIcon} from "naive-ui"
+import {ArrowForwardIosFilled} from "@vicons/material";
 import LoadingCom from "../../components/util/LoadingCom.vue"
 // import {createE}
 
@@ -29,7 +51,7 @@ const isShow = ref(true)
 const picList = ref<any>([])
 const offset = ref(10)
 const total = ref(0)
-const pageSize = ref(10)
+const pageSize = ref(6)
 const pageNum = ref(1)
 const colRaw = ref(2)
 const screenWidth = ref(0)
@@ -39,10 +61,11 @@ const hover = inject('hover') as Ref<boolean>
 const showVlog = inject('showVlog') as Ref<boolean>
 const isLoading = ref(false)
 const currentInfo = ref("")
-
+const isEnd = ref(false)
 
 var touchX = 0
 var touchY = 0
+
 
 function touchStart(event: any) {
   touchX = event.targetTouches[0].pageX;
@@ -54,8 +77,10 @@ function touchEnd(event: any) {
   // alert(touchY)
   let touchYEnd = event.changedTouches[0].pageY
   let touches = touchYEnd - touchY
+  const box = document.getElementById("main") as HTMLSelectElement
+
   if (touches < -90) {
-    if (!isLoading.value && document.querySelectorAll("img").length < total.value) {
+    if (!isLoading.value && box.querySelectorAll("img").length < total.value) {
       isLoading.value = true
       setTimeout(() => {
         getNext()
@@ -95,7 +120,7 @@ function listenScroll(event: any) {
   if (box.scrollTop + box.offsetHeight + 100 > box.scrollHeight) {
     // offset.value += 5
     // console.log((pageNum.value ) * pageSize.value)
-    if (!isLoading.value && document.querySelectorAll("img").length < total.value) {
+    if (!isLoading.value && box.querySelectorAll("img").length < total.value) {
       isLoading.value = true
       setTimeout(() => {
         getNext()
@@ -141,8 +166,8 @@ function getNext() {
       let child = document.createElement("img")
       child.classList.add("test")
       child.src = pics[i].Path
-      child.addEventListener("load",waterFall)
-      child.addEventListener("click",()=> {
+      child.addEventListener("load", waterFall)
+      child.addEventListener("click", () => {
         showingPage.value = pics[i].Path
         hover.value = true
         currentInfo.value = pics[i].Description
@@ -175,8 +200,8 @@ function getPic() {
       let child = document.createElement("img")
       child.classList.add("test")
       child.src = pics[i].Path
-      child.addEventListener("load",waterFall)
-      child.addEventListener("click",()=> {
+      child.addEventListener("load", waterFall)
+      child.addEventListener("click", () => {
         showingPage.value = pics[i].Path
         hover.value = true
         currentInfo.value = pics[i].Description
@@ -228,10 +253,10 @@ function waterFall() {
     for (let i = 0; i < childs.length; i++) {
       boxHeight = childs[i].offsetHeight
       if (i < col) {
-        heightArr.push(boxHeight + 30)
+        heightArr.push(boxHeight)
         childs[i].style.position = 'absolute'
         childs[i].style.left = i * boxWidth + 'px'
-        childs[i].style.top = 3 + '0px'
+        // childs[i].style.top = 3 + '0px'
         childs[i].style.opacity = '1'
         childs[i].style.transform = "translateY(0)"
       } else {
@@ -245,7 +270,19 @@ function waterFall() {
         heightArr[minIndex] += boxHeight
       }
     }
+    var load = document.getElementsByClassName("picFooter") as any
+    load[0].style.visibility = "visible"
+    let maxBoxHeight = heightArr[maxBox(heightArr)]
+    for (let i = 0; i < load.length; i++) {
+      load[i].style.top = maxBoxHeight + 10 + "px"
+      // load[i].style.left = boxWidth - load[i].offsetWidth / 2 + 'px'
+
+    }
+
     isLoading.value = false
+    var box = document.querySelector("#main") as any
+    isEnd.value = box.querySelectorAll("img").length == total.value
+
   }, 600)
 }
 
@@ -253,6 +290,16 @@ function minBox(box: any) {
   var j = 0
   for (let i = 0; i < box.length; i++) {
     if (box[j] > box[i]) {
+      j = i
+    }
+  }
+  return j
+}
+
+function maxBox(box: any) {
+  var j = 0
+  for (let i = 0; i < box.length; i++) {
+    if (box[j] < box[i]) {
       j = i
     }
   }
@@ -302,12 +349,40 @@ watch(colRaw, () => {
 </script>
 
 <style lang="less" scoped>
+
+.arrow{
+  transform: rotate(90deg);
+  cursor: pointer;
+  animation: move 2s ease infinite;
+}
+
+@keyframes move {
+  50%{
+    transform:  rotate(90deg) translateX(-1vh);
+  }
+}
+
+.picFooter{
+  visibility: hidden;
+  position: absolute;
+  width:100%;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  height: 2vh;
+}
 .loading {
   // position: relative;
-  bottom: 0;
+  position: absolute;
+  //bottom: 0;
   // height: 5%;
   // float: left;
   text-align: center;
+}
+
+.last {
+  font-size: .9em;
+  color: darkgray;
 }
 
 .v-enter-from,
@@ -343,13 +418,14 @@ watch(colRaw, () => {
 
   .info {
     position: absolute;
-    top: 15px;
+    top: 4vh;
     left: 2%;
-    background-color: rgb(124, 119, 118);
+    background-color: rgb(194, 193, 193);
     //background-color: rgb(124, 105, 105);
     color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
+    padding: .5vh 1.5vh;
+    border-radius: .4vh;
+    font-size: .8em;
     //border:2px solid rgb(49,49,49);
     //border:3px solid rgba(255,255,255,.1);
     box-shadow: -2px 2px 1px 1px rgba(49, 49, 49, .2);
@@ -388,7 +464,7 @@ watch(colRaw, () => {
   // transform: translateY(1000px);
 
   &:hover {
-    transform: translate(-5px, -5px) !important;
+    //transform: translate(-5px, -5px) !important;
     box-shadow: -2px 2px 5px 1px rgba(0, 0, 0, 0.1);
     transition: all .2s ease;
 
@@ -406,7 +482,7 @@ watch(colRaw, () => {
   height: 100%;
   // width: 80%;
   // margin: 0 auto;
-  width: 70%;
+  width: 85%;
   // float: left;
   // height: 100%;
   overflow: auto;
@@ -414,7 +490,7 @@ watch(colRaw, () => {
   position: relative;
   // bottom: 0;
   margin: 0 auto;
-  padding-top: 5vh;
+  //padding-top: 5vh;
 
   &::-webkit-scrollbar {
     width: 0px;
@@ -440,7 +516,8 @@ watch(colRaw, () => {
 
   @media (max-aspect-ratio: 9/16) {
     // padding-top: 2vh;
-    width: 90%
+    width: 90%;
+    margin: 0 auto;
   }
 
 
@@ -466,20 +543,27 @@ button {
   }
 }
 
+.picInfo {
+  position: absolute;
+  width: 20vh;
+  left: 2vh;
+  top: 10vh;
+  color: slategrey;
+}
 </style>
 
 <style lang="less">
 .test {
   cursor: pointer;
-  left: 0px;
+  //left: 0px;
   width: 50%;
   // height: 100%;
   box-sizing: border-box;
   padding: 8px;
   // margin: 8px;
   /* margin:15px; */
-  // float: left;
-  transition: opacity 0.2s ease-in-out;
+   float: left;
+  transition: all 0.2s ease-in-out;
   // transition: all 1s;
   // animation: enter 1s;
   // animation-timing-function: ease-in-out;
@@ -489,7 +573,7 @@ button {
   // transform: translateY(1000px);
 
   &:hover {
-    transform: translate(-5px, -5px) !important;
+    //transform: translate(-5px, -5px) !important;
     box-shadow: -2px 2px 5px 1px rgba(0, 0, 0, 0.1);
     transition: all .2s ease;
 
