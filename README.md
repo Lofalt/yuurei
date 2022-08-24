@@ -1,6 +1,7 @@
 # yuurei - 自用个人网站
 
-
+vue+vue-cli4.0+pinia
+golang+gin+mysql+redis
 ## 服务器端
 
 在config/application.yml 填写mysql以及redis配置
