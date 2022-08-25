@@ -1,13 +1,13 @@
 <template>
   <div id="main" @wheel="listenScroll" @touchstart.stop="touchStart" @touchend.stop="touchEnd">
     <!-- <button class="scrollToTop" @click="scrollToTop">dmwo</button> -->
-<!--    <img class=" test" v-for="(item, index) in picList" :src="item.Path" :key="item.ID" ref="waterFallItem"-->
-<!--         @click="zoom(index)" :style="{ animationDelay: (index % 2) * 0.1 + 's' }"/>-->
+    <!--    <img class=" test" v-for="(item, index) in picList" :src="item.Path" :key="item.ID" ref="waterFallItem"-->
+    <!--         @click="zoom(index)" :style="{ animationDelay: (index % 2) * 0.1 + 's' }"/>-->
     <div class="picFooter">
-    <loading-com class="loading" v-show="isLoading"></loading-com>
-    <div class="loading last" v-show="isEnd">— 记忆的尽头 —</div>
-      <div class="loading last arrow" v-show="!isEnd&&!isLoading"  @click="getNext">
-<!--    v-show="!isEnd&&!isLoading"   -->
+      <loading-com class="loading" v-show="isLoading"></loading-com>
+      <div class="loading last" v-show="isEnd">— 记忆的尽头 —</div>
+      <div class="loading last arrow" v-show="!isEnd&&!isLoading" @click="getNext">
+        <!--    v-show="!isEnd&&!isLoading"   -->
         <n-icon size="1.5em" color="var(--button-color)">
           <arrow-forward-ios-filled/>
         </n-icon>
@@ -350,27 +350,28 @@ watch(colRaw, () => {
 
 <style lang="less" scoped>
 
-.arrow{
+.arrow {
   transform: rotate(90deg);
   cursor: pointer;
   animation: move 2s ease infinite;
 }
 
 @keyframes move {
-  50%{
-    transform:  rotate(90deg) translateX(-1vh);
+  50% {
+    transform: rotate(90deg) translateX(-1vh);
   }
 }
 
-.picFooter{
+.picFooter {
   visibility: hidden;
   position: absolute;
-  width:100%;
+  width: 100%;
   align-items: center;
   display: flex;
   justify-content: center;
   height: 2vh;
 }
+
 .loading {
   // position: relative;
   position: absolute;
@@ -489,7 +490,7 @@ watch(colRaw, () => {
   overflow-x: hidden;
   position: relative;
   // bottom: 0;
-  margin: 0 auto;
+  //margin: 0 auto;
   //padding-top: 5vh;
 
   &::-webkit-scrollbar {
@@ -562,7 +563,7 @@ button {
   padding: 8px;
   // margin: 8px;
   /* margin:15px; */
-   float: left;
+  float: left;
   transition: all 0.2s ease-in-out;
   // transition: all 1s;
   // animation: enter 1s;
