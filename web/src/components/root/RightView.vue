@@ -1,4 +1,5 @@
 <template>
+  <div class="artistInfo">cr: <a href="https://www.voyagerillustration.com/">{{ config.ArtistName }}</a></div>
   <div id="rightbar" @touchstart="touchStart" @touchend="touchEnd">
     <transition>
 
@@ -21,10 +22,14 @@
       <div class="bottomPage">
         <!--        <about v-if="pageData.pagedata.count==2"/>-->
         <div class="bottomTitle">
-          <div>记忆</div>
+          <div>相册</div>
           <div>一些碎片</div>
         </div>
         <pic-page v-if="pageData.pagedata.count==2"/>
+
+      </div>
+      <div style="position: absolute;bottom:0;color:white">Powered by yuurei &nbsp;&nbsp;&nbsp;<a
+          href="https://beian.miit.gov.cn" target="_blank">粤ICP备2022104976号</a>
       </div>
     </div>
     <div class=" bottom" @wheel.self="wheeling" v-show="isAdmin">
@@ -34,7 +39,7 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, onMounted, provide, ref, watch} from 'vue';
+import {computed, inject, onMounted, provide, ref, watch} from 'vue';
 import RightBar from '@/components/root/RightBar.vue'
 import {usePageData} from '@/store/pageData';
 import Date from "@/components/util/Date.vue";
@@ -56,6 +61,7 @@ const router = useRouter()
 const hover = ref(false)
 const isPushing = ref(false)
 provide('hover', hover)
+const config = inject("globalConfig")
 
 // provide('showVlog', showVlog)
 
@@ -156,6 +162,20 @@ onMounted(() => {
   }
 }
 
+a {
+  text-decoration: none;
+  color: white;
+  font-size: .8em;
+
+  &:hover {
+    color: var(--sec-color) !important;
+  }
+
+  &:visited {
+    color: white;
+  }
+}
+
 .player {
   height: 100% !important;
   width: 100% !important;
@@ -180,8 +200,12 @@ onMounted(() => {
   width: 83.5%;
   height: 100%;
   float: right;
+  //z-index: 2;
+  //pointer-events: none;
   // overflow: hidden;
   transition: all .8s ease-in-out;
+  //cursor: not-allowed;
+  //pointer-events: none;
 
   @media (max-aspect-ratio: 1/1) {
     width: 100%;
@@ -204,6 +228,7 @@ onMounted(() => {
   height: 100%;
   transition: all 2s;
   display: flex;
+  z-index: 2;
   justify-content: center;
   align-items: center;
 }
@@ -211,6 +236,33 @@ onMounted(() => {
 iframe {
   width: 100%;
   height: 100%;
+}
+
+.artistInfo {
+  position: fixed;
+  top: 0;
+  right: 0;
+  //left: 1vh;
+  width: 83.5%;
+  text-align: right;
+  color: white;
+  z-index: 0;
+  @media (max-aspect-ratio: 1/1) {
+    width: 100%;
+  }
+
+  a {
+    text-decoration: none;
+    color: white;
+
+    &:hover {
+      color: var(--sec-color) !important;
+    }
+
+    &:visited {
+      color: white;
+    }
+  }
 }
 
 .bottomPage,
@@ -226,6 +278,7 @@ iframe {
   border-radius: 5px;
   background-color: rgb(255, 255, 255);
   // padding: 100px;
+  //z-index: 10;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -249,6 +302,7 @@ iframe {
   //background-color: #fffdf7;
   //border: 3px;
   padding: 4vh 0;
+  height: 90%;
   padding-bottom: 0;
   flex-direction: row;
   position: relative;

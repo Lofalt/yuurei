@@ -41,7 +41,6 @@
     <n-icon v-show="isLogin" class="logout" size="2.3vh" color="#484848" @click="logOut">
       <logout/>
     </n-icon>
-
   </div>
 </template>
 
@@ -158,6 +157,7 @@ function changePage(num: number) {
     router.push("/home")
     emit('toggleNav')
   }
+  emit('toggleNav')
 
 }
 </script>

@@ -137,7 +137,7 @@ watch(router.currentRoute, (newValue, oldValue) => {
     pre.value = result.data.pre
     next.value = result.data.next
     // document.getElementsByClassName("articlePage")[1].scrollTo(0, 0)
-    document.getElementsByClassName("articlePage")[1] &&     document.getElementsByClassName("articlePage")[1].scrollTo(0, 0)
+    document.getElementsByClassName("articlePage")[1] && document.getElementsByClassName("articlePage")[1].scrollTo(0, 0)
 
 
   })
@@ -150,7 +150,7 @@ watch(props, (newValue, oldValue) => {
     pre.value = result.data.pre
     next.value = result.data.next
     // document.getElementsByClassName("articlePage")[1].scrollTo(0, 0)
-    document.getElementsByClassName("articlePage")[1] &&     document.getElementsByClassName("articlePage")[1].scrollTo(0, 0)
+    document.getElementsByClassName("articlePage")[1] && document.getElementsByClassName("articlePage")[1].scrollTo(0, 0)
 
 
   })
@@ -257,7 +257,7 @@ blockquote p {
 .article {
   .articleContent {
     line-height: 3.5vh;
-    font-size: 1.6vh;
+    font-size: 1.7vh;
     @media (max-aspect-ratio: 9/16) {
       font-size: 3vw;
     }
@@ -337,7 +337,7 @@ blockquote p {
     padding: 2vh;
     justify-content: center;
     align-items: center;
-    font-family: "幼圆",-apple-system, BlinkMacSystemFont, Tahoma, Arial, "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    font-family: "幼圆", -apple-system, BlinkMacSystemFont, Tahoma, Arial, "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
     border-radius: 2px;
     //border: 3px solid rgb(49, 49, 49);
     /*padding-bottom: 40px;*/

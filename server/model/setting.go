@@ -17,4 +17,6 @@ type GlobalConfig struct {
 	ThirdColor            string `gorm:"type:varchar(10)"`
 	FourthColor           string `gorm:"type:varchar(10)"`
 	Slogan                string `gorm:"type:varchar(200)"`
+	ArtistName            string `gorm:"type:varchar(50)"`
+	ArtistLink            string `gorm:"type:varchar(200)"`
 }

@@ -5,7 +5,7 @@
     <!--         @click="zoom(index)" :style="{ animationDelay: (index % 2) * 0.1 + 's' }"/>-->
     <div class="picFooter">
       <loading-com class="loading" v-show="isLoading"></loading-com>
-      <div class="loading last" v-show="isEnd">— 记忆的尽头 —</div>
+      <div class="loading last" v-show="isEnd">— 碎完了 —</div>
       <div class="loading last arrow" v-show="!isEnd&&!isLoading" @click="getNext">
         <!--    v-show="!isEnd&&!isLoading"   -->
         <n-icon size="1.5em" color="var(--button-color)">

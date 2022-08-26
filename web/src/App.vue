@@ -37,6 +37,7 @@ import {useUserInfo} from "@/store/UserInfo";
 import axios from "@/request/index"
 import {useRouter} from "vue-router";
 import {useMessage, NMessageProvider, NDialogProvider} from "naive-ui";
+import {isMobile} from "./util/utils"
 
 const router = useRouter()
 const isShow = ref(true)
@@ -96,13 +97,17 @@ axios.get("/yuurei/settings/1", {}).then((res: any) => {
 })
 
 onMounted(() => {
-  let main = document.getElementsByClassName("app")[0] as any
-  main.style.height = window.innerHeight + "px"
+  if (isMobile()) {
+    let main = document.getElementById("app") as any
+    main.style.height = window.innerHeight + "px"
+  }
 
   window.onresize = () => {
     return (() => {
-      let main = document.getElementsByClassName("app")[0] as any
-      main.style.height = window.innerHeight + "px"
+      if (isMobile()) {
+        let main = document.getElementById("app") as any
+        main.style.height = window.innerHeight + "px"
+      }
     })()
   }
 })
@@ -164,9 +169,8 @@ function changePage(num: number) {
 
 <style lang="less" scoped>
 
-#app{
+#app {
   font-family: -apple-system, BlinkMacSystemFont, Tahoma, Arial, "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-
 }
 
 
@@ -303,8 +307,9 @@ button {
 }
 
 #app {
-  height: 100%;
+  height: 100vh;
   // overflow: hidden;
+  z-index: 0;
 }
 
 .app {

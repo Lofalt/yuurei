@@ -32,6 +32,12 @@
       </td>
     </tr>
     <tr>
+      <td>画师</td>
+      <td>
+        <n-input type="text" v-model:value="ArtistName"/>
+      </td>
+    </tr>
+    <tr>
       <td>留言框默认头像</td>
       <td>
         <upload-pic @confirm="acceptMessageIcon" name="上传头像" :raw-src="MessageIcon" directory="messageIcon"
@@ -116,6 +122,7 @@ const DateColor = ref('')
 const ButtonColor = ref('')
 const router = useRouter()
 const Slogan = ref("")
+const ArtistName = ref("")
 const SecColor = ref("")
 const ThirdColor = ref("")
 const FourthColor = ref("")
@@ -152,7 +159,8 @@ function create() {
     ThirdColor: ThirdColor.value,
     FourthColor: FourthColor.value,
     AnonymousName: AnonymousName.value,
-    Slogan: Slogan.value
+    Slogan: Slogan.value,
+    ArtistName: ArtistName.value,
   }).then((res: any) => {
     if (res.code == 200) {
       router.go(0)
@@ -183,7 +191,9 @@ function getConfig() {
     AnonymousName.value = set.AnonymousName
     Slogan.value = set.Slogan
     FourthColor.value = set.FourthColor
+    ArtistName.value = set.ArtistName
     HasInited.value = true
+
   })
 }
 
@@ -205,7 +215,8 @@ function edit() {
     FourthColor: FourthColor.value,
     MobileBackgroundImage: MobileBackgroundImage.value,
     AnonymousName: AnonymousName.value,
-    Slogan: Slogan.value
+    Slogan: Slogan.value,
+    ArtistName: ArtistName.value
 
   }).then((res: any) => {
     if (res.code == 200) {
