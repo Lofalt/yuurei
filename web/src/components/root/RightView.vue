@@ -1,5 +1,5 @@
 <template>
-  <div class="artistInfo">cr: <a href="https://www.voyagerillustration.com/">{{ config.ArtistName }}</a></div>
+  <div class="artistInfo">cr: <a href="https://www.voyagerillustration.com/">{{ config && config.ArtistName }}</a></div>
   <div id="rightbar" @touchstart="touchStart" @touchend="touchEnd">
     <transition>
 
@@ -124,12 +124,19 @@ axios.get("yuurei/article/all?pageNum=1&pageSize=1", {}).then((res) => {
 })
 onMounted(() => {
   const rightPage = document.getElementById("rightbar") as HTMLSelectElement
+  console.log(rightPage)
   rightPage.style.transform = `translateY(-${pageData.pagedata.count}00%)`
 })
 
 watch(pageData.pagedata, (newValue, oldValue) => {
   const rightPage = document.getElementById("rightbar") as HTMLSelectElement
   rightPage.style.transform = `translateY(-${newValue.count}00%)`
+})
+watch(router.currentRoute, (newValue: any, oldValue: any) => {
+  if (newValue.path.startsWith("/archive")) {
+    const rightPage = document.getElementById("rightbar") as HTMLSelectElement
+    rightPage.style.transform = `translateY(-100%)`
+  }
 })
 
 function changePage(num: number) {
