@@ -29,8 +29,9 @@
       <div class="articleContent" v-html="article.ArticleContent" v-highlight/>
       <div class="footer">
         文章标题:&nbsp;&nbsp;{{ article.ArticleTitle }}<br>
-        发布于&nbsp;&nbsp; {{ new Date(article.CreatedAt).Format("yyyy/M/dd  hh:mm:ss") }}<br>
         分类:&nbsp;&nbsp;{{ article.ArticleCategory.ArticleCategoryName }}<br>
+        {{ article.Readers && article.Readers.length }} 人读过<br>
+        发布于&nbsp;&nbsp; {{ new Date(article.CreatedAt).Format("yyyy/M/dd  hh:mm:ss") }}<br>
         修改于&nbsp;&nbsp; {{ new Date(article.UpdatedAt).Format("yyyy/M/dd  hh:mm:ss") }}
       </div>
     </div>

@@ -69,7 +69,16 @@ func (a ArticleController) SelectAll(c *gin.Context) {
 func (a ArticleController) SelectArticleById(c *gin.Context) {
 	id := c.Params.ByName("id")
 	nid, _ := strconv.Atoi(id)
-	fmt.Println(nid)
+	ip := c.ClientIP()
+	reader := model.Reader{}
+	a.DB.Debug().Where("ip_address= ? and article_id = ?", ip, id).First(&reader)
+	if reader.ID == 0 {
+		a.DB.Create(&model.Reader{
+			IPAddress: ip,
+			UserID:    "",
+			ArticleID: uint(nid),
+		})
+	}
 	article := model.Article{
 		Model: gorm.Model{
 			ID:        uint(nid),
@@ -80,7 +89,7 @@ func (a ArticleController) SelectArticleById(c *gin.Context) {
 	}
 	var pre model.Article
 	var next model.Article
-	a.DB.Preload("Tags").Preload("ArticleCategory").Preload("ArticleComments.Comments").Preload("ArticleComments", func(db *gorm.DB) *gorm.DB {
+	a.DB.Preload("Tags").Preload("ArticleCategory").Preload("Readers").Preload("ArticleComments.Comments").Preload("ArticleComments", func(db *gorm.DB) *gorm.DB {
 		return db.Order("created_at DESC").Where("father_id is NULL")
 	}).Find(&article)
 	a.DB.Where("created_at<? AND article_category_id=?", article.CreatedAt, article.ArticleCategoryID).Last(&pre)
@@ -153,7 +162,7 @@ func (a ArticleController) SelectArticlesByCategoryId(c *gin.Context) {
 
 func CreateArticleController() IArticleController {
 	db := common.GetDb()
-	err := db.AutoMigrate(model.Article{}, model.Tag{}, model.ArticleComment{})
+	err := db.AutoMigrate(model.Article{}, model.Tag{}, model.ArticleComment{}, model.Reader{})
 	if err != nil {
 		fmt.Println(err.Error())
 

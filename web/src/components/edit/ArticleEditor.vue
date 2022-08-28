@@ -29,6 +29,9 @@
     </div>
 
     <wang-editor class="editor" @upload-content="acceptContent"/>
+    {{
+      content.split(/<[^>]*>/).join("").length
+    }}字
     <button class="sendBtn" @click="send">点我</button>
   </div>
 </template>

@@ -27,9 +27,11 @@
     ]"
                       size="small" v-model:value="tagColor"/>
     </div>
-
     <wang-editor class="editor" @upload-content="acceptContent" :article="article"/>
     <button class="sendBtn" @click="send">点我</button>
+    {{
+      content.split(/<[^>]*>/).join("").length
+    }}字
   </div>
 </template>
 
