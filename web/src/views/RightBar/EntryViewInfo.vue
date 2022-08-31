@@ -91,7 +91,7 @@ watch(router.currentRoute, (newValue: any) => {
   //overflow: auto;
   //background-color: ghostwhite;
   background-attachment: unset;
-  @media (max-aspect-ratio: 9/16) {
+  @media (max-aspect-ratio: 12/16) {
     font-size: 3.5vw;
   }
 
@@ -118,7 +118,7 @@ watch(router.currentRoute, (newValue: any) => {
         //width: auto;
         //max-height: 50vh;
 
-        @media (max-aspect-ratio: 9/16) {
+        @media (max-aspect-ratio: 12/16) {
           max-width: 90%;
         }
       }
@@ -183,7 +183,7 @@ watch(router.currentRoute, (newValue: any) => {
       padding-left: 1.7em;
       position: relative;
 
-      @media (max-aspect-ratio: 9/16) {
+      @media (max-aspect-ratio: 12/16) {
         line-height: 5vh;
       }
 
@@ -305,7 +305,7 @@ iframe {
   min-height: 80vh;
 
 
-  @media (max-aspect-ratio: 9/16) {
+  @media (max-aspect-ratio: 12/16) {
     //height: 50vw;
     min-height: 0;
     //height: 100px;

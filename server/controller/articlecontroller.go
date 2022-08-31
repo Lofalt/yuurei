@@ -71,7 +71,7 @@ func (a ArticleController) SelectArticleById(c *gin.Context) {
 	nid, _ := strconv.Atoi(id)
 	ip := c.ClientIP()
 	reader := model.Reader{}
-	a.DB.Debug().Where("ip_address= ? and article_id = ?", ip, id).First(&reader)
+	a.DB.Where("ip_address= ? and article_id = ?", ip, id).First(&reader)
 	if reader.ID == 0 {
 		a.DB.Create(&model.Reader{
 			IPAddress: ip,

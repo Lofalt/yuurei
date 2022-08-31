@@ -18,3 +18,11 @@ type User struct {
 // 		telephone,
 // 	}
 // }
+type Visitor struct {
+	gorm.Model
+	UserID       string `gorm:"type:varchar(50);unique;default:null"`
+	Username     string `gorm:"type:varchar(100)"`
+	User         User
+	IPAddress    string `gorm:"type:varchar(50)"`
+	IPAddressLoc string `gorm:"type:varchar(50)"`
+}

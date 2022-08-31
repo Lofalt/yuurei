@@ -226,7 +226,7 @@ const props = defineProps<{
         -webkit-line-clamp: 7;
 
       }
-      @media (max-aspect-ratio: 9/16) {
+      @media (max-aspect-ratio: 12/16) {
         -webkit-line-clamp: 5;
 
       }

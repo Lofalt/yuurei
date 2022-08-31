@@ -100,7 +100,7 @@ function send() {
     align-items: flex-end;
     width: 80%;
 
-    @media (max-aspect-ratio: 9/16){
+    @media (max-aspect-ratio: 12/16){
       width: 70%;
 
     }
@@ -120,7 +120,7 @@ function send() {
         border:.4vh solid black;
         padding-left:2vh;
 
-        @media (max-aspect-ratio: 9/16){
+        @media (max-aspect-ratio: 12/16){
           width: 15vh;
         }
 
@@ -158,7 +158,7 @@ function send() {
       border: .4vh solid rgba(49, 49, 49, 1);
       box-sizing: border-box;
 
-      @media (max-aspect-ratio: 9/16) {
+      @media (max-aspect-ratio: 12/16) {
         //height: 57vw;
         width: 100%;
 

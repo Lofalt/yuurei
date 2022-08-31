@@ -26,6 +26,16 @@
         <n-tab-pane name="entryCat" tab="词条分类" display-directive="show">
           <category-entry/>
         </n-tab-pane>
+        <n-tab-pane name="visitors" tab="最近访客" display-directive="if">
+          <n-dialog-provider>
+            <visitors/>
+          </n-dialog-provider>
+        </n-tab-pane>
+        <n-tab-pane name="friends" tab="友链管理" display-directive="if">
+          <n-dialog-provider>
+            <friends/>
+          </n-dialog-provider>
+        </n-tab-pane>
       </n-tabs>
     </n-card>
   </div>
@@ -37,10 +47,12 @@ import articleMenu from "@/views/admin/ArticleMenu.vue";
 import ArticleMenu from "@/views/admin/ArticleMenu.vue";
 import CategoryMenu from "@/views/admin/CategoryMenu.vue"
 import PicMenu from "@/views/admin/PicMenu.vue"
+import Visitors from "./Visitors.vue"
 import Config from "./Config.vue"
 import {useRouter} from "vue-router"
 import EntryEditing from "./EntryEditing.vue"
 import CategoryEntry from "./CategoryEntry.vue"
+import Friends from "./Friends.vue"
 
 const router = useRouter()
 

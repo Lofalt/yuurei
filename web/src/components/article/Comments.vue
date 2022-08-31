@@ -69,7 +69,7 @@ function send(args: any) {
     position: relative;
     padding-left:2vh;
     margin-top:5vh;
-    @media (max-aspect-ratio: 9/16){
+    @media (max-aspect-ratio: 12/16){
       width: 95%;
       margin:0 auto;
 

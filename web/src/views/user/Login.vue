@@ -99,7 +99,7 @@ function login() {
   justify-content: flex-start;
   flex-direction: column;
   //margin-bottom: 20px;
-  @media (max-aspect-ratio: 9/16) {
+  @media (max-aspect-ratio: 12/16) {
     width: 95vw;
     height: 50vw;
   }
@@ -119,7 +119,7 @@ function login() {
     width: 90%;
     text-wrap: nowrap;
 
-    @media (max-aspect-ratio: 9/16) {
+    @media (max-aspect-ratio: 12/16) {
       width: 100%;
     }
 

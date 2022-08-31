@@ -52,7 +52,7 @@ const backgroundImage = computed(() => {
   if (config.value == null) {
     return ''
   }
-  if ((document.body.clientWidth / document.body.clientHeight) < 9 / 16) {
+  if ((document.body.clientWidth / document.body.clientHeight) < 12/16) {
     return `url(${config.value.MobileBackgroundImage})`
   }
   return `url(${config.value.BackgroundImage})`
@@ -144,6 +144,7 @@ router.beforeEach((to, from, next) => {
 function showNav() {
   isActive.value = !isActive.value
 }
+axios.request("/yuurei/report","post",{})
 
 onMounted(() => {
   // let windows = document.getElementsByClassName("app")
@@ -222,7 +223,7 @@ function changePage(num: number) {
   border-radius: 50%;
   padding-top: .5vh;
   cursor: pointer;
-  @media (max-aspect-ratio: 9/16) {
+  @media (max-aspect-ratio: 12/16) {
     //height: 10vh;
     height: 4vh;
     width: 4vh;

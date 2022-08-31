@@ -165,7 +165,7 @@ function jump(id: number) {
 
 <style lang="less">
 
-//@media (max-aspect-ratio: 9/16) {
+//@media (max-aspect-ratio: 12/16) {
 button {
   cursor: pointer;
 }
@@ -193,7 +193,7 @@ iframe {
   min-height: 80vh;
 
 
-  @media (max-aspect-ratio: 9/16) {
+  @media (max-aspect-ratio: 12/16) {
     //height: 50vw;
     min-height: 0;
     //height: 100px;
@@ -259,7 +259,7 @@ blockquote p {
   .articleContent {
     line-height: 3.5vh;
     font-size: 1.7vh;
-    @media (max-aspect-ratio: 9/16) {
+    @media (max-aspect-ratio: 12/16) {
       font-size: 3vw;
     }
 

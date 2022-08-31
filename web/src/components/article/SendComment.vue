@@ -103,7 +103,7 @@ function send() {
   margin-left: 8vh;
   margin-bottom: 2vh;
 
-  @media (max-aspect-ratio: 9/16) {
+  @media (max-aspect-ratio: 12/16) {
     width: 95%;
     margin: 0 auto;
     margin-bottom: 2vh;

@@ -1,6 +1,8 @@
 package controller
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
 	"github.com/Lofalt/yuurei/common"
 	"github.com/Lofalt/yuurei/dto"
@@ -12,8 +14,13 @@ import (
 	"github.com/jordan-wright/email"
 	"github.com/satori/go.uuid"
 	"golang.org/x/crypto/bcrypt"
+	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
+	"io"
+	"io/ioutil"
 	"log"
 	"math/rand"
+	"net/http"
 	"net/smtp"
 	"os"
 	"path/filepath"
@@ -180,4 +187,107 @@ func SendEmailValidate(em []string) (string, error) {
 	//设置服务器相关的配置
 	err := e.Send("smtp.qq.com:25", smtp.PlainAuth("", "515636512@qq.com", "knjdcbozvueibhhf", "smtp.qq.com"))
 	return vCode, err
+}
+
+func Report(ctx *gin.Context) {
+	//获取header
+	tokenString := ctx.GetHeader("Authorization")
+	var userId string
+	IPAddressLoc := ""
+	if tokenString != "" {
+		tokenString = tokenString[7:]
+
+		token, claims, err := common.ParseToken(tokenString)
+
+		if err != nil || !token.Valid {
+
+		}
+		userId = claims.UserId
+		var user model.User
+		db := common.GetDb()
+		db.Debug().First(&user, "id = ?", userId)
+
+	}
+	post, err := http.Post("https://apikey.net/?type=json&ip="+ctx.ClientIP(), "application/json", bytes.NewReader([]byte{}))
+	if err != nil {
+		log.Println(err.Error())
+		return
+	}
+	if post.Status == "200 OK" {
+
+		defer func(Body io.ReadCloser) {
+			err := Body.Close()
+			if err != nil {
+
+			}
+		}(post.Body)
+		body, _ := ioutil.ReadAll(post.Body)
+		if err != nil {
+			return
+		}
+		var res IPResult
+		err = json.Unmarshal(body, &res)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
+		IPAddressLoc = res.Address
+	}
+	visitor := model.Visitor{
+		Model:        gorm.Model{},
+		UserID:       userId,
+		IPAddress:    ctx.ClientIP(),
+		IPAddressLoc: IPAddressLoc,
+	}
+
+	db := common.GetDb()
+	var vis model.Visitor
+	if userId != "" {
+		db.Debug().Where(" user_id = ?", userId).Preload("User").First(&vis)
+		if vis.ID != 0 {
+			db.Where("id = ?", vis.ID).Updates(&visitor)
+			response.Success(ctx, gin.H{"data": vis}, "success")
+			return
+		}
+
+	}
+	db.Debug().Where(" ip_address = ?", ctx.ClientIP()).Preload("User").First(&vis)
+	if vis.ID != 0 {
+		db.Where("id = ?", vis.ID).Updates(&visitor)
+		response.Success(ctx, gin.H{"data": vis}, "success")
+		return
+	} else {
+		db.Create(&visitor)
+	}
+}
+
+func ShowVisitors(c *gin.Context) {
+	var visitors []model.Visitor
+	db := common.GetDb()
+
+	pageNum, _ := strconv.Atoi(c.DefaultQuery("pageNum", "-1"))
+	pageSize, _ := strconv.Atoi(c.DefaultQuery("pageSize", "-1"))
+	var offset int
+	if pageNum == -1 {
+		offset = -1
+	} else {
+		offset = (pageNum - 1) * pageSize
+	}
+	var total int64
+	db.Model(model.Visitor{}).Count(&total)
+	if err := db.Preload(clause.Associations).Order("updated_at desc").Offset(offset).Limit(pageSize).Find(&visitors).Error; err != nil {
+		response.Fail(c, gin.H{}, err.Error())
+		return
+	}
+
+	response.Success(c, gin.H{"data": visitors, "total": total}, "success")
+}
+
+type IPResult struct {
+	Msg     string `json:"msg"`
+	Code    int    `json:"code"`
+	Ip      string `json:"ip"`
+	Iplong  int    `json:"iplong"`
+	Address string `json:"address"`
+	Ipproxy bool   `json:"ipproxy"`
 }

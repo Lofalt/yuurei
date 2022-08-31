@@ -216,7 +216,7 @@ watch(currentCat, (newValue, oldValue) => {
   text-align: center;
   cursor: pointer;
 
-  @media (max-aspect-ratio: 9/16) {
+  @media (max-aspect-ratio: 12/16) {
     height: 35vw;
   }
 }

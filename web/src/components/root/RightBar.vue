@@ -73,7 +73,7 @@ provide('hover', hover)
 provide('showVlog', showVlog)
 
 function touchCard(num: number) {
-  if (document.body.clientWidth / document.body.clientHeight < 9 / 16) {
+  if (document.body.clientWidth / document.body.clientHeight < 12/16) {
     return
   }
   pullCard(num)
@@ -212,7 +212,7 @@ function pushCard() {
     background-size: cover;
 
     &::-webkit-scrollbar {
-      width: 5px;
+      width: 0px;
       // transition: all 1s;
     }
 
@@ -223,16 +223,16 @@ function pushCard() {
       border-radius: 10px;
     }
 
-    @media (max-aspect-ratio: 1/1) AND (min-aspect-ratio: 9/16) AND (min-height: 700px) {
+    @media (max-aspect-ratio: 1/1) AND (min-aspect-ratio: 12/16)  {
       width: 90vw;
       min-height: 80vh;
       //max-height: ;
       // right: -85vw;
     }
 
-    @media (max-aspect-ratio: 9/16) {
+    @media (max-aspect-ratio: 12/16) {
       width: 90vw;
-      min-height: 150vw;
+      min-height: 85vh;
     }
 
 
@@ -263,6 +263,17 @@ function pushCard() {
       align-items: center;
       //font-size: 2vh;
       flex-direction: column;
+      &::-webkit-scrollbar {
+        width: 5px;
+        // transition: all 1s;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        width: 5px;
+        background-color: var(--button-color);
+        // transition: all 1s;
+        border-radius: 10px;
+      }
     }
       // background-image: url("./assets/wallhaven-p262de.jpg");
       //border: .5vh solid rgb(49, 49, 49);

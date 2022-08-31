@@ -47,8 +47,18 @@
   line-height: 3vh;
   margin-top: 3vh;
   font-size: 1.8vh;
+  &::-webkit-scrollbar {
+    width: 5px;
+    // transition: all 1s;
+  }
 
-  @media (max-aspect-ratio: 9/16) {
+  &::-webkit-scrollbar-thumb {
+    width: 0px;
+    background-color: var(--button-color);
+    // transition: all 1s;
+    border-radius: 10px;
+  }
+  @media (max-aspect-ratio: 12/16) {
     font-size: 3.2vw;
     line-height: 3vh;
 
@@ -71,7 +81,7 @@
   margin-bottom: 4vh;
 
 
-  @media (max-aspect-ratio: 9/16) {
+  @media (max-aspect-ratio: 12/16) {
     max-width: 30vw;
   }
 }

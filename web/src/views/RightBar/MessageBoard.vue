@@ -339,7 +339,7 @@ const wang = ref<InstanceType<typeof WangEditorMini>>();
 // const wang = ref(null)
 
 function changeModal() {
-  if ((document.body.clientWidth / document.body.clientHeight) > 9 / 16) {
+  if ((document.body.clientWidth / document.body.clientHeight) > 12/16) {
     showModal.value = !showModal.value
   } else {
     showTheModal.value = !showTheModal.value
@@ -416,7 +416,7 @@ function getFile(event: any) {
   width: 50vw;
   //min-width: 50vw;
   border: 3px solid black;
-  @media (max-aspect-ratio: 9/16) {
+  @media (max-aspect-ratio: 12/16) {
     width: 100vw;
   }
 
@@ -450,7 +450,7 @@ function getFile(event: any) {
   cursor: pointer;
   border: .4vh solid rgb(49, 49, 49);
 
-  @media (max-aspect-ratio: 9/16) {
+  @media (max-aspect-ratio: 12/16) {
     width: 23vw;
     height: 23vw;
     top: -25vw !important;
@@ -476,7 +476,7 @@ function getFile(event: any) {
     //left: -3px;
     //top: -3px;
     //border: 3px solid rgba(49, 49, 49, 0.2);
-    @media (max-aspect-ratio: 9/16) {
+    @media (max-aspect-ratio: 12/16) {
       visibility: visible !important;
       border: .6vw solid rgba(49, 49, 49, 0.2);
       font-size: 4vw;
@@ -558,7 +558,7 @@ function getFile(event: any) {
   // overflow: hidden;
   // white-space: nowrap;
 
-  @media (max-aspect-ratio: 1/1) AND (min-aspect-ratio: 9/16) AND (min-height: 800px) {
+  @media (max-aspect-ratio: 1/1) AND (min-aspect-ratio: 12/16) AND (min-height: 800px) {
     width: 80%;
     //max-height: ;
     // right: -85vw;
@@ -601,14 +601,14 @@ function getFile(event: any) {
         position: absolute;
         background: rgba(0, 0, 0, .3);
 
-        @media (max-aspect-ratio: 9/16) {
+        @media (max-aspect-ratio: 12/16) {
           visibility: visible;
         }
 
       }
 
 
-      @media (max-aspect-ratio: 9/16) {
+      @media (max-aspect-ratio: 12/16) {
         width: 100px  ;
         height: 150px;
         &:nth-child(3) {
@@ -622,7 +622,7 @@ function getFile(event: any) {
   @media (max-height: 800px) {
     //height: 180px;
   }
-  @media (max-aspect-ratio: 9/16) {
+  @media (max-aspect-ratio: 12/16) {
     border: .7vw solid black;
     height: 70vw;
     margin: 0 auto;
@@ -641,7 +641,7 @@ function getFile(event: any) {
     border-right-color: rgb(49, 49, 49);
     border-bottom-color: rgba(49, 49, 49);
 
-    @media (max-aspect-ratio: 9/16) {
+    @media (max-aspect-ratio: 12/16) {
       display: none;
     }
   }
@@ -661,7 +661,7 @@ function getFile(event: any) {
     border-top: .2vh solid rgba(49, 49, 49, .1);
     box-sizing: border-box;
 
-    @media (max-aspect-ratio: 9/16) {
+    @media (max-aspect-ratio: 12/16) {
       height: 57vw;
       border-top: .4vw solid rgba(49, 49, 49, .1);
     }
@@ -683,7 +683,7 @@ function getFile(event: any) {
     //padding: 10px;
     height: 5vh;
 
-    @media (max-aspect-ratio: 9/16) {
+    @media (max-aspect-ratio: 12/16) {
       //height: 100px;
       height: 12vw;
     }
@@ -710,7 +710,7 @@ function getFile(event: any) {
       margin-right: 1vh;
       border: .4vh solid rgb(49, 49, 49); // transition: all 1s;
 
-      @media (max-aspect-ratio: 9/16) {
+      @media (max-aspect-ratio: 12/16) {
         width: 15vw;
         border: .8vw solid rgb(49, 49, 49); // transition: all 1s;
         height: 8vw;
@@ -732,7 +732,7 @@ function getFile(event: any) {
   //left: 10% !important;
   //top: -120px !important;
   z-index: 10;
-  @media (max-aspect-ratio: 9/16) {
+  @media (max-aspect-ratio: 12/16) {
     right: 0px !important;
   }
 }

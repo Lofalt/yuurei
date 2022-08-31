@@ -83,7 +83,7 @@ const props = defineProps<{
     //border: .3vh solid var(--replyColor);
     border: .4vh solid rgb(49, 49, 49);
 
-    @media (max-aspect-ratio: 9/16) {
+    @media (max-aspect-ratio: 12/16) {
       width: 15vw;
       height: 15vw;
       margin-right: 2vh;
@@ -160,7 +160,7 @@ const props = defineProps<{
     position: relative;
 
 
-    @media (max-aspect-ratio: 9/16) {
+    @media (max-aspect-ratio: 12/16) {
       width: 66%;
       min-height: 11vh;
       border: .6vw solid var(--replyColor);

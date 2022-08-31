@@ -210,7 +210,7 @@ function deleteMsg() {
       border-left: .6vh solid rgb(49, 49, 49);
       border-bottom: .6vh solid rgb(49, 49, 49);
     }
-    @media (max-aspect-ratio: 9/16) {
+    @media (max-aspect-ratio: 12/16) {
       top: 1.5vh;
       border: .7vw solid rgb(49, 49, 49);
       border-left: 1vw solid rgb(49, 49, 49);

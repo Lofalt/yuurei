@@ -1,6 +1,5 @@
 <template>
 
-  {{backgroundImg}}
   <n-button @click="showNew=!showNew">新增</n-button>
   <n-data-table
       :columns="columns"

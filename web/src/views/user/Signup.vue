@@ -77,7 +77,7 @@ function signup() {
   }
   axios.request("/yuurei/sign_up", "post", qs.stringify({
     username: username.value,
-    name: name,
+    name: name.value,
     password: password.value,
     code: validCode.value
   })).then((res: any) => {
@@ -182,7 +182,7 @@ function checkPass() {
 <!--  justify-content: center;-->
 <!--  flex-direction: column;-->
 <!--  //margin-bottom: 20px;-->
-<!--  @media (max-aspect-ratio: 9/16) {-->
+<!--  @media (max-aspect-ratio: 12/16) {-->
 <!--    width: 100vw;-->
 <!--    height: 70vw;-->
 <!--  }-->
@@ -249,7 +249,7 @@ function checkPass() {
   justify-content: flex-start;
   flex-direction: column;
   //margin-bottom: 20px;
-  @media (max-aspect-ratio: 9/16) {
+  @media (max-aspect-ratio: 12/16) {
     width: 95vw;
     //height: 50vw;
   }
@@ -269,7 +269,7 @@ function checkPass() {
     width: 90%;
     text-wrap: nowrap;
 
-    @media (max-aspect-ratio: 9/16) {
+    @media (max-aspect-ratio: 12/16) {
       width: 100%;
     }
 

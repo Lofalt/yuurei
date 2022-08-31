@@ -16,9 +16,9 @@
       </a>
       <!-- </div> -->
       <!-- <div> -->
-      <a href="javascript:">
-        <n-icon size="2.5vh" color="#484848    ">
-          <device-tv/>
+      <a href="javascript:" @click="showModal=true">
+        <n-icon size="2.5vh" color="var(--button-color)">
+          <user-friends/>
         </n-icon>
       </a>
       <!-- </div> -->
@@ -41,6 +41,19 @@
     <n-icon v-show="isLogin" class="logout" size="2.3vh" color="#484848" @click="logOut">
       <logout/>
     </n-icon>
+    <n-modal display-directive="if" v-model:show="showModal">
+      <n-card class="friends">
+        <div class="f-header">
+          友達
+        </div>
+        <div class="f-container">
+          <friend v-for="item in friends" :name="item.Name" :summary="item.Summary"
+                  :link="item.Link"
+                  :icon="item.Icon"
+          />
+        </div>
+      </n-card>
+    </n-modal>
   </div>
 </template>
 
@@ -54,13 +67,16 @@ export default {
 <script lang="ts" setup>
 import {computed, inject, onMounted, reactive, ref} from 'vue';
 import {useRouter} from 'vue-router';
-import {Weibo, Twitter, GrinTongue, Github} from '@vicons/fa'
+import {Weibo, Twitter, GrinTongue, Github, UserFriends} from '@vicons/fa'
 import {NIcon} from "naive-ui"
 import {usePageData} from '@/store/pageData';
 import {Settings, Home, Login, Logout, DeviceTv} from '@vicons/tabler'
 import {useUserInfo} from "@/store/UserInfo";
-import {useDialog, useMessage} from "naive-ui";
+import {useDialog, useMessage, NModal, NCard} from "naive-ui";
+import Friend from "../Friend.vue"
+import axios from "../../request/index"
 
+const showModal = ref(false)
 const router = useRouter()
 const dialog = useDialog()
 const pageData = usePageData()
@@ -68,6 +84,7 @@ const userInfo = useUserInfo()
 const emit = defineEmits(['toggleNav'])
 const config = inject("globalConfig") as any
 const message = useMessage()
+const friends = ref([])
 
 const backgroundImage = computed(() => {
   if (config.value == null) {
@@ -160,13 +177,89 @@ function changePage(num: number) {
   emit('toggleNav')
 
 }
+
+onMounted(()=>{
+  axios.get("/yuurei/friends/all",{}).then((res:any)=>{
+    friends.value = res.data.data
+  })
+})
 </script>
 
 <style lang="less" scoped>
 .n-icon:hover {
-  cursor: not-allowed;
+  //cursor: not-allowed;
 
 
+}
+
+.friends {
+  width: 50vw;
+  height: 65vh;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  font-size: 1.7vh;
+  padding:1vh;
+
+  @media (max-aspect-ratio: 12/16){
+    //padding: .5vh;
+    padding:0;
+  }
+  &::-webkit-scrollbar {
+    width: 3px;
+    // transition: all 1s;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    width: 5px;
+    background-color: darkgray;
+    // transition: all 1s;
+    border-radius: 10px;
+  }
+  .f-header {
+    padding-left: 1.5vh;
+    font-size: 3.2vh;
+    font-weight: bold;
+    border-bottom: .1vh solid rgba(49, 49, 49, .2);
+    padding-bottom: 1vh;
+  }
+
+  .f-container {
+    display: flex;
+    flex-direction: row;
+    margin-top: 3vh;
+    flex-wrap: wrap;
+    font-size: 1.6vh;
+
+    .f-card {
+      display: flex;
+      flex-direction: row;
+      //margin-top: 2vh;
+
+      .f-icon {
+        width: 8vh;
+        height: 8vh;
+        background-color: black;
+        border-radius: 50%;
+        margin-right: 1vh;
+      }
+      .f-right{
+        display: flex;
+        flex-direction: column;
+        .f-name{
+          font-size: 1.1em;
+          font-weight: bold;
+          color:var(--button-color)
+        }
+      }
+    }
+
+  }
+
+  @media screen and (max-aspect-ratio: 1/1) {
+    width: 95vw;
+    height: 50vh;
+  }
 }
 
 a {

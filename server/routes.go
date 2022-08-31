@@ -1,8 +1,10 @@
 package main
 
 import (
+	"github.com/Lofalt/yuurei/common"
 	"github.com/Lofalt/yuurei/controller"
 	"github.com/Lofalt/yuurei/middleware"
+	"github.com/Lofalt/yuurei/model"
 	"github.com/gin-gonic/gin"
 )
 
@@ -13,6 +15,9 @@ func CollecRouter(r *gin.Engine) *gin.Engine {
 	r.GET("/yuurei/info", middleware.AuthMiddleware(), controller.Info)
 	r.POST("/yuurei/img", controller.Imgs)
 	r.POST("/yuurei/validEmail", controller.SendEmail)
+	r.POST("/yuurei/report", controller.Report)
+	r.GET("/yuurei/visitors", controller.ShowVisitors)
+	common.GetDb().AutoMigrate(model.Visitor{})
 
 	articleRoutes := r.Group("/yuurei/article")
 	artilceController := controller.CreateArticleController()
@@ -33,6 +38,14 @@ func CollecRouter(r *gin.Engine) *gin.Engine {
 	categoryRoutes.DELETE(":id", middleware.Inception(), categoryController.Delete)
 	categoryRoutes.GET(":id", categoryController.Show)
 	categoryRoutes.GET("all", categoryController.ShowAll)
+
+	friendRoutes := r.Group("/yuurei/friends")
+	friendController := controller.NewFriendController()
+	friendRoutes.POST("", middleware.Inception(), friendController.Create)
+	friendRoutes.PUT(":id", middleware.Inception(), friendController.Update)
+	friendRoutes.DELETE(":id", middleware.Inception(), friendController.Delete)
+	friendRoutes.GET(":id", friendController.Show)
+	friendRoutes.GET("all", friendController.ShowAll)
 
 	tagRoutes := r.Group("/yuurei/tag")
 	tagController := controller.NewTagController()

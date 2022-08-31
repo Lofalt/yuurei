@@ -157,7 +157,7 @@
       padding-left: 1.7em;
       position: relative;
 
-      @media (max-aspect-ratio: 9/16) {
+      @media (max-aspect-ratio: 12/16) {
         line-height: 7vh;
       }
 
@@ -275,7 +275,7 @@ iframe {
   min-height: 80vh;
 
 
-  @media (max-aspect-ratio: 9/16) {
+  @media (max-aspect-ratio: 12/16) {
     //height: 50vw;
     min-height: 0;
     //height: 100px;

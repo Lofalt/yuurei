@@ -164,7 +164,7 @@ onMounted(() => {
 * {
   font-size: 1.8vh;
 
-  @media (max-aspect-ratio: 9/16) {
+  @media (max-aspect-ratio: 12/16) {
     font-size: 3vw;
   }
 }
@@ -324,7 +324,7 @@ iframe {
     padding-left: 4vh;
     flex-shrink: 0;
     align-content: center;
-    @media (max-aspect-ratio: 9/16) {
+    @media (max-aspect-ratio: 12/16) {
       margin-bottom: 1vh;
       height: 3.5%;
       padding-left: 0;
@@ -347,7 +347,7 @@ iframe {
       font-weight: bold;
       color: #343333;
 
-      @media (max-aspect-ratio: 9/16) {
+      @media (max-aspect-ratio: 12/16) {
         font-size: 1.4em;
         //padding-left: 5%;
         //align-content: flex-start;
@@ -385,7 +385,7 @@ iframe {
     border-radius: 20px;
   }
 
-  @media (max-aspect-ratio: 9/16) {
+  @media (max-aspect-ratio: 12/16) {
     flex-direction: column;
     padding-top: 1vh;
     //align-content: flex-end;

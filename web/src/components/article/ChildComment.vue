@@ -76,7 +76,7 @@ function send(args: any) {
   float: right;
   margin-bottom: 2vh;
   //margin-top: 5vh;
-  @media (max-aspect-ratio: 9/16) {
+  @media (max-aspect-ratio: 12/16) {
     width: 95%;
     margin-right: 0;
   }
@@ -149,7 +149,7 @@ function send(args: any) {
 
 .comment {
   width: 60%;
-  @media (max-aspect-ratio: 9/16) {
+  @media (max-aspect-ratio: 12/16) {
     width: 80%;
 
   }

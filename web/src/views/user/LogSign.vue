@@ -110,7 +110,7 @@ function isActive(arg: string) {
       min-height: 50vw;
     }
 
-    @media (max-aspect-ratio: 9/16) {
+    @media (max-aspect-ratio: 12/16) {
       width: 100vw;
       min-height: 62.5vw;
     }

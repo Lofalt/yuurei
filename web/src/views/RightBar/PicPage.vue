@@ -515,7 +515,7 @@ watch(colRaw, () => {
     visibility: hidden;
   }
 
-  @media (max-aspect-ratio: 9/16) {
+  @media (max-aspect-ratio: 12/16) {
     // padding-top: 2vh;
     width: 90%;
     margin: 0 auto;

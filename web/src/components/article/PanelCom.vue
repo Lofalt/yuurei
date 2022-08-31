@@ -190,7 +190,7 @@ function archive(articleId: number) {
   }
 }
 
-@media screen and (max-aspect-ratio: 9/16) {
+@media screen and (max-aspect-ratio: 12/16) {
   .panel {
     /*width:100%;*/
     height: 200px;

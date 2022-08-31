@@ -98,7 +98,7 @@ function send(args: any) {
   //margin-top: 5vh;
   animation: enter 1s ease;
 
-  @media (max-aspect-ratio: 9/16) {
+  @media (max-aspect-ratio: 12/16) {
     width: 95%;
     margin: 0 auto;
     margin-bottom: 2vh;
@@ -119,7 +119,7 @@ function send(args: any) {
       background-size: cover;
       border: .1vh solid rgba(49, 49, 49, .2);
 
-      @media (max-aspect-ratio: 9/16) {
+      @media (max-aspect-ratio: 12/16) {
         width: 8vh;
         height: 8vh;
       }
@@ -178,7 +178,7 @@ function send(args: any) {
 .comment {
   width: 60%;
 
-  @media (max-aspect-ratio: 9/16) {
+  @media (max-aspect-ratio: 12/16) {
     width: 80%;
   }
 }
@@ -188,7 +188,7 @@ function send(args: any) {
   //min-height: 40vh;
   margin-left: 6vh;
   //margin-bottom: 6vh;
-  @media (max-aspect-ratio: 9/16) {
+  @media (max-aspect-ratio: 12/16) {
     float: right;
     width: 90%;
     margin: 0 auto;
