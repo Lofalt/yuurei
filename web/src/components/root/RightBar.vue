@@ -232,7 +232,7 @@ function pushCard() {
 
     @media (max-aspect-ratio: 12/16) {
       width: 90vw;
-      min-height: 85vh;
+      min-height: 80vh;
     }
 
 
